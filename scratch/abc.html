@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Border as Percentage</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: lightblue;
+            border: 5px solid transparent; /* Base border */
+            border-image: linear-gradient(to right, red, blue);
+            border-image-slice: 1;
+            border-width: 10%; /* This sets the border width as a percentage of the element's width */
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+</body>
+</html>
