@@ -1,43 +1,954 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <title>testing . . .</title>
-    <link rel="stylesheet" href="./index.css">
-    <script src="./cache.tailwind.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Typographic Forms Navigator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Enforce a strictly black & white theme */
+    body {
+      background-color: #fff;
+      color: #000;
+    }
+    .card {
+      background-color: #fff;
+      border: 1px solid #000;
+    }
+    .card:hover {
+      background-color: #000;
+      color: #fff;
+    }
+  </style>
 </head>
+<body class="bg-white text-black">
 
-<body class="bg-slate-200">
-    <div class="min-h-screen min-w-screen m-8 flex">
-        <div class="h-full p-4">
-            <!-- The arbitrary values set here are how we determine the letterform size -->
-            <div class="h-[550px] w-[550px] overflow-hidden relative">
-                <div class="h-[150%] w-[150%] absolute -top-[25%] -left-[25%] overflow-hidden bg-black grid grid-cols-4 grid-rows-4 content-center gap-0">
-                    <div class="relative h-full w-full bg-white"></div>
-                    <div class="relative h-full w-full bg-white"></div>
-                    <div class="relative h-full w-full bg-white"></div>
-                    <div class="relative h-full w-full bg-white"></div>
+  <!-- Header -->
+  <header class="py-8 text-center">
+    <h1 class="text-4xl font-bold">Typographic Forms Navigator</h1>
+    <nav class="bg-white border-b border-black px-4 py-2">
+      <div class="max-w-7xl mx-auto">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search typographic forms..."
+          class="border border-black rounded px-3 py-1 w-full md:w-1/3"
+        />
+      </div>
+    </nav>
+  </header>
 
-                    <div class="relative h-full w-[92%] bg-white"></div>
-                    <div class="relative h-full w-[92%] bg-white"></div>
-                    <div class="relative h-full w-[92%] bg-white"></div>
-                    <div class="relative h-full w-full bg-white"></div>
+  <!-- Main Container -->
+  <main class="container mx-auto px-4 pb-8">
 
-                    <div class="relative h-full w-[92%] bg-white"></div>
-                    <div class="relative h-full w-[92%] bg-white"></div>
-                    <div class="relative h-full w-[92%] bg-white"></div>
-                    <div class="relative h-full w-full bg-white"></div>
+    <!-- SHORT BODIES Section -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">Short Bodies</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
-                    <div class="relative h-full w-full bg-white"></div>
-                    <div class="relative h-full w-full bg-white"></div>
-                    <div class="relative h-full w-full bg-white"></div>
-                    <div class="relative h-full w-full bg-white"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="./index.js"></script>
+        <!-- Card for shortbody-horizontal-1.html -->
+        <a href="typographic_forms/short_bodies/shortbody-horizontal-1.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-horizontal-1.png"
+            alt="Shortbody Horizontal 1"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Horizontal 1</h3>
+          <p class="text-sm">View the Shortbody Horizontal 1 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-horizontal-2.html -->
+        <a href="typographic_forms/short_bodies/shortbody-horizontal-2.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-horizontal-2.png"
+            alt="Shortbody Horizontal 2"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Horizontal 2</h3>
+          <p class="text-sm">View the Shortbody Horizontal 2 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-horizontal-3.html -->
+        <a href="typographic_forms/short_bodies/shortbody-horizontal-3.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-horizontal-3.png"
+            alt="Shortbody Horizontal 3"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Horizontal 3</h3>
+          <p class="text-sm">View the Shortbody Horizontal 3 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-horizontal-4.html -->
+        <a href="typographic_forms/short_bodies/shortbody-horizontal-4.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-horizontal-4.png"
+            alt="Shortbody Horizontal 4"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Horizontal 4</h3>
+          <p class="text-sm">View the Shortbody Horizontal 4 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-horizontal-5.html -->
+        <a href="typographic_forms/short_bodies/shortbody-horizontal-5.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-horizontal-5.png"
+            alt="Shortbody Horizontal 5"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Horizontal 5</h3>
+          <p class="text-sm">View the Shortbody Horizontal 5 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-horizontal-6.html -->
+        <a href="typographic_forms/short_bodies/shortbody-horizontal-6.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-horizontal-6.png"
+            alt="Shortbody Horizontal 6"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Horizontal 6</h3>
+          <p class="text-sm">View the Shortbody Horizontal 6 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-vertical-1.html -->
+        <a href="typographic_forms/short_bodies/shortbody-vertical-1.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-vertical-1.png"
+            alt="Shortbody Vertical 1"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Vertical 1</h3>
+          <p class="text-sm">View the Shortbody Vertical 1 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-vertical-2.html -->
+        <a href="typographic_forms/short_bodies/shortbody-vertical-2.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-vertical-2.png"
+            alt="Shortbody Vertical 2"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Vertical 2</h3>
+          <p class="text-sm">View the Shortbody Vertical 2 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-vertical-3.html -->
+        <a href="typographic_forms/short_bodies/shortbody-vertical-3.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-vertical-3.png"
+            alt="Shortbody Vertical 3"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Vertical 3</h3>
+          <p class="text-sm">View the Shortbody Vertical 3 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-vertical-4.html -->
+        <a href="typographic_forms/short_bodies/shortbody-vertical-4.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-vertical-4.png"
+            alt="Shortbody Vertical 4"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Vertical 4</h3>
+          <p class="text-sm">View the Shortbody Vertical 4 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-vertical-5.html -->
+        <a href="typographic_forms/short_bodies/shortbody-vertical-5.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-vertical-5.png"
+            alt="Shortbody Vertical 5"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Vertical 5</h3>
+          <p class="text-sm">View the Shortbody Vertical 5 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-vertical-6.html -->
+        <a href="typographic_forms/short_bodies/shortbody-vertical-6.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-vertical-6.png"
+            alt="Shortbody Vertical 6"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Vertical 6</h3>
+          <p class="text-sm">View the Shortbody Vertical 6 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-diagonal-ltr-1.html -->
+        <a href="typographic_forms/short_bodies/shortbody-diagonal-ltr-1.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-diagonal-ltr-1.png"
+            alt="Shortbody Diagonal Ltr 1"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Diagonal Ltr 1</h3>
+          <p class="text-sm">View the Shortbody Diagonal Ltr 1 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-diagonal-ltr-2.html -->
+        <a href="typographic_forms/short_bodies/shortbody-diagonal-ltr-2.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-diagonal-ltr-2.png"
+            alt="Shortbody Diagonal Ltr 2"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Diagonal Ltr 2</h3>
+          <p class="text-sm">View the Shortbody Diagonal Ltr 2 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-diagonal-ltr-3.html -->
+        <a href="typographic_forms/short_bodies/shortbody-diagonal-ltr-3.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-diagonal-ltr-3.png"
+            alt="Shortbody Diagonal Ltr 3"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Diagonal Ltr 3</h3>
+          <p class="text-sm">View the Shortbody Diagonal Ltr 3 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-diagonal-ltr-4.html -->
+        <a href="typographic_forms/short_bodies/shortbody-diagonal-ltr-4.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-diagonal-ltr-4.png"
+            alt="Shortbody Diagonal Ltr 4"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Diagonal Ltr 4</h3>
+          <p class="text-sm">View the Shortbody Diagonal Ltr 4 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-diagonal-ltr-5.html -->
+        <a href="typographic_forms/short_bodies/shortbody-diagonal-ltr-5.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-diagonal-ltr-5.png"
+            alt="Shortbody Diagonal Ltr 5"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Diagonal Ltr 5</h3>
+          <p class="text-sm">View the Shortbody Diagonal Ltr 5 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-diagonal-ltr-6.html -->
+        <a href="typographic_forms/short_bodies/shortbody-diagonal-ltr-6.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-diagonal-ltr-6.png"
+            alt="Shortbody Diagonal Ltr 6"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Diagonal Ltr 6</h3>
+          <p class="text-sm">View the Shortbody Diagonal Ltr 6 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-diagonal-rtl-1.html -->
+        <a href="typographic_forms/short_bodies/shortbody-diagonal-rtl-1.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-diagonal-rtl-1.png"
+            alt="Shortbody Diagonal Rtl 1"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Diagonal Rtl 1</h3>
+          <p class="text-sm">View the Shortbody Diagonal Rtl 1 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-diagonal-rtl-2.html -->
+        <a href="typographic_forms/short_bodies/shortbody-diagonal-rtl-2.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-diagonal-rtl-2.png"
+            alt="Shortbody Diagonal Rtl 2"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Diagonal Rtl 2</h3>
+          <p class="text-sm">View the Shortbody Diagonal Rtl 2 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-diagonal-rtl-3.html -->
+        <a href="typographic_forms/short_bodies/shortbody-diagonal-rtl-3.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-diagonal-rtl-3.png"
+            alt="Shortbody Diagonal Rtl 3"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Diagonal Rtl 3</h3>
+          <p class="text-sm">View the Shortbody Diagonal Rtl 3 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-diagonal-rtl-4.html -->
+        <a href="typographic_forms/short_bodies/shortbody-diagonal-rtl-4.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-diagonal-rtl-4.png"
+            alt="Shortbody Diagonal Rtl 4"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Diagonal Rtl 4</h3>
+          <p class="text-sm">View the Shortbody Diagonal Rtl 4 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-diagonal-rtl-5.html -->
+        <a href="typographic_forms/short_bodies/shortbody-diagonal-rtl-5.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-diagonal-rtl-5.png"
+            alt="Shortbody Diagonal Rtl 5"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Diagonal Rtl 5</h3>
+          <p class="text-sm">View the Shortbody Diagonal Rtl 5 typographic form.</p>
+        </a>
+
+        <!-- Card for shortbody-diagonal-rtl-6.html -->
+        <a href="typographic_forms/short_bodies/shortbody-diagonal-rtl-6.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/short_bodies/shortbody-diagonal-rtl-6.png"
+            alt="Shortbody Diagonal Rtl 6"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Shortbody Diagonal Rtl 6</h3>
+          <p class="text-sm">View the Shortbody Diagonal Rtl 6 typographic form.</p>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- LONG BODIES Section -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">Long Bodies</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+        <!-- Card for longbody-diagonal-1.html -->
+        <a href="typographic_forms/long_bodies/longbody-diagonal-1.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/long_bodies/longbody-diagonal-1.png"
+            alt="Longbody Diagonal 1"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Longbody Diagonal 1</h3>
+          <p class="text-sm">View the Longbody Diagonal 1 typographic form.</p>
+        </a>
+
+        <!-- Card for longbody-diagonal-2.html -->
+        <a href="typographic_forms/long_bodies/longbody-diagonal-2.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/long_bodies/longbody-diagonal-2.png"
+            alt="Longbody Diagonal 2"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Longbody Diagonal 2</h3>
+          <p class="text-sm">View the Longbody Diagonal 2 typographic form.</p>
+        </a>
+
+        <!-- Card for longbody-diagonal-3.html -->
+        <a href="typographic_forms/long_bodies/longbody-diagonal-3.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/long_bodies/longbody-diagonal-3.png"
+            alt="Longbody Diagonal 3"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Longbody Diagonal 3</h3>
+          <p class="text-sm">View the Longbody Diagonal 3 typographic form.</p>
+        </a>
+
+        <!-- Card for longbody-diagonal-4.html -->
+        <a href="typographic_forms/long_bodies/longbody-diagonal-4.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/long_bodies/longbody-diagonal-4.png"
+            alt="Longbody Diagonal 4"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Longbody Diagonal 4</h3>
+          <p class="text-sm">View the Longbody Diagonal 4 typographic form.</p>
+        </a>
+
+        <!-- Card for longbody-diagonal-5.html -->
+        <a href="typographic_forms/long_bodies/longbody-diagonal-5.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/long_bodies/longbody-diagonal-5.png"
+            alt="Longbody Diagonal 5"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Longbody Diagonal 5</h3>
+          <p class="text-sm">View the Longbody Diagonal 5 typographic form.</p>
+        </a>
+
+        <!-- Card for longbody-diagonal-6.html -->
+        <a href="typographic_forms/long_bodies/longbody-diagonal-6.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/long_bodies/longbody-diagonal-6.png"
+            alt="Longbody Diagonal 6"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Longbody Diagonal 6</h3>
+          <p class="text-sm">View the Longbody Diagonal 6 typographic form.</p>
+        </a>
+
+        <!-- Card for longbody-horizontal-1.html -->
+        <a href="typographic_forms/long_bodies/longbody-horizontal-1.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/long_bodies/longbody-horizontal-1.png"
+            alt="Longbody Horizontal 1"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Longbody Horizontal 1</h3>
+          <p class="text-sm">View the Longbody Horizontal 1 typographic form.</p>
+        </a>
+
+        <!-- Card for longbody-horizontal-2.html -->
+        <a href="typographic_forms/long_bodies/longbody-horizontal-2.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/long_bodies/longbody-horizontal-2.png"
+            alt="Longbody Horizontal 2"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Longbody Horizontal 2</h3>
+          <p class="text-sm">View the Longbody Horizontal 2 typographic form.</p>
+        </a>
+
+        <!-- Card for longbody-horizontal-3.html -->
+        <a href="typographic_forms/long_bodies/longbody-horizontal-3.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/long_bodies/longbody-horizontal-3.png"
+            alt="Longbody Horizontal 3"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Longbody Horizontal 3</h3>
+          <p class="text-sm">View the Longbody Horizontal 3 typographic form.</p>
+        </a>
+
+        <!-- Card for longbody-vertical-1.html -->
+        <a href="typographic_forms/long_bodies/longbody-vertical-1.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/long_bodies/longbody-vertical-1.png"
+            alt="Longbody Vertical 1"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Longbody Vertical 1</h3>
+          <p class="text-sm">View the Longbody Vertical 1 typographic form.</p>
+        </a>
+
+        <!-- Card for longbody-vertical-2.html -->
+        <a href="typographic_forms/long_bodies/longbody-vertical-2.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/long_bodies/longbody-vertical-2.png"
+            alt="Longbody Vertical 2"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Longbody Vertical 2</h3>
+          <p class="text-sm">View the Longbody Vertical 2 typographic form.</p>
+        </a>
+
+        <!-- Card for longbody-vertical-3.html -->
+        <a href="typographic_forms/long_bodies/longbody-vertical-3.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/long_bodies/longbody-vertical-3.png"
+            alt="Longbody Vertical 3"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Longbody Vertical 3</h3>
+          <p class="text-sm">View the Longbody Vertical 3 typographic form.</p>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- SERIFS Section -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">Serifs</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+        <!-- Card for ascent-1.html -->
+        <a href="typographic_forms/serifs/ascent-1.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/ascent-1.png"
+            alt="Ascent 1"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Ascent 1</h3>
+          <p class="text-sm">View the Ascent 1 typographic form.</p>
+        </a>
+
+        <!-- Card for ascent-2.html -->
+        <a href="typographic_forms/serifs/ascent-2.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/ascent-2.png"
+            alt="Ascent 2"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Ascent 2</h3>
+          <p class="text-sm">View the Ascent 2 typographic form.</p>
+        </a>
+
+        <!-- Card for ascent-3.html -->
+        <a href="typographic_forms/serifs/ascent-3.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/ascent-3.png"
+            alt="Ascent 3"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Ascent 3</h3>
+          <p class="text-sm">View the Ascent 3 typographic form.</p>
+        </a>
+
+        <!-- Card for ascent-4.html -->
+        <a href="typographic_forms/serifs/ascent-4.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/ascent-4.png"
+            alt="Ascent 4"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Ascent 4</h3>
+          <p class="text-sm">View the Ascent 4 typographic form.</p>
+        </a>
+
+        <!-- Card for ascent-5.html -->
+        <a href="typographic_forms/serifs/ascent-5.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/ascent-5.png"
+            alt="Ascent 5"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Ascent 5</h3>
+          <p class="text-sm">View the Ascent 5 typographic form.</p>
+        </a>
+
+        <!-- Card for ascent-6.html -->
+        <a href="typographic_forms/serifs/ascent-6.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/ascent-6.png"
+            alt="Ascent 6"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Ascent 6</h3>
+          <p class="text-sm">View the Ascent 6 typographic form.</p>
+        </a>
+
+        <!-- Card for left-diagonal-ascent-1.html -->
+        <a href="typographic_forms/serifs/left-diagonal-ascent-1.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/left-diagonal-ascent-1.png"
+            alt="Left Diagonal Ascent 1"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Left Diagonal Ascent 1</h3>
+          <p class="text-sm">View the Left Diagonal Ascent 1 typographic form.</p>
+        </a>
+
+        <!-- Card for left-diagonal-ascent-2.html -->
+        <a href="typographic_forms/serifs/left-diagonal-ascent-2.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/left-diagonal-ascent-2.png"
+            alt="Left Diagonal Ascent 2"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Left Diagonal Ascent 2</h3>
+          <p class="text-sm">View the Left Diagonal Ascent 2 typographic form.</p>
+        </a>
+
+        <!-- Card for left-diagonal-ascent-3.html -->
+        <a href="typographic_forms/serifs/left-diagonal-ascent-3.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/left-diagonal-ascent-3.png"
+            alt="Left Diagonal Ascent 3"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Left Diagonal Ascent 3</h3>
+          <p class="text-sm">View the Left Diagonal Ascent 3 typographic form.</p>
+        </a>
+
+        <!-- Card for left-diagonal-ascent-4.html -->
+        <a href="typographic_forms/serifs/left-diagonal-ascent-4.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/left-diagonal-ascent-4.png"
+            alt="Left Diagonal Ascent 4"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Left Diagonal Ascent 4</h3>
+          <p class="text-sm">View the Left Diagonal Ascent 4 typographic form.</p>
+        </a>
+
+        <!-- Card for left-diagonal-ascent-5.html -->
+        <a href="typographic_forms/serifs/left-diagonal-ascent-5.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/left-diagonal-ascent-5.png"
+            alt="Left Diagonal Ascent 5"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Left Diagonal Ascent 5</h3>
+          <p class="text-sm">View the Left Diagonal Ascent 5 typographic form.</p>
+        </a>
+
+        <!-- Card for left-diagonal-ascent-6.html -->
+        <a href="typographic_forms/serifs/left-diagonal-ascent-6.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/left-diagonal-ascent-6.png"
+            alt="Left Diagonal Ascent 6"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Left Diagonal Ascent 6</h3>
+          <p class="text-sm">View the Left Diagonal Ascent 6 typographic form.</p>
+        </a>
+
+        <!-- Card for right-diagonal-ascent-1.html -->
+        <a href="typographic_forms/serifs/right-diagonal-ascent-1.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/right-diagonal-ascent-1.png"
+            alt="Right Diagonal Ascent 1"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Right Diagonal Ascent 1</h3>
+          <p class="text-sm">View the Right Diagonal Ascent 1 typographic form.</p>
+        </a>
+
+        <!-- Card for right-diagonal-ascent-2.html -->
+        <a href="typographic_forms/serifs/right-diagonal-ascent-2.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/right-diagonal-ascent-2.png"
+            alt="Right Diagonal Ascent 2"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Right Diagonal Ascent 2</h3>
+          <p class="text-sm">View the Right Diagonal Ascent 2 typographic form.</p>
+        </a>
+
+        <!-- Card for right-diagonal-ascent-3.html -->
+        <a href="typographic_forms/serifs/right-diagonal-ascent-3.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/right-diagonal-ascent-3.png"
+            alt="Right Diagonal Ascent 3"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Right Diagonal Ascent 3</h3>
+          <p class="text-sm">View the Right Diagonal Ascent 3 typographic form.</p>
+        </a>
+
+        <!-- Card for right-diagonal-ascent-4.html -->
+        <a href="typographic_forms/serifs/right-diagonal-ascent-4.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/right-diagonal-ascent-4.png"
+            alt="Right Diagonal Ascent 4"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Right Diagonal Ascent 4</h3>
+          <p class="text-sm">View the Right Diagonal Ascent 4 typographic form.</p>
+        </a>
+
+        <!-- Card for right-diagonal-ascent-5.html -->
+        <a href="typographic_forms/serifs/right-diagonal-ascent-5.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/right-diagonal-ascent-5.png"
+            alt="Right Diagonal Ascent 5"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Right Diagonal Ascent 5</h3>
+          <p class="text-sm">View the Right Diagonal Ascent 5 typographic form.</p>
+        </a>
+
+        <!-- Card for right-diagonal-ascent-6.html -->
+        <a href="typographic_forms/serifs/right-diagonal-ascent-6.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/right-diagonal-ascent-6.png"
+            alt="Right Diagonal Ascent 6"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Right Diagonal Ascent 6</h3>
+          <p class="text-sm">View the Right Diagonal Ascent 6 typographic form.</p>
+        </a>
+
+        <!-- Card for left-diagonal-descent-1.html -->
+        <a href="typographic_forms/serifs/left-diagonal-descent-1.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/left-diagonal-descent-1.png"
+            alt="Left Diagonal Descent 1"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Left Diagonal Descent 1</h3>
+          <p class="text-sm">View the Left Diagonal Descent 1 typographic form.</p>
+        </a>
+
+        <!-- Card for left-diagonal-descent-2.html -->
+        <a href="typographic_forms/serifs/left-diagonal-descent-2.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/left-diagonal-descent-2.png"
+            alt="Left Diagonal Descent 2"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Left Diagonal Descent 2</h3>
+          <p class="text-sm">View the Left Diagonal Descent 2 typographic form.</p>
+        </a>
+
+        <!-- Card for left-diagonal-descent-3.html -->
+        <a href="typographic_forms/serifs/left-diagonal-descent-3.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/left-diagonal-descent-3.png"
+            alt="Left Diagonal Descent 3"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Left Diagonal Descent 3</h3>
+          <p class="text-sm">View the Left Diagonal Descent 3 typographic form.</p>
+        </a>
+
+        <!-- Card for left-diagonal-descent-4.html -->
+        <a href="typographic_forms/serifs/left-diagonal-descent-4.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/left-diagonal-descent-4.png"
+            alt="Left Diagonal Descent 4"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Left Diagonal Descent 4</h3>
+          <p class="text-sm">View the Left Diagonal Descent 4 typographic form.</p>
+        </a>
+
+        <!-- Card for left-diagonal-descent-5.html -->
+        <a href="typographic_forms/serifs/left-diagonal-descent-5.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/left-diagonal-descent-5.png"
+            alt="Left Diagonal Descent 5"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Left Diagonal Descent 5</h3>
+          <p class="text-sm">View the Left Diagonal Descent 5 typographic form.</p>
+        </a>
+
+        <!-- Card for left-diagonal-descent-6.html -->
+        <a href="typographic_forms/serifs/left-diagonal-descent-6.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/left-diagonal-descent-6.png"
+            alt="Left Diagonal Descent 6"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Left Diagonal Descent 6</h3>
+          <p class="text-sm">View the Left Diagonal Descent 6 typographic form.</p>
+        </a>
+
+        <!-- Card for right-diagonal-descent-1.html -->
+        <a href="typographic_forms/serifs/right-diagonal-descent-1.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/right-diagonal-descent-1.png"
+            alt="Right Diagonal Descent 1"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Right Diagonal Descent 1</h3>
+          <p class="text-sm">View the Right Diagonal Descent 1 typographic form.</p>
+        </a>
+
+        <!-- Card for right-diagonal-descent-2.html -->
+        <a href="typographic_forms/serifs/right-diagonal-descent-2.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/right-diagonal-descent-2.png"
+            alt="Right Diagonal Descent 2"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Right Diagonal Descent 2</h3>
+          <p class="text-sm">View the Right Diagonal Descent 2 typographic form.</p>
+        </a>
+
+        <!-- Card for right-diagonal-descent-3.html -->
+        <a href="typographic_forms/serifs/right-diagonal-descent-3.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/right-diagonal-descent-3.png"
+            alt="Right Diagonal Descent 3"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Right Diagonal Descent 3</h3>
+          <p class="text-sm">View the Right Diagonal Descent 3 typographic form.</p>
+        </a>
+
+        <!-- Card for right-diagonal-descent-4.html -->
+        <a href="typographic_forms/serifs/right-diagonal-descent-4.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/right-diagonal-descent-4.png"
+            alt="Right Diagonal Descent 4"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Right Diagonal Descent 4</h3>
+          <p class="text-sm">View the Right Diagonal Descent 4 typographic form.</p>
+        </a>
+
+        <!-- Card for right-diagonal-descent-5.html -->
+        <a href="typographic_forms/serifs/right-diagonal-descent-5.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/right-diagonal-descent-5.png"
+            alt="Right Diagonal Descent 5"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Right Diagonal Descent 5</h3>
+          <p class="text-sm">View the Right Diagonal Descent 5 typographic form.</p>
+        </a>
+
+        <!-- Card for right-diagonal-descent-6.html -->
+        <a href="typographic_forms/serifs/right-diagonal-descent-6.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/right-diagonal-descent-6.png"
+            alt="Right Diagonal Descent 6"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Right Diagonal Descent 6</h3>
+          <p class="text-sm">View the Right Diagonal Descent 6 typographic form.</p>
+        </a>
+
+        <!-- Card for descent-1.html -->
+        <a href="typographic_forms/serifs/descent-1.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/descent-1.png"
+            alt="Descent 1"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Descent 1</h3>
+          <p class="text-sm">View the Descent 1 typographic form.</p>
+        </a>
+
+        <!-- Card for descent-2.html -->
+        <a href="typographic_forms/serifs/descent-2.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/descent-2.png"
+            alt="Descent 2"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Descent 2</h3>
+          <p class="text-sm">View the Descent 2 typographic form.</p>
+        </a>
+
+        <!-- Card for descent-3.html -->
+        <a href="typographic_forms/serifs/descent-3.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/descent-3.png"
+            alt="Descent 3"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Descent 3</h3>
+          <p class="text-sm">View the Descent 3 typographic form.</p>
+        </a>
+
+        <!-- Card for descent-4.html -->
+        <a href="typographic_forms/serifs/descent-4.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/descent-4.png"
+            alt="Descent 4"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Descent 4</h3>
+          <p class="text-sm">View the Descent 4 typographic form.</p>
+        </a>
+
+        <!-- Card for descent-5.html -->
+        <a href="typographic_forms/serifs/descent-5.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/descent-5.png"
+            alt="Descent 5"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Descent 5</h3>
+          <p class="text-sm">View the Descent 5 typographic form.</p>
+        </a>
+
+        <!-- Card for descent-6.html -->
+        <a href="typographic_forms/serifs/descent-6.html"
+           class="card p-4 rounded-lg hover:shadow-lg transition-all duration-200">
+          <img
+            src="assets/typographic_forms/serifs/descent-6.png"
+            alt="Descent 6"
+            class="w-full h-40 object-cover mb-4"
+          />
+          <h3 class="text-xl font-medium mb-2">Descent 6</h3>
+          <p class="text-sm">View the Descent 6 typographic form.</p>
+        </a>
+
+      </div>
+    </section>
+  <script>
+  document
+    .getElementById('searchInput')
+    .addEventListener('input', function (e) {
+      const query = e.target.value.toLowerCase();
+      const cards = document.querySelectorAll('main a.card');
+
+      cards.forEach((card) => {
+        const title = card
+          .querySelector('h3')
+          .innerText.toLowerCase();
+        if (title.includes(query)) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+</script>
+
+
+  </main>
 </body>
-
 </html>
