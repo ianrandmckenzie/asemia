@@ -1,0 +1,88 @@
+.
+├── assets
+│   ├── foil_v2.png
+│   └── foil.png
+├── cache.tailwind.js
+├── index.html
+└── typographic_forms
+    ├── short_bodies
+    │   ├── shortbody-horizontal-1.html
+    │   ├── shortbody-horizontal-2.html
+    │   ├── shortbody-horizontal-3.html
+    │   ├── shortbody-horizontal-4.html
+    │   ├── shortbody-horizontal-5.html
+    │   ├── shortbody-horizontal-6.html
+    │   ├── shortbody-vertical-1.html
+    │   ├── shortbody-vertical-2.html
+    │   ├── shortbody-vertical-3.html
+    │   ├── shortbody-vertical-4.html
+    │   ├── shortbody-vertical-5.html
+    │   ├── shortbody-vertical-6.html
+    │   ├── shortbody-diagonal-ltr-1.html
+    │   ├── shortbody-diagonal-ltr-2.html
+    │   ├── shortbody-diagonal-ltr-3.html
+    │   ├── shortbody-diagonal-ltr-4.html
+    │   ├── shortbody-diagonal-ltr-5.html
+    │   ├── shortbody-diagonal-ltr-6.html
+    │   ├── shortbody-diagonal-rtl-1.html
+    │   ├── shortbody-diagonal-rtl-2.html
+    │   ├── shortbody-diagonal-rtl-3.html
+    │   ├── shortbody-diagonal-rtl-4.html
+    │   ├── shortbody-diagonal-rtl-5.html
+    │   ├── shortbody-diagonal-rtl-6.html
+    │   ├── shortbody-vertical-1.html
+    │   ├── shortbody-vertical-2.html
+    │   ├── shortbody-vertical-3.html
+    │   ├── shortbody-vertical-4.html
+    │   ├── shortbody-vertical-5.html
+    │   ├── shortbody-vertical-6.html
+    ├── long_bodies
+    │   ├── longbody-diagonal-1.html
+    │   ├── longbody-diagonal-2.html
+    │   ├── longbody-diagonal-3.html
+    │   ├── longbody-diagonal-4.html
+    │   ├── longbody-diagonal-5.html
+    │   ├── longbody-diagonal-6.html
+    │   ├── longbody-horizontal-1.html
+    │   ├── longbody-horizontal-2.html
+    │   ├── longbody-horizontal-3.html
+    │   ├── longbody-vertical-1.html
+    │   ├── longbody-vertical-2.html
+    │   └── longbody-vertical-3.html
+    └── serifs
+        ├── ascent-1.html
+        ├── ascent-2.html
+        ├── ascent-3.html
+        ├── ascent-4.html
+        ├── ascent-5.html
+        ├── ascent-6.html
+        ├── left-diagonal-ascent-1.html
+        ├── left-diagonal-ascent-2.html
+        ├── left-diagonal-ascent-3.html
+        ├── left-diagonal-ascent-4.html
+        ├── left-diagonal-ascent-5.html
+        ├── left-diagonal-ascent-6.html
+        ├── right-diagonal-ascent-1.html
+        ├── right-diagonal-ascent-2.html
+        ├── right-diagonal-ascent-3.html
+        ├── right-diagonal-ascent-4.html
+        ├── right-diagonal-ascent-5.html
+        ├── right-diagonal-ascent-6.html
+        ├── left-diagonal-descent-1.html
+        ├── left-diagonal-descent-2.html
+        ├── left-diagonal-descent-3.html
+        ├── left-diagonal-descent-4.html
+        ├── left-diagonal-descent-5.html
+        ├── left-diagonal-descent-6.html
+        ├── right-diagonal-descent-1.html
+        ├── right-diagonal-descent-2.html
+        ├── right-diagonal-descent-3.html
+        ├── right-diagonal-descent-4.html
+        ├── right-diagonal-descent-5.html
+        ├── right-diagonal-descent-6.html
+        ├── descent-1.html
+        ├── descent-2.html
+        ├── descent-3.html
+        ├── descent-4.html
+        ├── descent-5.html
+        └── descent-6.html
