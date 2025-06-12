@@ -6,6 +6,93 @@
   <title>Typographic Forms Navigator</title>
   <!-- <script src="https://cdn.tailwindcss.com"></script> -->
    <script src="./cache.tailwind.js"></script>
+
+  <!-- Google Fonts for Raleway and Grenze Gotisch -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@100..900&family=Raleway:wght@100..900&family=Borel&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'media',
+      theme: {
+        extend: {
+          colors: {
+            primary: "#4b5d48",
+            secondary: "#514b3f",
+            tertiary: "#7b7774",
+            danger: "#ef4444",
+            "code-400": "#fefcf9",
+            "code-600": "#3c455b",
+            pewter: {
+              50: "#f6f6f5",
+              100: "#eeedec",
+              200: "#d4d2cf",
+              300: "#b9b7b2",
+              400: "#858179",
+              500: "#514b3f",
+              600: "#494439",
+              700: "#3d382f",
+              800: "#312d26",
+              900: "#28251f",
+            },
+            polecat: {
+              50: "#f8f8f8",
+              100: "#f2f1f1",
+              200: "#dedddc",
+              300: "#cac9c7",
+              400: "#a3a09e",
+              500: "#7b7774",
+              600: "#6f6b68",
+              700: "#5c5957",
+              800: "#4a4746",
+              900: "#3c3a39",
+            },
+            panther: {
+              50: "#f4f4f4",
+              100: "#e9e9e9",
+              200: "#c9c9c9",
+              300: "#a8a8a8",
+              400: "#676667",
+              500: "#262526",
+              600: "#222122",
+              700: "#1d1c1d",
+              800: "#171617",
+              900: "#131213",
+            },
+            pearl: {
+              50: "#fefdfd",
+              100: "#fdfcfb",
+              200: "#f9f7f5",
+              300: "#f5f3ef",
+              400: "#eee9e2",
+              500: "#e7e0d6",
+              600: "#d0cac1",
+              700: "#ada8a1",
+              800: "#8b8680",
+              900: "#716e69",
+            },
+            pine: {
+              50: "#f6f7f6",
+              100: "#edefed",
+              200: "#d2d7d1",
+              300: "#b7beb6",
+              400: "#818e7f",
+              500: "#4b5d48",
+              600: "#445441",
+              700: "#384636",
+              800: "#2d382b",
+              900: "#252e23",
+            },
+          },
+          fontFamily: {
+            sans: ["Raleway", "sans-serif"],
+            serif: ["Grenze Gotisch", "serif"],
+            cursive: ["Borel", "cursive"]
+          },
+        },
+      },
+    };
+  </script>
   <style>
     /* Enforce a strictly black & white theme */
     body {
@@ -27,18 +114,18 @@
     }
   </style>
 </head>
-<body class="bg-white text-black">
+<body class="bg-pearl-100 text-panther">
 
   <!-- Header -->
   <header class="py-8 text-center">
-    <h1 class="text-4xl font-bold">Asemic Typeforms Constructor</h1>
-    <nav class="bg-white border-b border-sky-200 px-4 py-2">
+    <h1 class="font-serif text-5xl font-bold">Asemic Typeforms Constructor</h1>
+    <nav class="bg-pearl-100 border-b border-sky-200 px-4 py-2">
       <div class="max-w-7xl mx-auto">
         <input
           type="text"
           id="searchInput"
           placeholder="Search typographic forms..."
-          class="border border-sky-200 rounded px-3 py-1 w-full md:w-1/3"
+          class="border border-sky-200 bg-pearl-200 rounded px-3 py-1 w-full md:w-1/3"
         />
       </div>
     </nav>
@@ -48,14 +135,14 @@
   <main class="container mx-auto px-4 pb-8">
     <div class="h-full p-4">
         <!-- The arbitrary values set here are how we determine the letterform size -->
-        <div class="h-[18rem] w-[18rem] overflow-hidden relative rounded-full border border-sky-200 mx-auto">
+        <div class="h-[12rem] w-[12rem] overflow-hidden relative rounded-full border border-sky-200 mx-auto">
           <div class="p-12 h-[150%] w-[150%] absolute -top-[25%] -left-[25%] overflow-hidden bg-foil grid grid-cols-4 grid-rows-4  gap-0">
-              <div class="relative h-full w-full bg-white"></div>
-              <div class="relative h-full w-full bg-white"></div>
-              <div class="relative h-full w-full bg-white"></div>
-              <div class="relative h-full w-full bg-white"></div>
+              <div class="relative h-full w-full bg-sky-50"></div>
+              <div class="relative h-full w-full bg-sky-50"></div>
+              <div class="relative h-full w-full bg-sky-50"></div>
+              <div class="relative h-full w-full bg-sky-50"></div>
 
-              <div class="relative h-full w-full bg-white rounded-br-[25%]">
+              <div class="relative h-full w-full bg-sky-50 rounded-br-[25%]">
                   <div class="w-[4%] h-[90%] absolute bottom-[10%] right-0 bg-foil z-20"></div>
               </div>
               <div class="relative w-full h-full">
@@ -63,27 +150,27 @@
                   <div class="bg-foil w-full h-full z-10 rounded-bl-[25%] overflow-hidden relative">
                       <div class="grid grid-cols-2 grid-rows-2 absolute -inset-[37.5%] -rotate-45 h-[175%] w-[175%] content-center">
                           <div class=" w-[101%] h-[101%] absolute top-0 left-0"></div>
-                          <div class="bg-white w-[92%] h-[101%] z-10 rounded-tr-[100%]">
+                          <div class="bg-sky-50 w-[92%] h-[101%] z-10 rounded-tr-[100%]">
                           </div>
                           <div class=" w-[101%] h-[101%] absolute top-0 right-0"></div>
-                          <div class="bg-white w-[92%] h-[101%] z-10 rounded-tl-[25%]">
+                          <div class="bg-sky-50 w-[92%] h-[101%] z-10 rounded-tl-[25%]">
                           </div>
 
                           <div class=" w-[101%] h-[101%] absolute bottom-0 left-0"></div>
-                          <div class="bg-white w-[92%] h-[101%] z-10">
+                          <div class="bg-sky-50 w-[92%] h-[101%] z-10">
                           </div>
                           <div class=" w-[101%] h-[101%] absolute bottom-0 right-0"></div>
-                          <div class="bg-white w-[92%] h-[101%] z-10">
+                          <div class="bg-sky-50 w-[92%] h-[101%] z-10">
                           </div>
                       </div>
                   </div>
                   <div class="w-[4%] h-[81%] absolute bottom-[10%] left-0 bg-foil z-20"></div>
               </div>
-              <div class="relative h-full w-full bg-white"></div>
-              <div class="relative h-full w-full bg-white"></div>
+              <div class="relative h-full w-full bg-sky-50"></div>
+              <div class="relative h-full w-full bg-sky-50"></div>
 
-              <div class="relative h-full w-full bg-white"></div>
-              <div class="relative h-full w-full bg-white">
+              <div class="relative h-full w-full bg-sky-50"></div>
+              <div class="relative h-full w-full bg-sky-50">
                   <div class="w-[7%] h-[20%] -rotate-45 absolute -top-[7%] -right-[1.6%] bg-foil"></div>
               </div>
               <div class="relative w-full h-full">
@@ -91,37 +178,37 @@
                   <div class="bg-foil w-full h-full z-10 rounded-tr-[25%] overflow-hidden relative">
                       <div class="grid grid-cols-2 grid-rows-2 absolute -inset-[37.5%] -rotate-45 h-[175%] w-[175%] content-center">
                           <div class=" w-[101%] h-[101%] absolute top-0 left-0"></div>
-                          <div class="bg-white w-[92%] h-[101%] z-10">
+                          <div class="bg-sky-50 w-[92%] h-[101%] z-10">
                           </div>
                           <div class=" w-[101%] h-[101%] absolute top-0 right-0"></div>
-                          <div class="bg-white w-[92%] h-[101%] z-10">
+                          <div class="bg-sky-50 w-[92%] h-[101%] z-10">
                           </div>
 
                           <div class=" w-[101%] h-[101%] absolute bottom-0 left-0"></div>
-                          <div class="bg-white w-[92%] h-[101%] z-10 rounded-br-[25%]">
+                          <div class="bg-sky-50 w-[92%] h-[101%] z-10 rounded-br-[25%]">
                           </div>
                           <div class=" w-[101%] h-[101%] absolute bottom-0 right-0"></div>
-                          <div class="bg-white w-[92%] h-[101%] z-10 rounded-bl-[100%]">
+                          <div class="bg-sky-50 w-[92%] h-[101%] z-10 rounded-bl-[100%]">
                           </div>
                       </div>
                   </div>
                   <div class="w-[4%] h-[90%] absolute bottom-[10%] right-0 bg-foil z-20"></div>
               </div>
-              <div class="relative h-full w-full bg-white rounded-tl-[25%]">
+              <div class="relative h-full w-full bg-sky-50 rounded-tl-[25%]">
                   <div class="w-[4%] h-full absolute bottom-0 left-0 bg-foil"></div>
               </div>
 
-              <div class="relative h-full w-full bg-white"></div>
-              <div class="relative h-full w-full bg-white"></div>
-              <div class="relative h-full w-full bg-white"></div>
-              <div class="relative h-full w-full bg-white"></div>
+              <div class="relative h-full w-full bg-sky-50"></div>
+              <div class="relative h-full w-full bg-sky-50"></div>
+              <div class="relative h-full w-full bg-sky-50"></div>
+              <div class="relative h-full w-full bg-sky-50"></div>
           </div>
         </div>
     </div>
 
     <!-- SHORT BODIES Section -->
     <section class="mb-8">
-      <h2 class="text-2xl font-semibold mb-4">Short Bodies</h2>
+      <h2 class="font-serif text-3xl font-semibold mb-4">Short Bodies</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
         <!-- Card for shortbody-horizontal-1.html -->
@@ -337,7 +424,7 @@
 
     <!-- LONG BODIES Section -->
     <section class="mb-8">
-      <h2 class="text-2xl font-semibold mb-4">Long Bodies</h2>
+      <h2 class="font-serif text-3xl font-semibold mb-4">Long Bodies</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
         <!-- Card for longbody-diagonal-1.html -->
@@ -441,7 +528,7 @@
 
     <!-- SERIFS Section -->
     <section class="mb-8">
-      <h2 class="text-2xl font-semibold mb-4">Serifs</h2>
+      <h2 class="font-serif text-3xl font-semibold mb-4">Serifs</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
         <!-- Card for ascent-1.html -->
