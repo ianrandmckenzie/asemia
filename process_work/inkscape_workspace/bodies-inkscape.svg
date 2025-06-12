@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="210mm"
+   viewBox="0 0 210 210"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="bodies-inkscape.svg"
+   inkscape:version="1.4 (e7c3feb1, 2024-10-09)"
+   inkscape:export-filename="../Documents/asemia/typographic_forms/serifs/ascent.svg"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.23425149"
+     inkscape:cx="-2608.3079"
+     inkscape:cy="1188.8932"
+     inkscape:window-width="1472"
+     inkscape:window-height="896"
+     inkscape:window-x="0"
+     inkscape:window-y="32"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1">
+    <inkscape:page
+       x="0"
+       y="0"
+       width="210"
+       height="210"
+       id="page9"
+       margin="0"
+       bleed="0" />
+    <inkscape:page
+       x="-5.7074351"
+       y="242.56599"
+       width="210"
+       height="210"
+       id="page10"
+       margin="0"
+       bleed="0" />
+    <inkscape:page
+       x="-569.4278"
+       y="21.23126"
+       width="210"
+       height="420"
+       id="page19"
+       margin="0"
+       bleed="0"
+       inkscape:export-filename="../Documents/asemia/typographic_forms/45_deg.svg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <inkscape:page
+       x="-282.81812"
+       y="20.215141"
+       width="210"
+       height="420"
+       id="page26"
+       margin="0"
+       bleed="0"
+       inkscape:export-filename="../22_5_deg.svg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <inkscape:page
+       x="-1041.7283"
+       y="27.358522"
+       width="420"
+       height="420"
+       id="page1"
+       margin="0"
+       bleed="0" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       d="m 94.292567,242.566 v 210 h 10.000003 v -210 z"
+       style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:1.5282;enable-background:accumulate;stop-color:#000000"
+       id="path9-3" />
+    <path
+       d="M 210.0001,7.0708862 V 0 h -7.0714 L 0,202.9287 v 7.0714 h 7.0708862 z"
+       style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:1.9157;enable-background:accumulate;stop-color:#000000"
+       id="path9" />
+    <path
+       d="m -359.42767,33.597432 v -12.36617 h -6.76135 L -569.42778,428.8653 v 12.36617 h 6.76135 z"
+       style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:2.50024;enable-background:accumulate;stop-color:#000000"
+       id="path10" />
+    <path
+       d="M -182.81813,20.214944 V 440.21515 h 10 V 20.214944 Z"
+       style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:2.1612;enable-background:accumulate;stop-color:#000000"
+       id="path9-2" />
+    <path
+       d="m -621.73311,34.434591 v -7.070887 h -7.0714 L -1041.7235,440.28269 v 7.07088 h 7.0714 z"
+       style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:2.64692;enable-background:accumulate;stop-color:#000000"
+       id="path1" />
+  </g>
+</svg>
