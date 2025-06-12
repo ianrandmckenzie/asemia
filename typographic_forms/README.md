@@ -1,6 +1,8 @@
 # Typographic Forms
 
-This is mostly just a checklist
+This is mostly just a checklist.
+
+Sidenote: rules.json only need to exist with bodies and joins?
 
 ## Joins
 
