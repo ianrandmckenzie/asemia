@@ -8,7 +8,13 @@
     background-repeat: no-repeat;
 }
 
-.bg-marble {
+.bg-marble-50 {
+    background-image: url(../assets/marble.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.bg-marble-100 {
     background-image: url(../assets/marble2.png);
     background-size: cover;
     background-repeat: no-repeat;
