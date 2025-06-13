@@ -1,0 +1,15 @@
+.card {
+  background-color: #fff;
+}
+
+.bg-foil {
+    background-image: url(../assets/foil.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.bg-marble {
+    background-image: url(../assets/marble2.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}

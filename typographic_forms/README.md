@@ -22,3 +22,5 @@ Sidenote: rules.json only need to exist with bodies and joins?
 ## Joins
 
 ## Serifs
+
+Serifs are joins that are paired together and reduced in size at the termination of a body. 1x1 joins used as serifs are reduced to 25% width. 1x2 joins used as serifs are reduced to 50% width.
