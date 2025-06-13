@@ -28,7 +28,7 @@
      inkscape:document-units="mm"
      inkscape:zoom="0.3941896"
      inkscape:cx="381.79596"
-     inkscape:cy="1594.4104"
+     inkscape:cy="1411.7572"
      inkscape:window-width="1472"
      inkscape:window-height="896"
      inkscape:window-x="0"
@@ -50,7 +50,10 @@
        height="210"
        id="page10"
        margin="0"
-       bleed="0" />
+       bleed="0"
+       inkscape:export-filename="/Users/exampleuser/Desktop/Page 2.svg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
     <inkscape:page
        x="249.2027"
        y="245.06656"

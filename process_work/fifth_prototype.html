@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <title>testing . . .</title>
     <script src="../../cache.tailwind.js"></script>
+    <link rel="stylesheet" href="../index.css">
 </head>
 
 <body class="bg-slate-200">
@@ -21,23 +22,52 @@
 
                     <div class="relative h-full w-full bg-white"></div>
 
-                    <!----><div class="relative h-full w-full bg-white">
-                      <img src="../typographic_forms/joins/0_deg.svg" class="absolute right-[1.25%] w-[25%] top-0 rotate-180 z-10">
-                      <img src="../typographic_forms/joins/0_deg.svg" class="absolute -right-[26.25%] w-[25%] top-0 rotate-180 scale-x-[-1] z-10">
-                      <img src="../typographic_forms/short_bodies/0_deg.svg" class="absolute -right-[50%] top-0 z-10">
-                      <img src="../typographic_forms/joins/135_deg.svg" class="absolute -bottom-[7%] -right-[69%] rotate-45 z-10">
+                    <div class="relative h-full w-full bg-white">
+                      <img src="../typographic_forms/joins/0_deg.svg" class="absolute right-[2.75%] w-[25%] top-0 rotate-180 z-10">
+                      <img src="../typographic_forms/joins/0_deg.svg" class="absolute -right-[27.75%] w-[25%] top-0 rotate-180 scale-x-[-1] z-10">
+                       <!-- <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="h-[100%] absolute -right-[50%] top-0 z-10">
+                        <line style="stroke: black;stroke-width: 5.75;" x1="50" y1="0" x2="50" y2="100" />
+                      </svg>
+                      <svg viewBox="0 0 100 102" xmlns="http://www.w3.org/2000/svg" class="h-[102%] absolute -right-[50%] top-0 z-10">
+                        <defs>
+                          <mask id="vertical-mask">
+                            <line x1="50" y1="0" x2="50" y2="102" stroke="white" stroke-width="5.75" />
+                          </mask>
+                        </defs>
+                        <image href="../assets/foil.png" x="0" y="0" width="200" height="102" mask="url(#vertical-mask)" />
+                      </svg> -->
+                      <svg viewBox="0 0 100 102" xmlns="http://www.w3.org/2000/svg" class="h-[102%] absolute -right-[50%] -top-[0%] z-10">
+                        <defs>
+                          <pattern id="bg-pattern" patternUnits="userSpaceOnUse" width="300" height="200">
+                            <image href="../assets/foil.png" width="300" height="200" />
+                          </pattern>
+                        </defs>
+                        <line x1="50" y1="0" x2="50" y2="102" stroke="url(#bg-pattern)" stroke-width="6" />
+                      </svg>
+
+                      <img src="../typographic_forms/joins/135_deg.svg" class="absolute -bottom-[32.5%] -right-[69.75%] h-[100%] rotate-45 z-10">
                     </div>
-                    <!----><div class="relative h-full w-full bg-white"></div>
-
                     <div class="relative h-full w-full bg-white"></div>
 
                     <div class="relative h-full w-full bg-white"></div>
 
-                    <!----><div class="relative h-full w-full bg-white"></div>
-                    <!----><div class="relative h-full w-full bg-white">
-                      <img src="../typographic_forms/short_bodies/45_deg.svg" class="absolute -left-[2.4%] -top-[1%] rotate-90">
-                      <img src="../typographic_forms/joins/45_deg.svg" class="absolute right-[1.25%] bottom-0 w-[25%] z-10 scale-x-[-1]">
-                      <img src="../typographic_forms/joins/135_deg.svg" class="absolute -right-[23.25%] w-[50%] -bottom-[0%] z-10">
+                    <div class="relative h-full w-full bg-white"></div>
+
+                    <div class="relative h-full w-full bg-white"></div>
+                    <div class="relative h-full w-full bg-white">
+                      <img src="../typographic_forms/joins/45_deg.svg" class="absolute right-[5.5%] bottom-0 w-[25%] z-10 scale-x-[-1]">
+                      <img src="../typographic_forms/joins/135_deg.svg" class="absolute -right-[27%] w-[50%] -bottom-0 z-10">
+                      <!-- <svg viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" class="absolute h-[111.5%] z-10 -top-[6.5%] left-[2%] diagonal-line rotate-90">
+                        <line style="stroke: black;stroke-width: 6;" x1="110" y1="0" x2="0" y2="110" />
+                      </svg> -->
+                      <svg viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" class="absolute h-[111.5%] z-10 -top-[6.5%] left-[2%] diagonal-line rotate-90">
+                        <defs>
+                          <mask id="line-mask">
+                            <line stroke="white" stroke-width="6" x1="110" y1="0" x2="0" y2="110" />
+                          </mask>
+                        </defs>
+                        <image href="../assets/foil.png" x="0" y="0" width="170" height="110" mask="url(#line-mask)" />
+                      </svg>
                     </div>
 
                     <div class="relative h-full w-full bg-white"></div>
