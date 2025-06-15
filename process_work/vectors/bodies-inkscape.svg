@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="210mm"
+   width="279.89001mm"
    height="210mm"
-   viewBox="0 0 210 210"
+   viewBox="0 0 279.89001 210"
    version="1.1"
    id="svg1"
    sodipodi:docname="bodies-inkscape.svg"
@@ -26,9 +26,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="0.24839114"
-     inkscape:cx="-1731.1406"
-     inkscape:cy="622.00286"
+     inkscape:zoom="0.066215576"
+     inkscape:cx="-755.10934"
+     inkscape:cy="521.02545"
      inkscape:window-width="1472"
      inkscape:window-height="920"
      inkscape:window-x="0"
@@ -38,7 +38,7 @@
     <inkscape:page
        x="0"
        y="0"
-       width="210"
+       width="279.89001"
        height="210"
        id="page9"
        margin="0"
@@ -46,7 +46,7 @@
     <inkscape:page
        x="-5.7074351"
        y="242.56599"
-       width="210"
+       width="114.89999"
        height="210"
        id="page10"
        margin="0"
@@ -54,7 +54,7 @@
     <inkscape:page
        x="-569.4278"
        y="21.23126"
-       width="210"
+       width="226.37999"
        height="420"
        id="page19"
        margin="0"
@@ -65,7 +65,7 @@
     <inkscape:page
        x="-282.81812"
        y="20.215141"
-       width="210"
+       width="114.89999"
        height="420"
        id="page26"
        margin="0"
@@ -74,9 +74,9 @@
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
     <inkscape:page
-       x="-1254.6221"
-       y="-695.74609"
-       width="420"
+       x="-1086.6029"
+       y="30.937037"
+       width="489.89999"
        height="420"
        id="page1"
        margin="0"
@@ -89,36 +89,36 @@
      inkscape:groupmode="layer"
      id="layer1">
     <path
-       d="m 94.292567,242.566 v 210 h 10.000003 v -210 z"
+       d="m 46.742559,242.566 v 210 h 10.000003 v -210 z"
        style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:1.5282;enable-background:accumulate;stop-color:#000000"
        id="path9-3"
        inkscape:export-filename="/Users/exampleuser/Documents/path9-3.svg"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
     <path
-       d="M -182.81813,20.214944 V 440.21515 h 10 V 20.214944 Z"
+       d="M -230.36813,20.214945 V 440.21515 h 10 V 20.214945 Z"
        style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:2.1612;enable-background:accumulate;stop-color:#000000"
        id="path9-2"
        inkscape:export-filename="/Users/exampleuser/Desktop/path9-2.svg"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
     <path
-       d="M 209.99907,13.823446 V 0.00103353 h -0.31885 L 0.00103353,209.67867 v 0.3204 H 13.824996 Z"
-       style="fill:#000000;stroke:#000000;stroke-width:0.00192851;fill-opacity:1"
+       d="M 279.88906,13.823417 V 0.00100411 h -0.31885 L 69.891026,209.67864 v 0.3204 h 13.823962 z"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.00192851"
        id="path6"
        inkscape:export-filename="/Users/exampleuser/Documents/path6.svg"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
     <path
-       d="m -834.62192,-681.61679 v -14.12937 h -0.0114 l -419.98881,419.98831 v 0.0119 h 14.1283 z"
-       style="fill:#000000;stroke:#000000;stroke-width:0.01;fill-opacity:1"
+       d="m -596.70794,45.061203 v -14.12937 h -0.0114 L -1016.7081,450.92015 v 0.0119 h 14.1283 z"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.01"
        id="path12"
-       inkscape:export-filename="/Users/exampleuser/Documents/path12.svg"
+       inkscape:export-filename="/Users/exampleuser/Desktop/path12.svg"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
     <path
-       d="M -359.42767,47.354215 V 21.231262 h -0.004 L -533.40207,441.23147 h 10.82467 z"
-       style="fill:#000000;stroke:#000000;stroke-width:0.001;fill-opacity:1"
+       d="M -343.04832,47.353515 V 21.230562 h -0.004 l -173.9704,420.000208 h 10.82467 z"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.001"
        id="path19"
        inkscape:export-filename="/Users/exampleuser/Documents/path19.svg"
        inkscape:export-xdpi="96"
