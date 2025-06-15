@@ -26,13 +26,13 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="0.23425149"
-     inkscape:cx="-2608.3079"
-     inkscape:cy="1188.8932"
+     inkscape:zoom="0.24839114"
+     inkscape:cx="-1731.1406"
+     inkscape:cy="622.00286"
      inkscape:window-width="1472"
-     inkscape:window-height="896"
+     inkscape:window-height="920"
      inkscape:window-x="0"
-     inkscape:window-y="32"
+     inkscape:window-y="36"
      inkscape:window-maximized="0"
      inkscape:current-layer="layer1">
     <inkscape:page
@@ -74,8 +74,8 @@
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
     <inkscape:page
-       x="-1041.7283"
-       y="27.358522"
+       x="-1254.6221"
+       y="-695.74609"
        width="420"
        height="420"
        id="page1"
@@ -91,22 +91,37 @@
     <path
        d="m 94.292567,242.566 v 210 h 10.000003 v -210 z"
        style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:1.5282;enable-background:accumulate;stop-color:#000000"
-       id="path9-3" />
-    <path
-       d="M 210.0001,7.0708862 V 0 h -7.0714 L 0,202.9287 v 7.0714 h 7.0708862 z"
-       style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:1.9157;enable-background:accumulate;stop-color:#000000"
-       id="path9" />
-    <path
-       d="m -359.42767,33.597432 v -12.36617 h -6.76135 L -569.42778,428.8653 v 12.36617 h 6.76135 z"
-       style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:2.50024;enable-background:accumulate;stop-color:#000000"
-       id="path10" />
+       id="path9-3"
+       inkscape:export-filename="/Users/exampleuser/Documents/path9-3.svg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
     <path
        d="M -182.81813,20.214944 V 440.21515 h 10 V 20.214944 Z"
        style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:2.1612;enable-background:accumulate;stop-color:#000000"
-       id="path9-2" />
+       id="path9-2"
+       inkscape:export-filename="/Users/exampleuser/Desktop/path9-2.svg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
     <path
-       d="m -621.73311,34.434591 v -7.070887 h -7.0714 L -1041.7235,440.28269 v 7.07088 h 7.0714 z"
-       style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:2.64692;enable-background:accumulate;stop-color:#000000"
-       id="path1" />
+       d="M 209.99907,13.823446 V 0.00103353 h -0.31885 L 0.00103353,209.67867 v 0.3204 H 13.824996 Z"
+       style="fill:#000000;stroke:#000000;stroke-width:0.00192851;fill-opacity:1"
+       id="path6"
+       inkscape:export-filename="/Users/exampleuser/Documents/path6.svg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       d="m -834.62192,-681.61679 v -14.12937 h -0.0114 l -419.98881,419.98831 v 0.0119 h 14.1283 z"
+       style="fill:#000000;stroke:#000000;stroke-width:0.01;fill-opacity:1"
+       id="path12"
+       inkscape:export-filename="/Users/exampleuser/Documents/path12.svg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       d="M -359.42767,47.354215 V 21.231262 h -0.004 L -533.40207,441.23147 h 10.82467 z"
+       style="fill:#000000;stroke:#000000;stroke-width:0.001;fill-opacity:1"
+       id="path19"
+       inkscape:export-filename="/Users/exampleuser/Documents/path19.svg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
   </g>
 </svg>
