@@ -8,3 +8,7 @@
 - If this overlapping grid system is utilized, this means the terminating bodies are centered to the cell within their dedicated grid.
 - Joins are not attachments for bodies, they are instead the bodies themselves, where applicable
 - Joins are centered to the cell, going to the very edge where they terminate
+
+## TLDR
+- SVGs need to be redone
+- HTML needs 2 grids, offset by 50% of the cell size.
