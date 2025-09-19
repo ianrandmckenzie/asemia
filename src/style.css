@@ -58,14 +58,3 @@
 .shape-selected {
   box-shadow: 0 0 0 2px #3b82f6;
 }
-
-/* Multi-cell shape styling */
-.multi-cell-shape {
-  z-index: 15;
-}
-
-/* Overflow shapes styling */
-.overflow-shape {
-  overflow: visible;
-  z-index: 16;
-}
