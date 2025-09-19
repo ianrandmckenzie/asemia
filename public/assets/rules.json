@@ -1,6 +1,7 @@
 {
   "shapes": {
     "bodies": {
+      "grid": "serifs",
       "0_deg": [
         {
           "shape_name": "horizontal",
@@ -41,6 +42,7 @@
       ]
     },
     "serifs": {
+      "grid": "serifs",
       "0_deg": [
         {
           "shape_name": "bottom",
@@ -129,6 +131,7 @@
       ]
     },
     "joins": {
+      "grid": "joins",
       "22_5_deg": [
         {
           "shape_name": "horizontal_br",
@@ -317,7 +320,7 @@
           "cell_orientation": "top left"
         }
       ],
-      "167_5_deg": [
+      "157_5_deg": [
         {
           "shape_name": "horizontal_br",
           "cell_orientation": "bottom right"

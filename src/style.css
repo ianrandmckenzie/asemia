@@ -1,1 +1,34 @@
 @import "tailwindcss";
+
+/* Custom styles for the grids */
+#serifsGrid .grid-cell {
+  border: 1px solid #e5e7eb;
+  transition: background-color 0.2s;
+}
+
+#serifsGrid .grid-cell:hover {
+  background-color: #f3f4f6;
+}
+
+#joinsGrid .grid-cell {
+  border: 1px solid #fca5a5;
+  background-color: rgba(254, 226, 226, 0.5);
+  transition: background-color 0.2s;
+}
+
+#joinsGrid .grid-cell:hover {
+  background-color: rgba(254, 202, 202, 0.7);
+}
+
+/* Shape button styling */
+.shape-button {
+  transition: all 0.2s;
+}
+
+.shape-button:hover {
+  transform: scale(1.05);
+}
+
+.shape-selected {
+  box-shadow: 0 0 0 2px #3b82f6;
+}
