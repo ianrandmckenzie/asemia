@@ -35,6 +35,11 @@
   background-color: transparent;
 }
 
+/* Preview mode - make all shapes black */
+.preview-mode .grid-inactive {
+  opacity: 1;
+}
+
 /* Grid interaction states */
 .grid-inactive {
   pointer-events: none;
@@ -63,4 +68,49 @@
 
 .shape-selected {
   box-shadow: 0 0 0 2px #3b82f6;
+}
+
+/* Override Tailwind's default img styles for grid cell images */
+.grid-cell img {
+  height: auto !important;
+  width: auto !important;
+  max-height: unset !important;
+  max-width: unset !important;
+}
+
+/* Ensure our custom sizing classes take precedence */
+.grid-cell img.max-w-full {
+  max-width: 100% !important;
+}
+
+.grid-cell img.max-h-full {
+  max-height: 100% !important;
+}
+
+.grid-cell img.max-w-\[200\%\] {
+  max-width: 200% !important;
+}
+
+.grid-cell img.max-h-\[200\%\] {
+  max-height: 200% !important;
+}
+
+.grid-cell img.max-w-\[110\%\] {
+  max-width: 110% !important;
+}
+
+.grid-cell img.max-h-\[110\%\] {
+  max-height: 110% !important;
+}
+
+.grid-cell img.max-w-\[120\%\] {
+  max-width: 120% !important;
+}
+
+.grid-cell img.max-h-\[120\%\] {
+  max-height: 120% !important;
+}
+
+.grid-cell img.w-auto {
+  width: auto !important;
 }
