@@ -3,7 +3,7 @@
 /* Custom styles for the grids */
 #serifsGrid .grid-cell {
   border: 1px solid #e5e7eb;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
 }
 
 #serifsGrid .grid-cell:hover {
@@ -13,11 +13,37 @@
 #joinsGrid .grid-cell {
   border: 1px solid #fca5a5;
   background-color: rgba(254, 226, 226, 0.5);
-  transition: background-color 0.2s;
+  transition: all 0.2s;
 }
 
 #joinsGrid .grid-cell:hover {
   background-color: rgba(254, 202, 202, 0.7);
+}
+
+/* Preview mode - hide borders */
+.preview-mode #serifsGrid .grid-cell {
+  border: none;
+}
+
+.preview-mode #joinsGrid .grid-cell {
+  border: none;
+  background-color: transparent;
+}
+
+.preview-mode #serifsGrid .grid-cell:hover,
+.preview-mode #joinsGrid .grid-cell:hover {
+  background-color: transparent;
+}
+
+/* Grid interaction states */
+.grid-inactive {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.grid-active {
+  pointer-events: auto;
+  opacity: 1;
 }
 
 /* Shape button styling */
@@ -31,4 +57,15 @@
 
 .shape-selected {
   box-shadow: 0 0 0 2px #3b82f6;
+}
+
+/* Multi-cell shape styling */
+.multi-cell-shape {
+  z-index: 15;
+}
+
+/* Overflow shapes styling */
+.overflow-shape {
+  overflow: visible;
+  z-index: 16;
 }

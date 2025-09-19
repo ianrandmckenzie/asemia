@@ -2,6 +2,7 @@
 let rulesData = null;
 let selectedShape = null;
 let currentTab = 'bodies';
+let previewMode = false;
 
 // Initialize the application
 async function init() {
@@ -10,6 +11,8 @@ async function init() {
   setupSidebar();
   setupTabSwitching();
   setupClearSelection();
+  setupPreviewToggle();
+  updateGridLayers();
 }
 
 // Load the rules.json file
@@ -194,63 +197,190 @@ function handleGridCellClick(event) {
 
 // Place shape in grid cell
 function placeShapeInCell(cell, shapeData) {
-  // Clear existing content
-  cell.innerHTML = '';
+  const shape = shapeData.shape;
+  const width = shape.width || 1;
+  const height = shape.height || 1;
+  const overflow = shape.overflow;
+
+  // Check if shape fits in grid
+  if (!canPlaceShape(cell, width, height)) {
+    alert('Shape does not fit in available grid space');
+    return;
+  }
+
+  // Clear existing content from all affected cells
+  clearShapeCells(cell, width, height);
+
+  // Create container for the shape
+  const container = document.createElement('div');
+  container.className = 'absolute inset-0';
+
+  // Handle multi-cell shapes
+  if (width > 1 || height > 1) {
+    container.classList.add('multi-cell-shape');
+    container.style.width = `${width * 100}px`;
+    container.style.height = `${height * 100}px`;
+
+    // Mark occupied cells
+    markOccupiedCells(cell, width, height, shapeData);
+  }
+
+  // Handle overflow shapes
+  if (overflow) {
+    container.classList.add('overflow-shape');
+    applyOverflow(container, overflow);
+  }
 
   // Create image element
   const img = document.createElement('img');
   img.src = shapeData.imagePath;
-  img.alt = shapeData.shape.shape_name;
-  img.className = 'absolute max-w-full max-h-full object-contain';
+  img.alt = shape.shape_name;
+  img.className = 'w-full h-full object-contain';
 
   // Apply cell orientation positioning
-  const orientation = shapeData.shape.cell_orientation.split(' ');
-  const vertical = orientation[0]; // top, center, bottom
-  const horizontal = orientation[1]; // left, center, right
-
-  // Position the image based on cell_orientation
-  switch (vertical) {
-    case 'top':
-      img.style.top = '0';
-      img.style.transform = horizontal === 'center' ? 'translateX(-50%)' : '';
-      break;
-    case 'center':
-      img.style.top = '50%';
-      img.style.transform = horizontal === 'center' ? 'translate(-50%, -50%)' : 'translateY(-50%)';
-      break;
-    case 'bottom':
-      img.style.bottom = '0';
-      img.style.transform = horizontal === 'center' ? 'translateX(-50%)' : '';
-      break;
-  }
-
-  switch (horizontal) {
-    case 'left':
-      img.style.left = '0';
-      break;
-    case 'center':
-      img.style.left = '50%';
-      if (vertical !== 'center') {
-        img.style.transform = 'translateX(-50%)';
-      }
-      break;
-    case 'right':
-      img.style.right = '0';
-      break;
-  }
+  applyOrientation(container, shape.cell_orientation, overflow);
 
   // Handle image load error
   img.onerror = () => {
     img.style.display = 'none';
     const text = document.createElement('div');
-    text.textContent = shapeData.shape.shape_name;
-    text.className = 'absolute text-xs font-mono text-center w-full text-gray-600';
-    text.style.top = '50%';
-    text.style.transform = 'translateY(-50%)';
-    cell.appendChild(text);
+    text.textContent = shape.shape_name;
+    text.className = 'absolute text-xs font-mono text-center w-full text-gray-600 top-1/2 transform -translate-y-1/2';
+    container.appendChild(text);
   };
 
-  cell.appendChild(img);
+  container.appendChild(img);
+  cell.appendChild(container);
+
+  // Store shape data on the cell
+  cell.dataset.shapeWidth = width;
+  cell.dataset.shapeHeight = height;
+  cell.dataset.shapeName = shape.shape_name;
+}
+
+// Check if shape can be placed at given position
+function canPlaceShape(startCell, width, height) {
+  const gridType = startCell.dataset.grid;
+  const startIndex = parseInt(startCell.dataset.index);
+  const gridSize = gridType === 'serifs' ? 5 : 4;
+
+  const startRow = Math.floor(startIndex / gridSize);
+  const startCol = startIndex % gridSize;
+
+  // Check if shape extends beyond grid boundaries
+  if (startCol + width > gridSize || startRow + height > gridSize) {
+    return false;
+  }
+
+  return true;
+}
+
+// Clear all cells that will be occupied by the shape
+function clearShapeCells(startCell, width, height) {
+  const gridType = startCell.dataset.grid;
+  const startIndex = parseInt(startCell.dataset.index);
+  const gridSize = gridType === 'serifs' ? 5 : 4;
+  const startRow = Math.floor(startIndex / gridSize);
+  const startCol = startIndex % gridSize;
+
+  for (let row = startRow; row < startRow + height; row++) {
+    for (let col = startCol; col < startCol + width; col++) {
+      const cellIndex = row * gridSize + col;
+      const targetCell = document.querySelector(`[data-grid="${gridType}"][data-index="${cellIndex}"]`);
+      if (targetCell) {
+        targetCell.innerHTML = '';
+        targetCell.style.backgroundColor = '';
+        targetCell.removeAttribute('data-shape-width');
+        targetCell.removeAttribute('data-shape-height');
+        targetCell.removeAttribute('data-shape-name');
+        targetCell.removeAttribute('data-occupied-by');
+      }
+    }
+  }
+}
+
+// Mark cells as occupied by a multi-cell shape
+function markOccupiedCells(startCell, width, height, shapeData) {
+  const gridType = startCell.dataset.grid;
+  const startIndex = parseInt(startCell.dataset.index);
+  const gridSize = gridType === 'serifs' ? 5 : 4;
+  const startRow = Math.floor(startIndex / gridSize);
+  const startCol = startIndex % gridSize;
+
+  for (let row = startRow; row < startRow + height; row++) {
+    for (let col = startCol; col < startCol + width; col++) {
+      const cellIndex = row * gridSize + col;
+      const targetCell = document.querySelector(`[data-grid="${gridType}"][data-index="${cellIndex}"]`);
+      if (targetCell && targetCell !== startCell) {
+        // Mark as occupied
+        targetCell.dataset.occupiedBy = startIndex;
+        targetCell.style.backgroundColor = 'rgba(59, 130, 246, 0.1)';
+      }
+    }
+  }
+}
+
+// Apply overflow styling
+function applyOverflow(container, overflow) {
+  const directions = overflow.split(' ');
+  const vertical = directions[0]; // top, bottom
+  const horizontal = directions[1]; // left, right
+
+  // Extend the container beyond cell boundaries
+  if (vertical === 'top') {
+    container.style.top = '-50px';
+    container.style.height = '150px';
+  } else if (vertical === 'bottom') {
+    container.style.bottom = '-50px';
+    container.style.height = '150px';
+  }
+
+  if (horizontal === 'left') {
+    container.style.left = '-50px';
+    container.style.width = '150px';
+  } else if (horizontal === 'right') {
+    container.style.right = '-50px';
+    container.style.width = '150px';
+  }
+}
+
+// Apply orientation positioning
+function applyOrientation(container, cellOrientation, overflow) {
+  const orientation = cellOrientation.split(' ');
+  const vertical = orientation[0]; // top, center, bottom
+  const horizontal = orientation[1]; // left, center, right
+
+  // If there's overflow, the positioning is handled by applyOverflow
+  if (overflow) {
+    return;
+  }
+
+  // Standard positioning for non-overflow shapes
+  switch (vertical) {
+    case 'top':
+      container.style.justifyContent = 'flex-start';
+      break;
+    case 'center':
+      container.style.justifyContent = 'center';
+      break;
+    case 'bottom':
+      container.style.justifyContent = 'flex-end';
+      break;
+  }
+
+  switch (horizontal) {
+    case 'left':
+      container.style.alignItems = 'flex-start';
+      break;
+    case 'center':
+      container.style.alignItems = 'center';
+      break;
+    case 'right':
+      container.style.alignItems = 'flex-end';
+      break;
+  }
+
+  container.style.display = 'flex';
 }
 
 // Setup tab switching
@@ -266,6 +396,7 @@ function setupTabSwitching() {
     joinsTab.className = 'flex-1 py-3 px-4 bg-gray-200 font-medium text-gray-700';
     bodiesContent.classList.remove('hidden');
     joinsContent.classList.add('hidden');
+    updateGridLayers();
   });
 
   joinsTab.addEventListener('click', () => {
@@ -274,6 +405,7 @@ function setupTabSwitching() {
     bodiesTab.className = 'flex-1 py-3 px-4 bg-gray-200 font-medium text-gray-700';
     joinsContent.classList.remove('hidden');
     bodiesContent.classList.add('hidden');
+    updateGridLayers();
   });
 }
 
@@ -281,7 +413,33 @@ function setupTabSwitching() {
 function handleGridCellRightClick(event) {
   event.preventDefault();
   const cell = event.currentTarget;
-  cell.innerHTML = '';
+
+  // Handle multi-cell shapes
+  const width = parseInt(cell.dataset.shapeWidth) || 1;
+  const height = parseInt(cell.dataset.shapeHeight) || 1;
+
+  if (width > 1 || height > 1) {
+    clearShapeCells(cell, width, height);
+  } else {
+    // Handle single cell or occupied cell
+    const occupiedBy = cell.dataset.occupiedBy;
+    if (occupiedBy) {
+      // This cell is occupied by another shape, clear the main shape
+      const gridType = cell.dataset.grid;
+      const mainCell = document.querySelector(`[data-grid="${gridType}"][data-index="${occupiedBy}"]`);
+      if (mainCell) {
+        const mainWidth = parseInt(mainCell.dataset.shapeWidth) || 1;
+        const mainHeight = parseInt(mainCell.dataset.shapeHeight) || 1;
+        clearShapeCells(mainCell, mainWidth, mainHeight);
+      }
+    } else {
+      // Regular single cell
+      cell.innerHTML = '';
+      cell.removeAttribute('data-shape-width');
+      cell.removeAttribute('data-shape-height');
+      cell.removeAttribute('data-shape-name');
+    }
+  }
 }
 
 // Update selected shape display
@@ -306,6 +464,39 @@ function setupClearSelection() {
     });
     updateSelectedShapeDisplay();
   });
+}
+
+// Setup preview toggle
+function setupPreviewToggle() {
+  const previewToggle = document.getElementById('previewToggle');
+  previewToggle.addEventListener('change', (e) => {
+    previewMode = e.target.checked;
+    document.body.classList.toggle('preview-mode', previewMode);
+  });
+}
+
+// Update grid layers and interactivity based on current tab
+function updateGridLayers() {
+  const serifsGrid = document.getElementById('serifsGrid');
+  const joinsGrid = document.getElementById('joinsGrid');
+
+  if (currentTab === 'bodies') {
+    // Bodies/Serifs tab: serifs grid on top and active
+    serifsGrid.style.zIndex = '20';
+    joinsGrid.style.zIndex = '10';
+    serifsGrid.classList.remove('grid-inactive');
+    serifsGrid.classList.add('grid-active');
+    joinsGrid.classList.remove('grid-active');
+    joinsGrid.classList.add('grid-inactive');
+  } else if (currentTab === 'joins') {
+    // Joins tab: joins grid on top and active
+    joinsGrid.style.zIndex = '20';
+    serifsGrid.style.zIndex = '10';
+    joinsGrid.classList.remove('grid-inactive');
+    joinsGrid.classList.add('grid-active');
+    serifsGrid.classList.remove('grid-active');
+    serifsGrid.classList.add('grid-inactive');
+  }
 }
 
 // Initialize when DOM is loaded
