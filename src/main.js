@@ -18,7 +18,7 @@ async function init() {
 // Load the rules.json file
 async function loadRules() {
   try {
-    const response = await fetch('/public/assets/rules.json');
+    const response = await fetch('./public/assets/rules.json');
     rulesData = await response.json();
   } catch (error) {
     console.error('Failed to load rules.json:', error);
@@ -135,7 +135,7 @@ function createShapeButton(category, angleKey, shape) {
 
   // Create image element
   const img = document.createElement('img');
-  const imagePath = `/public/assets/shapes/${category}/${angleKey}/${shape.shape_name}.svg`;
+  const imagePath = `./public/assets/shapes/${category}/${angleKey}/${shape.shape_name}.svg`;
   img.src = imagePath;
   img.alt = shape.shape_name;
   img.className = 'w-8 h-8 object-contain';
@@ -173,7 +173,7 @@ function selectShape(button, category, angleKey, shape) {
     category,
     angleKey,
     shape,
-    imagePath: `/public/assets/shapes/${category}/${angleKey}/${shape.shape_name}.svg`
+    imagePath: `./public/assets/shapes/${category}/${angleKey}/${shape.shape_name}.svg`
   };
 
   updateSelectedShapeDisplay();
