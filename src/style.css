@@ -114,3 +114,11 @@
 .grid-cell img.w-auto {
   width: auto !important;
 }
+
+.grid-cell img.w-full {
+  width: 100% !important;
+}
+
+.grid-cell img.h-auto {
+  height: auto !important;
+}

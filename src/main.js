@@ -320,7 +320,8 @@ const shapeConfig = {
     // Special serif cases
     'serif_22_5_side': 'max-w-full max-h-[200%]',
     'serif_22_5_regular': 'max-w-[200%] max-h-full',
-    'serif_45': 'max-h-full w-auto',
+    'serif_45_regular': 'max-h-full w-auto',
+    'serif_45_side': 'w-full h-auto max-h-[200%]',
     // 1x1 cases
     'body_1x1': 'max-w-[120%] max-h-[120%]',
     'join_1x1': 'max-w-[110%] max-h-[110%]',
@@ -389,7 +390,9 @@ function getSizingClass(shapeData) {
   if (category === 'serifs' && angleKey === '22_5_deg') {
     return isSideSerif ? shapeConfig.sizing['serif_22_5_side'] : shapeConfig.sizing['serif_22_5_regular'];
   }
-  if (category === 'serifs' && angleKey === '45_deg') return shapeConfig.sizing['serif_45'];
+  if (category === 'serifs' && angleKey === '45_deg') {
+    return isSideSerif ? shapeConfig.sizing['serif_45_side'] : shapeConfig.sizing['serif_45_regular'];
+  }
 
   // 1x1 cases
   if (category === 'bodies' && width === 1 && height === 1) return shapeConfig.sizing['body_1x1'];
