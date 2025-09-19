@@ -43,6 +43,8 @@ function createSerifsGrid() {
     cell.dataset.index = i;
     cell.addEventListener('click', handleGridCellClick);
     cell.addEventListener('contextmenu', handleGridCellRightClick);
+    cell.addEventListener('mouseenter', handleGridCellHover);
+    cell.addEventListener('mouseleave', handleGridCellLeave);
     serifsGrid.appendChild(cell);
   }
 }
@@ -59,6 +61,8 @@ function createJoinsGrid() {
     cell.dataset.index = i;
     cell.addEventListener('click', handleGridCellClick);
     cell.addEventListener('contextmenu', handleGridCellRightClick);
+    cell.addEventListener('mouseenter', handleGridCellHover);
+    cell.addEventListener('mouseleave', handleGridCellLeave);
     joinsGrid.appendChild(cell);
   }
 }
@@ -175,6 +179,98 @@ function selectShape(button, category, angleKey, shape) {
   updateSelectedShapeDisplay();
 }
 
+// Helper function to get cell position in grid
+function getCellPosition(cellIndex, gridType) {
+  if (gridType === 'serifs') {
+    // 5x5 grid
+    const row = Math.floor(cellIndex / 5);
+    const col = cellIndex % 5;
+    return { row, col, gridSize: 5 };
+  } else if (gridType === 'joins') {
+    // 4x4 grid
+    const row = Math.floor(cellIndex / 4);
+    const col = cellIndex % 4;
+    return { row, col, gridSize: 4 };
+  }
+}
+
+// Helper function to get cell by position
+function getCellByPosition(row, col, gridType) {
+  const gridSize = gridType === 'serifs' ? 5 : 4;
+  if (row < 0 || col < 0 || row >= gridSize || col >= gridSize) {
+    return null;
+  }
+
+  const index = row * gridSize + col;
+  const grid = document.getElementById(gridType + 'Grid');
+  return grid.children[index];
+}
+
+// Helper function to get cells that would be occupied by a shape
+function getOccupiedCells(startCell, shapeData) {
+  const gridType = startCell.dataset.grid;
+  const startIndex = parseInt(startCell.dataset.index);
+  const startPos = getCellPosition(startIndex, gridType);
+
+  const width = shapeData.shape.width || 1;
+  const height = shapeData.shape.height || 1;
+
+  const occupiedCells = [];
+
+  // For 2x1 shapes, determine orientation from shape name
+  if (width === 2 && height === 1) {
+    // Horizontal shape - extends to the right
+    occupiedCells.push(startCell);
+    const rightCell = getCellByPosition(startPos.row, startPos.col + 1, gridType);
+    if (rightCell) occupiedCells.push(rightCell);
+  } else if (width === 1 && height === 2) {
+    // Vertical shape - extends downward
+    occupiedCells.push(startCell);
+    const bottomCell = getCellByPosition(startPos.row + 1, startPos.col, gridType);
+    if (bottomCell) occupiedCells.push(bottomCell);
+  } else {
+    // 1x1 shape
+    occupiedCells.push(startCell);
+  }
+
+  return occupiedCells;
+}
+
+// Handle grid cell hover
+function handleGridCellHover(event) {
+  if (!selectedShape) return;
+
+  const cell = event.currentTarget;
+  const gridType = cell.dataset.grid;
+
+  // Check if shape can be placed on this grid
+  const shapeGrid = rulesData.shapes[selectedShape.category].grid;
+  if (gridType !== shapeGrid) return;
+
+  // Clear previous highlights
+  clearCellHighlights();
+
+  // Highlight all cells this shape would occupy
+  const occupiedCells = getOccupiedCells(cell, selectedShape);
+  occupiedCells.forEach(occupiedCell => {
+    if (occupiedCell) {
+      occupiedCell.classList.add('cell-highlight');
+    }
+  });
+}
+
+// Handle grid cell leave
+function handleGridCellLeave(event) {
+  clearCellHighlights();
+}
+
+// Clear all cell highlights
+function clearCellHighlights() {
+  document.querySelectorAll('.cell-highlight').forEach(cell => {
+    cell.classList.remove('cell-highlight');
+  });
+}
+
 // Handle grid cell click
 function handleGridCellClick(event) {
   if (!selectedShape) {
@@ -192,6 +288,23 @@ function handleGridCellClick(event) {
     return;
   }
 
+  // Get all cells this shape would occupy
+  const occupiedCells = getOccupiedCells(cell, selectedShape);
+
+  // Check if all cells are available (within bounds)
+  if (occupiedCells.some(c => !c)) {
+    alert('Shape extends beyond grid boundaries');
+    return;
+  }
+
+  // Clear all occupied cells first
+  occupiedCells.forEach(occupiedCell => {
+    if (occupiedCell) {
+      occupiedCell.innerHTML = '';
+    }
+  });
+
+  // Place the shape in the primary cell (the one clicked)
   placeShapeInCell(cell, selectedShape);
 }
 
@@ -204,42 +317,72 @@ function placeShapeInCell(cell, shapeData) {
   const img = document.createElement('img');
   img.src = shapeData.imagePath;
   img.alt = shapeData.shape.shape_name;
-  img.className = 'absolute max-w-full max-h-full object-contain';
 
-  // Apply cell orientation positioning
+  // Apply sizing based on shape dimensions
+  let sizeClasses = 'absolute object-contain';
+  const width = shapeData.shape.width || 1;
+  const height = shapeData.shape.height || 1;
+
+  if (width === 2 && height === 1) {
+    // 2x1 shape gets max-w-[200%]
+    sizeClasses += ' max-w-[200%] max-h-full';
+  } else if (width === 1 && height === 2) {
+    // 1x2 shape gets max-h-[200%]
+    sizeClasses += ' max-w-full max-h-[200%]';
+  } else {
+    // 1x1 shape gets standard sizing
+    sizeClasses += ' max-w-full max-h-full';
+  }
+
+  img.className = sizeClasses;
+
+  // Apply positioning based on shape dimensions and cell orientation
   const orientation = shapeData.shape.cell_orientation.split(' ');
   const vertical = orientation[0]; // top, center, bottom
   const horizontal = orientation[1]; // left, center, right
 
-  // Position the image based on cell_orientation
-  switch (vertical) {
-    case 'top':
-      img.style.top = '0';
-      img.style.transform = horizontal === 'center' ? 'translateX(-50%)' : '';
-      break;
-    case 'center':
-      img.style.top = '50%';
-      img.style.transform = horizontal === 'center' ? 'translate(-50%, -50%)' : 'translateY(-50%)';
-      break;
-    case 'bottom':
-      img.style.bottom = '0';
-      img.style.transform = horizontal === 'center' ? 'translateX(-50%)' : '';
-      break;
-  }
+  // Special positioning for multi-cell shapes
+  if (width === 2 && height === 1) {
+    // 2x1 shape: always align to top-left of clicked cell
+    img.style.top = '0';
+    img.style.left = '0';
+    img.style.transform = '';
+  } else if (width === 1 && height === 2) {
+    // 1x2 shape: always align to top-left of clicked cell
+    img.style.top = '0';
+    img.style.left = '0';
+    img.style.transform = '';
+  } else {
+    // 1x1 shape: use normal cell_orientation positioning
+    switch (vertical) {
+      case 'top':
+        img.style.top = '0';
+        img.style.transform = horizontal === 'center' ? 'translateX(-50%)' : '';
+        break;
+      case 'center':
+        img.style.top = '50%';
+        img.style.transform = horizontal === 'center' ? 'translate(-50%, -50%)' : 'translateY(-50%)';
+        break;
+      case 'bottom':
+        img.style.bottom = '0';
+        img.style.transform = horizontal === 'center' ? 'translateX(-50%)' : '';
+        break;
+    }
 
-  switch (horizontal) {
-    case 'left':
-      img.style.left = '0';
-      break;
-    case 'center':
-      img.style.left = '50%';
-      if (vertical !== 'center') {
-        img.style.transform = 'translateX(-50%)';
-      }
-      break;
-    case 'right':
-      img.style.right = '0';
-      break;
+    switch (horizontal) {
+      case 'left':
+        img.style.left = '0';
+        break;
+      case 'center':
+        img.style.left = '50%';
+        if (vertical !== 'center') {
+          img.style.transform = 'translateX(-50%)';
+        }
+        break;
+      case 'right':
+        img.style.right = '0';
+        break;
+    }
   }
 
   // Handle image load error

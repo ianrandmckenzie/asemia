@@ -46,6 +46,12 @@
   opacity: 1;
 }
 
+/* Cell highlighting for multi-cell shapes */
+.cell-highlight {
+  background-color: rgba(59, 130, 246, 0.3) !important;
+  border-color: #3b82f6 !important;
+}
+
 /* Shape button styling */
 .shape-button {
   transition: all 0.2s;
