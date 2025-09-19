@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="120mm"
+   height="200mm"
+   viewBox="0 0 120 200"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1"
+     transform="translate(23.733118,379.72989)">
+    <g
+       id="g2-6"
+       transform="rotate(180,48.133431,-89.858018)">
+      <path
+         d="m 18.081067,190.02458 -4.121712,9.95081 H 119.97562 v -9.95081 z"
+         style="stroke:#000000;stroke-width:0.0487215"
+         id="path4-42" />
+      <path
+         d="M 102.80406,-40.445076 7.3401204,190.02458 H 18.081067 L 111.97146,-36.647892 Z"
+         style="stroke:#000000;stroke-width:0.0769319"
+         id="path5-8" />
+      <path
+         d="M 18.081067,190.02458 H 7.3401204 l -4.1217122,9.95081 H 13.959355 Z"
+         style="stroke:#000000;stroke-width:0.0769319"
+         id="path3-4" />
+      <path
+         d="M 107.75005,190.56785 C 89.885539,188.31253 77.285259,182.48443 68.609349,174.58188 57.369095,164.34352 52.720484,150.69038 51.514788,137.09511 50.375285,124.24618 52.300724,111.45631 54.642969,101.5 L 17.75,190.56785 Z"
+         style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.559629;enable-background:accumulate;stop-color:#000000"
+         id="path28-4" />
+    </g>
+  </g>
+</svg>
