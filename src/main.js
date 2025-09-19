@@ -308,6 +308,196 @@ function handleGridCellClick(event) {
   placeShapeInCell(cell, selectedShape);
 }
 
+// Configuration object for shape styling and positioning
+const shapeConfig = {
+  sizing: {
+    // Multi-cell shapes
+    '2x1': 'max-w-[200%] max-h-full',
+    '1x2': 'max-w-full max-h-[200%]',
+    // Special serif cases
+    'serif_22_5_side': 'max-w-full max-h-[200%]',
+    'serif_22_5_regular': 'max-w-[200%] max-h-full',
+    'serif_45': 'max-h-full w-auto',
+    // 1x1 cases
+    'body_1x1': 'max-w-[120%] max-h-[120%]',
+    'join_1x1': 'max-w-[110%] max-h-[110%]',
+    // Default
+    'default': 'max-w-full max-h-full'
+  },
+
+  joinPositioning: {
+    '2x1': {
+      '67_5_deg': {
+        top: { vertical: 'bottom: 28%', horizontal: { right: 'right: -5%', left: 'left: -5%' }},
+        bottom: { vertical: 'top: 28%', horizontal: { right: 'right: -5%', left: 'left: -5%' }}
+      },
+      default: {
+        top: { vertical: 'bottom: 5%', horizontal: { right: 'left: -17.5%', left: 'right: -17.5%' }},
+        bottom: { vertical: 'top: 5%', horizontal: { right: 'left: -17.5%', left: 'right: -17.5%' }}
+      }
+    },
+    '1x2': {
+      '67_5_deg': {
+        top: { vertical: 'top: -5%', horizontal: { left: 'right: 28%', right: 'left: 28%' }},
+        bottom: { vertical: 'bottom: -5%', horizontal: { left: 'right: 28%', right: 'left: 28%' }}
+      },
+      default: {
+        top: { vertical: 'bottom: -17.5%', horizontal: { left: 'right: 5%', right: 'left: 5%' }},
+        bottom: { vertical: 'top: -17.5%', horizontal: { left: 'right: 5%', right: 'left: 5%' }}
+      }
+    }
+  }
+};
+
+// Helper function to get sizing class
+function getSizingClass(shapeData) {
+  const { category, angleKey, shape } = shapeData;
+  const width = shape.width || 1;
+  const height = shape.height || 1;
+  const isSideSerif = shape.shape_name.startsWith('side_');
+
+  // Multi-cell shapes
+  if (width === 2 && height === 1) return shapeConfig.sizing['2x1'];
+  if (width === 1 && height === 2) return shapeConfig.sizing['1x2'];
+
+  // Special serif cases
+  if (category === 'serifs' && angleKey === '22_5_deg') {
+    return isSideSerif ? shapeConfig.sizing['serif_22_5_side'] : shapeConfig.sizing['serif_22_5_regular'];
+  }
+  if (category === 'serifs' && angleKey === '45_deg') return shapeConfig.sizing['serif_45'];
+
+  // 1x1 cases
+  if (category === 'bodies' && width === 1 && height === 1) return shapeConfig.sizing['body_1x1'];
+  if (category === 'joins' && width === 1 && height === 1) return shapeConfig.sizing['join_1x1'];
+
+  return shapeConfig.sizing['default'];
+}
+
+// Helper function to apply join positioning
+function applyJoinPositioning(img, shapeData) {
+  const { angleKey, shape } = shapeData;
+  const width = shape.width || 1;
+  const height = shape.height || 1;
+  const orientation = shape.cell_orientation;
+
+  const sizeKey = `${width}x${height}`;
+  const config = shapeConfig.joinPositioning[sizeKey];
+  if (!config) return;
+
+  const angleConfig = config[angleKey] || config.default;
+  const orientationKey = orientation.includes('top') ? 'top' : 'bottom';
+  const positioning = angleConfig[orientationKey];
+
+  // Apply vertical positioning
+  const verticalStyle = positioning.vertical.split(': ');
+  img.style[verticalStyle[0]] = verticalStyle[1];
+
+  // Apply horizontal positioning
+  const horizontalKey = orientation.includes('right') ? 'right' : 'left';
+  const horizontalStyle = positioning.horizontal[horizontalKey].split(': ');
+  img.style[horizontalStyle[0]] = horizontalStyle[1];
+
+  img.style.transform = '';
+}
+
+function applySerifPositioning(img, shapeData, vertical, horizontal) {
+  const isSideSerif = shapeData.shape.cell_orientation.includes('top') || shapeData.shape.cell_orientation.includes('bottom');
+  img.style.transform = '';
+
+  if (isSideSerif) {
+    // Side serifs: vertical positioning with -7% offset
+    switch (vertical) {
+      case 'bottom':
+        img.style.top = '-7%';
+        img.style.maxHeight = '200%';
+        break;
+      case 'top':
+        img.style.bottom = '-7%';
+        img.style.maxHeight = '200%';
+        break;
+      default:
+        img.style.top = '0';
+        break;
+    }
+
+    // Horizontal centering for side serifs
+    switch (horizontal) {
+      case 'left':
+        img.style.left = '0';
+        break;
+      case 'right':
+        img.style.right = '0';
+        break;
+      case 'center':
+        img.style.left = '50%';
+        img.style.transform = 'translateX(-50%)';
+        break;
+    }
+  } else {
+    // Regular 22.5° serifs: horizontal positioning with -7% offset
+    switch (horizontal) {
+      case 'right':
+        img.style.left = '-7%';
+        img.style.maxWidth = '200%';
+        break;
+      case 'left':
+        img.style.right = '-7%';
+        img.style.maxWidth = '200%';
+        break;
+      default:
+        img.style.left = '0';
+        break;
+    }
+
+    // Vertical positioning for regular serifs
+    switch (vertical) {
+      case 'top':
+        img.style.top = '0';
+        break;
+      case 'bottom':
+        img.style.bottom = '0';
+        break;
+      case 'center':
+        img.style.top = '50%';
+        img.style.transform = 'translateY(-50%)';
+        break;
+    }
+  }
+}
+
+function applyStandardPositioning(img, vertical, horizontal) {
+  // Standard cell orientation positioning for most shapes
+  switch (vertical) {
+    case 'top':
+      img.style.top = '0';
+      img.style.transform = horizontal === 'center' ? 'translateX(-50%)' : '';
+      break;
+    case 'center':
+      img.style.top = '50%';
+      img.style.transform = horizontal === 'center' ? 'translate(-50%, -50%)' : 'translateY(-50%)';
+      break;
+    case 'bottom':
+      img.style.bottom = '0';
+      img.style.transform = horizontal === 'center' ? 'translateX(-50%)' : '';
+      break;
+  }
+
+  switch (horizontal) {
+    case 'left':
+      img.style.left = '0';
+      break;
+    case 'center':
+      img.style.left = '50%';
+      if (vertical !== 'center') {
+        img.style.transform = 'translateX(-50%)';
+      }
+      break;
+    case 'right':
+      img.style.right = '0';
+      break;
+  }
+}
+
 // Place shape in grid cell
 function placeShapeInCell(cell, shapeData) {
   // Clear existing content
@@ -318,220 +508,43 @@ function placeShapeInCell(cell, shapeData) {
   img.src = shapeData.imagePath;
   img.alt = shapeData.shape.shape_name;
 
-  // Apply sizing based on shape dimensions and category
-  let sizeClasses = 'absolute object-contain';
-  const width = shapeData.shape.width || 1;
-  const height = shapeData.shape.height || 1;
-  const isSerif22_5 = shapeData.category === 'serifs' && (shapeData.angleKey === '22_5_deg');
-  const isSerif45 = shapeData.category === 'serifs' && (shapeData.angleKey === '45_deg');
-  const isBody1x1 = shapeData.category === 'bodies' && width === 1 && height === 1;
-  const isJoin1x1 = shapeData.category === 'joins' && width === 1 && height === 1;
-  const isJoin2x1 = shapeData.category === 'joins' && width === 2 && height === 1;
-  const isJoin1x2 = shapeData.category === 'joins' && width === 1 && height === 2;
-  const isSideSerif = shapeData.shape.shape_name.startsWith('side_');
-
-  if (width === 2 && height === 1) {
-    // 2x1 shape gets max-w-[200%]
-    sizeClasses += ' max-w-[200%] max-h-full';
-  } else if (width === 1 && height === 2) {
-    // 1x2 shape gets max-h-[200%]
-    sizeClasses += ' max-w-full max-h-[200%]';
-  } else if (isSerif22_5) {
-    // 22.5° serifs need special sizing
-    if (isSideSerif) {
-      // Side serifs get 200% height
-      sizeClasses += ' max-w-full max-h-[200%]';
-    } else {
-      // Regular 22.5° serifs get 200% width
-      sizeClasses += ' max-w-[200%] max-h-full';
-    }
-  } else if (isSerif45) {
-    // 45° serifs get max-height 100% and width auto
-    sizeClasses += ' max-h-full w-auto';
-  } else if (isBody1x1) {
-    // 1x1 bodies get 120% max height/width
-    sizeClasses += ' max-w-[120%] max-h-[120%]';
-  } else if (isJoin1x1) {
-    // 1x1 joins get 120% max height/width
-    sizeClasses += ' max-w-[110%] max-h-[110%]';
-  } else {
-    // Standard 1x1 shape gets normal sizing
-    sizeClasses += ' max-w-full max-h-full';
-  }
-
+  // Apply sizing classes
+  const sizeClasses = 'absolute object-contain ' + getSizingClass(shapeData);
   img.className = sizeClasses;
 
-  // Apply positioning based on shape dimensions and cell orientation
-  const orientation = shapeData.shape.cell_orientation.split(' ');
-  const vertical = orientation[0]; // top, center, bottom
-  const horizontal = orientation[1]; // left, center, right
+  // Apply positioning based on shape type and configuration
+  const { category, angleKey, shape } = shapeData;
+  const width = shape.width || 1;
+  const height = shape.height || 1;
+  const orientation = shape.cell_orientation.split(' ');
+  const vertical = orientation[0];
+  const horizontal = orientation[1];
 
-  // Special positioning for multi-cell shapes
-  if (isJoin2x1) {
-    if(shapeData.shape.cell_orientation.includes('top')) {
-      if (shapeData.angleKey == '67_5_deg'){
-        img.style.bottom = '28%';
-      } else {
-        img.style.bottom = '5%';
-      }
-    } else {
-      if (shapeData.angleKey == '67_5_deg'){
-        img.style.top = '28%';
-      } else {
-        img.style.top = '5%';
-      }
-    }
-    if(shapeData.shape.cell_orientation.includes('right')) {
-      if (shapeData.angleKey == '67_5_deg'){
-        img.style.right = '-5%';
-      } else {
-        img.style.left = '-17.5%';
-      }
-    } else {
-      if (shapeData.angleKey == '67_5_deg'){
-        img.style.left = '-5%';
-      } else {
-        img.style.right = '-17.5%';
-      }
-    }
-    img.style.transform = '';
-  } else if (isJoin1x2) {
-    if(shapeData.shape.cell_orientation.includes('top')) {
-      if (shapeData.angleKey == '67_5_deg'){
-        img.style.top = '-5%';
-      } else {
-        img.style.bottom = '-17.5%';
-      }
-    } else {
-      if (shapeData.angleKey == '67_5_deg'){
-        img.style.bottom = '-5%'; // current
-      } else {
-        img.style.top = '-17.5%';
-      }
-    }
-    if(shapeData.shape.cell_orientation.includes('left')) {
-      if (shapeData.angleKey == '67_5_deg'){
-        img.style.right = '28%';
-      } else {
-        img.style.right = '5%';
-      }
-    } else {
-      if (shapeData.angleKey == '67_5_deg'){
-        img.style.left = '28%'; // current
-      } else {
-        img.style.left = '5%';
-      }
-    }
-    img.style.transform = '';
+  // Determine positioning strategy
+  if (category === 'joins' && (width === 2 || height === 2)) {
+    // Multi-cell joins use configuration-based positioning
+    applyJoinPositioning(img, shapeData);
   } else if (width === 2 && height === 1) {
-    // 2x1 shape: always align to top-left of clicked cell
+    // Non-join 2x1 shapes: align to top-left
     img.style.top = '0';
     img.style.left = '0';
     img.style.transform = '';
   } else if (width === 1 && height === 2) {
-    // 1x2 shape: always align to top-left of clicked cell
+    // Non-join 1x2 shapes: align to top-left
     img.style.top = '0';
     img.style.left = '0';
     img.style.transform = '';
-  } else if (isSerif22_5) {
-    // Special positioning for 22.5° serifs with -7% offset from cell_orientation
-    img.style.transform = '';
-
-    if (isSideSerif) {
-      // Side serifs: vertical positioning with -7% offset
-      switch (vertical) {
-        case 'bottom':
-          img.style.top = '-7%';
-          img.style.maxHeight = '200%';
-          break;
-        case 'top':
-          img.style.bottom = '-7%';
-          img.style.maxHeight = '200%';
-          break;
-        default:
-          img.style.top = '0';
-          break;
-      }
-
-      // Horizontal centering for side serifs
-      switch (horizontal) {
-        case 'left':
-          img.style.left = '0';
-          break;
-        case 'right':
-          img.style.right = '0';
-          break;
-        case 'center':
-          img.style.left = '50%';
-          img.style.transform = 'translateX(-50%)';
-          break;
-      }
-    } else {
-      // Regular 22.5° serifs: horizontal positioning with -7% offset
-      switch (horizontal) {
-        case 'right':
-          img.style.left = '-7%';
-          img.style.maxWidth = '200%';
-          break;
-        case 'left':
-          img.style.right = '-7%';
-          img.style.maxWidth = '200%';
-          break;
-        default:
-          img.style.left = '0';
-          break;
-      }
-
-      // Vertical positioning for regular serifs
-      switch (vertical) {
-        case 'top':
-          img.style.top = '0';
-          break;
-        case 'bottom':
-          img.style.bottom = '0';
-          break;
-        case 'center':
-          img.style.top = '50%';
-          img.style.transform = 'translateY(-50%)';
-          break;
-      }
-    }
-  } else if (isJoin1x1) {
-    // 1x1 joins: special positioning at -5%, -5%
+  } else if (category === 'serifs' && angleKey === '22_5_deg') {
+    // 22.5° serifs use special offset positioning
+    applySerifPositioning(img, shapeData, vertical, horizontal);
+  } else if (category === 'joins' && width === 1 && height === 1) {
+    // 1x1 joins: special -5% offset
     img.style.top = '-5%';
     img.style.left = '-5%';
     img.style.transform = '';
   } else {
-    // Other 1x1 shapes: use normal cell_orientation positioning
-    switch (vertical) {
-      case 'top':
-        img.style.top = '0';
-        img.style.transform = horizontal === 'center' ? 'translateX(-50%)' : '';
-        break;
-      case 'center':
-        img.style.top = '50%';
-        img.style.transform = horizontal === 'center' ? 'translate(-50%, -50%)' : 'translateY(-50%)';
-        break;
-      case 'bottom':
-        img.style.bottom = '0';
-        img.style.transform = horizontal === 'center' ? 'translateX(-50%)' : '';
-        break;
-    }
-
-    switch (horizontal) {
-      case 'left':
-        img.style.left = '0';
-        break;
-      case 'center':
-        img.style.left = '50%';
-        if (vertical !== 'center') {
-          img.style.transform = 'translateX(-50%)';
-        }
-        break;
-      case 'right':
-        img.style.right = '0';
-        break;
-    }
+    // Standard cell orientation positioning
+    applyStandardPositioning(img, vertical, horizontal);
   }
 
   // Handle image load error
