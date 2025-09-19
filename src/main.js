@@ -318,10 +318,15 @@ function placeShapeInCell(cell, shapeData) {
   img.src = shapeData.imagePath;
   img.alt = shapeData.shape.shape_name;
 
-  // Apply sizing based on shape dimensions
+  // Apply sizing based on shape dimensions and category
   let sizeClasses = 'absolute object-contain';
   const width = shapeData.shape.width || 1;
   const height = shapeData.shape.height || 1;
+  const isSerif22_5 = shapeData.category === 'serifs' && (shapeData.angleKey === '22_5_deg');
+  const isSerif45 = shapeData.category === 'serifs' && (shapeData.angleKey === '45_deg');
+  const isBody1x1 = shapeData.category === 'bodies' && width === 1 && height === 1;
+  const isJoin1x1 = shapeData.category === 'joins' && width === 1 && height === 1;
+  const isSideSerif = shapeData.shape.shape_name.startsWith('side_');
 
   if (width === 2 && height === 1) {
     // 2x1 shape gets max-w-[200%]
@@ -329,8 +334,26 @@ function placeShapeInCell(cell, shapeData) {
   } else if (width === 1 && height === 2) {
     // 1x2 shape gets max-h-[200%]
     sizeClasses += ' max-w-full max-h-[200%]';
+  } else if (isSerif22_5) {
+    // 22.5° serifs need special sizing
+    if (isSideSerif) {
+      // Side serifs get 200% height
+      sizeClasses += ' max-w-full max-h-[200%]';
+    } else {
+      // Regular 22.5° serifs get 200% width
+      sizeClasses += ' max-w-[200%] max-h-full';
+    }
+  } else if (isSerif45) {
+    // 45° serifs get max-height 100% and width auto
+    sizeClasses += ' max-h-full w-auto';
+  } else if (isBody1x1) {
+    // 1x1 bodies get 120% max height/width
+    sizeClasses += ' max-w-[120%] max-h-[120%]';
+  } else if (isJoin1x1) {
+    // 1x1 joins get 120% max height/width
+    sizeClasses += ' max-w-[110%] max-h-[110%]';
   } else {
-    // 1x1 shape gets standard sizing
+    // Standard 1x1 shape gets normal sizing
     sizeClasses += ' max-w-full max-h-full';
   }
 
@@ -352,8 +375,76 @@ function placeShapeInCell(cell, shapeData) {
     img.style.top = '0';
     img.style.left = '0';
     img.style.transform = '';
+  } else if (isSerif22_5) {
+    // Special positioning for 22.5° serifs with -7% offset from cell_orientation
+    img.style.transform = '';
+
+    if (isSideSerif) {
+      // Side serifs: vertical positioning with -7% offset
+      switch (vertical) {
+        case 'bottom':
+          img.style.top = '-7%';
+          img.style.maxHeight = '200%';
+          break;
+        case 'top':
+          img.style.bottom = '-7%';
+          img.style.maxHeight = '200%';
+          break;
+        default:
+          img.style.top = '0';
+          break;
+      }
+
+      // Horizontal centering for side serifs
+      switch (horizontal) {
+        case 'left':
+          img.style.left = '0';
+          break;
+        case 'right':
+          img.style.right = '0';
+          break;
+        case 'center':
+          img.style.left = '50%';
+          img.style.transform = 'translateX(-50%)';
+          break;
+      }
+    } else {
+      // Regular 22.5° serifs: horizontal positioning with -7% offset
+      switch (horizontal) {
+        case 'right':
+          img.style.left = '-7%';
+          img.style.maxWidth = '200%';
+          break;
+        case 'left':
+          img.style.right = '-7%';
+          img.style.maxWidth = '200%';
+          break;
+        default:
+          img.style.left = '0';
+          break;
+      }
+
+      // Vertical positioning for regular serifs
+      switch (vertical) {
+        case 'top':
+          img.style.top = '0';
+          break;
+        case 'bottom':
+          img.style.bottom = '0';
+          break;
+        case 'center':
+          img.style.top = '50%';
+          img.style.transform = 'translateY(-50%)';
+          break;
+      }
+    }
+  } else if (isJoin1x1) {
+    // 1x1 joins: special positioning at -5%, -5%
+    img.style.top = '-5%';
+    img.style.left = '-5%';
+    img.style.transform = '';
   } else {
-    // 1x1 shape: use normal cell_orientation positioning
+    // Other 1x1 shapes: use normal cell_orientation positioning
     switch (vertical) {
       case 'top':
         img.style.top = '0';
