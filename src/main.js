@@ -326,6 +326,8 @@ function placeShapeInCell(cell, shapeData) {
   const isSerif45 = shapeData.category === 'serifs' && (shapeData.angleKey === '45_deg');
   const isBody1x1 = shapeData.category === 'bodies' && width === 1 && height === 1;
   const isJoin1x1 = shapeData.category === 'joins' && width === 1 && height === 1;
+  const isJoin2x1 = shapeData.category === 'joins' && width === 2 && height === 1;
+  const isJoin1x2 = shapeData.category === 'joins' && width === 1 && height === 2;
   const isSideSerif = shapeData.shape.shape_name.startsWith('side_');
 
   if (width === 2 && height === 1) {
@@ -365,7 +367,31 @@ function placeShapeInCell(cell, shapeData) {
   const horizontal = orientation[1]; // left, center, right
 
   // Special positioning for multi-cell shapes
-  if (width === 2 && height === 1) {
+  if (isJoin2x1) {
+    if(shapeData.shape.cell_orientation.includes('top')) {
+      img.style.bottom = '5%';
+    } else {
+      img.style.top = '5%';
+    }
+    if(shapeData.shape.cell_orientation.includes('right')) {
+      img.style.left = '-17.5%';
+    } else {
+      img.style.right = '-17.5%';
+    }
+    img.style.transform = '';
+  } else if (isJoin1x2) {
+    if(shapeData.shape.cell_orientation.includes('top')) {
+      img.style.bottom = '-17.5%';
+    } else {
+      img.style.top = '-17.5%';
+    }
+    if(shapeData.shape.cell_orientation.includes('left')) {
+      img.style.right = '5%';
+    } else {
+      img.style.left = '5%';
+    }
+    img.style.transform = '';
+  } else if (width === 2 && height === 1) {
     // 2x1 shape: always align to top-left of clicked cell
     img.style.top = '0';
     img.style.left = '0';
