@@ -314,6 +314,9 @@ const shapeConfig = {
     // Multi-cell shapes
     '2x1': 'max-w-[200%] max-h-full',
     '1x2': 'max-w-full max-h-[200%]',
+    // Special join cases
+    'join_112_5_2x1': 'max-w-[200%] max-h-[200%]',
+    'join_112_5_1x2': 'max-w-[200%] max-h-[200%]',
     // Special serif cases
     'serif_22_5_side': 'max-w-full max-h-[200%]',
     'serif_22_5_regular': 'max-w-[200%] max-h-full',
@@ -331,6 +334,14 @@ const shapeConfig = {
         top: { vertical: 'bottom: 28%', horizontal: { right: 'right: -5%', left: 'left: -5%' }},
         bottom: { vertical: 'top: 28%', horizontal: { right: 'right: -5%', left: 'left: -5%' }}
       },
+      '112_5_deg': {
+        top: { vertical: 'bottom: -15%', horizontal: { right: 'left: -27%', left: 'right: -27%' }},
+        bottom: { vertical: 'top: -15%', horizontal: { right: 'left: -27%', left: 'right: -27%' }}
+      },
+      '135_deg': {
+        top: { vertical: 'bottom: 5%', horizontal: { right: 'left: 3.5%', left: 'right: 3.5%' }},
+        bottom: { vertical: 'top: 5%', horizontal: { right: 'left: 3.5%', left: 'right: 3.5%' }}
+      },
       default: {
         top: { vertical: 'bottom: 5%', horizontal: { right: 'left: -17.5%', left: 'right: -17.5%' }},
         bottom: { vertical: 'top: 5%', horizontal: { right: 'left: -17.5%', left: 'right: -17.5%' }}
@@ -340,6 +351,14 @@ const shapeConfig = {
       '67_5_deg': {
         top: { vertical: 'top: -5%', horizontal: { left: 'right: 28%', right: 'left: 28%' }},
         bottom: { vertical: 'bottom: -5%', horizontal: { left: 'right: 28%', right: 'left: 28%' }}
+      },
+      '112_5_deg': {
+        top: { vertical: 'top: -17%', horizontal: { left: 'right: -15%', right: 'left: -15%' }},
+        bottom: { vertical: 'bottom: -17%', horizontal: { left: 'right: -15%', right: 'left: -15%' }}
+      },
+      '135_deg': {
+        top: { vertical: 'bottom: 4%', horizontal: { right: 'left: 5%', left: 'right: 5%' }},
+        bottom: { vertical: 'top: 4%', horizontal: { right: 'left: 5%', left: 'right: 5%' }}
       },
       default: {
         top: { vertical: 'bottom: -17.5%', horizontal: { left: 'right: 5%', right: 'left: 5%' }},
@@ -355,6 +374,12 @@ function getSizingClass(shapeData) {
   const width = shape.width || 1;
   const height = shape.height || 1;
   const isSideSerif = shape.shape_name.startsWith('side_');
+
+  // Special join cases for 112_5_deg
+  if (category === 'joins' && angleKey === '112_5_deg') {
+    if (width === 2 && height === 1) return shapeConfig.sizing['join_112_5_2x1'];
+    if (width === 1 && height === 2) return shapeConfig.sizing['join_112_5_1x2'];
+  }
 
   // Multi-cell shapes
   if (width === 2 && height === 1) return shapeConfig.sizing['2x1'];
@@ -409,10 +434,12 @@ function applySerifPositioning(img, shapeData, vertical, horizontal) {
     switch (vertical) {
       case 'bottom':
         img.style.top = '-7%';
+        img.style.right = '-4%';
         img.style.maxHeight = '200%';
         break;
       case 'top':
         img.style.bottom = '-7%';
+        img.style.left = '-4%';
         img.style.maxHeight = '200%';
         break;
       default:
