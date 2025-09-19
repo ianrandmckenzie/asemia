@@ -11,8 +11,8 @@
 }
 
 #joinsGrid .grid-cell {
-  border: 1px solid #fca5a5;
-  background-color: rgba(254, 226, 226, 0.5);
+  border: 1px solid #dedede;
+  background-color: rgba(245, 245, 245, 0.25);
   transition: all 0.2s;
 }
 
