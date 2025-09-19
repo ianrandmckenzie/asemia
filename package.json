@@ -1,0 +1,54 @@
+{
+  "name": "asemia",
+  "description": "todo",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --outDir docs",
+    "preview": "vite preview",
+    "tauri": "tauri",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build",
+    "android:init": "tauri android init",
+    "android:dev": "tauri android dev",
+    "android:build": "tauri android build",
+    "android:build:release": "tauri android build --release",
+    "ios:init": "tauri ios init",
+    "ios:dev": "tauri ios dev",
+    "ios:build": "tauri ios build",
+    "ios:build:release": "tauri ios build --release",
+    "lint": "eslint src/**/*.js",
+    "lint:security": "eslint --ext .js src/ --config .eslintrc.json",
+    "audit": "npm audit",
+    "audit:fix": "npm audit fix",
+    "security-check": "npm run lint:security && npm run audit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ianrandmckenzie/asemia.git"
+  },
+  "keywords": [
+    "todo"
+  ],
+  "author": "Ian Rand McKenzie",
+  "license": "Copyright © Ian Rand McKenzie 2025, All Rights Reserved where applicable.",
+  "bugs": {
+    "url": "https://github.com/ianrandmckenzie/asemia/issues"
+  },
+  "homepage": "https://asemia.relentlesscurious.com",
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.10",
+    "@tauri-apps/cli": "^2.6.2",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^8.57.1",
+    "eslint-plugin-security": "^1.7.1",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.10",
+    "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "@tauri-apps/plugin-os": "^2.3.0"
+  }
+}
