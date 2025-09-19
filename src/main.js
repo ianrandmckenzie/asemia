@@ -369,26 +369,58 @@ function placeShapeInCell(cell, shapeData) {
   // Special positioning for multi-cell shapes
   if (isJoin2x1) {
     if(shapeData.shape.cell_orientation.includes('top')) {
-      img.style.bottom = '5%';
+      if (shapeData.angleKey == '67_5_deg'){
+        img.style.bottom = '28%';
+      } else {
+        img.style.bottom = '5%';
+      }
     } else {
-      img.style.top = '5%';
+      if (shapeData.angleKey == '67_5_deg'){
+        img.style.top = '28%';
+      } else {
+        img.style.top = '5%';
+      }
     }
     if(shapeData.shape.cell_orientation.includes('right')) {
-      img.style.left = '-17.5%';
+      if (shapeData.angleKey == '67_5_deg'){
+        img.style.right = '-5%';
+      } else {
+        img.style.left = '-17.5%';
+      }
     } else {
-      img.style.right = '-17.5%';
+      if (shapeData.angleKey == '67_5_deg'){
+        img.style.left = '-5%';
+      } else {
+        img.style.right = '-17.5%';
+      }
     }
     img.style.transform = '';
   } else if (isJoin1x2) {
     if(shapeData.shape.cell_orientation.includes('top')) {
-      img.style.bottom = '-17.5%';
+      if (shapeData.angleKey == '67_5_deg'){
+        img.style.top = '-5%';
+      } else {
+        img.style.bottom = '-17.5%';
+      }
     } else {
-      img.style.top = '-17.5%';
+      if (shapeData.angleKey == '67_5_deg'){
+        img.style.bottom = '-5%'; // current
+      } else {
+        img.style.top = '-17.5%';
+      }
     }
     if(shapeData.shape.cell_orientation.includes('left')) {
-      img.style.right = '5%';
+      if (shapeData.angleKey == '67_5_deg'){
+        img.style.right = '28%';
+      } else {
+        img.style.right = '5%';
+      }
     } else {
-      img.style.left = '5%';
+      if (shapeData.angleKey == '67_5_deg'){
+        img.style.left = '28%'; // current
+      } else {
+        img.style.left = '5%';
+      }
     }
     img.style.transform = '';
   } else if (width === 2 && height === 1) {
