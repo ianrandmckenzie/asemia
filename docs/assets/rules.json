@@ -1,0 +1,485 @@
+{
+  "shapes": {
+    "bodies": {
+      "grid": "serifs",
+      "0_deg": [
+        {
+          "shape_name": "horizontal",
+          "cell_orientation": "center center",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "vertical",
+          "cell_orientation":"center center",
+          "width": 1,
+          "height": 1
+        }
+      ],
+      "22_5_deg": [
+        {
+          "shape_name": "vertical_slash",
+          "cell_orientation": "center center",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_backslash",
+          "cell_orientation": "center center",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "horizontal_slash",
+          "cell_orientation": "center center",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_backslash",
+          "cell_orientation": "center center",
+          "width": 2,
+          "height": 1
+        }
+      ],
+      "45_deg": [
+        {
+          "shape_name": "slash",
+          "cell_orientation": "center center",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "backslash",
+          "cell_orientation": "center center",
+          "width": 1,
+          "height": 1
+        }
+      ]
+    },
+    "serifs": {
+      "grid": "serifs",
+      "0_deg": [
+        {
+          "shape_name": "bottom",
+          "cell_orientation": "bottom center",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "top",
+          "cell_orientation":"top center",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "left",
+          "cell_orientation": "center left",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "right",
+          "cell_orientation":"center right",
+          "width": 1,
+          "height": 1
+        }
+      ],
+      "22_5_deg": [
+        {
+          "shape_name": "bl_to_tr",
+          "cell_orientation": "bottom right",
+          "width": 1,
+          "height": 1,
+          "overflow": "top left"
+        },
+        {
+          "shape_name": "br_to_tl",
+          "cell_orientation":"bottom left",
+          "width": 1,
+          "height": 1,
+          "overflow": "top right"
+        },
+        {
+          "shape_name": "tr_to_bl",
+          "cell_orientation": "top left",
+          "width": 1,
+          "height": 1,
+          "overflow": "bottom right"
+        },
+        {
+          "shape_name": "tl_to_br",
+          "cell_orientation":"top right",
+          "width": 1,
+          "height": 1,
+          "overflow": "bottom left"
+        },
+        {
+          "shape_name": "side_bl_to_tr",
+          "cell_orientation": "top left",
+          "width": 1,
+          "height": 1,
+          "overflow": "bottom right"
+        },
+        {
+          "shape_name": "side_br_to_tl",
+          "cell_orientation":"top right",
+          "width": 1,
+          "height": 1,
+          "overflow": "bottom left"
+        },
+        {
+          "shape_name": "side_tr_to_bl",
+          "cell_orientation": "bottom right",
+          "width": 1,
+          "height": 1,
+          "overflow": "top left"
+        },
+        {
+          "shape_name": "side_tl_to_br",
+          "cell_orientation": "bottom left",
+          "width": 1,
+          "height": 1,
+          "overflow": "top right"
+        }
+      ],
+      "45_deg": [
+        {
+          "shape_name": "bl_to_tr",
+          "cell_orientation": "bottom right",
+          "width": 1,
+          "height": 1,
+          "overflow": "top left"
+        },
+        {
+          "shape_name": "br_to_tl",
+          "cell_orientation":"bottom left",
+          "width": 1,
+          "height": 1,
+          "overflow": "top right"
+        },
+        {
+          "shape_name": "tr_to_bl",
+          "cell_orientation": "top left",
+          "width": 1,
+          "height": 1,
+          "overflow": "bottom right"
+        },
+        {
+          "shape_name": "tl_to_br",
+          "cell_orientation":"top right",
+          "width": 1,
+          "height": 1,
+          "overflow": "bottom left"
+        },
+        {
+          "shape_name": "side_bl_to_tr",
+          "cell_orientation": "top left",
+          "width": 1,
+          "height": 1,
+          "overflow": "bottom right"
+        },
+        {
+          "shape_name": "side_br_to_tl",
+          "cell_orientation":"top right",
+          "width": 1,
+          "height": 1,
+          "overflow": "bottom left"
+        },
+        {
+          "shape_name": "side_tr_to_bl",
+          "cell_orientation": "bottom right",
+          "width": 1,
+          "height": 1,
+          "overflow": "top left"
+        },
+        {
+          "shape_name": "side_tl_to_br",
+          "cell_orientation": "bottom left",
+          "width": 1,
+          "height": 1,
+          "overflow": "top right"
+        }
+      ]
+    },
+    "joins": {
+      "grid": "joins",
+      "22_5_deg": [
+        {
+          "shape_name": "horizontal_br",
+          "cell_orientation": "bottom right",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_bl",
+          "cell_orientation": "bottom left",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tr",
+          "cell_orientation": "top right",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tl",
+          "cell_orientation": "top left",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "vertical_br",
+          "cell_orientation": "bottom right",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_bl",
+          "cell_orientation": "bottom left",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_tr",
+          "cell_orientation": "top right",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_tl",
+          "cell_orientation": "top left",
+          "width": 1,
+          "height": 2
+        }
+      ],
+      "45_deg": [
+        {
+          "shape_name": "horizontal_br",
+          "cell_orientation": "bottom right",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_bl",
+          "cell_orientation": "bottom left",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tr",
+          "cell_orientation": "top right",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tl",
+          "cell_orientation": "top left",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "vertical_br",
+          "cell_orientation": "bottom right",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "vertical_bl",
+          "cell_orientation": "bottom left",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "vertical_tr",
+          "cell_orientation": "top right",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "vertical_tl",
+          "cell_orientation": "top left",
+          "width": 1,
+          "height": 1
+        }
+      ],
+      "67_5_deg": [
+        {
+          "shape_name": "horizontal_br",
+          "cell_orientation": "bottom right",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_bl",
+          "cell_orientation": "bottom left",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tr",
+          "cell_orientation": "top right",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tl",
+          "cell_orientation": "top left",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "vertical_br",
+          "cell_orientation": "bottom right",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_bl",
+          "cell_orientation": "bottom left",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_tr",
+          "cell_orientation": "top right",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_tl",
+          "cell_orientation": "top left",
+          "width": 1,
+          "height": 2
+        }
+      ],
+      "90_deg": [
+        {
+          "shape_name": "horizontal_br",
+          "cell_orientation": "bottom right",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_bl",
+          "cell_orientation": "bottom left",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tr",
+          "cell_orientation": "top right",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tl",
+          "cell_orientation": "top left",
+          "width": 1,
+          "height": 1
+        }
+      ],
+      "112_5_deg": [
+        {
+          "shape_name": "horizontal_br",
+          "cell_orientation": "bottom right",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_bl",
+          "cell_orientation": "bottom left",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tr",
+          "cell_orientation": "top right",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tl",
+          "cell_orientation": "top left",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "vertical_br",
+          "cell_orientation": "bottom right",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_bl",
+          "cell_orientation": "bottom left",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_tr",
+          "cell_orientation": "top right",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_tl",
+          "cell_orientation": "top left",
+          "width": 1,
+          "height": 2
+        }
+      ],
+      "135_deg": [
+        {
+          "shape_name": "horizontal_br",
+          "cell_orientation": "bottom right",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_bl",
+          "cell_orientation": "bottom left",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tr",
+          "cell_orientation": "top right",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tl",
+          "cell_orientation": "top left",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "vertical_br",
+          "cell_orientation": "bottom right",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_bl",
+          "cell_orientation": "bottom left",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_tr",
+          "cell_orientation": "top right",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_tl",
+          "cell_orientation": "top left",
+          "width": 1,
+          "height": 2
+        }
+      ]
+    }
+  }
+}
