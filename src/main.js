@@ -432,7 +432,40 @@ function applySerifPositioning(img, shapeData, vertical, horizontal) {
   const isSideSerif = shapeData.shape.cell_orientation.includes('top') || shapeData.shape.cell_orientation.includes('bottom');
   img.style.transform = '';
 
-  if (isSideSerif) {
+  const shapeName = shapeData.shape.shape_name;
+
+  // Special handling for specific 22.5 serifs - check this FIRST
+  if (shapeName === 'br_to_tl' || shapeName === 'tr_to_bl') {
+    img.style.right = '-7%';
+    // Vertical positioning for special serifs
+    switch (vertical) {
+      case 'top':
+        img.style.top = '0';
+        break;
+      case 'bottom':
+        img.style.bottom = '0';
+        break;
+      case 'center':
+        img.style.top = '50%';
+        img.style.transform = 'translateY(-50%)';
+        break;
+    }
+  } else if (shapeName === 'bl_to_tr' || shapeName === 'tl_to_br') {
+    img.style.left = '-7%';
+    // Vertical positioning for special serifs
+    switch (vertical) {
+      case 'top':
+        img.style.top = '0';
+        break;
+      case 'bottom':
+        img.style.bottom = '0';
+        break;
+      case 'center':
+        img.style.top = '50%';
+        img.style.transform = 'translateY(-50%)';
+        break;
+    }
+  } else if (isSideSerif) {
     // Side serifs: vertical positioning with -7% offset
     switch (vertical) {
       case 'bottom':
