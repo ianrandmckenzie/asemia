@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- Security Headers -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
+
+  <meta name="description" content="" />
+  <meta name="keywords" content="todo" />
+  <title></title>
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="en">
+
+  <!-- <link rel="icon" type="image/png" href="./public/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="./public/favicon.svg" />
+  <link rel="shortcut icon" href="./public/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./public/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="" />
+  <link rel="manifest" href="./public/site.webmanifest" /> -->
+
+  <!-- Open Graph Meta Tags for Social Sharing -->
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://asemia.relentlesscurious.com">
+  <meta property="og:image" content="https://asemia.relentlesscurious.com/og-image.jpeg">
+  <meta property="og:site_name" content="">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="https://asemia.relentlesscurious.com/og-image.jpeg">
+  <meta property="twitter:domain" content="asemia.relentlesscurious.com">
+  <meta property="twitter:url" content="https://asemia.relentlesscurious.com/">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://asemia.relentlesscurious.com/">
+
+  <link href="/src/style.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="flex h-screen">
+    <!-- Sidebar Properties Menu -->
+    <div id="sidebar" class="w-80 bg-gray-100 border-r border-gray-300 flex flex-col">
+      <!-- Tabs -->
+      <div class="flex border-b border-gray-300">
+        <button id="bodiesTab" class="flex-1 py-3 px-4 bg-white border-r border-gray-300 font-medium text-gray-900">
+          Bodies/Serifs
+        </button>
+        <button id="joinsTab" class="flex-1 py-3 px-4 bg-gray-200 font-medium text-gray-700">
+          Joins
+        </button>
+      </div>
+
+      <!-- Content Area -->
+      <div class="flex-1 overflow-y-auto p-4">
+        <!-- Selected Shape Display -->
+        <div id="selectedShapeDisplay" class="mb-4 p-3 bg-slate-50 border border-slate-200 rounded hidden">
+          <div class="text-sm font-medium text-slate-900">Selected Shape:</div>
+          <div id="selectedShapeInfo" class="text-sm text-slate-700"></div>
+          <button id="clearSelection" class="mt-2 px-2 py-1 bg-slate-500 text-white text-xs rounded hover:bg-slate-600">
+            Clear Selection
+          </button>
+        </div>
+
+        <!-- Bodies/Serifs Content -->
+        <div id="bodiesContent" class="space-y-4">
+          <div class="space-y-2">
+            <h3 class="font-semibold text-sm text-gray-700">Bodies</h3>
+            <div id="bodiesShapes" class="grid grid-cols-4 gap-2"></div>
+          </div>
+          <div class="space-y-2">
+            <h3 class="font-semibold text-sm text-gray-700">Serifs</h3>
+            <div id="serifsShapes" class="grid grid-cols-4 gap-2"></div>
+          </div>
+        </div>
+
+        <!-- Joins Content -->
+        <div id="joinsContent" class="hidden space-y-4">
+          <div class="space-y-2">
+            <h3 class="font-semibold text-sm text-gray-700">Joins</h3>
+            <div id="joinsShapes" class="grid grid-cols-4 gap-2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 relative bg-gray-50">
+      <!-- Home Link and Save/Load Controls -->
+      <div class="absolute top-4 left-4 z-50 flex gap-2">
+        <a href="/" class="bg-white hover:bg-gray-50 text-gray-700 px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors border border-gray-300">
+          ← Home
+        </a>
+
+        <!-- Save Dropdown -->
+        <div class="relative group">
+          <button onclick="saveComposition()" class="bg-slate-600 hover:bg-slate-700 text-white px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors">
+            💾 Save
+          </button>
+          <!-- Dropdown Menu -->
+          <div class="absolute left-0 top-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+            <button onclick="saveComposition()" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-t-lg">
+              Save to browser
+            </button>
+            <button onclick="saveCompositionToComputer()" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-b-lg border-t border-gray-200">
+              Save to computer
+            </button>
+          </div>
+        </div>
+
+        <!-- Load Dropdown -->
+        <div class="relative group">
+          <button onclick="loadComposition()" class="bg-slate-600 hover:bg-slate-700 text-white px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors">
+            📁 Load
+          </button>
+          <!-- Dropdown Menu -->
+          <div class="absolute left-0 top-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+            <button onclick="loadFromBrowser()" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-t-lg">
+              Load from browser
+            </button>
+            <button onclick="loadComposition()" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-b-lg border-t border-gray-200">
+              Load from computer
+            </button>
+          </div>
+        </div>
+
+        <button onclick="manageCompositions()" class="bg-slate-600 hover:bg-slate-700 text-white px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors">
+          ⚙️ Manage
+        </button>
+        <button onclick="clearAllGrids()" class="bg-slate-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors">
+          🗑️ Clear
+        </button>
+      </div>
+
+      <!-- Preview Toggle -->
+      <div class="absolute top-4 right-4 z-50">
+        <label class="flex items-center space-x-2 bg-white px-3 py-2 rounded-lg shadow-md border border-gray-300">
+          <input type="checkbox" id="previewToggle" class="rounded">
+          <span class="text-sm font-medium text-gray-700">Preview</span>
+        </label>
+      </div>
+
+      <!-- Grids Container -->
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div class="relative">
+          <!-- 5x5 Serifs Grid -->
+          <div id="serifsGrid" class="grid grid-cols-5 gap-0 z-10" style="width: 500px; height: 500px;">
+            <!-- Grid cells will be generated by JavaScript -->
+          </div>
+
+          <!-- 4x4 Joins Grid (overlapped/inset) -->
+          <div id="joinsGrid" class="absolute grid grid-cols-4 gap-0 z-0"
+               style="width: 400px; height: 400px; top: 50px; left: 50px;">
+            <!-- Grid cells will be generated by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/builder.js"></script>
+  <script type="module" src="/src/storage.js"></script>
+</body>
+</html>
