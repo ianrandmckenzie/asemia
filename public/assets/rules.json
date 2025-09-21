@@ -6,14 +6,14 @@
         {
           "shape_name": "horizontal",
           "cell_orientation": "center center",
-          "allowed_connection_points": "top center, bottom center",
+          "allowed_connection_points": "left center, right center",
           "width": 1,
           "height": 1
         },
         {
           "shape_name": "vertical",
           "cell_orientation":"center center",
-          "allowed_connection_points": "left center, right center",
+          "allowed_connection_points": "top center, bottom center",
           "width": 1,
           "height": 1
         }
@@ -85,14 +85,14 @@
         {
           "shape_name": "left",
           "cell_orientation": "center left",
-          "allowed_connection_points": "center right",
+          "allowed_connection_points": "right center",
           "width": 1,
           "height": 1
         },
         {
           "shape_name": "right",
           "cell_orientation":"center right",
-          "allowed_connection_points": "center left",
+          "allowed_connection_points": "left center",
           "width": 1,
           "height": 1
         }
@@ -101,7 +101,7 @@
         {
           "shape_name": "bl_to_tr",
           "cell_orientation": "bottom right",
-          "allowed_connection_points": "top right",
+          "allowed_connection_points": "bottom left",
           "width": 1,
           "height": 1,
           "overflow": "top left"
@@ -109,7 +109,7 @@
         {
           "shape_name": "br_to_tl",
           "cell_orientation":"bottom left",
-          "allowed_connection_points": "top left",
+          "allowed_connection_points": "bottom right",
           "width": 1,
           "height": 1,
           "overflow": "top right"
@@ -117,7 +117,7 @@
         {
           "shape_name": "tr_to_bl",
           "cell_orientation": "top left",
-          "allowed_connection_points": "bottom left",
+          "allowed_connection_points": "top right",
           "width": 1,
           "height": 1,
           "overflow": "bottom right"
@@ -125,7 +125,7 @@
         {
           "shape_name": "tl_to_br",
           "cell_orientation":"top right",
-          "allowed_connection_points": "bottom right",
+          "allowed_connection_points": "top left",
           "width": 1,
           "height": 1,
           "overflow": "bottom left"
@@ -166,7 +166,7 @@
       "45_deg": [
         {
           "shape_name": "bl_to_tr",
-          "cell_orientation": "bottom right",
+          "cell_orientation": "top left",
           "allowed_connection_points": "top right",
           "width": 1,
           "height": 1,
@@ -174,7 +174,7 @@
         },
         {
           "shape_name": "br_to_tl",
-          "cell_orientation":"bottom left",
+          "cell_orientation":"top right",
           "allowed_connection_points": "top left",
           "width": 1,
           "height": 1,
@@ -182,7 +182,7 @@
         },
         {
           "shape_name": "tr_to_bl",
-          "cell_orientation": "top left",
+          "cell_orientation": "bottom right",
           "allowed_connection_points": "bottom left",
           "width": 1,
           "height": 1,
@@ -190,7 +190,7 @@
         },
         {
           "shape_name": "tl_to_br",
-          "cell_orientation":"top right",
+          "cell_orientation":"bottom left",
           "allowed_connection_points": "bottom right",
           "width": 1,
           "height": 1,
@@ -199,7 +199,7 @@
         {
           "shape_name": "side_bl_to_tr",
           "cell_orientation": "top left",
-          "allowed_connection_points": "top left",
+          "allowed_connection_points": "top right",
           "width": 1,
           "height": 1,
           "overflow": "bottom right"

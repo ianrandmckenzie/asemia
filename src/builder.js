@@ -621,6 +621,27 @@ function placeShapeInCell(cell, shapeData) {
   } else if (category === 'serifs' && angleKey === '22_5_deg') {
     // 22.5° serifs use special offset positioning
     applySerifPositioning(img, shapeData, vertical, horizontal);
+  } else if (category === 'serifs' && angleKey === '45_deg') {
+    // 45° serifs positioning
+    const shapeName = shape.shape_name;
+    if (shapeName === 'tl_to_br' || shapeName === 'bl_to_tr') {
+      img.style.right = '0';
+    } else if (shapeName === 'tr_to_bl' || shapeName === 'br_to_tl') {
+      img.style.left = '0';
+    }
+    // Apply vertical positioning normally
+    switch (vertical) {
+      case 'top':
+        img.style.top = '0';
+        break;
+      case 'bottom':
+        img.style.bottom = '0';
+        break;
+      case 'center':
+        img.style.top = '50%';
+        img.style.transform = 'translateY(-50%)';
+        break;
+    }
   } else if (category === 'joins' && width === 1 && height === 1) {
     // 1x1 joins: special -5% offset
     img.style.top = '-5%';
