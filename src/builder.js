@@ -86,6 +86,13 @@ async function initBuilder() {
   window.clearCellHighlights = clearCellHighlights;
   window.placeShapeInCell = placeShapeInCell;
   window.rulesData = rulesData;
+
+  // Make selectedShape accessible via a getter function since it changes
+  window.getSelectedShape = () => selectedShape;
+  window.handleGridCellClick = handleGridCellClick;
+  window.handleGridCellRightClick = handleGridCellRightClick;
+  window.handleGridCellLeave = handleGridCellLeave;
+
   console.log('Builder functions made globally accessible');
 }
 
