@@ -12,38 +12,48 @@ document.addEventListener('DOMContentLoaded', () => {
   // Override hover behavior after builder.js loads
   setTimeout(() => {
     overrideHoverBehavior();
-  }, 200);
+  }, 500);
 });
 
 // Override the hover behavior to show constraint validation
 function overrideHoverBehavior() {
-  if (typeof handleGridCellHover === 'function') {
-    // Store original hover function
-    window.originalHandleGridCellHover = handleGridCellHover;
+  console.log('Overriding hover behavior for constraint validation');
 
-    // Override with constraint-aware version
-    window.handleGridCellHover = constrainedHandleGridCellHover;
+  // Get all grid cells and re-attach event listeners
+  const allCells = document.querySelectorAll('.grid-cell');
 
-    console.log('Hover behavior overridden for constraint validation');
-  }
+  allCells.forEach(cell => {
+    // Remove existing mouseenter listener by cloning the node
+    const newCell = cell.cloneNode(true);
+    cell.parentNode.replaceChild(newCell, cell);
+
+    // Add back all the necessary event listeners
+    newCell.addEventListener('click', handleGridCellClick);
+    newCell.addEventListener('contextmenu', handleGridCellRightClick);
+    newCell.addEventListener('mouseenter', constrainedHandleGridCellHover);
+    newCell.addEventListener('mouseleave', handleGridCellLeave);
+  });
+
+  console.log('Hover behavior successfully overridden for', allCells.length, 'cells');
 }
 
 // Enhanced hover handler with visual constraint validation
 function constrainedHandleGridCellHover(event) {
+  const selectedShape = window.getSelectedShape();
   if (!selectedShape) return;
 
   const cell = event.currentTarget;
   const gridType = cell.dataset.grid;
 
   // Check if shape can be placed on this grid
-  const shapeGrid = rulesData.shapes[selectedShape.category].grid;
+  const shapeGrid = window.rulesData.shapes[selectedShape.category].grid;
   if (gridType !== shapeGrid) return;
 
   // Clear previous highlights
-  clearCellHighlights();
+  window.clearCellHighlights();
 
   // Highlight all cells this shape would occupy
-  const occupiedCells = getOccupiedCells(cell, selectedShape);
+  const occupiedCells = window.getOccupiedCells(cell, selectedShape);
 
   // Check if placement would be valid (including constraints)
   const isValidPlacement = occupiedCells.every(c => c) && // All cells exist
@@ -62,35 +72,60 @@ function constrainedHandleGridCellHover(event) {
 
 // Validate that the shape can connect to adjacent existing shapes
 function validateShapeConnections(targetCell, shapeData) {
-  console.log('Validating connections for:', shapeData.shape.shape_name, 'at cell', targetCell.dataset.index);
+  console.log('\n=== VALIDATION START ===');
+  console.log('Validating connections for:', shapeData.angleKey + '.' + shapeData.shape.shape_name, 'at cell', targetCell.dataset.index);
+  console.log('Shape dimensions:', shapeData.shape.width + 'x' + shapeData.shape.height);
+  console.log('Shape connection points:', shapeData.shape.allowed_connection_points);
 
-  const gridType = targetCell.dataset.grid;
-  const cellIndex = parseInt(targetCell.dataset.index);
-  const cellPos = getCellPosition(cellIndex, gridType);
+  // Get all cells that would be occupied by this shape
+  const occupiedCells = window.getOccupiedCells(targetCell, shapeData);
+  console.log('Shape will occupy cells:', occupiedCells.map(c => c ? c.dataset.index : 'null'));
 
-  // Get adjacent cells and check for existing shapes
-  const adjacentCells = getAdjacentCells(cellPos, gridType);
+  // For each occupied cell, check connections to adjacent existing shapes
+  for (const occupiedCell of occupiedCells) {
+    if (!occupiedCell) continue;
 
-  for (const adjacent of adjacentCells) {
-    if (!adjacent.cell || !adjacent.cell.children.length) {
-      continue; // No shape in this adjacent cell
-    }
+    const gridType = occupiedCell.dataset.grid;
+    const cellIndex = parseInt(occupiedCell.dataset.index);
+    const cellPos = window.getCellPosition(cellIndex, gridType);
 
-    // Get the existing shape data
-    const existingShapeData = getShapeDataFromCell(adjacent.cell);
-    if (!existingShapeData) {
-      continue;
-    }
+    console.log('\n--- Checking connections from occupied cell:', cellIndex, 'at position (row ' + cellPos.row + ', col ' + cellPos.col + ') ---');
 
-    console.log('Checking connection:', shapeData.angleKey + '.' + shapeData.shape.shape_name, 'to', existingShapeData.angleKey + '.' + existingShapeData.shape.shape_name, 'direction:', adjacent.direction);
+    // Get adjacent cells and check for existing shapes
+    const adjacentCells = getAdjacentCells(cellPos, gridType);
 
-    // Check if the new shape can connect to the existing shape
-    if (!canShapesConnect(shapeData, existingShapeData, adjacent.direction)) {
-      console.log(`Invalid connection: ${shapeData.shape.shape_name} cannot connect to ${existingShapeData.shape.shape_name} (${adjacent.direction})`);
-      return false;
+    for (const adjacent of adjacentCells) {
+      if (!adjacent.cell || !adjacent.cell.children.length) {
+        continue; // No shape in this adjacent cell
+      }
+
+      // Skip if the adjacent cell is one of our own occupied cells
+      if (occupiedCells.includes(adjacent.cell)) {
+        continue;
+      }
+
+      // Get the existing shape data
+      const existingShapeData = getShapeDataFromCell(adjacent.cell);
+      if (!existingShapeData) {
+        continue;
+      }
+
+      console.log('Found existing shape:', existingShapeData.angleKey + '.' + existingShapeData.shape.shape_name, 'in direction:', adjacent.direction, 'at cell:', adjacent.cell.dataset.index);
+      console.log('Existing shape connection points:', existingShapeData.shape.allowed_connection_points);
+
+      // Check if the new shape can connect to the existing shape
+      if (!canShapesConnect(shapeData, existingShapeData, adjacent.direction, occupiedCell, adjacent.cell)) {
+        console.log(`❌ INVALID CONNECTION: ${shapeData.shape.shape_name} cannot connect to ${existingShapeData.shape.shape_name} (${adjacent.direction}) from cell ${cellIndex}`);
+        console.log('=== VALIDATION END (FAILED) ===\n');
+        return false;
+      } else {
+        console.log(`✅ Valid connection: ${shapeData.shape.shape_name} can connect to ${existingShapeData.shape.shape_name} (${adjacent.direction}) from cell ${cellIndex}`);
+      }
     }
   }
 
+  console.log('✅ ALL CONNECTIONS VALID');
+  console.log('=== VALIDATION END (PASSED) ===\n');
   return true;
 }
 
@@ -111,7 +146,7 @@ function getAdjacentCells(cellPos, gridType) {
 
   return directions.map(dir => ({
     direction: dir.direction,
-    cell: getCellByPosition(
+    cell: window.getCellByPosition(
       cellPos.row + dir.rowOffset,
       cellPos.col + dir.colOffset,
       gridType
@@ -133,11 +168,11 @@ function getShapeDataFromCell(cell) {
   const category = pathParts[pathParts.length - 3];
 
   // Find the shape data in rulesData
-  if (!rulesData?.shapes?.[category]?.[angleKey]) {
+  if (!window.rulesData?.shapes?.[category]?.[angleKey]) {
     return null;
   }
 
-  const shape = rulesData.shapes[category][angleKey].find(s => s.shape_name === fileName);
+  const shape = window.rulesData.shapes[category][angleKey].find(s => s.shape_name === fileName);
   if (!shape) {
     return null;
   }
@@ -150,25 +185,127 @@ function getShapeDataFromCell(cell) {
 }
 
 // Check if two shapes can connect based on their allowed_connection_points
-function canShapesConnect(newShape, existingShape, directionFromNewToExisting) {
+function canShapesConnect(newShape, existingShape, directionFromNewToExisting, newShapeCell, existingShapeCell) {
   // Get allowed connection points for both shapes
   const newShapeConnections = parseConnectionPoints(newShape.shape.allowed_connection_points);
   const existingShapeConnections = parseConnectionPoints(existingShape.shape.allowed_connection_points);
 
+  // For multi-cell shapes, we need to determine which connection points apply
+  // based on the relative position within the shape
+  const effectiveNewConnections = getEffectiveConnectionPoints(newShape, newShapeCell, newShapeConnections);
+  const effectiveExistingConnections = getEffectiveConnectionPoints(existingShape, existingShapeCell, existingShapeConnections);
+
+  console.log('    New shape effective connections:', effectiveNewConnections.map(c => c.direction + ' -> ' + c.allowedShapes.join(',')));
+  console.log('    Existing shape effective connections:', effectiveExistingConnections.map(c => c.direction + ' -> ' + c.allowedShapes.join(',')));
+
   // Check if new shape allows connections in the direction of the existing shape
-  const newShapeAllowsConnection = newShapeConnections.some(conn =>
-    conn.direction === directionFromNewToExisting &&
-    isShapeCompatible(conn.allowedShapes, existingShape)
-  );
+  const newShapeAllowsConnection = effectiveNewConnections.some(conn => {
+    const directionMatches = conn.direction === directionFromNewToExisting;
+    const shapeCompatible = isShapeCompatible(conn.allowedShapes, existingShape);
+    console.log(`    New shape check: direction "${conn.direction}" === "${directionFromNewToExisting}"? ${directionMatches}, compatible? ${shapeCompatible}`);
+    return directionMatches && shapeCompatible;
+  });
 
   // Check if existing shape allows connections from the direction of the new shape
   const oppositeDirection = getOppositeDirection(directionFromNewToExisting);
-  const existingShapeAllowsConnection = existingShapeConnections.some(conn =>
-    conn.direction === oppositeDirection &&
-    isShapeCompatible(conn.allowedShapes, newShape)
-  );
+  const existingShapeAllowsConnection = effectiveExistingConnections.some(conn => {
+    const directionMatches = conn.direction === oppositeDirection;
+    const shapeCompatible = isShapeCompatible(conn.allowedShapes, newShape);
+    console.log(`    Existing shape check: direction "${conn.direction}" === "${oppositeDirection}"? ${directionMatches}, compatible? ${shapeCompatible}`);
+    return directionMatches && shapeCompatible;
+  });
 
+  console.log('    🔹 New shape allows connection in direction "' + directionFromNewToExisting + '":', newShapeAllowsConnection);
+  console.log('    🔹 Existing shape allows connection from direction "' + oppositeDirection + '":', existingShapeAllowsConnection);
   return newShapeAllowsConnection && existingShapeAllowsConnection;
+}
+
+// Get effective connection points for a specific cell within a multi-cell shape
+function getEffectiveConnectionPoints(shapeData, shapeCell, allConnections) {
+  const width = shapeData.shape.width || 1;
+  const height = shapeData.shape.height || 1;
+
+  // For 1x1 shapes, all connections are available from the single cell
+  if (width === 1 && height === 1) {
+    return allConnections;
+  }
+
+  // For multi-cell shapes, we need to find the primary cell (where the shape was placed)
+  // and determine which connections are available from this specific cell
+
+  // Find all cells occupied by this shape
+  const occupiedCells = findOccupiedCellsForPlacedShape(shapeCell);
+
+  if (occupiedCells.length <= 1) {
+    // If we can't determine the shape structure, return all connections
+    return allConnections;
+  }
+
+  // Determine which cell this is within the shape (primary, secondary, etc.)
+  const cellIndex = parseInt(shapeCell.dataset.index);
+  const gridType = shapeCell.dataset.grid;
+  const cellPos = window.getCellPosition(cellIndex, gridType);
+
+  // For 22.5° shapes, filter connections based on cell position within the multi-cell shape
+  if (shapeData.angleKey === '22_5_deg') {
+    return filterConnectionsForMultiCellShape(shapeData, cellPos, occupiedCells, allConnections, gridType);
+  }
+
+  // For other multi-cell shapes, return all connections for now
+  return allConnections;
+}
+
+// Find all cells occupied by a placed shape by traversing from the given cell
+function findOccupiedCellsForPlacedShape(startCell) {
+  const occupiedCells = [startCell];
+  const gridType = startCell.dataset.grid;
+  const startIndex = parseInt(startCell.dataset.index);
+  const startPos = window.getCellPosition(startIndex, gridType);
+
+  // Check adjacent cells to find other parts of the same shape
+  const directions = [
+    { rowOffset: -1, colOffset: 0 }, // top
+    { rowOffset: 1, colOffset: 0 },  // bottom
+    { rowOffset: 0, colOffset: -1 }, // left
+    { rowOffset: 0, colOffset: 1 }   // right
+  ];
+
+  for (const dir of directions) {
+    const adjacentCell = window.getCellByPosition(
+      startPos.row + dir.rowOffset,
+      startPos.col + dir.colOffset,
+      gridType
+    );
+
+    if (adjacentCell && adjacentCell.children.length > 0) {
+      // Check if this cell has the same shape (same image src)
+      const startImg = startCell.querySelector('img');
+      const adjacentImg = adjacentCell.querySelector('img');
+
+      if (startImg && adjacentImg && startImg.src === adjacentImg.src) {
+        occupiedCells.push(adjacentCell);
+      }
+    }
+  }
+
+  return occupiedCells;
+}
+
+// Filter connections for multi-cell 22.5° shapes based on cell position
+function filterConnectionsForMultiCellShape(shapeData, cellPos, occupiedCells, allConnections, gridType) {
+  // For 22.5° shapes, connections are typically available from the ends of the shape
+  // This is a simplified implementation - may need refinement based on actual shape geometry
+
+  if (occupiedCells.length === 2) {
+    // For 2-cell shapes, determine if this is the "first" or "second" cell
+    const otherCell = occupiedCells.find(cell => cell !== occupiedCells[0] || cell !== occupiedCells[1]);
+
+    // For now, allow all connections from both cells
+    // TODO: Implement more specific logic based on shape orientation and connection geometry
+    return allConnections;
+  }
+
+  return allConnections;
 }
 
 // Parse the allowed_connection_points string into structured data
