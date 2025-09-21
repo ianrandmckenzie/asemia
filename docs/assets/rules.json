@@ -1,0 +1,557 @@
+{
+  "shapes": {
+    "bodies": {
+      "grid": "serifs",
+      "0_deg": [
+        {
+          "shape_name": "horizontal",
+          "cell_orientation": "center center",
+          "allowed_connection_points": "left center, right center",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "vertical",
+          "cell_orientation":"center center",
+          "allowed_connection_points": "top center, bottom center",
+          "width": 1,
+          "height": 1
+        }
+      ],
+      "22_5_deg": [
+        {
+          "shape_name": "vertical_slash",
+          "cell_orientation": "center center",
+          "allowed_connection_points": "bottom left, top right",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_backslash",
+          "cell_orientation": "center center",
+          "allowed_connection_points": "top left, bottom right",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "horizontal_slash",
+          "cell_orientation": "center center",
+          "allowed_connection_points": "bottom left, top right",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_backslash",
+          "cell_orientation": "center center",
+          "allowed_connection_points": "top left, bottom right",
+          "width": 2,
+          "height": 1
+        }
+      ],
+      "45_deg": [
+        {
+          "shape_name": "slash",
+          "cell_orientation": "center center",
+          "allowed_connection_points": "bottom left, top right",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "backslash",
+          "cell_orientation": "center center",
+          "allowed_connection_points": "top left, bottom right",
+          "width": 1,
+          "height": 1
+        }
+      ]
+    },
+    "serifs": {
+      "grid": "serifs",
+      "0_deg": [
+        {
+          "shape_name": "bottom",
+          "cell_orientation": "bottom center",
+          "allowed_connection_points": "top center",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "top",
+          "cell_orientation":"top center",
+          "allowed_connection_points": "bottom center",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "left",
+          "cell_orientation": "center left",
+          "allowed_connection_points": "right center",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "right",
+          "cell_orientation":"center right",
+          "allowed_connection_points": "left center",
+          "width": 1,
+          "height": 1
+        }
+      ],
+      "22_5_deg": [
+        {
+          "shape_name": "bl_to_tr",
+          "cell_orientation": "bottom right",
+          "allowed_connection_points": "bottom left",
+          "width": 1,
+          "height": 1,
+          "overflow": "top left"
+        },
+        {
+          "shape_name": "br_to_tl",
+          "cell_orientation":"bottom left",
+          "allowed_connection_points": "bottom right",
+          "width": 1,
+          "height": 1,
+          "overflow": "top right"
+        },
+        {
+          "shape_name": "tr_to_bl",
+          "cell_orientation": "top left",
+          "allowed_connection_points": "top right",
+          "width": 1,
+          "height": 1,
+          "overflow": "bottom right"
+        },
+        {
+          "shape_name": "tl_to_br",
+          "cell_orientation":"top right",
+          "allowed_connection_points": "top left",
+          "width": 1,
+          "height": 1,
+          "overflow": "bottom left"
+        },
+        {
+          "shape_name": "side_bl_to_tr",
+          "cell_orientation": "top left",
+          "allowed_connection_points": "top right",
+          "width": 1,
+          "height": 1,
+          "overflow": "bottom right"
+        },
+        {
+          "shape_name": "side_br_to_tl",
+          "cell_orientation":"top right",
+          "allowed_connection_points": "top left",
+          "width": 1,
+          "height": 1,
+          "overflow": "bottom left"
+        },
+        {
+          "shape_name": "side_tr_to_bl",
+          "cell_orientation": "bottom right",
+          "allowed_connection_points": "bottom left",
+          "width": 1,
+          "height": 1,
+          "overflow": "top left"
+        },
+        {
+          "shape_name": "side_tl_to_br",
+          "cell_orientation": "bottom left",
+          "allowed_connection_points": "bottom right",
+          "width": 1,
+          "height": 1,
+          "overflow": "top right"
+        }
+      ],
+      "45_deg": [
+        {
+          "shape_name": "bl_to_tr",
+          "cell_orientation": "top left",
+          "allowed_connection_points": "top right",
+          "width": 1,
+          "height": 1,
+          "overflow": "top left"
+        },
+        {
+          "shape_name": "br_to_tl",
+          "cell_orientation":"top right",
+          "allowed_connection_points": "top left",
+          "width": 1,
+          "height": 1,
+          "overflow": "top right"
+        },
+        {
+          "shape_name": "tr_to_bl",
+          "cell_orientation": "bottom right",
+          "allowed_connection_points": "bottom left",
+          "width": 1,
+          "height": 1,
+          "overflow": "bottom right"
+        },
+        {
+          "shape_name": "tl_to_br",
+          "cell_orientation":"bottom left",
+          "allowed_connection_points": "bottom right",
+          "width": 1,
+          "height": 1,
+          "overflow": "bottom left"
+        },
+        {
+          "shape_name": "side_bl_to_tr",
+          "cell_orientation": "top left",
+          "allowed_connection_points": "top right",
+          "width": 1,
+          "height": 1,
+          "overflow": "bottom right"
+        },
+        {
+          "shape_name": "side_br_to_tl",
+          "cell_orientation":"top right",
+          "allowed_connection_points": "top left",
+          "width": 1,
+          "height": 1,
+          "overflow": "bottom left"
+        },
+        {
+          "shape_name": "side_tr_to_bl",
+          "cell_orientation": "bottom right",
+          "allowed_connection_points": "bottom left",
+          "width": 1,
+          "height": 1,
+          "overflow": "top left"
+        },
+        {
+          "shape_name": "side_tl_to_br",
+          "cell_orientation": "bottom left",
+          "allowed_connection_points": "bottom right",
+          "width": 1,
+          "height": 1,
+          "overflow": "top right"
+        }
+      ]
+    },
+    "joins": {
+      "grid": "joins",
+      "22_5_deg": [
+        {
+          "shape_name": "horizontal_br",
+          "cell_orientation": "bottom right",
+          "allowed_connection_points": "bottom left 0_deg.horizontal, top left 22_5_deg.vertical_slash",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_bl",
+          "cell_orientation": "bottom left",
+          "allowed_connection_points": "bottom right 0_deg.horizontal, top right 22_5_deg.vertical_backslash",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tr",
+          "cell_orientation": "top right",
+          "allowed_connection_points": "bottom left 22_5_deg.vertical_slash, top left 0_deg.horizontal",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tl",
+          "cell_orientation": "top left",
+          "allowed_connection_points": "bottom right 22_5_deg.vertical_backslash, top right 0_deg.horizontal",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "vertical_br",
+          "cell_orientation": "bottom right",
+          "allowed_connection_points": "top left 22_5_deg.horizontal_slash, top right 0_deg.vertical",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_bl",
+          "cell_orientation": "bottom left",
+          "allowed_connection_points": "top left 0_deg.vertical, top right 22_5_deg.horizontal_backslash",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_tr",
+          "cell_orientation": "top right",
+          "allowed_connection_points": "bottom left 22_5_deg.horizontal_slash, bottom right 0_deg.vertical",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_tl",
+          "cell_orientation": "top left",
+          "allowed_connection_points": "bottom left 0_deg.vertical, bottom right 22_5_deg.horizontal_backslash",
+          "width": 1,
+          "height": 2
+        }
+      ],
+      "45_deg": [
+        {
+          "shape_name": "horizontal_br",
+          "cell_orientation": "bottom right",
+          "allowed_connection_points": "bottom left 0_deg.horizontal, top left 45_deg.slash",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_bl",
+          "cell_orientation": "bottom left",
+          "allowed_connection_points": "bottom right 0_deg.horizontal, top right 45_deg.backslash",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tr",
+          "cell_orientation": "top right",
+          "allowed_connection_points": "bottom left 45_deg.slash, top left 0_deg.horizontal",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tl",
+          "cell_orientation": "top left",
+          "allowed_connection_points": "bottom right 45_deg.backslash, top right 0_deg.horizontal",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "vertical_br",
+          "cell_orientation": "bottom right",
+          "allowed_connection_points": "top left 45_deg.slash, top right 0_deg.vertical",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "vertical_bl",
+          "cell_orientation": "bottom left",
+          "allowed_connection_points": "top left 0_deg.vertical, top right 45_deg.backslash",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "vertical_tr",
+          "cell_orientation": "top right",
+          "allowed_connection_points": "bottom left 45_deg.slash, bottom right 0_deg.vertical",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "vertical_tl",
+          "cell_orientation": "top left",
+          "allowed_connection_points": "bottom left 0_deg.vertical, bottom right 45_deg.backslash",
+          "width": 1,
+          "height": 1
+        }
+      ],
+      "67_5_deg": [
+        {
+          "shape_name": "horizontal_br",
+          "cell_orientation": "bottom right",
+          "allowed_connection_points": "bottom left 22_5_deg.vertical_slash, bottom right 45_deg.slash",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_bl",
+          "cell_orientation": "bottom left",
+          "allowed_connection_points": "bottom left 45_deg.backslash, bottom right 22_5_deg.vertical_backslash",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tr",
+          "cell_orientation": "top right",
+          "allowed_connection_points": "top left 22_5_deg.vertical_slash, top right 45_deg.slash",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tl",
+          "cell_orientation": "top left",
+          "allowed_connection_points": "top left 45_deg.backslash, top right 22_5_deg.vertical_backslash",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "vertical_br",
+          "cell_orientation": "bottom right",
+          "allowed_connection_points": "top right 45_deg.slash, bottom right 22_5_deg.horizontal_slash",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_bl",
+          "cell_orientation": "bottom left",
+          "allowed_connection_points": "top left 45_deg.backslash, bottom left 22_5_deg.horizontal_backslash",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_tr",
+          "cell_orientation": "top right",
+          "allowed_connection_points": "top right 22_5_deg.horizontal_slash, bottom right 45_deg.slash",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_tl",
+          "cell_orientation": "top left",
+          "allowed_connection_points": "top left 22_5_deg.horizontal_backslash, bottom left 45_deg.backslash",
+          "width": 1,
+          "height": 2
+        }
+      ],
+      "90_deg": [
+        {
+          "shape_name": "horizontal_br",
+          "cell_orientation": "bottom right",
+          "allowed_connection_points": "bottom left 45_deg.slash, top right 90_deg.horizontal_tl",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_bl",
+          "cell_orientation": "bottom left",
+          "allowed_connection_points": "top left 90_deg.horizontal_tr, bottom right 45_deg.backslash",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tr",
+          "cell_orientation": "top right",
+          "allowed_connection_points": "top left 45_deg.slash, bottom right 90_deg.horizontal_bl",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tl",
+          "cell_orientation": "top left",
+          "allowed_connection_points": "bottom left 90_deg.horizontal_br, top right 45_deg.backslash",
+          "width": 1,
+          "height": 1
+        }
+      ],
+      "112_5_deg": [
+        {
+          "shape_name": "horizontal_br",
+          "cell_orientation": "bottom right",
+          "allowed_connection_points": "bottom right 0_deg.horizontal, top left 22_5_deg.vertical_slash",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_bl",
+          "cell_orientation": "bottom left",
+          "allowed_connection_points": "bottom left 0_deg.horizontal, top right 22_5_deg.vertical_backslash",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tr",
+          "cell_orientation": "top right",
+          "allowed_connection_points": "top right 0_deg.horizontal, bottom left 22_5_deg.vertical_slash",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tl",
+          "cell_orientation": "top left",
+          "allowed_connection_points": "top left 0_deg.horizontal, bottom right 22_5_deg.vertical_backslash",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "vertical_br",
+          "cell_orientation": "bottom right",
+          "allowed_connection_points": "top left 22_5_deg.horizontal_slash, bottom right 0_deg.vertical",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_bl",
+          "cell_orientation": "bottom left",
+          "allowed_connection_points": "top right 22_5_deg.horizontal_backslash, bottom left 0_deg.vertical",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_tr",
+          "cell_orientation": "top right",
+          "allowed_connection_points": "top right 0_deg.vertical, bottom left 22_5_deg.horizontal_slash",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_tl",
+          "cell_orientation": "top left",
+          "allowed_connection_points": "top left 0_deg.vertical, bottom right 22_5_deg.horizontal_backslash",
+          "width": 1,
+          "height": 2
+        }
+      ],
+      "135_deg": [
+        {
+          "shape_name": "horizontal_br",
+          "cell_orientation": "bottom right",
+          "allowed_connection_points": "bottom right 0_deg.horizontal, top left 45_deg.slash",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_bl",
+          "cell_orientation": "bottom left",
+          "allowed_connection_points": "bottom left 0_deg.horizontal, top right 45_deg.backslash",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tr",
+          "cell_orientation": "top right",
+          "allowed_connection_points": "top right 0_deg.horizontal, bottom left 45_deg.slash",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "horizontal_tl",
+          "cell_orientation": "top left",
+          "allowed_connection_points": "top left 0_deg.horizontal, bottom right 45_deg.backslash",
+          "width": 2,
+          "height": 1
+        },
+        {
+          "shape_name": "vertical_br",
+          "cell_orientation": "bottom right",
+          "allowed_connection_points": "top left 45_deg.slash, bottom right 0_deg.vertical",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_bl",
+          "cell_orientation": "bottom left",
+          "allowed_connection_points": "top right 45_deg.backslash, bottom left 0_deg.vertical",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_tr",
+          "cell_orientation": "top right",
+          "allowed_connection_points": "top right 0_deg.vertical, bottom left 45_deg.slash",
+          "width": 1,
+          "height": 2
+        },
+        {
+          "shape_name": "vertical_tl",
+          "cell_orientation": "top left",
+          "allowed_connection_points": "top left 0_deg.vertical, bottom right 45_deg.backslash",
+          "width": 1,
+          "height": 2
+        }
+      ]
+    }
+  }
+}
