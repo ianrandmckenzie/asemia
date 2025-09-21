@@ -94,13 +94,19 @@ function validateShapeConnections(targetCell, shapeData) {
   return true;
 }
 
-// Get adjacent cells in all four directions
+// Get adjacent cells in all directions (including diagonals)
 function getAdjacentCells(cellPos, gridType) {
   const directions = [
+    // Cardinal directions
     { direction: 'top', rowOffset: -1, colOffset: 0 },
     { direction: 'bottom', rowOffset: 1, colOffset: 0 },
     { direction: 'left', rowOffset: 0, colOffset: -1 },
-    { direction: 'right', rowOffset: 0, colOffset: 1 }
+    { direction: 'right', rowOffset: 0, colOffset: 1 },
+    // Diagonal directions
+    { direction: 'top left', rowOffset: -1, colOffset: -1 },
+    { direction: 'top right', rowOffset: -1, colOffset: 1 },
+    { direction: 'bottom left', rowOffset: 1, colOffset: -1 },
+    { direction: 'bottom right', rowOffset: 1, colOffset: 1 }
   ];
 
   return directions.map(dir => ({
@@ -169,15 +175,32 @@ function canShapesConnect(newShape, existingShape, directionFromNewToExisting) {
 function parseConnectionPoints(connectionString) {
   if (!connectionString) return [];
 
-  // Format: "direction1 position1 angleKey1.shapeName1, direction2 position2 angleKey2.shapeName2"
+  // Format: "direction1 position1, direction2 position2" or "direction1 position1 angleKey1.shapeName1, ..."
   const connections = connectionString.split(',').map(conn => conn.trim());
 
   return connections.map(conn => {
     const parts = conn.split(' ');
-    if (parts.length >= 3) {
-      const direction = parts[0];
+    if (parts.length >= 2) {
+      let direction = parts[0];
       const position = parts[1];
-      const allowedShapes = parts.slice(2); // Can be multiple allowed shapes
+      let allowedShapes = [];
+
+      // Combine direction and position for diagonal connections
+      if (['top', 'bottom'].includes(direction) && ['left', 'right'].includes(position)) {
+        direction = `${direction} ${position}`;  // e.g., "top left", "bottom right"
+        allowedShapes = parts.slice(2);
+      } else if (['left', 'right'].includes(direction) && ['top', 'bottom'].includes(position)) {
+        direction = `${position} ${direction}`;  // e.g., "top right" from "right top"
+        allowedShapes = parts.slice(2);
+      } else {
+        // Cardinal directions like "top center", "left center"
+        allowedShapes = parts.slice(2);
+      }
+
+      // If no specific shapes are mentioned, allow any connection
+      if (allowedShapes.length === 0) {
+        allowedShapes = ['*']; // Wildcard for any shape
+      }
 
       return {
         direction,
@@ -194,14 +217,21 @@ function isShapeCompatible(allowedShapes, shapeData) {
   const shapeIdentifier = `${shapeData.angleKey}.${shapeData.shape.shape_name}`;
 
   return allowedShapes.some(allowed => {
+    // Handle wildcard - any shape is allowed
+    if (allowed === '*') {
+      return true;
+    }
     // Handle wildcards like "0_deg.*" or just angleKey matches
-    if (allowed.endsWith('.*')) {
+    else if (allowed.endsWith('.*')) {
       const allowedAngleKey = allowed.replace('.*', '');
       return shapeData.angleKey === allowedAngleKey;
-    } else if (allowed === shapeIdentifier) {
+    }
+    // Exact shape match
+    else if (allowed === shapeIdentifier) {
       return true;
-    } else if (allowed === shapeData.angleKey) {
-      // Allow just angle key matching for simplified rules
+    }
+    // Allow just angle key matching for simplified rules
+    else if (allowed === shapeData.angleKey) {
       return true;
     }
     return false;
@@ -214,7 +244,11 @@ function getOppositeDirection(direction) {
     'top': 'bottom',
     'bottom': 'top',
     'left': 'right',
-    'right': 'left'
+    'right': 'left',
+    'top left': 'bottom right',
+    'top right': 'bottom left',
+    'bottom left': 'top right',
+    'bottom right': 'top left'
   };
   return opposites[direction] || direction;
 }
