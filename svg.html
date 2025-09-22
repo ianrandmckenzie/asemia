@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG Grid Viewer - Rules.json</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {}
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100 p-8">
+  <div class="max-w-7xl mx-auto">
+    <header class="mb-8">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">SVG Grid Viewer</h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300 mb-4">
+        Visual grid of all SVGs from rules.json to verify integrity during copy/paste operations
+      </p>
+      <div class="flex items-center space-x-4">
+        <label class="flex items-center space-x-2">
+          <input type="checkbox" id="darkToggle" class="rounded">
+          <span class="text-sm">Dark Mode</span>
+        </label>
+        <button id="refreshBtn" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm">
+          Refresh Data
+        </button>
+      </div>
+    </header>
+
+    <div id="loading" class="text-center py-8">
+      <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <p class="mt-2">Loading SVGs...</p>
+    </div>
+
+    <div id="error" class="hidden bg-red-100 dark:bg-red-900/40 border border-red-400 dark:border-red-600 text-red-700 dark:text-red-200 px-4 py-3 rounded mb-4">
+      <strong>Error:</strong> <span id="errorMessage"></span>
+    </div>
+
+    <div id="content" class="hidden space-y-12">
+      <!-- SVG grids will be populated here -->
+    </div>
+
+    <div id="stats" class="hidden mt-8 p-4 bg-white dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-gray-700">
+      <h3 class="text-lg font-semibold mb-2">Statistics</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+        <div>
+          <span class="text-gray-600 dark:text-gray-400">Total SVGs:</span>
+          <span id="totalCount" class="font-mono font-bold ml-2">0</span>
+        </div>
+        <div>
+          <span class="text-gray-600 dark:text-gray-400">Valid SVGs:</span>
+          <span id="validCount" class="font-mono font-bold ml-2 text-green-600 dark:text-green-400">0</span>
+        </div>
+        <div>
+          <span class="text-gray-600 dark:text-gray-400">Empty SVGs:</span>
+          <span id="emptyCount" class="font-mono font-bold ml-2 text-yellow-600 dark:text-yellow-400">0</span>
+        </div>
+        <div>
+          <span class="text-gray-600 dark:text-gray-400">Invalid SVGs:</span>
+          <span id="invalidCount" class="font-mono font-bold ml-2 text-red-600 dark:text-red-400">0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let rulesData = null;
+    let stats = {
+      total: 0,
+      valid: 0,
+      empty: 0,
+      invalid: 0
+    };
+
+    // Dark mode toggle
+    const darkToggle = document.getElementById('darkToggle');
+    const html = document.documentElement;
+    
+    // Initialize dark mode
+    darkToggle.checked = html.classList.contains('dark');
+    
+    darkToggle.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        html.classList.add('dark');
+      } else {
+        html.classList.remove('dark');
+      }
+    });
+
+    // Load and display SVGs
+    async function loadRulesData() {
+      try {
+        document.getElementById('loading').classList.remove('hidden');
+        document.getElementById('error').classList.add('hidden');
+        document.getElementById('content').classList.add('hidden');
+        document.getElementById('stats').classList.add('hidden');
+
+        const response = await fetch('./public/assets/rules.json');
+        if (!response.ok) {
+          throw new Error(`Failed to fetch rules.json: ${response.status} ${response.statusText}`);
+        }
+        
+        rulesData = await response.json();
+        displaySVGs();
+        updateStats();
+        
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('content').classList.remove('hidden');
+        document.getElementById('stats').classList.remove('hidden');
+      } catch (error) {
+        console.error('Error loading rules.json:', error);
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('error').classList.remove('hidden');
+        document.getElementById('errorMessage').textContent = error.message;
+      }
+    }
+
+    function validateSVG(svgString) {
+      if (!svgString || svgString.trim() === '') {
+        return 'empty';
+      }
+      
+      try {
+        // Basic SVG validation - check if it's valid XML and contains SVG tag
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(svgString, 'image/svg+xml');
+        
+        // Check for parsing errors
+        const parserError = doc.querySelector('parsererror');
+        if (parserError) {
+          return 'invalid';
+        }
+        
+        // Check if it contains an SVG element
+        const svgElement = doc.querySelector('svg');
+        if (!svgElement) {
+          return 'invalid';
+        }
+        
+        return 'valid';
+      } catch (error) {
+        return 'invalid';
+      }
+    }
+
+    function createSVGDisplay(shape, category, angleKey) {
+      const validation = validateSVG(shape.svg);
+      stats.total++;
+      stats[validation]++;
+      
+      const container = document.createElement('div');
+      container.className = 'border border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-white dark:bg-slate-800';
+      
+      let svgContent = '';
+      let statusClass = '';
+      let statusText = '';
+      
+      if (validation === 'valid') {
+        svgContent = shape.svg;
+        statusClass = 'text-green-600 dark:text-green-400';
+        statusText = '✓ Valid';
+      } else if (validation === 'empty') {
+        svgContent = '<div class="w-24 h-24 bg-yellow-100 dark:bg-yellow-900/40 border-2 border-dashed border-yellow-400 dark:border-yellow-600 rounded flex items-center justify-center text-yellow-600 dark:text-yellow-400 text-xs">Empty SVG</div>';
+        statusClass = 'text-yellow-600 dark:text-yellow-400';
+        statusText = '⚠ Empty';
+      } else {
+        svgContent = '<div class="w-24 h-24 bg-red-100 dark:bg-red-900/40 border-2 border-dashed border-red-400 dark:border-red-600 rounded flex items-center justify-center text-red-600 dark:text-red-400 text-xs">Invalid SVG</div>';
+        statusClass = 'text-red-600 dark:text-red-400';
+        statusText = '✗ Invalid';
+      }
+      
+      container.innerHTML = `
+        <div class="flex flex-col items-center space-y-2">
+          <div class="w-24 h-24 flex items-center justify-center border border-gray-200 dark:border-gray-600 rounded bg-gray-50 dark:bg-slate-700">
+            ${validation === 'valid' ? `<div class="w-20 h-20 flex items-center justify-center">${svgContent}</div>` : svgContent}
+          </div>
+          <div class="text-center">
+            <div class="font-mono text-xs font-bold text-gray-900 dark:text-gray-100">${shape.shape_name}</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400">${shape.width}×${shape.height}</div>
+            <div class="text-xs ${statusClass}">${statusText}</div>
+          </div>
+        </div>
+      `;
+      
+      return container;
+    }
+
+    function displaySVGs() {
+      const content = document.getElementById('content');
+      content.innerHTML = '';
+      
+      // Reset stats
+      stats = { total: 0, valid: 0, empty: 0, invalid: 0 };
+      
+      if (!rulesData || !rulesData.shapes) {
+        content.innerHTML = '<p class="text-center text-gray-500 dark:text-gray-400">No shapes data found in rules.json</p>';
+        return;
+      }
+      
+      const categories = ['bodies', 'serifs', 'joins'];
+      
+      categories.forEach(category => {
+        if (!rulesData.shapes[category]) return;
+        
+        const categorySection = document.createElement('div');
+        categorySection.className = 'space-y-6';
+        
+        const categoryTitle = document.createElement('h2');
+        categoryTitle.className = 'text-2xl font-bold text-gray-900 dark:text-gray-100 border-b border-gray-300 dark:border-gray-700 pb-2';
+        categoryTitle.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+        categorySection.appendChild(categoryTitle);
+        
+        // Skip the 'grid' property and process angle groups
+        Object.keys(rulesData.shapes[category]).forEach(angleKey => {
+          if (angleKey === 'grid') return;
+          
+          const shapes = rulesData.shapes[category][angleKey];
+          if (!Array.isArray(shapes) || shapes.length === 0) return;
+          
+          const angleSection = document.createElement('div');
+          angleSection.className = 'space-y-3';
+          
+          const angleTitle = document.createElement('h3');
+          angleTitle.className = 'text-lg font-semibold text-gray-800 dark:text-gray-200';
+          angleTitle.textContent = `${angleKey} (${shapes.length} shapes)`;
+          angleSection.appendChild(angleTitle);
+          
+          const grid = document.createElement('div');
+          grid.className = 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4';
+          
+          shapes.forEach(shape => {
+            const svgDisplay = createSVGDisplay(shape, category, angleKey);
+            grid.appendChild(svgDisplay);
+          });
+          
+          angleSection.appendChild(grid);
+          categorySection.appendChild(angleSection);
+        });
+        
+        content.appendChild(categorySection);
+      });
+    }
+
+    function updateStats() {
+      document.getElementById('totalCount').textContent = stats.total;
+      document.getElementById('validCount').textContent = stats.valid;
+      document.getElementById('emptyCount').textContent = stats.empty;
+      document.getElementById('invalidCount').textContent = stats.invalid;
+    }
+
+    // Refresh button
+    document.getElementById('refreshBtn').addEventListener('click', loadRulesData);
+
+    // Load data on page load
+    document.addEventListener('DOMContentLoaded', loadRulesData);
+  </script>
+</body>
+</html>
