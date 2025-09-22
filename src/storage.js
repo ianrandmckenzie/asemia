@@ -259,9 +259,9 @@ function clearAllGrids() {
 function showNotification(message, type = 'info') {
   const notification = document.createElement('div');
   notification.className = `fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-4 py-2 rounded-lg shadow-lg text-white text-sm font-medium ${
-    type === 'success' ? 'bg-green-500' :
-    type === 'error' ? 'bg-red-500' :
-    'bg-blue-500'
+    type === 'success' ? 'bg-green-500 dark:bg-green-600' :
+    type === 'error' ? 'bg-red-500 dark:bg-red-600' :
+    'bg-blue-500 dark:bg-blue-600'
   }`;
   notification.textContent = message;
 
@@ -279,17 +279,17 @@ function showNotification(message, type = 'info') {
 function showNameInputModal(title, placeholder, onConfirm) {
   // Create modal overlay
   const overlay = document.createElement('div');
-  overlay.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center';
+  overlay.className = 'fixed inset-0 bg-black bg-opacity-50 dark:bg-black dark:bg-opacity-60 z-50 flex items-center justify-center';
 
   // Create modal content
   const modal = document.createElement('div');
-  modal.className = 'bg-white rounded-lg shadow-xl max-w-sm w-full mx-4';
+  modal.className = 'bg-white dark:bg-slate-900 rounded-lg shadow-xl max-w-sm w-full mx-4';
 
   // Create modal header
   const header = document.createElement('div');
-  header.className = 'px-6 py-4 border-b border-gray-200';
+  header.className = 'px-6 py-4 border-b border-gray-200 dark:border-gray-700';
   header.innerHTML = `
-    <h3 class="text-lg font-medium text-gray-900">${title}</h3>
+    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">${title}</h3>
   `;
 
   // Create modal body with input
@@ -299,22 +299,22 @@ function showNameInputModal(title, placeholder, onConfirm) {
   const input = document.createElement('input');
   input.type = 'text';
   input.placeholder = placeholder;
-  input.className = 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none';
+  input.className = 'w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none';
   input.value = '';
 
   body.appendChild(input);
 
   // Create modal footer
   const footer = document.createElement('div');
-  footer.className = 'px-6 py-4 border-t border-gray-200 flex justify-end gap-3';
+  footer.className = 'px-6 py-4 border-t border-gray-200 dark:border-gray-700 flex justify-end gap-3';
 
   const cancelButton = document.createElement('button');
-  cancelButton.className = 'px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors';
+  cancelButton.className = 'px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors';
   cancelButton.textContent = 'Cancel';
   cancelButton.onclick = () => document.body.removeChild(overlay);
 
   const saveButton = document.createElement('button');
-  saveButton.className = 'px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors';
+  saveButton.className = 'px-4 py-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-lg transition-colors';
   saveButton.textContent = 'Save';
 
   const handleSave = () => {
@@ -409,38 +409,38 @@ async function loadFromBrowser() {
 function showDeleteConfirmation(composition, parentOverlay, onSuccess) {
   // Create confirmation overlay
   const confirmOverlay = document.createElement('div');
-  confirmOverlay.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center';
+  confirmOverlay.className = 'fixed inset-0 bg-black bg-opacity-50 dark:bg-black dark:bg-opacity-60 z-50 flex items-center justify-center';
 
   // Create confirmation modal
   const confirmModal = document.createElement('div');
-  confirmModal.className = 'bg-white rounded-lg shadow-xl max-w-sm w-full mx-4';
+  confirmModal.className = 'bg-white dark:bg-slate-900 rounded-lg shadow-xl max-w-sm w-full mx-4';
 
   // Create header
   const header = document.createElement('div');
-  header.className = 'px-6 py-4 border-b border-gray-200';
+  header.className = 'px-6 py-4 border-b border-gray-200 dark:border-gray-700';
   header.innerHTML = `
-    <h3 class="text-lg font-medium text-red-600">Delete Composition</h3>
+    <h3 class="text-lg font-medium text-red-600 dark:text-red-400">Delete Composition</h3>
   `;
 
   // Create body
   const body = document.createElement('div');
   body.className = 'px-6 py-4';
   body.innerHTML = `
-    <p class="text-gray-700">Are you sure you want to delete <strong>"${composition.metadata.name}"</strong>?</p>
-    <p class="text-sm text-gray-500 mt-2">This action cannot be undone.</p>
+    <p class="text-gray-700 dark:text-gray-200">Are you sure you want to delete <strong>"${composition.metadata.name}"</strong>?</p>
+    <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">This action cannot be undone.</p>
   `;
 
   // Create footer
   const footer = document.createElement('div');
-  footer.className = 'px-6 py-4 border-t border-gray-200 flex justify-end gap-3';
+  footer.className = 'px-6 py-4 border-t border-gray-200 dark:border-gray-700 flex justify-end gap-3';
 
   const cancelBtn = document.createElement('button');
-  cancelBtn.className = 'px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors';
+  cancelBtn.className = 'px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors';
   cancelBtn.textContent = 'Cancel';
   cancelBtn.onclick = () => document.body.removeChild(confirmOverlay);
 
   const deleteBtn = document.createElement('button');
-  deleteBtn.className = 'px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors';
+  deleteBtn.className = 'px-4 py-2 bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 text-white rounded-lg transition-colors';
   deleteBtn.textContent = 'Delete';
 
   deleteBtn.onclick = async () => {
@@ -488,18 +488,18 @@ function showDeleteConfirmation(composition, parentOverlay, onSuccess) {
 function showCompositionSelector(compositions) {
   // Create modal overlay
   const overlay = document.createElement('div');
-  overlay.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center';
+  overlay.className = 'fixed inset-0 bg-black bg-opacity-50 dark:bg-black dark:bg-opacity-60 z-50 flex items-center justify-center';
 
   // Create modal content
   const modal = document.createElement('div');
-  modal.className = 'bg-white rounded-lg shadow-xl max-w-md w-full mx-4 max-h-96 overflow-hidden';
+  modal.className = 'bg-white dark:bg-slate-900 rounded-lg shadow-xl max-w-md w-full mx-4 max-h-96 overflow-hidden';
 
   // Create modal header
   const header = document.createElement('div');
-  header.className = 'px-6 py-4 border-b border-gray-200';
+  header.className = 'px-6 py-4 border-b border-gray-200 dark:border-gray-700';
   header.innerHTML = `
-    <h3 class="text-lg font-medium text-gray-900">Load Composition</h3>
-    <p class="text-sm text-gray-500">Choose a composition to load</p>
+    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Load Composition</h3>
+    <p class="text-sm text-gray-500 dark:text-gray-400">Choose a composition to load</p>
   `;
 
   // Create compositions list
@@ -507,8 +507,8 @@ function showCompositionSelector(compositions) {
   list.className = 'max-h-64 overflow-y-auto px-6 py-4';
 
   compositions.forEach((composition, index) => {
-    const item = document.createElement('div');
-    item.className = 'border border-gray-200 rounded mb-2 p-3 hover:bg-gray-50 transition-colors';
+  const item = document.createElement('div');
+  item.className = 'border border-gray-200 dark:border-gray-700 rounded mb-2 p-3 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors';
 
     const date = new Date(composition.saved || composition.metadata.created).toLocaleDateString();
 
@@ -520,8 +520,8 @@ function showCompositionSelector(compositions) {
     const info = document.createElement('button');
     info.className = 'flex-1 text-left';
     info.innerHTML = `
-      <div class="font-medium text-gray-900">${composition.metadata.name}</div>
-      <div class="text-sm text-gray-500">Saved: ${date}</div>
+      <div class="font-medium text-gray-900 dark:text-gray-100">${composition.metadata.name}</div>
+      <div class="text-sm text-gray-500 dark:text-gray-400">Saved: ${date}</div>
     `;
 
     info.onclick = () => {
@@ -531,7 +531,7 @@ function showCompositionSelector(compositions) {
 
     // Create delete button
     const deleteBtn = document.createElement('button');
-    deleteBtn.className = 'ml-3 px-2 py-1 text-red-600 hover:bg-red-100 rounded transition-colors text-sm';
+  deleteBtn.className = 'ml-3 px-2 py-1 text-red-600 hover:bg-red-100 dark:hover:bg-slate-800 rounded transition-colors text-sm';
     deleteBtn.innerHTML = '🗑️';
     deleteBtn.title = 'Delete composition';
 
@@ -552,10 +552,10 @@ function showCompositionSelector(compositions) {
 
   // Create modal footer
   const footer = document.createElement('div');
-  footer.className = 'px-6 py-4 border-t border-gray-200 flex justify-end';
+  footer.className = 'px-6 py-4 border-t border-gray-200 dark:border-gray-700 flex justify-end';
 
   const cancelButton = document.createElement('button');
-  cancelButton.className = 'px-4 py-2 text-gray-700 hover:bg-gray-100 rounded transition-colors';
+  cancelButton.className = 'px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-slate-800 rounded transition-colors';
   cancelButton.textContent = 'Cancel';
   cancelButton.onclick = () => document.body.removeChild(overlay);
 
@@ -588,20 +588,20 @@ async function manageCompositions() {
       return;
     }
 
-    // Create modal overlay
-    const overlay = document.createElement('div');
-    overlay.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center';
+  // Create modal overlay
+  const overlay = document.createElement('div');
+  overlay.className = 'fixed inset-0 bg-black bg-opacity-50 dark:bg-black dark:bg-opacity-60 z-50 flex items-center justify-center';
 
-    // Create modal content
-    const modal = document.createElement('div');
-    modal.className = 'bg-white rounded-lg shadow-xl max-w-md w-full mx-4 max-h-96 overflow-hidden';
+  // Create modal content
+  const modal = document.createElement('div');
+  modal.className = 'bg-white dark:bg-slate-900 rounded-lg shadow-xl max-w-md w-full mx-4 max-h-96 overflow-hidden';
 
     // Create modal header
     const header = document.createElement('div');
-    header.className = 'px-6 py-4 border-b border-gray-200';
+    header.className = 'px-6 py-4 border-b border-gray-200 dark:border-gray-700';
     header.innerHTML = `
-      <h3 class="text-lg font-medium text-gray-900">Manage Saved Compositions</h3>
-      <p class="text-sm text-gray-500">Load or delete your saved compositions</p>
+      <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Manage Saved Compositions</h3>
+      <p class="text-sm text-gray-500 dark:text-gray-400">Load or delete your saved compositions</p>
     `;
 
     // Create compositions list
@@ -613,13 +613,13 @@ async function manageCompositions() {
       list.innerHTML = '';
 
       if (updatedCompositions.length === 0) {
-        list.innerHTML = '<p class="text-gray-500 text-center py-8">No compositions saved</p>';
+        list.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-center py-8">No compositions saved</p>';
         return;
       }
 
       updatedCompositions.forEach((composition) => {
-        const item = document.createElement('div');
-        item.className = 'border border-gray-200 rounded mb-2 p-3 hover:bg-gray-50 transition-colors';
+  const item = document.createElement('div');
+  item.className = 'border border-gray-200 dark:border-gray-700 rounded mb-2 p-3 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors';
 
         const date = new Date(composition.saved || composition.metadata.created).toLocaleDateString();
 
@@ -631,8 +631,8 @@ async function manageCompositions() {
         const info = document.createElement('div');
         info.className = 'flex-1';
         info.innerHTML = `
-          <div class="font-medium text-gray-900">${composition.metadata.name}</div>
-          <div class="text-sm text-gray-500">Saved: ${date}</div>
+          <div class="font-medium text-gray-900 dark:text-gray-100">${composition.metadata.name}</div>
+          <div class="text-sm text-gray-500 dark:text-gray-400">Saved: ${date}</div>
         `;
 
         // Create buttons container
@@ -640,8 +640,8 @@ async function manageCompositions() {
         buttons.className = 'flex gap-2 ml-3';
 
         // Load button
-        const loadBtn = document.createElement('button');
-        loadBtn.className = 'px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm transition-colors';
+  const loadBtn = document.createElement('button');
+  loadBtn.className = 'px-3 py-1 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded text-sm transition-colors';
         loadBtn.textContent = 'Load';
         loadBtn.onclick = () => {
           applyComposition(composition);
@@ -649,8 +649,8 @@ async function manageCompositions() {
         };
 
         // Delete button
-        const deleteBtn = document.createElement('button');
-        deleteBtn.className = 'px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded text-sm transition-colors';
+  const deleteBtn = document.createElement('button');
+  deleteBtn.className = 'px-3 py-1 bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 text-white rounded text-sm transition-colors';
         deleteBtn.textContent = 'Delete';
         deleteBtn.onclick = async () => {
           if (confirm(`Delete "${composition.metadata.name}"?`)) {
@@ -677,11 +677,11 @@ async function manageCompositions() {
     await refreshList();
 
     // Create modal footer
-    const footer = document.createElement('div');
-    footer.className = 'px-6 py-4 border-t border-gray-200 flex justify-end';
+  const footer = document.createElement('div');
+  footer.className = 'px-6 py-4 border-t border-gray-200 dark:border-gray-700 flex justify-end';
 
-    const closeButton = document.createElement('button');
-    closeButton.className = 'px-4 py-2 text-gray-700 hover:bg-gray-100 rounded transition-colors';
+  const closeButton = document.createElement('button');
+  closeButton.className = 'px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-slate-800 rounded transition-colors';
     closeButton.textContent = 'Close';
     closeButton.onclick = () => document.body.removeChild(overlay);
 
