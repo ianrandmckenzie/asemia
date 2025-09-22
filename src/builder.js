@@ -212,7 +212,8 @@ function populateJoinsShapes() {
 // Create a shape button for the sidebar
 function createShapeButton(category, angleKey, shape) {
   const button = document.createElement('button');
-  button.className = 'w-12 h-12 border border-gray-300 rounded hover:border-blue-500 hover:bg-blue-50 flex items-center justify-center relative shape-button';
+  // include dark: variants so JS-created buttons respect dark mode
+  button.className = 'w-12 h-12 border border-gray-300 dark:border-gray-700 rounded hover:border-blue-500 dark:hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/40 flex items-center justify-center relative shape-button';
 
   // Create image element
   const img = document.createElement('img');
@@ -244,11 +245,13 @@ function createShapeButton(category, angleKey, shape) {
 function selectShape(button, category, angleKey, shape) {
   // Remove previous selection
   document.querySelectorAll('.shape-selected').forEach(el => {
-    el.classList.remove('shape-selected', 'bg-blue-200', 'border-blue-500');
+    // remove both light and dark variants when clearing previous selection
+    el.classList.remove('shape-selected', 'bg-blue-200', 'border-blue-500', 'dark:bg-blue-800/40', 'dark:border-blue-400');
   });
 
   // Add selection to current button
-  button.classList.add('shape-selected', 'bg-blue-200', 'border-blue-500');
+  // add selection styles for both light and dark themes
+  button.classList.add('shape-selected', 'bg-blue-200', 'border-blue-500', 'dark:bg-blue-800/40', 'dark:border-blue-400');
 
   selectedShape = {
     category,
@@ -664,7 +667,8 @@ function placeShapeInCell(cell, shapeData) {
     img.style.display = 'none';
     const text = document.createElement('div');
     text.textContent = shapeData.shape.shape_name;
-    text.className = 'absolute text-xs font-mono text-center w-full text-gray-600';
+  // text fallback should also have a dark variant
+  text.className = 'absolute text-xs font-mono text-center w-full text-gray-600 dark:text-gray-300';
     text.style.top = '50%';
     text.style.transform = 'translateY(-50%)';
     cell.appendChild(text);
@@ -682,8 +686,8 @@ function setupTabSwitching() {
 
   bodiesTab.addEventListener('click', () => {
     currentTab = 'bodies';
-    bodiesTab.className = 'flex-1 py-3 px-4 bg-white border-r border-gray-300 font-medium text-gray-900';
-    joinsTab.className = 'flex-1 py-3 px-4 bg-gray-200 font-medium text-gray-700';
+  bodiesTab.className = 'flex-1 py-3 px-4 bg-white dark:bg-slate-800 border-r border-gray-300 dark:border-gray-700 font-medium text-gray-900 dark:text-gray-100';
+  joinsTab.className = 'flex-1 py-3 px-4 bg-gray-200 dark:bg-slate-700 font-medium text-gray-700 dark:text-gray-200';
     bodiesContent.classList.remove('hidden');
     joinsContent.classList.add('hidden');
     updateGridLayers();
@@ -691,8 +695,8 @@ function setupTabSwitching() {
 
   joinsTab.addEventListener('click', () => {
     currentTab = 'joins';
-    joinsTab.className = 'flex-1 py-3 px-4 bg-white border-r border-gray-300 font-medium text-gray-900';
-    bodiesTab.className = 'flex-1 py-3 px-4 bg-gray-200 font-medium text-gray-700';
+  joinsTab.className = 'flex-1 py-3 px-4 bg-white dark:bg-slate-800 border-r border-gray-300 dark:border-gray-700 font-medium text-gray-900 dark:text-gray-100';
+  bodiesTab.className = 'flex-1 py-3 px-4 bg-gray-200 dark:bg-slate-700 font-medium text-gray-700 dark:text-gray-200';
     joinsContent.classList.remove('hidden');
     bodiesContent.classList.add('hidden');
     updateGridLayers();

@@ -48,13 +48,13 @@
 <body>
   <div class="flex h-screen">
     <!-- Sidebar Properties Menu -->
-    <div id="sidebar" class="w-80 bg-gray-100 border-r border-gray-300 flex flex-col">
+  <div id="sidebar" class="w-80 bg-gray-100 dark:bg-slate-800 border-r border-gray-300 dark:border-gray-700 flex flex-col">
       <!-- Tabs -->
-      <div class="flex border-b border-gray-300">
-        <button id="bodiesTab" class="flex-1 py-3 px-4 bg-white border-r border-gray-300 font-medium text-gray-900">
+      <div class="flex border-b border-gray-300 dark:border-gray-700">
+        <button id="bodiesTab" class="flex-1 py-3 px-4 bg-white dark:bg-slate-800 border-r border-gray-300 dark:border-gray-700 font-medium text-gray-900 dark:text-gray-100">
           Bodies/Serifs
         </button>
-        <button id="joinsTab" class="flex-1 py-3 px-4 bg-gray-200 font-medium text-gray-700">
+        <button id="joinsTab" class="flex-1 py-3 px-4 bg-gray-200 dark:bg-slate-700 font-medium text-gray-700 dark:text-gray-200">
           Joins
         </button>
       </div>
@@ -62,10 +62,10 @@
       <!-- Content Area -->
       <div class="flex-1 overflow-y-auto p-4">
         <!-- Selected Shape Display -->
-        <div id="selectedShapeDisplay" class="mb-4 p-3 bg-slate-50 border border-slate-200 rounded hidden">
-          <div class="text-sm font-medium text-slate-900">Selected Shape:</div>
-          <div id="selectedShapeInfo" class="text-sm text-slate-700"></div>
-          <button id="clearSelection" class="mt-2 px-2 py-1 bg-slate-500 text-white text-xs rounded hover:bg-slate-600">
+        <div id="selectedShapeDisplay" class="mb-4 p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-gray-700 rounded hidden">
+          <div class="text-sm font-medium text-slate-900 dark:text-gray-100">Selected Shape:</div>
+          <div id="selectedShapeInfo" class="text-sm text-slate-700 dark:text-gray-300"></div>
+          <button id="clearSelection" class="mt-2 px-2 py-1 bg-slate-500 dark:bg-slate-600 text-white text-xs rounded hover:bg-slate-600 dark:hover:bg-slate-500">
             Clear Selection
           </button>
         </div>
@@ -93,10 +93,10 @@
     </div>
 
     <!-- Main Content Area -->
-    <div class="flex-1 relative bg-gray-50">
+  <div class="flex-1 relative bg-gray-50 dark:bg-slate-900">
       <!-- Home Link and Save/Load Controls -->
       <div class="absolute top-4 left-4 z-50 flex gap-2">
-        <a href="/" class="bg-white hover:bg-gray-50 text-gray-700 px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors border border-gray-300">
+        <a href="/" class="bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-800 text-gray-700 dark:text-gray-200 px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors border border-gray-300 dark:border-gray-700">
           ← Home
         </a>
 
@@ -106,7 +106,7 @@
             💾 Save
           </button>
           <!-- Dropdown Menu -->
-          <div class="absolute left-0 top-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+          <div class="absolute left-0 top-full mt-1 bg-white dark:bg-slate-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
             <button onclick="saveComposition()" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-t-lg">
               Save to browser
             </button>
@@ -122,7 +122,7 @@
             📁 Load
           </button>
           <!-- Dropdown Menu -->
-          <div class="absolute left-0 top-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+          <div class="absolute left-0 top-full mt-1 bg-white dark:bg-slate-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
             <button onclick="loadFromBrowser()" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-t-lg">
               Load from browser
             </button>
@@ -132,17 +132,17 @@
           </div>
         </div>
 
-        <button onclick="manageCompositions()" class="bg-slate-600 hover:bg-slate-700 text-white px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors">
+        <button onclick="manageCompositions()" class="bg-slate-600 hover:bg-slate-700 dark:bg-slate-500 dark:hover:bg-slate-600 text-white px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors">
           ⚙️ Manage
         </button>
-        <button onclick="clearAllGrids()" class="bg-slate-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors">
+        <button onclick="clearAllGrids()" class="bg-slate-600 hover:bg-red-700 dark:bg-slate-600 dark:hover:bg-red-600 text-white px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors">
           🗑️ Clear
         </button>
       </div>
 
       <!-- Preview Toggle -->
       <div class="absolute top-4 right-4 z-50">
-        <label class="flex items-center space-x-2 bg-white px-3 py-2 rounded-lg shadow-md border border-gray-300">
+        <label class="flex items-center space-x-2 bg-white dark:bg-slate-800 px-3 py-2 rounded-lg shadow-md border border-gray-300 dark:border-gray-700">
           <input type="checkbox" id="previewToggle" class="rounded">
           <span class="text-sm font-medium text-gray-700">Preview</span>
         </label>
