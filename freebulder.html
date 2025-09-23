@@ -46,7 +46,7 @@
   <link href="/src/style.css" rel="stylesheet" />
 </head>
 <body>
-  <div class="flex h-screen">
+  <div class="flex h-screen text-black dark:text-white">
     <!-- Sidebar Properties Menu -->
   <div id="sidebar" class="w-80 bg-gray-100 dark:bg-slate-800 border-r border-gray-300 dark:border-gray-700 flex flex-col">
       <!-- Tabs -->
@@ -73,11 +73,11 @@
         <!-- Bodies/Serifs Content -->
         <div id="bodiesContent" class="space-y-4">
           <div class="space-y-2">
-            <h3 class="font-semibold text-sm text-gray-700">Bodies</h3>
+            <h3 class="font-semibold text-sm text-gray-700 dark:text-gray-200">Bodies</h3>
             <div id="bodiesShapes" class="grid grid-cols-4 gap-2"></div>
           </div>
           <div class="space-y-2">
-            <h3 class="font-semibold text-sm text-gray-700">Serifs</h3>
+            <h3 class="font-semibold text-sm text-gray-700 dark:text-gray-200">Serifs</h3>
             <div id="serifsShapes" class="grid grid-cols-4 gap-2"></div>
           </div>
         </div>
@@ -85,7 +85,7 @@
         <!-- Joins Content -->
         <div id="joinsContent" class="hidden space-y-4">
           <div class="space-y-2">
-            <h3 class="font-semibold text-sm text-gray-700">Joins</h3>
+            <h3 class="font-semibold text-sm text-gray-700 dark:text-gray-200">Joins</h3>
             <div id="joinsShapes" class="grid grid-cols-4 gap-2"></div>
           </div>
         </div>
@@ -144,7 +144,7 @@
       <div class="absolute top-4 right-4 z-50">
         <label class="flex items-center space-x-2 bg-white dark:bg-slate-800 px-3 py-2 rounded-lg shadow-md border border-gray-300 dark:border-gray-700">
           <input type="checkbox" id="previewToggle" class="rounded">
-          <span class="text-sm font-medium text-gray-700">Preview</span>
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Preview</span>
         </label>
       </div>
 
@@ -166,6 +166,7 @@
     </div>
   </div>
 
+  <script src="/src/svg.js"></script>
   <script type="module" src="/src/builder.js"></script>
   <script type="module" src="/src/storage.js"></script>
 </body>
