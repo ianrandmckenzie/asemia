@@ -29,41 +29,168 @@ const shapeConfig = {
     'default': 'max-w-full max-h-full'
   },
 
-  joinPositioning: {
-    '2x1': {
-      '67_5_deg': {
-        top: { vertical: 'bottom: 28%', horizontal: { right: 'right: -5%', left: 'left: -5%' }},
-        bottom: { vertical: 'top: 28%', horizontal: { right: 'right: -5%', left: 'left: -5%' }}
+  positioning: {
+    // Join positioning (multi-cell)
+    joins: {
+      '2x1': {
+        '67_5_deg': {
+          top: { vertical: 'bottom: 28%', horizontal: { right: 'right: -5%', left: 'left: -5%' }},
+          bottom: { vertical: 'top: 28%', horizontal: { right: 'right: -5%', left: 'left: -5%' }}
+        },
+        '112_5_deg': {
+          top: { vertical: 'bottom: -15%', horizontal: { right: 'left: -27%', left: 'right: -27%' }},
+          bottom: { vertical: 'top: -15%', horizontal: { right: 'left: -27%', left: 'right: -27%' }}
+        },
+        '135_deg': {
+          top: { vertical: 'bottom: 5%', horizontal: { right: 'left: -4.5%', left: 'right: -4.5%' }},
+          bottom: { vertical: 'top: 5%', horizontal: { right: 'left: -4.5%', left: 'right: -4.5%' }}
+        },
+        default: {
+          top: { vertical: 'bottom: 5%', horizontal: { right: 'left: -17.5%', left: 'right: -17.5%' }},
+          bottom: { vertical: 'top: 5%', horizontal: { right: 'left: -17.5%', left: 'right: -17.5%' }}
+        }
       },
-      '112_5_deg': {
-        top: { vertical: 'bottom: -15%', horizontal: { right: 'left: -27%', left: 'right: -27%' }},
-        bottom: { vertical: 'top: -15%', horizontal: { right: 'left: -27%', left: 'right: -27%' }}
+      '1x2': {
+        '67_5_deg': {
+          top: { vertical: 'top: -5%', horizontal: { left: 'right: 25%', right: 'left: 25%' }},
+          bottom: { vertical: 'bottom: -5%', horizontal: { left: 'right: 25%', right: 'left: 25%' }}
+        },
+        '112_5_deg': {
+          top: { vertical: 'top: -27%', horizontal: { left: 'right: -15%', right: 'left: -15%' }},
+          bottom: { vertical: 'bottom: -27%', horizontal: { left: 'right: -15%', right: 'left: -15%' }}
+        },
+        '135_deg': {
+          top: { vertical: 'bottom: -4.5%', horizontal: { left: 'right: 5%', right: 'left: 5%' }},
+          bottom: { vertical: 'top: -4.5%', horizontal: { left: 'right: 5%', right: 'left: 5%' }}
+        },
+        default: {
+          top: { vertical: 'bottom: -17.5%', horizontal: { left: 'right: 5%', right: 'left: 5%' }},
+          bottom: { vertical: 'top: -17.5%', horizontal: { left: 'right: 5%', right: 'left: 5%' }}
+        }
       },
-      '135_deg': {
-        top: { vertical: 'bottom: 5%', horizontal: { right: 'left: 3.5%', left: 'right: 3.5%' }},
-        bottom: { vertical: 'top: 5%', horizontal: { right: 'left: 3.5%', left: 'right: 3.5%' }}
-      },
-      default: {
-        top: { vertical: 'bottom: 5%', horizontal: { right: 'left: -17.5%', left: 'right: -17.5%' }},
-        bottom: { vertical: 'top: 5%', horizontal: { right: 'left: -17.5%', left: 'right: -17.5%' }}
+      '1x1': {
+        default: {
+          type: 'offset',
+          top: '-5%',
+          left: '-5%',
+          transform: ''
+        }
       }
     },
-    '1x2': {
-      '67_5_deg': {
-        top: { vertical: 'top: -5%', horizontal: { left: 'right: 28%', right: 'left: 28%' }},
-        bottom: { vertical: 'bottom: -5%', horizontal: { left: 'right: 28%', right: 'left: 28%' }}
+
+    // Serif positioning
+    serifs: {
+      '22_5_deg': {
+        // Special named serifs
+        'br_to_tl': {
+          type: 'special',
+          right: '-24.5%',
+          vertical: {
+            top: { top: '0' },
+            bottom: { bottom: '0' },
+            center: { top: '50%', transform: 'translateY(-50%)' }
+          }
+        },
+        'tr_to_bl': {
+          type: 'special',
+          right: '-24.5%',
+          vertical: {
+            top: { top: '0' },
+            bottom: { bottom: '0' },
+            center: { top: '50%', transform: 'translateY(-50%)' }
+          }
+        },
+        'bl_to_tr': {
+          type: 'special',
+          left: '-24.5%',
+          vertical: {
+            top: { top: '0' },
+            bottom: { bottom: '0' },
+            center: { top: '50%', transform: 'translateY(-50%)' }
+          }
+        },
+        'tl_to_br': {
+          type: 'special',
+          left: '-24.5%',
+          vertical: {
+            top: { top: '0' },
+            bottom: { bottom: '0' },
+            center: { top: '50%', transform: 'translateY(-50%)' }
+          }
+        },
+        // Side serifs (contains 'top' or 'bottom' in orientation)
+        side: {
+          type: 'side',
+          bottom: { top: '-24.5%', right: '0', maxHeight: '200%' },
+          top: { bottom: '-24.5%', left: '0', maxHeight: '200%' },
+          default: { top: '0' },
+          horizontal: {
+            left: { left: '0' },
+            right: { right: '0' },
+            center: { left: '50%', transform: 'translateX(-50%)' }
+          }
+        },
+        // Regular 22.5° serifs
+        regular: {
+          type: 'regular',
+          horizontal: {
+            right: { left: '-25%', maxWidth: '200%' },
+            left: { right: '-25%', maxWidth: '200%' },
+            default: { left: '0' }
+          },
+          vertical: {
+            top: { top: '0' },
+            bottom: { bottom: '0' },
+            center: { top: '50%', transform: 'translateY(-50%)' }
+          }
+        }
       },
-      '112_5_deg': {
-        top: { vertical: 'top: -27%', horizontal: { left: 'right: -15%', right: 'left: -15%' }},
-        bottom: { vertical: 'bottom: -27%', horizontal: { left: 'right: -15%', right: 'left: -15%' }}
+      '45_deg': {
+        'tl_to_br': { right: '0' },
+        'bl_to_tr': { right: '0' },
+        'tr_to_bl': { left: '0' },
+        'br_to_tl': { left: '0' },
+        vertical: {
+          top: { top: '0' },
+          bottom: { bottom: '0' },
+          center: { top: '50%', transform: 'translateY(-50%)' }
+        }
+      }
+    },
+
+    // Bodies positioning and multi-cell non-join shapes
+    bodies: {
+      '2x1': {
+        type: 'topLeft'
       },
-      '135_deg': {
-        top: { vertical: 'bottom: 3.5%', horizontal: { left: 'right: 5%', right: 'left: 5%' }},
-        bottom: { vertical: 'top: 3.5%', horizontal: { left: 'right: 5%', right: 'left: 5%' }}
+      '1x2': {
+        type: 'topLeft'
       },
-      default: {
-        top: { vertical: 'bottom: -17.5%', horizontal: { left: 'right: 5%', right: 'left: 5%' }},
-        bottom: { vertical: 'top: -17.5%', horizontal: { left: 'right: 5%', right: 'left: 5%' }}
+      '1x1': {
+        type: 'standard'
+      }
+    },
+
+    // Standard positioning for most shapes
+    standard: {
+      vertical: {
+        top: {
+          top: '0',
+          transform: { center: 'translateX(-50%)', default: '' }
+        },
+        center: {
+          top: '50%',
+          transform: { center: 'translate(-50%, -50%)', default: 'translateY(-50%)' }
+        },
+        bottom: {
+          bottom: '0',
+          transform: { center: 'translateX(-50%)', default: '' }
+        }
+      },
+      horizontal: {
+        left: { left: '0' },
+        center: { left: '50%' },
+        right: { right: '0' }
       }
     }
   }
@@ -391,15 +518,26 @@ function handleGridCellClick(event) {
     }
   }
 
-  // Clear all occupied cells first
-  occupiedCells.forEach(occupiedCell => {
-    if (occupiedCell) {
-      occupiedCell.innerHTML = '';
-    }
-  });
+  // Check if we're in constrained builder mode (has validation function)
+  const isConstrainedBuilder = typeof validateShapeConnections === 'function';
+
+  // For freebuilder: only clear cells if it's not a body shape, or if it's a multi-cell shape
+  // For constrained builder: always clear cells as before
+  const shouldClearCells = isConstrainedBuilder ||
+                          selectedShape.category !== 'bodies' ||
+                          (selectedShape.shape.width > 1 || selectedShape.shape.height > 1);
+
+  if (shouldClearCells) {
+    // Clear all occupied cells first
+    occupiedCells.forEach(occupiedCell => {
+      if (occupiedCell) {
+        occupiedCell.innerHTML = '';
+      }
+    });
+  }
 
   // Place the shape in the primary cell (the one clicked)
-  placeShapeInCell(cell, selectedShape);
+  placeShapeInCell(cell, selectedShape, !shouldClearCells);
 }
 
 // Helper function to get sizing class
@@ -442,7 +580,7 @@ function applyJoinPositioning(element, shapeData) {
   const orientation = shape.cell_orientation;
 
   const sizeKey = `${width}x${height}`;
-  const config = shapeConfig.joinPositioning[sizeKey];
+  const config = shapeConfig.positioning.joins[sizeKey];
   if (!config) return;
 
   const angleConfig = config[angleKey] || config.default;
@@ -461,143 +599,165 @@ function applyJoinPositioning(element, shapeData) {
   element.style.transform = '';
 }
 
-function applySerifPositioning(element, shapeData, vertical, horizontal) {
-  const isSideSerif = shapeData.shape.cell_orientation.includes('top') || shapeData.shape.cell_orientation.includes('bottom');
+// Unified positioning function that uses configuration objects
+function applyPositioning(element, shapeData) {
+  const { category, angleKey, shape } = shapeData;
+  const width = shape.width || 1;
+  const height = shape.height || 1;
+  const orientation = shape.cell_orientation.split(' ');
+  const vertical = orientation[0];
+  const horizontal = orientation[1];
+
+  // Reset element styles
   element.style.transform = '';
 
-  const shapeName = shapeData.shape.shape_name;
+  // Multi-cell joins
+  if (category === 'joins' && (width === 2 || height === 2)) {
+    return applyJoinPositioning(element, shapeData);
+  }
 
-  // Special handling for specific 22.5 serifs - check this FIRST
-  if (shapeName === 'br_to_tl' || shapeName === 'tr_to_bl') {
-    element.style.right = '-7%';
-    // Vertical positioning for special serifs
-    switch (vertical) {
-      case 'top':
-        element.style.top = '0';
-        break;
-      case 'bottom':
-        element.style.bottom = '0';
-        break;
-      case 'center':
-        element.style.top = '50%';
-        element.style.transform = 'translateY(-50%)';
-        break;
-    }
-  } else if (shapeName === 'bl_to_tr' || shapeName === 'tl_to_br') {
-    element.style.left = '-7%';
-    // Vertical positioning for special serifs
-    switch (vertical) {
-      case 'top':
-        element.style.top = '0';
-        break;
-      case 'bottom':
-        element.style.bottom = '0';
-        break;
-      case 'center':
-        element.style.top = '50%';
-        element.style.transform = 'translateY(-50%)';
-        break;
-    }
-  } else if (isSideSerif) {
-    // Side serifs: vertical positioning with -7% offset
-    switch (vertical) {
-      case 'bottom':
-        element.style.top = '-7%';
-        element.style.right = '-4%';
-        element.style.maxHeight = '200%';
-        break;
-      case 'top':
-        element.style.bottom = '-7%';
-        element.style.left = '-4%';
-        element.style.maxHeight = '200%';
-        break;
-      default:
-        element.style.top = '0';
-        break;
+  // 1x1 joins
+  if (category === 'joins' && width === 1 && height === 1) {
+    const config = shapeConfig.positioning.joins['1x1'].default;
+    element.style.top = config.top;
+    element.style.left = config.left;
+    element.style.transform = config.transform;
+    return;
+  }
+
+  // Multi-cell bodies (non-joins)
+  if (category === 'bodies' && (width === 2 || height === 2)) {
+    element.style.top = '0';
+    element.style.left = '0';
+    element.style.transform = '';
+    return;
+  }
+
+  // Serifs
+  if (category === 'serifs') {
+    const angleConfig = shapeConfig.positioning.serifs[angleKey];
+    if (!angleConfig) {
+      return applyStandardPositioning(element, vertical, horizontal);
     }
 
-    // Horizontal centering for side serifs
-    switch (horizontal) {
-      case 'left':
-        element.style.left = '0';
-        break;
-      case 'right':
-        element.style.right = '0';
-        break;
-      case 'center':
-        element.style.left = '50%';
-        element.style.transform = 'translateX(-50%)';
-        break;
-    }
-  } else {
-    // Regular 22.5° serifs: horizontal positioning with -7% offset
-    switch (horizontal) {
-      case 'right':
-        element.style.left = '-7%';
-        element.style.maxWidth = '200%';
-        break;
-      case 'left':
-        element.style.right = '-7%';
-        element.style.maxWidth = '200%';
-        break;
-      default:
-        element.style.left = '0';
-        break;
+    // 22.5° serifs
+    if (angleKey === '22_5_deg') {
+      const shapeName = shape.shape_name;
+
+      // Special named serifs
+      if (angleConfig[shapeName]) {
+        const config = angleConfig[shapeName];
+        if (config.left) element.style.left = config.left;
+        if (config.right) element.style.right = config.right;
+
+        const verticalConfig = config.vertical[vertical];
+        if (verticalConfig) {
+          Object.keys(verticalConfig).forEach(prop => {
+            element.style[prop] = verticalConfig[prop];
+          });
+        }
+        return;
+      }
+
+      // Side serifs
+      const isSideSerif = shape.cell_orientation.includes('top') || shape.cell_orientation.includes('bottom');
+      if (isSideSerif) {
+        const sideConfig = angleConfig.side;
+        const posConfig = sideConfig[vertical] || sideConfig.default;
+
+        Object.keys(posConfig).forEach(prop => {
+          if (prop !== 'transform') {
+            element.style[prop] = posConfig[prop];
+          }
+        });
+
+        const horizConfig = sideConfig.horizontal[horizontal];
+        if (horizConfig) {
+          Object.keys(horizConfig).forEach(prop => {
+            element.style[prop] = horizConfig[prop];
+          });
+        }
+        return;
+      }
+
+      // Regular 22.5° serifs
+      const regularConfig = angleConfig.regular;
+      const horizConfig = regularConfig.horizontal[horizontal] || regularConfig.horizontal.default;
+      const vertConfig = regularConfig.vertical[vertical];
+
+      Object.keys(horizConfig).forEach(prop => {
+        element.style[prop] = horizConfig[prop];
+      });
+
+      if (vertConfig) {
+        Object.keys(vertConfig).forEach(prop => {
+          element.style[prop] = vertConfig[prop];
+        });
+      }
+      return;
     }
 
-    // Vertical positioning for regular serifs
-    switch (vertical) {
-      case 'top':
-        element.style.top = '0';
-        break;
-      case 'bottom':
-        element.style.bottom = '0';
-        break;
-      case 'center':
-        element.style.top = '50%';
-        element.style.transform = 'translateY(-50%)';
-        break;
+    // 45° serifs
+    if (angleKey === '45_deg') {
+      const shapeName = shape.shape_name;
+      const shapeConfig = angleConfig[shapeName];
+
+      if (shapeConfig) {
+        Object.keys(shapeConfig).forEach(prop => {
+          element.style[prop] = shapeConfig[prop];
+        });
+      }
+
+      const verticalConfig = angleConfig.vertical[vertical];
+      if (verticalConfig) {
+        Object.keys(verticalConfig).forEach(prop => {
+          element.style[prop] = verticalConfig[prop];
+        });
+      }
+      return;
     }
   }
+
+  // Default to standard positioning
+  applyStandardPositioning(element, vertical, horizontal);
 }
 
 function applyStandardPositioning(element, vertical, horizontal) {
-  // Standard cell orientation positioning for most shapes
-  switch (vertical) {
-    case 'top':
-      element.style.top = '0';
-      element.style.transform = horizontal === 'center' ? 'translateX(-50%)' : '';
-      break;
-    case 'center':
-      element.style.top = '50%';
-      element.style.transform = horizontal === 'center' ? 'translate(-50%, -50%)' : 'translateY(-50%)';
-      break;
-    case 'bottom':
-      element.style.bottom = '0';
-      element.style.transform = horizontal === 'center' ? 'translateX(-50%)' : '';
-      break;
+  const config = shapeConfig.positioning.standard;
+
+  // Apply vertical positioning
+  const vertConfig = config.vertical[vertical];
+  if (vertConfig) {
+    Object.keys(vertConfig).forEach(prop => {
+      if (prop === 'transform') {
+        const transformConfig = vertConfig[prop];
+        element.style.transform = transformConfig[horizontal] || transformConfig.default;
+      } else {
+        element.style[prop] = vertConfig[prop];
+      }
+    });
   }
 
-  switch (horizontal) {
-    case 'left':
-      element.style.left = '0';
-      break;
-    case 'center':
-      element.style.left = '50%';
-      if (vertical !== 'center') {
-        element.style.transform = 'translateX(-50%)';
-      }
-      break;
-    case 'right':
-      element.style.right = '0';
-      break;
+  // Apply horizontal positioning
+  const horizConfig = config.horizontal[horizontal];
+  if (horizConfig) {
+    Object.keys(horizConfig).forEach(prop => {
+      element.style[prop] = horizConfig[prop];
+    });
+
+    // Handle transform for center horizontal positioning
+    if (horizontal === 'center' && vertical !== 'center') {
+      element.style.transform = 'translateX(-50%)';
+    }
   }
 }
 
 // Place shape in grid cell
-function placeShapeInCell(cell, shapeData) {
-  // Clear existing content
-  cell.innerHTML = '';
+function placeShapeInCell(cell, shapeData, allowOverlap = false) {
+  // Clear existing content only if not allowing overlap
+  if (!allowOverlap) {
+    cell.innerHTML = '';
+  }
 
   // Create SVG element
   const sizeClasses = 'absolute object-contain ' + getSizingClass(shapeData);
@@ -622,61 +782,8 @@ function placeShapeInCell(cell, shapeData) {
 
   svgElement.setAttribute('alt', shapeData.shape.shape_name);
 
-  // Apply positioning based on shape type and configuration
-  const { category, angleKey, shape } = shapeData;
-  const width = shape.width || 1;
-  const height = shape.height || 1;
-  const orientation = shape.cell_orientation.split(' ');
-  const vertical = orientation[0];
-  const horizontal = orientation[1];
-
-  // Determine positioning strategy
-  if (category === 'joins' && (width === 2 || height === 2)) {
-    // Multi-cell joins use configuration-based positioning
-    applyJoinPositioning(svgElement, shapeData);
-  } else if (width === 2 && height === 1) {
-    // Non-join 2x1 shapes: align to top-left
-    svgElement.style.top = '0';
-    svgElement.style.left = '0';
-    svgElement.style.transform = '';
-  } else if (width === 1 && height === 2) {
-    // Non-join 1x2 shapes: align to top-left
-    svgElement.style.top = '0';
-    svgElement.style.left = '0';
-    svgElement.style.transform = '';
-  } else if (category === 'serifs' && angleKey === '22_5_deg') {
-    // 22.5° serifs use special offset positioning
-    applySerifPositioning(svgElement, shapeData, vertical, horizontal);
-  } else if (category === 'serifs' && angleKey === '45_deg') {
-    // 45° serifs positioning
-    const shapeName = shape.shape_name;
-    if (shapeName === 'tl_to_br' || shapeName === 'bl_to_tr') {
-      svgElement.style.right = '0';
-    } else if (shapeName === 'tr_to_bl' || shapeName === 'br_to_tl') {
-      svgElement.style.left = '0';
-    }
-    // Apply vertical positioning normally
-    switch (vertical) {
-      case 'top':
-        svgElement.style.top = '0';
-        break;
-      case 'bottom':
-        svgElement.style.bottom = '0';
-        break;
-      case 'center':
-        svgElement.style.top = '50%';
-        svgElement.style.transform = 'translateY(-50%)';
-        break;
-    }
-  } else if (category === 'joins' && width === 1 && height === 1) {
-    // 1x1 joins: special -5% offset
-    svgElement.style.top = '-5%';
-    svgElement.style.left = '-5%';
-    svgElement.style.transform = '';
-  } else {
-    // Standard cell orientation positioning
-    applyStandardPositioning(svgElement, vertical, horizontal);
-  }
+  // Apply positioning using unified configuration-based approach
+  applyPositioning(svgElement, shapeData);
 
   // SVG elements don't have load errors like img elements, so no error handling needed
 
