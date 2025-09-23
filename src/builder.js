@@ -38,8 +38,8 @@ const shapeConfig = {
           bottom: { vertical: 'top: 28%', horizontal: { right: 'right: -5%', left: 'left: -5%' }}
         },
         '112_5_deg': {
-          top: { vertical: 'bottom: -15%', horizontal: { right: 'left: -27%', left: 'right: -27%' }},
-          bottom: { vertical: 'top: -15%', horizontal: { right: 'left: -27%', left: 'right: -27%' }}
+          top: { vertical: 'bottom: 27%', horizontal: { right: 'left: -45%', left: 'right: -45%' }},
+          bottom: { vertical: 'top: 27%', horizontal: { right: 'left: -45%', left: 'right: -45%' }}
         },
         '135_deg': {
           top: { vertical: 'bottom: 5%', horizontal: { right: 'left: -4.5%', left: 'right: -4.5%' }},
@@ -56,8 +56,8 @@ const shapeConfig = {
           bottom: { vertical: 'bottom: -5%', horizontal: { left: 'right: 25%', right: 'left: 25%' }}
         },
         '112_5_deg': {
-          top: { vertical: 'top: -27%', horizontal: { left: 'right: -15%', right: 'left: -15%' }},
-          bottom: { vertical: 'bottom: -27%', horizontal: { left: 'right: -15%', right: 'left: -15%' }}
+          top: { vertical: 'top: 27%', horizontal: { left: 'left: 5%', right: 'right: -45%' }},
+          bottom: { vertical: 'bottom: 27%', horizontal: { left: 'left: 5%', right: 'right: -45%' }}
         },
         '135_deg': {
           top: { vertical: 'bottom: -4.5%', horizontal: { left: 'right: 5%', right: 'left: 5%' }},
@@ -69,11 +69,13 @@ const shapeConfig = {
         }
       },
       '1x1': {
-        default: {
-          type: 'offset',
-          top: '-5%',
-          left: '-5%',
-          transform: ''
+        '45_deg': {
+          top: { vertical: 'top: -5%', horizontal: { left: 'left: 0%', right: 'right: 0%' } },
+          bottom: { vertical: 'bottom: -5%', horizontal: { left: 'left: 0%', right: 'right: 0%' } }
+        },
+        '90_deg': {
+          top: { vertical: 'top: -5%', horizontal: { left: 'left: 0%', right: 'right: 0%' } },
+          bottom: { vertical: 'bottom: -5%', horizontal: { left: 'left: 0%', right: 'right: 0%' } }
         }
       }
     },
@@ -146,10 +148,10 @@ const shapeConfig = {
         }
       },
       '45_deg': {
-        'tl_to_br': { right: '0' },
-        'bl_to_tr': { right: '0' },
-        'tr_to_bl': { left: '0' },
-        'br_to_tl': { left: '0' },
+        'tl_to_br': { right: '3%' },
+        'bl_to_tr': { right: '3%' },
+        'tr_to_bl': { left: '3%' },
+        'br_to_tl': { left: '3%' },
         vertical: {
           top: { top: '0' },
           bottom: { bottom: '0' },
@@ -521,10 +523,10 @@ function handleGridCellClick(event) {
   // Check if we're in constrained builder mode (has validation function)
   const isConstrainedBuilder = typeof validateShapeConnections === 'function';
 
-  // For freebuilder: only clear cells if it's not a body shape, or if it's a multi-cell shape
+  // For freebuilder: allow bodies and joins to overlap (only clear for serifs and multi-cell shapes)
   // For constrained builder: always clear cells as before
   const shouldClearCells = isConstrainedBuilder ||
-                          selectedShape.category !== 'bodies' ||
+                          (selectedShape.category !== 'bodies' && selectedShape.category !== 'joins') ||
                           (selectedShape.shape.width > 1 || selectedShape.shape.height > 1);
 
   if (shouldClearCells) {
@@ -618,7 +620,7 @@ function applyPositioning(element, shapeData) {
 
   // 1x1 joins
   if (category === 'joins' && width === 1 && height === 1) {
-    const config = shapeConfig.positioning.joins['1x1'].default;
+    const config = shapeConfig.positioning.joins['1x1'];
     element.style.top = config.top;
     element.style.left = config.left;
     element.style.transform = config.transform;
