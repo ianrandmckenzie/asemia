@@ -215,20 +215,22 @@ function createShapeButton(category, angleKey, shape) {
   // include dark: variants so JS-created buttons respect dark mode
   button.className = 'w-12 h-12 border border-gray-300 dark:border-gray-700 rounded hover:border-blue-500 dark:hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/40 flex items-center justify-center relative shape-button';
 
-  // Create image element
-  const img = document.createElement('img');
-  const imagePath = `./assets/shapes/${category}/${angleKey}/${shape.shape_name}.svg`;
-  img.src = imagePath;
-  img.alt = shape.shape_name;
-  img.className = 'w-8 h-8 object-contain';
+  // Create SVG element
+  let svgElement = null;
 
-  // Handle image load error
-  img.onerror = () => {
+  if (window.SVGUtils && window.SVGUtils.createSVGElement) {
+    svgElement = window.SVGUtils.createSVGElement(category, angleKey, shape.shape_name, 'w-8 h-8 object-contain');
+  }
+
+  if (!svgElement) {
+    // Fallback to text if SVG not found or SVGUtils not available
     button.textContent = shape.shape_name.substring(0, 2);
     button.className += ' text-xs font-mono';
-  };
-
-  button.appendChild(img);
+    console.warn(`Could not create SVG for ${category}/${angleKey}/${shape.shape_name}, using text fallback`);
+  } else {
+    svgElement.setAttribute('alt', shape.shape_name);
+    button.appendChild(svgElement);
+  }
 
   // Store shape data
   button.dataset.category = category;
@@ -433,7 +435,7 @@ function getSizingClass(shapeData) {
 }
 
 // Helper function to apply join positioning
-function applyJoinPositioning(img, shapeData) {
+function applyJoinPositioning(element, shapeData) {
   const { angleKey, shape } = shapeData;
   const width = shape.width || 1;
   const height = shape.height || 1;
@@ -449,145 +451,145 @@ function applyJoinPositioning(img, shapeData) {
 
   // Apply vertical positioning
   const verticalStyle = positioning.vertical.split(': ');
-  img.style[verticalStyle[0]] = verticalStyle[1];
+  element.style[verticalStyle[0]] = verticalStyle[1];
 
   // Apply horizontal positioning
   const horizontalKey = orientation.includes('right') ? 'right' : 'left';
   const horizontalStyle = positioning.horizontal[horizontalKey].split(': ');
-  img.style[horizontalStyle[0]] = horizontalStyle[1];
+  element.style[horizontalStyle[0]] = horizontalStyle[1];
 
-  img.style.transform = '';
+  element.style.transform = '';
 }
 
-function applySerifPositioning(img, shapeData, vertical, horizontal) {
+function applySerifPositioning(element, shapeData, vertical, horizontal) {
   const isSideSerif = shapeData.shape.cell_orientation.includes('top') || shapeData.shape.cell_orientation.includes('bottom');
-  img.style.transform = '';
+  element.style.transform = '';
 
   const shapeName = shapeData.shape.shape_name;
 
   // Special handling for specific 22.5 serifs - check this FIRST
   if (shapeName === 'br_to_tl' || shapeName === 'tr_to_bl') {
-    img.style.right = '-7%';
+    element.style.right = '-7%';
     // Vertical positioning for special serifs
     switch (vertical) {
       case 'top':
-        img.style.top = '0';
+        element.style.top = '0';
         break;
       case 'bottom':
-        img.style.bottom = '0';
+        element.style.bottom = '0';
         break;
       case 'center':
-        img.style.top = '50%';
-        img.style.transform = 'translateY(-50%)';
+        element.style.top = '50%';
+        element.style.transform = 'translateY(-50%)';
         break;
     }
   } else if (shapeName === 'bl_to_tr' || shapeName === 'tl_to_br') {
-    img.style.left = '-7%';
+    element.style.left = '-7%';
     // Vertical positioning for special serifs
     switch (vertical) {
       case 'top':
-        img.style.top = '0';
+        element.style.top = '0';
         break;
       case 'bottom':
-        img.style.bottom = '0';
+        element.style.bottom = '0';
         break;
       case 'center':
-        img.style.top = '50%';
-        img.style.transform = 'translateY(-50%)';
+        element.style.top = '50%';
+        element.style.transform = 'translateY(-50%)';
         break;
     }
   } else if (isSideSerif) {
     // Side serifs: vertical positioning with -7% offset
     switch (vertical) {
       case 'bottom':
-        img.style.top = '-7%';
-        img.style.right = '-4%';
-        img.style.maxHeight = '200%';
+        element.style.top = '-7%';
+        element.style.right = '-4%';
+        element.style.maxHeight = '200%';
         break;
       case 'top':
-        img.style.bottom = '-7%';
-        img.style.left = '-4%';
-        img.style.maxHeight = '200%';
+        element.style.bottom = '-7%';
+        element.style.left = '-4%';
+        element.style.maxHeight = '200%';
         break;
       default:
-        img.style.top = '0';
+        element.style.top = '0';
         break;
     }
 
     // Horizontal centering for side serifs
     switch (horizontal) {
       case 'left':
-        img.style.left = '0';
+        element.style.left = '0';
         break;
       case 'right':
-        img.style.right = '0';
+        element.style.right = '0';
         break;
       case 'center':
-        img.style.left = '50%';
-        img.style.transform = 'translateX(-50%)';
+        element.style.left = '50%';
+        element.style.transform = 'translateX(-50%)';
         break;
     }
   } else {
     // Regular 22.5° serifs: horizontal positioning with -7% offset
     switch (horizontal) {
       case 'right':
-        img.style.left = '-7%';
-        img.style.maxWidth = '200%';
+        element.style.left = '-7%';
+        element.style.maxWidth = '200%';
         break;
       case 'left':
-        img.style.right = '-7%';
-        img.style.maxWidth = '200%';
+        element.style.right = '-7%';
+        element.style.maxWidth = '200%';
         break;
       default:
-        img.style.left = '0';
+        element.style.left = '0';
         break;
     }
 
     // Vertical positioning for regular serifs
     switch (vertical) {
       case 'top':
-        img.style.top = '0';
+        element.style.top = '0';
         break;
       case 'bottom':
-        img.style.bottom = '0';
+        element.style.bottom = '0';
         break;
       case 'center':
-        img.style.top = '50%';
-        img.style.transform = 'translateY(-50%)';
+        element.style.top = '50%';
+        element.style.transform = 'translateY(-50%)';
         break;
     }
   }
 }
 
-function applyStandardPositioning(img, vertical, horizontal) {
+function applyStandardPositioning(element, vertical, horizontal) {
   // Standard cell orientation positioning for most shapes
   switch (vertical) {
     case 'top':
-      img.style.top = '0';
-      img.style.transform = horizontal === 'center' ? 'translateX(-50%)' : '';
+      element.style.top = '0';
+      element.style.transform = horizontal === 'center' ? 'translateX(-50%)' : '';
       break;
     case 'center':
-      img.style.top = '50%';
-      img.style.transform = horizontal === 'center' ? 'translate(-50%, -50%)' : 'translateY(-50%)';
+      element.style.top = '50%';
+      element.style.transform = horizontal === 'center' ? 'translate(-50%, -50%)' : 'translateY(-50%)';
       break;
     case 'bottom':
-      img.style.bottom = '0';
-      img.style.transform = horizontal === 'center' ? 'translateX(-50%)' : '';
+      element.style.bottom = '0';
+      element.style.transform = horizontal === 'center' ? 'translateX(-50%)' : '';
       break;
   }
 
   switch (horizontal) {
     case 'left':
-      img.style.left = '0';
+      element.style.left = '0';
       break;
     case 'center':
-      img.style.left = '50%';
+      element.style.left = '50%';
       if (vertical !== 'center') {
-        img.style.transform = 'translateX(-50%)';
+        element.style.transform = 'translateX(-50%)';
       }
       break;
     case 'right':
-      img.style.right = '0';
+      element.style.right = '0';
       break;
   }
 }
@@ -597,14 +599,28 @@ function placeShapeInCell(cell, shapeData) {
   // Clear existing content
   cell.innerHTML = '';
 
-  // Create image element
-  const img = document.createElement('img');
-  img.src = shapeData.imagePath;
-  img.alt = shapeData.shape.shape_name;
-
-  // Apply sizing classes
+  // Create SVG element
   const sizeClasses = 'absolute object-contain ' + getSizingClass(shapeData);
-  img.className = sizeClasses;
+  let svgElement = null;
+
+  if (window.SVGUtils && window.SVGUtils.createSVGElement) {
+    svgElement = window.SVGUtils.createSVGElement(shapeData.category, shapeData.angleKey, shapeData.shape.shape_name, sizeClasses);
+  }
+
+  if (!svgElement) {
+    console.warn('Could not create SVG for shape:', shapeData);
+    // Create a text fallback
+    const textElement = document.createElement('div');
+    textElement.textContent = shapeData.shape.shape_name;
+    textElement.className = sizeClasses + ' text-xs font-mono text-center text-gray-600 dark:text-gray-300';
+    textElement.style.display = 'flex';
+    textElement.style.alignItems = 'center';
+    textElement.style.justifyContent = 'center';
+    cell.appendChild(textElement);
+    return;
+  }
+
+  svgElement.setAttribute('alt', shapeData.shape.shape_name);
 
   // Apply positioning based on shape type and configuration
   const { category, angleKey, shape } = shapeData;
@@ -617,64 +633,54 @@ function placeShapeInCell(cell, shapeData) {
   // Determine positioning strategy
   if (category === 'joins' && (width === 2 || height === 2)) {
     // Multi-cell joins use configuration-based positioning
-    applyJoinPositioning(img, shapeData);
+    applyJoinPositioning(svgElement, shapeData);
   } else if (width === 2 && height === 1) {
     // Non-join 2x1 shapes: align to top-left
-    img.style.top = '0';
-    img.style.left = '0';
-    img.style.transform = '';
+    svgElement.style.top = '0';
+    svgElement.style.left = '0';
+    svgElement.style.transform = '';
   } else if (width === 1 && height === 2) {
     // Non-join 1x2 shapes: align to top-left
-    img.style.top = '0';
-    img.style.left = '0';
-    img.style.transform = '';
+    svgElement.style.top = '0';
+    svgElement.style.left = '0';
+    svgElement.style.transform = '';
   } else if (category === 'serifs' && angleKey === '22_5_deg') {
     // 22.5° serifs use special offset positioning
-    applySerifPositioning(img, shapeData, vertical, horizontal);
+    applySerifPositioning(svgElement, shapeData, vertical, horizontal);
   } else if (category === 'serifs' && angleKey === '45_deg') {
     // 45° serifs positioning
     const shapeName = shape.shape_name;
     if (shapeName === 'tl_to_br' || shapeName === 'bl_to_tr') {
-      img.style.right = '0';
+      svgElement.style.right = '0';
     } else if (shapeName === 'tr_to_bl' || shapeName === 'br_to_tl') {
-      img.style.left = '0';
+      svgElement.style.left = '0';
     }
     // Apply vertical positioning normally
     switch (vertical) {
       case 'top':
-        img.style.top = '0';
+        svgElement.style.top = '0';
         break;
       case 'bottom':
-        img.style.bottom = '0';
+        svgElement.style.bottom = '0';
         break;
       case 'center':
-        img.style.top = '50%';
-        img.style.transform = 'translateY(-50%)';
+        svgElement.style.top = '50%';
+        svgElement.style.transform = 'translateY(-50%)';
         break;
     }
   } else if (category === 'joins' && width === 1 && height === 1) {
     // 1x1 joins: special -5% offset
-    img.style.top = '-5%';
-    img.style.left = '-5%';
-    img.style.transform = '';
+    svgElement.style.top = '-5%';
+    svgElement.style.left = '-5%';
+    svgElement.style.transform = '';
   } else {
     // Standard cell orientation positioning
-    applyStandardPositioning(img, vertical, horizontal);
+    applyStandardPositioning(svgElement, vertical, horizontal);
   }
 
-  // Handle image load error
-  img.onerror = () => {
-    img.style.display = 'none';
-    const text = document.createElement('div');
-    text.textContent = shapeData.shape.shape_name;
-  // text fallback should also have a dark variant
-  text.className = 'absolute text-xs font-mono text-center w-full text-gray-600 dark:text-gray-300';
-    text.style.top = '50%';
-    text.style.transform = 'translateY(-50%)';
-    cell.appendChild(text);
-  };
+  // SVG elements don't have load errors like img elements, so no error handling needed
 
-  cell.appendChild(img);
+  cell.appendChild(svgElement);
 }
 
 // Setup tab switching
@@ -767,5 +773,20 @@ function updateGridLayers() {
   }
 }
 
-// Initialize when page loads
-document.addEventListener('DOMContentLoaded', initBuilder);
+// Initialize when page loads - but wait for SVG system to be ready
+document.addEventListener('DOMContentLoaded', () => {
+  // Check if SVG system is ready, if not wait for the ready event
+  if (window.SVGUtils && window.SVGUtils.isReady && window.SVGUtils.isReady()) {
+    initBuilder();
+  } else {
+    // Listen for the SVG system ready event
+    document.addEventListener('svgSystemReady', initBuilder);
+    // Fallback: try again in 100ms if event doesn't fire
+    setTimeout(() => {
+      if (window.SVGUtils && window.SVGUtils.isReady && window.SVGUtils.isReady()) {
+        document.removeEventListener('svgSystemReady', initBuilder);
+        initBuilder();
+      }
+    }, 100);
+  }
+});
