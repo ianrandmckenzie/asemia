@@ -19,8 +19,8 @@ const shapeConfig = {
           bottom: { vertical: 'top: -14%', horizontal: { right: 'right: -5%', left: 'left: -5%' }}
         },
         '112_5_deg': {
-          top: { vertical: 'bottom: 25%', horizontal: { right: 'left: -50%', left: 'right: -50%' }},
-          bottom: { vertical: 'top: 25%', horizontal: { right: 'left: -50%', left: 'right: -50%' }}
+          top: { vertical: 'bottom: -15%', horizontal: { right: 'left: -27%', left: 'right: -27%' }},
+          bottom: { vertical: 'top: -15%', horizontal: { right: 'left: -27%', left: 'right: -27%' }}
         },
         '135_deg': {
           top: { vertical: 'bottom: 0%', horizontal: { right: 'left: 0%', left: 'right: 0%' }},
@@ -33,8 +33,8 @@ const shapeConfig = {
       },
       '1x2': {
         '67_5_deg': {
-          top: { vertical: 'top: 0%', horizontal: { left: 'right: 25%', right: 'left: 25%' }},
-          bottom: { vertical: 'bottom: 0%', horizontal: { left: 'right: 25%', right: 'left: 25%' }}
+          top: { vertical: 'top: -5%', horizontal: { left: 'right: 27%', right: 'left: 27%' }},
+          bottom: { vertical: 'bottom: -5%', horizontal: { left: 'right: 27%', right: 'left: 27%' }}
         },
         '112_5_deg': {
           top: { vertical: 'top: 27%', horizontal: { left: 'left: -5%', right: 'right: -5%' }},
@@ -55,8 +55,8 @@ const shapeConfig = {
           bottom: { vertical: 'bottom: -5%', horizontal: { left: 'left: -5%', right: 'right: -5%' } }
         },
         '90_deg': {
-          top: { vertical: 'top: 0%', horizontal: { left: 'left: 0%', right: 'right: 0%' } },
-          bottom: { vertical: 'bottom: 0%', horizontal: { left: 'left: 0%', right: 'right: 0%' } }
+          top: { vertical: 'top: -5%', horizontal: { left: 'left: -5%', right: 'right: -5%' } },
+          bottom: { vertical: 'bottom: -5%', horizontal: { left: 'left: -5%', right: 'right: -5%' } }
         }
       }
     },
