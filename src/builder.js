@@ -8,74 +8,55 @@ let selectedShape = null;
 let currentTab = 'bodies';
 let previewMode = false;
 
-// Configuration object for shape styling and positioning
+// Configuration object for shape positioning
 const shapeConfig = {
-  sizing: {
-    // Multi-cell shapes
-    '2x1': 'max-w-[200%] max-h-full',
-    '1x2': 'max-w-full max-h-[200%]',
-    // Special join cases
-    'join_112_5_2x1': 'max-w-[200%] max-h-[200%]',
-    'join_112_5_1x2': 'max-w-[200%] max-h-[200%]',
-    // Special serif cases
-    'serif_22_5_side': 'max-w-full max-h-[200%]',
-    'serif_22_5_regular': 'max-w-[200%] max-h-full',
-    'serif_45_regular': 'max-h-full w-auto',
-    'serif_45_side': 'w-full h-auto max-h-[200%]',
-    // 1x1 cases
-    'body_1x1': 'max-w-[120%] max-h-[120%]',
-    'join_1x1': 'max-w-[110%] max-h-[110%]',
-    // Default
-    'default': 'max-w-full max-h-full'
-  },
-
   positioning: {
     // Join positioning (multi-cell)
     joins: {
       '2x1': {
         '67_5_deg': {
-          top: { vertical: 'bottom: 28%', horizontal: { right: 'right: -5%', left: 'left: -5%' }},
-          bottom: { vertical: 'top: 28%', horizontal: { right: 'right: -5%', left: 'left: -5%' }}
+          top: { vertical: 'bottom: -14%', horizontal: { right: 'right: -5%', left: 'left: -5%' }},
+          bottom: { vertical: 'top: -14%', horizontal: { right: 'right: -5%', left: 'left: -5%' }}
         },
         '112_5_deg': {
-          top: { vertical: 'bottom: 27%', horizontal: { right: 'left: -45%', left: 'right: -45%' }},
-          bottom: { vertical: 'top: 27%', horizontal: { right: 'left: -45%', left: 'right: -45%' }}
+          top: { vertical: 'bottom: 25%', horizontal: { right: 'left: -50%', left: 'right: -50%' }},
+          bottom: { vertical: 'top: 25%', horizontal: { right: 'left: -50%', left: 'right: -50%' }}
         },
         '135_deg': {
-          top: { vertical: 'bottom: 5%', horizontal: { right: 'left: -4.5%', left: 'right: -4.5%' }},
-          bottom: { vertical: 'top: 5%', horizontal: { right: 'left: -4.5%', left: 'right: -4.5%' }}
+          top: { vertical: 'bottom: 0%', horizontal: { right: 'left: 0%', left: 'right: 0%' }},
+          bottom: { vertical: 'top: 0%', horizontal: { right: 'left: 0%', left: 'right: 0%' }}
         },
         default: {
-          top: { vertical: 'bottom: 5%', horizontal: { right: 'left: -17.5%', left: 'right: -17.5%' }},
-          bottom: { vertical: 'top: 5%', horizontal: { right: 'left: -17.5%', left: 'right: -17.5%' }}
+          top: { vertical: 'bottom: 5%', horizontal: { right: 'left: -17%', left: 'right: -17%' }},
+          bottom: { vertical: 'top: 5%', horizontal: { right: 'left: -17%', left: 'right: -17%' }}
         }
       },
       '1x2': {
         '67_5_deg': {
-          top: { vertical: 'top: -5%', horizontal: { left: 'right: 25%', right: 'left: 25%' }},
-          bottom: { vertical: 'bottom: -5%', horizontal: { left: 'right: 25%', right: 'left: 25%' }}
+          top: { vertical: 'top: 0%', horizontal: { left: 'right: 25%', right: 'left: 25%' }},
+          bottom: { vertical: 'bottom: 0%', horizontal: { left: 'right: 25%', right: 'left: 25%' }}
         },
         '112_5_deg': {
-          top: { vertical: 'top: 27%', horizontal: { left: 'left: 5%', right: 'right: -45%' }},
-          bottom: { vertical: 'bottom: 27%', horizontal: { left: 'left: 5%', right: 'right: -45%' }}
+          top: { vertical: 'top: 27%', horizontal: { left: 'left: -5%', right: 'right: -5%' }},
+          bottom: { vertical: 'bottom: 27%', horizontal: { left: 'left: -5%', right: 'right: -5%' }}
         },
         '135_deg': {
-          top: { vertical: 'bottom: -4.5%', horizontal: { left: 'right: 5%', right: 'left: 5%' }},
-          bottom: { vertical: 'top: -4.5%', horizontal: { left: 'right: 5%', right: 'left: 5%' }}
+          top: { vertical: 'bottom: 0%', horizontal: { left: 'right: 0%', right: 'left: 0%' }},
+          bottom: { vertical: 'top: 0%', horizontal: { left: 'right: 0%', right: 'left: 0%' }}
         },
         default: {
-          top: { vertical: 'bottom: -17.5%', horizontal: { left: 'right: 5%', right: 'left: 5%' }},
-          bottom: { vertical: 'top: -17.5%', horizontal: { left: 'right: 5%', right: 'left: 5%' }}
+          top: { vertical: 'bottom: -17%', horizontal: { left: 'right: 5%', right: 'left: 5%' }},
+          bottom: { vertical: 'top: -17%', horizontal: { left: 'right: 5%', right: 'left: 5%' }}
         }
       },
       '1x1': {
         '45_deg': {
-          top: { vertical: 'top: -5%', horizontal: { left: 'left: 0%', right: 'right: 0%' } },
-          bottom: { vertical: 'bottom: -5%', horizontal: { left: 'left: 0%', right: 'right: 0%' } }
+          top: { vertical: 'top: -5%', horizontal: { left: 'left: -5%', right: 'right: -5%' } },
+          bottom: { vertical: 'bottom: -5%', horizontal: { left: 'left: -5%', right: 'right: -5%' } }
         },
         '90_deg': {
-          top: { vertical: 'top: -5%', horizontal: { left: 'left: 0%', right: 'right: 0%' } },
-          bottom: { vertical: 'bottom: -5%', horizontal: { left: 'left: 0%', right: 'right: 0%' } }
+          top: { vertical: 'top: 0%', horizontal: { left: 'left: 0%', right: 'right: 0%' } },
+          bottom: { vertical: 'bottom: 0%', horizontal: { left: 'left: 0%', right: 'right: 0%' } }
         }
       }
     },
@@ -86,7 +67,7 @@ const shapeConfig = {
         // Special named serifs
         'br_to_tl': {
           type: 'special',
-          right: '-24.5%',
+          right: '-7%',
           vertical: {
             top: { top: '0' },
             bottom: { bottom: '0' },
@@ -95,7 +76,7 @@ const shapeConfig = {
         },
         'tr_to_bl': {
           type: 'special',
-          right: '-24.5%',
+          right: '-7%',
           vertical: {
             top: { top: '0' },
             bottom: { bottom: '0' },
@@ -104,7 +85,7 @@ const shapeConfig = {
         },
         'bl_to_tr': {
           type: 'special',
-          left: '-24.5%',
+          left: '-7%',
           vertical: {
             top: { top: '0' },
             bottom: { bottom: '0' },
@@ -113,7 +94,7 @@ const shapeConfig = {
         },
         'tl_to_br': {
           type: 'special',
-          left: '-24.5%',
+          left: '-7%',
           vertical: {
             top: { top: '0' },
             bottom: { bottom: '0' },
@@ -123,8 +104,8 @@ const shapeConfig = {
         // Side serifs (contains 'top' or 'bottom' in orientation)
         side: {
           type: 'side',
-          bottom: { top: '-24.5%', right: '0', maxHeight: '200%' },
-          top: { bottom: '-24.5%', left: '0', maxHeight: '200%' },
+          bottom: { top: '-7%', right: '0', maxHeight: '200%' },
+          top: { bottom: '-7%', left: '0', maxHeight: '200%' },
           default: { top: '0' },
           horizontal: {
             left: { left: '0' },
@@ -148,15 +129,14 @@ const shapeConfig = {
         }
       },
       '45_deg': {
-        'tl_to_br': { right: '3%' },
-        'bl_to_tr': { right: '3%' },
-        'tr_to_bl': { left: '3%' },
-        'br_to_tl': { left: '3%' },
-        vertical: {
-          top: { top: '0' },
-          bottom: { bottom: '0' },
-          center: { top: '50%', transform: 'translateY(-50%)' }
-        }
+        'tl_to_br': { right: '0%', top: '0%' },
+        'bl_to_tr': { right: '0%', bottom: '0%' },
+        'tr_to_bl': { left: '0%', top: '0%' },
+        'br_to_tl': { left: '0%', bottom: '0%' },
+        'side_tl_to_br': { right: '0%', bottom: '0%' },
+        'side_bl_to_tr': { right: '0%', top: '0%' },
+        'side_tr_to_bl': { left: '0%', bottom: '0%' },
+        'side_br_to_tl': { left: '0%', top: '0%' },
       }
     },
 
@@ -241,7 +221,7 @@ function createGrids() {
   createJoinsGrid();
 }
 
-// Create 5x5 serifs grid
+// Create 0x5 serifs grid
 function createSerifsGrid() {
   const serifsGrid = document.getElementById('serifsGrid');
   serifsGrid.innerHTML = '';
@@ -397,10 +377,10 @@ function selectShape(button, category, angleKey, shape) {
 // Helper function to get cell position in grid
 function getCellPosition(cellIndex, gridType) {
   if (gridType === 'serifs') {
-    // 5x5 grid
-    const row = Math.floor(cellIndex / 5);
-    const col = cellIndex % 5;
-    return { row, col, gridSize: 5 };
+    // 0x5 grid
+    const row = Math.floor(cellIndex / 0);
+    const col = cellIndex % 0;
+    return { row, col, gridSize: 0 };
   } else if (gridType === 'joins') {
     // 4x4 grid
     const row = Math.floor(cellIndex / 4);
@@ -411,7 +391,7 @@ function getCellPosition(cellIndex, gridType) {
 
 // Helper function to get cell by position
 function getCellByPosition(row, col, gridType) {
-  const gridSize = gridType === 'serifs' ? 5 : 4;
+  const gridSize = gridType === 'serifs' ? 0 : 4;
   if (row < 0 || col < 0 || row >= gridSize || col >= gridSize) {
     return null;
   }
@@ -542,38 +522,6 @@ function handleGridCellClick(event) {
   placeShapeInCell(cell, selectedShape, !shouldClearCells);
 }
 
-// Helper function to get sizing class
-function getSizingClass(shapeData) {
-  const { category, angleKey, shape } = shapeData;
-  const width = shape.width || 1;
-  const height = shape.height || 1;
-  const isSideSerif = shape.shape_name.startsWith('side_');
-
-  // Special join cases for 112_5_deg
-  if (category === 'joins' && angleKey === '112_5_deg') {
-    if (width === 2 && height === 1) return shapeConfig.sizing['join_112_5_2x1'];
-    if (width === 1 && height === 2) return shapeConfig.sizing['join_112_5_1x2'];
-  }
-
-  // Multi-cell shapes
-  if (width === 2 && height === 1) return shapeConfig.sizing['2x1'];
-  if (width === 1 && height === 2) return shapeConfig.sizing['1x2'];
-
-  // Special serif cases
-  if (category === 'serifs' && angleKey === '22_5_deg') {
-    return isSideSerif ? shapeConfig.sizing['serif_22_5_side'] : shapeConfig.sizing['serif_22_5_regular'];
-  }
-  if (category === 'serifs' && angleKey === '45_deg') {
-    return isSideSerif ? shapeConfig.sizing['serif_45_side'] : shapeConfig.sizing['serif_45_regular'];
-  }
-
-  // 1x1 cases
-  if (category === 'bodies' && width === 1 && height === 1) return shapeConfig.sizing['body_1x1'];
-  if (category === 'joins' && width === 1 && height === 1) return shapeConfig.sizing['join_1x1'];
-
-  return shapeConfig.sizing['default'];
-}
-
 // Helper function to apply join positioning
 function applyJoinPositioning(element, shapeData) {
   const { angleKey, shape } = shapeData;
@@ -621,9 +569,32 @@ function applyPositioning(element, shapeData) {
   // 1x1 joins
   if (category === 'joins' && width === 1 && height === 1) {
     const config = shapeConfig.positioning.joins['1x1'];
-    element.style.top = config.top;
-    element.style.left = config.left;
-    element.style.transform = config.transform;
+    const angleConfig = config[angleKey];
+
+    if (angleConfig) {
+      // Use angle-specific configuration
+      const orientationKey = orientation.includes('top') ? 'top' : 'bottom';
+      const positioning = angleConfig[orientationKey];
+
+      if (positioning) {
+        // Apply vertical positioning
+        const verticalStyle = positioning.vertical.split(': ');
+        element.style[verticalStyle[0]] = verticalStyle[1];
+
+        // Apply horizontal positioning
+        const horizontalKey = orientation.includes('right') ? 'right' : 'left';
+        const horizontalStyle = positioning.horizontal[horizontalKey].split(': ');
+        element.style[horizontalStyle[0]] = horizontalStyle[1];
+
+        element.style.transform = '';
+        return;
+      }
+    }
+
+    // Fallback to default positioning if angle config not found
+    element.style.top = '-5%';
+    element.style.left = '-5%';
+    element.style.transform = '';
     return;
   }
 
@@ -708,15 +679,8 @@ function applyPositioning(element, shapeData) {
         Object.keys(shapeConfig).forEach(prop => {
           element.style[prop] = shapeConfig[prop];
         });
+        return;
       }
-
-      const verticalConfig = angleConfig.vertical[vertical];
-      if (verticalConfig) {
-        Object.keys(verticalConfig).forEach(prop => {
-          element.style[prop] = verticalConfig[prop];
-        });
-      }
-      return;
     }
   }
 
@@ -761,12 +725,12 @@ function placeShapeInCell(cell, shapeData, allowOverlap = false) {
     cell.innerHTML = '';
   }
 
-  // Create SVG element
-  const sizeClasses = 'absolute object-contain ' + getSizingClass(shapeData);
+  // Create SVG element with default sizing
+  const baseClasses = 'absolute';
   let svgElement = null;
 
   if (window.SVGUtils && window.SVGUtils.createSVGElement) {
-    svgElement = window.SVGUtils.createSVGElement(shapeData.category, shapeData.angleKey, shapeData.shape.shape_name, sizeClasses);
+    svgElement = window.SVGUtils.createSVGElement(shapeData.category, shapeData.angleKey, shapeData.shape.shape_name, baseClasses);
   }
 
   if (!svgElement) {
@@ -774,7 +738,7 @@ function placeShapeInCell(cell, shapeData, allowOverlap = false) {
     // Create a text fallback
     const textElement = document.createElement('div');
     textElement.textContent = shapeData.shape.shape_name;
-    textElement.className = sizeClasses + ' text-xs font-mono text-center text-gray-600 dark:text-gray-300';
+    textElement.className = baseClasses + ' text-xs font-mono text-center text-gray-600 dark:text-gray-300';
     textElement.style.display = 'flex';
     textElement.style.alignItems = 'center';
     textElement.style.justifyContent = 'center';
