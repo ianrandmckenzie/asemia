@@ -23,8 +23,8 @@ const shapeConfig = {
           bottom: { vertical: 'top: -15%', horizontal: { right: 'left: -27%', left: 'right: -27%' }}
         },
         '135_deg': {
-          top: { vertical: 'bottom: 0%', horizontal: { right: 'left: 0%', left: 'right: 0%' }},
-          bottom: { vertical: 'top: 0%', horizontal: { right: 'left: 0%', left: 'right: 0%' }}
+          top: { vertical: 'bottom: -15%', horizontal: { right: 'left: -15%', left: 'right: -15%' }},
+          bottom: { vertical: 'top: -15%', horizontal: { right: 'left: -15%', left: 'right: -15%' }}
         },
         default: {
           top: { vertical: 'bottom: 5%', horizontal: { right: 'left: -17%', left: 'right: -17%' }},
@@ -41,8 +41,8 @@ const shapeConfig = {
           bottom: { vertical: 'bottom: 27%', horizontal: { left: 'left: -5%', right: 'right: -5%' }}
         },
         '135_deg': {
-          top: { vertical: 'bottom: 0%', horizontal: { left: 'right: 0%', right: 'left: 0%' }},
-          bottom: { vertical: 'top: 0%', horizontal: { left: 'right: 0%', right: 'left: 0%' }}
+          top: { vertical: 'bottom: -15%', horizontal: { left: 'right: -15%', right: 'left: -15%' }},
+          bottom: { vertical: 'top: -15%', horizontal: { left: 'right: -15%', right: 'left: -15%' }}
         },
         default: {
           top: { vertical: 'bottom: -17%', horizontal: { left: 'right: 5%', right: 'left: 5%' }},
