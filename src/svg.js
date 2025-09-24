@@ -170,6 +170,11 @@ function createSVGElement(category, angle, shapeName, classes = '') {
     svgElement.setAttribute('class', classes);
   }
 
+  // Add data attributes for shape identification (used by save/load)
+  svgElement.setAttribute('data-category', category);
+  svgElement.setAttribute('data-angle-key', angle);
+  svgElement.setAttribute('data-shape-name', shapeName);
+
   return svgElement;
 }
 

@@ -129,9 +129,12 @@ function extractGridData(gridId, gridType) {
   const grid = document.getElementById(gridId);
   const cells = [];
 
+  console.log(`Extracting data from ${gridId}:`, grid);
+
   for (let i = 0; i < grid.children.length; i++) {
     const cell = grid.children[i];
     const img = cell.querySelector('img');
+    const svg = cell.querySelector('svg');
 
     if (img && img.src) {
       // Extract shape info from image path
@@ -141,6 +144,8 @@ function extractGridData(gridId, gridType) {
       const angleKey = pathParts[pathParts.length - 2];
       const category = pathParts[pathParts.length - 3];
 
+      console.log(`Found img in cell ${i}:`, { srcPath, fileName, angleKey, category });
+
       cells.push({
         index: i,
         category: category,
@@ -148,8 +153,27 @@ function extractGridData(gridId, gridType) {
         shapeName: fileName,
         imagePath: `./assets/shapes/${category}/${angleKey}/${fileName}.svg`
       });
+    } else if (svg) {
+      // Handle SVG elements that might not have img tags
+      console.log(`Found svg in cell ${i}:`, svg);
+      // Try to extract data from SVG attributes or data attributes
+      const category = svg.getAttribute('data-category');
+      const angleKey = svg.getAttribute('data-angle-key');
+      const shapeName = svg.getAttribute('data-shape-name');
+
+      if (category && angleKey && shapeName) {
+        cells.push({
+          index: i,
+          category: category,
+          angleKey: angleKey,
+          shapeName: shapeName,
+          imagePath: `./assets/shapes/${category}/${angleKey}/${shapeName}.svg`
+        });
+      }
     }
   }
+
+  console.log(`Extracted ${cells.length} shapes from ${gridId}`);
 
   return {
     gridType: gridType,
@@ -188,15 +212,19 @@ function handleFileLoad(event) {
 
 // Apply a loaded composition to the grids
 function applyComposition(composition) {
+  console.log('Loading composition:', composition);
+
   // Clear existing grids
   clearAllGrids();
 
   // Apply shapes to each grid
   if (composition.grids?.serifs) {
+    console.log('Loading serifs grid with', composition.grids.serifs.shapes.length, 'shapes');
     applyGridData('serifsGrid', composition.grids.serifs);
   }
 
   if (composition.grids?.joins) {
+    console.log('Loading joins grid with', composition.grids.joins.shapes.length, 'shapes');
     applyGridData('joinsGrid', composition.grids.joins);
   }
 
@@ -223,14 +251,22 @@ function applyGridData(gridId, gridData) {
       };
 
       // Find the actual shape data from rulesData for proper placement
-      if (rulesData?.shapes?.[shapeInfo.category]?.[shapeInfo.angleKey]) {
-        const foundShape = rulesData.shapes[shapeInfo.category][shapeInfo.angleKey]
+      if (window.rulesData?.shapes?.[shapeInfo.category]?.[shapeInfo.angleKey]) {
+        const foundShape = window.rulesData.shapes[shapeInfo.category][shapeInfo.angleKey]
           .find(s => s.shape_name === shapeInfo.shapeName);
 
         if (foundShape) {
           shapeData.shape = foundShape;
-          placeShapeInCell(cell, shapeData);
+          if (window.placeShapeInCell) {
+            window.placeShapeInCell(cell, shapeData);
+          } else {
+            console.warn('placeShapeInCell function not available');
+          }
+        } else {
+          console.warn('Shape not found in rulesData:', shapeInfo.shapeName);
         }
+      } else {
+        console.warn('Category/angleKey not found in rulesData:', shapeInfo.category, shapeInfo.angleKey);
       }
     }
   });
