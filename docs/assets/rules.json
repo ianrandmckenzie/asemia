@@ -5,6 +5,7 @@
       "0_deg": [
         {
           "shape_name": "horizontal",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"120px\" height=\"100px\" viewBox=\"0 0 120 100\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><rect style=\"stroke-width:0.0487215\" id=\"rect3-4-4\" width=\"9.9512787\" height=\"119.95128\" x=\"-54.975639\" y=\"0.024369435\" transform=\"rotate(-90)\" /></svg>",
           "cell_orientation": "center center",
           "allowed_connection_points": "left center, right center",
           "width": 1,
@@ -12,6 +13,7 @@
         },
         {
           "shape_name": "vertical",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"100px\" height=\"120px\" viewBox=\"0 0 100 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><rect style=\"stroke-width:0.0487215\" id=\"rect3-4\" width=\"9.9512787\" height=\"119.95128\" x=\"45.024353\" y=\"0.024369169\" /></svg>",
           "cell_orientation":"center center",
           "allowed_connection_points": "top center, bottom center",
           "width": 1,
@@ -21,6 +23,7 @@
       "22_5_deg": [
         {
           "shape_name": "vertical_slash",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"100px\" height=\"200px\" viewBox=\"0 0 100 200\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><rect style=\"stroke-width:0.0769319\" id=\"rect3-6\" width=\"9.923069\" height=\"299.92307\" x=\"79.500786\" y=\"-76.707748\" transform=\"rotate(22.5)\" /></svg>",
           "cell_orientation": "center center",
           "allowed_connection_points": "bottom left, top right",
           "width": 1,
@@ -28,6 +31,7 @@
         },
         {
           "shape_name": "vertical_backslash",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"100px\" height=\"200px\" viewBox=\"0 0 100 200\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><rect style=\"stroke-width:0.0769319\" id=\"rect3-6-3\" width=\"9.923069\" height=\"299.92307\" x=\"-12.887162\" y=\"-261.48364\" transform=\"rotate(157.5)\" /></svg>",
           "cell_orientation": "center center",
           "allowed_connection_points": "top left, bottom right",
           "width": 1,
@@ -35,6 +39,7 @@
         },
         {
           "shape_name": "horizontal_slash",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"200px\" height=\"100px\" viewBox=\"0 0 200 100\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><rect style=\"stroke-width:0.0769319\" id=\"rect3-6-3-5\" width=\"9.923069\" height=\"299.92307\" x=\"79.500786\" y=\"-223.21533\" transform=\"rotate(67.5)\" /></svg>",
           "cell_orientation": "center center",
           "allowed_connection_points": "bottom left, top right",
           "width": 2,
@@ -42,6 +47,7 @@
         },
         {
           "shape_name": "horizontal_backslash",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"200px\" height=\"100px\" viewBox=\"0 0 200 100\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><rect style=\"stroke-width:0.0769319\" id=\"rect3-6-3-0\" width=\"9.923069\" height=\"299.92307\" x=\"-12.887156\" y=\"-38.439407\" transform=\"rotate(-67.5)\" /></svg>",
           "cell_orientation": "center center",
           "allowed_connection_points": "top left, bottom right",
           "width": 2,
@@ -51,6 +57,7 @@
       "45_deg": [
         {
           "shape_name": "slash",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"120px\" height=\"120px\" viewBox=\"0 0 120 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><rect style=\"stroke-width:0.0628574\" id=\"rect3\" width=\"9.9371433\" height=\"199.93715\" x=\"79.884239\" y=\"-99.968575\" transform=\"rotate(45)\" /></svg>",
           "cell_orientation": "center center",
           "allowed_connection_points": "bottom left, top right",
           "width": 1,
@@ -58,6 +65,7 @@
         },
         {
           "shape_name": "backslash",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"120px\" height=\"120px\" viewBox=\"0 0 120 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><rect style=\"stroke-width:0.0628574\" id=\"rect3-3\" width=\"9.9371433\" height=\"199.93715\" x=\"-4.968565\" y=\"-15.115747\" transform=\"rotate(-45)\" /></svg>",
           "cell_orientation": "center center",
           "allowed_connection_points": "top left, bottom right",
           "width": 1,
@@ -70,6 +78,7 @@
       "0_deg": [
         {
           "shape_name": "bottom",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"100px\" height=\"100px\" viewBox=\"0 0 99.999999 100\" version=\"1.1\" id=\"svg1\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"g1\"><rect style=\"stroke-width:0.0487215\" id=\"rect3-4\" width=\"9.9512787\" height=\"119.95128\" x=\"45.024361\" y=\"-19.975639\" /><path d=\"M 45.25,51.936182 V 100 h -45 C 20.70912,98.219833 31.98881,86.542207 38.13672,74.875959 43.07144,65.511871 44.72077,56.184537 45.25,51.936182 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke:none;stroke-width:0.24156;enable-background:accumulate;\" id=\"path16\" /><path d=\"M 54.75,51.93619 V 100 h 45 C 79.290883,98.21984 68.011192,86.54221 61.863277,74.87597 56.928563,65.51188 55.279226,56.18454 54.75,51.93619 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke:none;stroke-width:0.24156;enable-background:accumulate;\" id=\"path16-9\" /></g></svg>",
           "cell_orientation": "bottom center",
           "allowed_connection_points": "top center",
           "width": 1,
@@ -77,6 +86,7 @@
         },
         {
           "shape_name": "top",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"100px\" height=\"100px\" viewBox=\"0 0 99.999999 100\" version=\"1.1\" id=\"svg1\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"g2\" transform=\"rotate(180,50.000001,50)\"><rect style=\"stroke-width:0.0487215\" id=\"rect3-4-6\" width=\"9.9512787\" height=\"119.95128\" x=\"45.024361\" y=\"-19.975639\" /><path d=\"M 45.25,51.936182 V 100 h -45 C 20.70912,98.219833 31.98881,86.542207 38.13672,74.875959 43.07144,65.511871 44.72077,56.184537 45.25,51.936182 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke:none;stroke-width:0.24156;enable-background:accumulate;\" id=\"path16-94\" /><path d=\"M 54.75,51.93619 V 100 h 45 C 79.290883,98.21984 68.011192,86.54221 61.863277,74.87597 56.928563,65.51188 55.279226,56.18454 54.75,51.93619 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke:none;stroke-width:0.24156;enable-background:accumulate;\" id=\"path16-9-1\" /></g></svg>",
           "cell_orientation":"top center",
           "allowed_connection_points": "bottom center",
           "width": 1,
@@ -84,6 +94,7 @@
         },
         {
           "shape_name": "left",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"100px\" height=\"100px\" viewBox=\"0 0 99.999999 100\" version=\"1.1\" id=\"svg1\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"g2-4\" transform=\"rotate(90,49.999999,49.999999)\"><rect style=\"stroke-width:0.0487215\" id=\"rect3-4-1\" width=\"9.9512787\" height=\"119.95128\" x=\"45.024361\" y=\"-19.975639\" /><path d=\"M 45.25,51.936182 V 100 h -45 C 20.70912,98.219833 31.98881,86.542207 38.13672,74.875959 43.07144,65.511871 44.72077,56.184537 45.25,51.936182 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke:none;stroke-width:0.24156;enable-background:accumulate;\" id=\"path16-8\" /><path d=\"M 54.75,51.93619 V 100 h 45 C 79.290883,98.21984 68.011192,86.54221 61.863277,74.87597 56.928563,65.51188 55.279226,56.18454 54.75,51.93619 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke:none;stroke-width:0.24156;enable-background:accumulate;\" id=\"path16-9-8\" /></g></svg>",
           "cell_orientation": "center left",
           "allowed_connection_points": "right center",
           "width": 1,
@@ -91,6 +102,7 @@
         },
         {
           "shape_name": "right",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"100px\" height=\"100px\" viewBox=\"0 0 99.999999 100\" version=\"1.1\" id=\"svg1\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"g2-9\" transform=\"rotate(-90,50.000004,50.000006)\"><rect style=\"stroke-width:0.0487215\" id=\"rect3-4-5\" width=\"9.9512787\" height=\"119.95128\" x=\"45.024361\" y=\"-19.975639\" /><path d=\"M 45.25,51.936182 V 100 h -45 C 20.70912,98.219833 31.98881,86.542207 38.13672,74.875959 43.07144,65.511871 44.72077,56.184537 45.25,51.936182 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke:none;stroke-width:0.24156;enable-background:accumulate;\" id=\"path16-4\" /><path d=\"M 54.75,51.93619 V 100 h 45 C 79.290883,98.21984 68.011192,86.54221 61.863277,74.87597 56.928563,65.51188 55.279226,56.18454 54.75,51.93619 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke:none;stroke-width:0.24156;enable-background:accumulate;\" id=\"path16-9-9\" /></g></svg>",
           "cell_orientation":"center right",
           "allowed_connection_points": "left center",
           "width": 1,
@@ -100,6 +112,7 @@
       "22_5_deg": [
         {
           "shape_name": "bl_to_tr",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"165px\" height=\"100px\" viewBox=\"0 0 165 100\" version=\"1.1\" id=\"svg1\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(65.695715,-9.9790952)\"><g id=\"g9\" transform=\"translate(0,-90.03631)\"><path   d=\"M 96.782206,0.02273763 H 86.041777 L 3.2178914,199.97694 H 13.958321 Z\"   style=\"stroke-width:0.0769319\"   id=\"path8\" /><path   d=\"m 58.975,200 c -8.93223,-1.12765 -15.23237,-4.04171 -19.57033,-7.99299 -5.62012,-5.11917 -7.94443,-11.94574 -8.54728,-18.74337 -0.56975,-6.42447 0.39297,-12.81941 1.56409,-17.79756 L 13.975,200 Z\"   style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.279814;enable-background:accumulate;\"   id=\"path28\" /><path   d=\"M 3.5550321,200 H -59.5 c 51.4524017,-5.72393 79.671302,-46.47841 90.000002,-65.05124 z\"   style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.358838;enable-background:accumulate;\"   id=\"path45\" /></g></g></svg>",
           "cell_orientation": "bottom right",
           "allowed_connection_points": "bottom left",
           "width": 1,
@@ -108,6 +121,7 @@
         },
         {
           "shape_name": "br_to_tl",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"165px\" height=\"100px\" viewBox=\"0 0 165 100\" version=\"1.1\" id=\"svg1\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1-4\" transform=\"matrix(-1,0,0,1,99.303778,-9.9790973)\"><g id=\"g9-0\" transform=\"translate(0,-90.03631)\"><path   d=\"M 96.782206,0.02273763 H 86.041777 L 3.2178914,199.97694 H 13.958321 Z\"   style=\"stroke-width:0.0769319\"   id=\"path8-4\" /><path   d=\"m 58.975,200 c -8.93223,-1.12765 -15.23237,-4.04171 -19.57033,-7.99299 -5.62012,-5.11917 -7.94443,-11.94574 -8.54728,-18.74337 -0.56975,-6.42447 0.39297,-12.81941 1.56409,-17.79756 L 13.975,200 Z\"   style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.279814;enable-background:accumulate;\"   id=\"path28-6\" /><path   d=\"M 3.5550321,200 H -59.5 c 51.4524017,-5.72393 79.671302,-46.47841 90.000002,-65.05124 z\"   style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.358838;enable-background:accumulate;\"   id=\"path45-4\" /></g></g></svg>",
           "cell_orientation":"bottom left",
           "allowed_connection_points": "bottom right",
           "width": 1,
@@ -116,6 +130,7 @@
         },
         {
           "shape_name": "tr_to_bl",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"165px\" height=\"100px\" viewBox=\"0 0 165 100\" version=\"1.1\" id=\"svg1\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1-1\" transform=\"rotate(180,49.651886,54.989559)\"><g id=\"g9-3\" transform=\"translate(0,-90.03631)\"><path   d=\"M 96.782206,0.02273763 H 86.041777 L 3.2178914,199.97694 H 13.958321 Z\"   style=\"stroke-width:0.0769319\"   id=\"path8-9\" /><path   d=\"m 58.975,200 c -8.93223,-1.12765 -15.23237,-4.04171 -19.57033,-7.99299 -5.62012,-5.11917 -7.94443,-11.94574 -8.54728,-18.74337 -0.56975,-6.42447 0.39297,-12.81941 1.56409,-17.79756 L 13.975,200 Z\"   style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.279814;enable-background:accumulate;\"   id=\"path28-7\" /><path   d=\"M 3.5550321,200 H -59.5 c 51.4524017,-5.72393 79.671302,-46.47841 90.000002,-65.05124 z\"   style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.358838;enable-background:accumulate;\"   id=\"path45-3\" /></g></g></svg>",
           "cell_orientation": "top left",
           "allowed_connection_points": "top right",
           "width": 1,
@@ -124,6 +139,7 @@
         },
         {
           "shape_name": "tl_to_br",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"165px\" height=\"100px\" viewBox=\"0 0 165 100\" version=\"1.1\" id=\"svg1\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1-4-9\" transform=\"matrix(1,0,0,-1,65.696008,109.97909)\"><g id=\"g9-0-4\" transform=\"translate(0,-90.03631)\"><path   d=\"M 96.782206,0.02273763 H 86.041777 L 3.2178914,199.97694 H 13.958321 Z\"   style=\"stroke-width:0.0769319\"   id=\"path8-4-1\" /><path   d=\"m 58.975,200 c -8.93223,-1.12765 -15.23237,-4.04171 -19.57033,-7.99299 -5.62012,-5.11917 -7.94443,-11.94574 -8.54728,-18.74337 -0.56975,-6.42447 0.39297,-12.81941 1.56409,-17.79756 L 13.975,200 Z\"   style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.279814;enable-background:accumulate;\"   id=\"path28-6-6\" /><path   d=\"M 3.5550321,200 H -59.5 c 51.4524017,-5.72393 79.671302,-46.47841 90.000002,-65.05124 z\"   style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.358838;enable-background:accumulate;\"   id=\"path45-4-1\" /></g></g></svg>",
           "cell_orientation":"top right",
           "allowed_connection_points": "top left",
           "width": 1,
@@ -132,6 +148,7 @@
         },
         {
           "shape_name": "side_bl_to_tr",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"100px\" height=\"165px\" viewBox=\"0 0 100 165\" version=\"1.1\" id=\"svg1\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1-4-9-3\" transform=\"matrix(0,-1,-1,0,109.97911,99.303781)\"><g id=\"g9-0-4-3\" transform=\"translate(0,-90.03631)\"><path   d=\"M 96.782206,0.02273763 H 86.041777 L 3.2178914,199.97694 H 13.958321 Z\"   style=\"stroke-width:0.0769319\"   id=\"path8-4-1-7\" /><path   d=\"m 58.975,200 c -8.93223,-1.12765 -15.23237,-4.04171 -19.57033,-7.99299 -5.62012,-5.11917 -7.94443,-11.94574 -8.54728,-18.74337 -0.56975,-6.42447 0.39297,-12.81941 1.56409,-17.79756 L 13.975,200 Z\"   style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.279814;enable-background:accumulate;\"   id=\"path28-6-6-0\" /><path   d=\"M 3.5550321,200 H -59.5 c 51.4524017,-5.72393 79.671302,-46.47841 90.000002,-65.05124 z\"   style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.358838;enable-background:accumulate;\"   id=\"path45-4-1-0\" /></g></g></svg>",
           "cell_orientation": "top left",
           "allowed_connection_points": "top right",
           "width": 1,
@@ -140,6 +157,7 @@
         },
         {
           "shape_name": "side_br_to_tl",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"100px\" height=\"165px\" viewBox=\"0 0 100 165\" version=\"1.1\" id=\"svg1\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1-7\" transform=\"rotate(-90,44.662346,54.641424)\"><g id=\"g9-39\" transform=\"translate(0,-90.03631)\"><path   d=\"M 96.782206,0.02273763 H 86.041777 L 3.2178914,199.97694 H 13.958321 Z\"   style=\"stroke-width:0.0769319\"   id=\"path8-7\" /><path   d=\"m 58.975,200 c -8.93223,-1.12765 -15.23237,-4.04171 -19.57033,-7.99299 -5.62012,-5.11917 -7.94443,-11.94574 -8.54728,-18.74337 -0.56975,-6.42447 0.39297,-12.81941 1.56409,-17.79756 L 13.975,200 Z\"   style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.279814;enable-background:accumulate;\"   id=\"path28-79\" /><path   d=\"M 3.5550321,200 H -59.5 c 51.4524017,-5.72393 79.671302,-46.47841 90.000002,-65.05124 z\"   style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.358838;enable-background:accumulate;\"   id=\"path45-5\" /></g></g></svg>",
           "cell_orientation":"top right",
           "allowed_connection_points": "top left",
           "width": 1,
@@ -148,6 +166,7 @@
         },
         {
           "shape_name": "side_tr_to_bl",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"100px\" height=\"165px\" viewBox=\"0 0 100 165\" version=\"1.1\" id=\"svg1\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1-4-4\" transform=\"matrix(0,1,1,0,-9.9790897,65.695998)\"><g id=\"g9-0-8\" transform=\"translate(0,-90.03631)\"><path   d=\"M 96.782206,0.02273763 H 86.041777 L 3.2178914,199.97694 H 13.958321 Z\"   style=\"stroke-width:0.0769319\"   id=\"path8-4-7\" /><path   d=\"m 58.975,200 c -8.93223,-1.12765 -15.23237,-4.04171 -19.57033,-7.99299 -5.62012,-5.11917 -7.94443,-11.94574 -8.54728,-18.74337 -0.56975,-6.42447 0.39297,-12.81941 1.56409,-17.79756 L 13.975,200 Z\"   style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.279814;enable-background:accumulate;\"   id=\"path28-6-5\" /><path   d=\"M 3.5550321,200 H -59.5 c 51.4524017,-5.72393 79.671302,-46.47841 90.000002,-65.05124 z\"   style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.358838;enable-background:accumulate;\"   id=\"path45-4-9\" /></g></g></svg>",
           "cell_orientation": "bottom right",
           "allowed_connection_points": "bottom left",
           "width": 1,
@@ -156,6 +175,7 @@
         },
         {
           "shape_name": "side_tl_to_br",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"100px\" height=\"165px\" viewBox=\"0 0 100 165\" version=\"1.1\" id=\"svg1\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1-1-8\" transform=\"rotate(90,22.141542,87.837577)\"><g id=\"g9-3-5\" transform=\"translate(0,-90.03631)\"><path   d=\"M 96.782206,0.02273763 H 86.041777 L 3.2178914,199.97694 H 13.958321 Z\"   style=\"stroke-width:0.0769319\"   id=\"path8-9-8\" /><path   d=\"m 58.975,200 c -8.93223,-1.12765 -15.23237,-4.04171 -19.57033,-7.99299 -5.62012,-5.11917 -7.94443,-11.94574 -8.54728,-18.74337 -0.56975,-6.42447 0.39297,-12.81941 1.56409,-17.79756 L 13.975,200 Z\"   style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.279814;enable-background:accumulate;\"   id=\"path28-7-9\" /><path   d=\"M 3.5550321,200 H -59.5 c 51.4524017,-5.72393 79.671302,-46.47841 90.000002,-65.05124 z\"   style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.358838;enable-background:accumulate;\"   id=\"path45-3-6\" /></g></g></svg>",
           "cell_orientation": "bottom left",
           "allowed_connection_points": "bottom right",
           "width": 1,
@@ -166,6 +186,7 @@
       "45_deg": [
         {
           "shape_name": "bl_to_tr",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"160px\" height=\"100px\" viewBox=\"0 0 160 100\" version=\"1.1\" id=\"svg1\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\"><g id=\"g1\" transform=\"translate(59.950177,-0.0498225)\"><path d=\"M 99.985628,7.0409139 V 0.01395264 H 92.959701 L -7.0119751,99.985628 h 14.052889 z\" style=\"stroke-width:0.128389\" id=\"path11\" /><path d=\"M 45.808654,61.191342 7,100 H 52.000001 C 51.258846,99.879883 50.471025,99.736288 49.635689,99.549146 45.732954,98.6748 41.036618,96.993287 37.879218,93.709414 34.721818,90.425543 33.150026,85.522219 35.497072,78.387069 37.037815,73.703123 40.267379,68.03938 45.808654,61.191342 Z\" id=\"path1\" style=\"stroke-width:0.214285\" /><path d=\"m -53.5,99.995448 c 5.29713,-0.379028 14.83191,-1.604416 27.07215,-5.55247 C -9.1931286,88.883963 13.30766,77.909293 36.5,56.423197 L -7.0769191,100 v -0.0047 z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.343048;enable-background:accumulate;\" id=\"path36\" /></g></g></svg>",
           "cell_orientation": "top left",
           "allowed_connection_points": "top right",
           "width": 1,
@@ -174,6 +195,7 @@
         },
         {
           "shape_name": "br_to_tl",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"160px\" height=\"100px\" viewBox=\"0 0 160 100\" version=\"1.1\" id=\"svg1\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1-1-5\" transform=\"matrix(-1,0,0,1,160.00001,1.4094322e-5)\"><g id=\"g2-7\" transform=\"translate(59.950177,-0.0498225)\"><path d=\"M 99.985628,7.0409139 V 0.01395264 H 92.959701 L -7.0119751,99.985628 h 14.052889 z\" style=\"stroke-width:0.128389\" id=\"path11-1-1\" /><path d=\"M 45.808654,61.191342 7,100 H 52.000001 C 51.258846,99.879883 50.471025,99.736288 49.635689,99.549146 45.732954,98.6748 41.036618,96.993287 37.879218,93.709414 34.721818,90.425543 33.150026,85.522219 35.497072,78.387069 37.037815,73.703123 40.267379,68.03938 45.808654,61.191342 Z\" id=\"path1-5-0\" style=\"stroke-width:0.214285\" /><path d=\"m -53.5,99.995448 c 5.29713,-0.379028 14.83191,-1.604416 27.07215,-5.55247 C -9.1931286,88.883963 13.30766,77.909293 36.5,56.423197 L -7.0769191,100 v -0.0047 z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.343048;enable-background:accumulate;\" id=\"path36-0-6\" /></g></g></svg>",
           "cell_orientation":"top right",
           "allowed_connection_points": "top left",
           "width": 1,
@@ -182,6 +204,7 @@
         },
         {
           "shape_name": "tr_to_bl",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"160px\" height=\"100px\" viewBox=\"0 0 160 100\" version=\"1.1\" id=\"svg1\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1-1\" transform=\"rotate(180,80,49.999995)\"><g id=\"g2\" transform=\"translate(59.950177,-0.0498225)\"><path d=\"M 99.985628,7.0409139 V 0.01395264 H 92.959701 L -7.0119751,99.985628 h 14.052889 z\" style=\"stroke-width:0.128389\" id=\"path11-1\" /><path d=\"M 45.808654,61.191342 7,100 H 52.000001 C 51.258846,99.879883 50.471025,99.736288 49.635689,99.549146 45.732954,98.6748 41.036618,96.993287 37.879218,93.709414 34.721818,90.425543 33.150026,85.522219 35.497072,78.387069 37.037815,73.703123 40.267379,68.03938 45.808654,61.191342 Z\" id=\"path1-5\" style=\"stroke-width:0.214285\" /><path d=\"m -53.5,99.995448 c 5.29713,-0.379028 14.83191,-1.604416 27.07215,-5.55247 C -9.1931286,88.883963 13.30766,77.909293 36.5,56.423197 L -7.0769191,100 v -0.0047 z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.343048;enable-background:accumulate;\" id=\"path36-0\" /></g></g></svg>",
           "cell_orientation": "bottom right",
           "allowed_connection_points": "bottom left",
           "width": 1,
@@ -190,6 +213,7 @@
         },
         {
           "shape_name": "tl_to_br",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"160px\" height=\"100px\" viewBox=\"0 0 160 100\" version=\"1.1\" id=\"svg1\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1-1-0\" transform=\"matrix(1,0,0,-1,4.7176996e-6,100)\"><g id=\"g2-5\" transform=\"translate(59.950177,-0.0498225)\"><path d=\"M 99.985628,7.0409139 V 0.01395264 H 92.959701 L -7.0119751,99.985628 h 14.052889 z\" style=\"stroke-width:0.128389\" id=\"path11-1-2\" /><path d=\"M 45.808654,61.191342 7,100 H 52.000001 C 51.258846,99.879883 50.471025,99.736288 49.635689,99.549146 45.732954,98.6748 41.036618,96.993287 37.879218,93.709414 34.721818,90.425543 33.150026,85.522219 35.497072,78.387069 37.037815,73.703123 40.267379,68.03938 45.808654,61.191342 Z\" id=\"path1-5-3\" style=\"stroke-width:0.214285\" /><path d=\"m -53.5,99.995448 c 5.29713,-0.379028 14.83191,-1.604416 27.07215,-5.55247 C -9.1931286,88.883963 13.30766,77.909293 36.5,56.423197 L -7.0769191,100 v -0.0047 z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.343048;enable-background:accumulate;\" id=\"path36-0-8\" /></g></g></svg>",
           "cell_orientation":"bottom left",
           "allowed_connection_points": "bottom right",
           "width": 1,
@@ -198,6 +222,7 @@
         },
         {
           "shape_name": "side_bl_to_tr",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"100px\" height=\"160px\" viewBox=\"0 0 100 160\" version=\"1.1\" id=\"svg1\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1-1-0-1\" transform=\"matrix(0,-1,-1,0,99.899955,159.99995)\"><g id=\"g2-5-0\" transform=\"translate(59.950177,-0.0498225)\"><path d=\"M 99.985628,7.0409139 V 0.01395264 H 92.959701 L -7.0119751,99.985628 h 14.052889 z\" style=\"stroke-width:0.128389\" id=\"path11-1-2-1\" /><path d=\"M 45.808654,61.191342 7,100 H 52.000001 C 51.258846,99.879883 50.471025,99.736288 49.635689,99.549146 45.732954,98.6748 41.036618,96.993287 37.879218,93.709414 34.721818,90.425543 33.150026,85.522219 35.497072,78.387069 37.037815,73.703123 40.267379,68.03938 45.808654,61.191342 Z\" id=\"path1-5-3-9\" style=\"stroke-width:0.214285\" /><path d=\"m -53.5,99.995448 c 5.29713,-0.379028 14.83191,-1.604416 27.07215,-5.55247 C -9.1931286,88.883963 13.30766,77.909293 36.5,56.423197 L -7.0769191,100 v -0.0047 z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.343048;enable-background:accumulate;\" id=\"path36-0-8-5\" /></g></g></svg>",
           "cell_orientation": "top left",
           "allowed_connection_points": "top right",
           "width": 1,
@@ -206,6 +231,7 @@
         },
         {
           "shape_name": "side_br_to_tl",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"100px\" height=\"160px\" viewBox=\"0 0 100 160\" version=\"1.1\" id=\"svg1\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1-16\" transform=\"rotate(-90,80.050048,79.949978)\"><g id=\"g2-1\" transform=\"translate(59.950177,-0.0498225)\"><path d=\"M 99.985628,7.0409139 V 0.01395264 H 92.959701 L -7.0119751,99.985628 h 14.052889 z\" style=\"stroke-width:0.128389\" id=\"path11-18\" /><path d=\"M 45.808654,61.191342 7,100 H 52.000001 C 51.258846,99.879883 50.471025,99.736288 49.635689,99.549146 45.732954,98.6748 41.036618,96.993287 37.879218,93.709414 34.721818,90.425543 33.150026,85.522219 35.497072,78.387069 37.037815,73.703123 40.267379,68.03938 45.808654,61.191342 Z\" id=\"path1-1\" style=\"stroke-width:0.214285\" /><path d=\"m -53.5,99.995448 c 5.29713,-0.379028 14.83191,-1.604416 27.07215,-5.55247 C -9.1931286,88.883963 13.30766,77.909293 36.5,56.423197 L -7.0769191,100 v -0.0047 z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.343048;enable-background:accumulate;\" id=\"path36-1\" /></g></g></svg>",
           "cell_orientation":"top right",
           "allowed_connection_points": "top left",
           "width": 1,
@@ -214,6 +240,7 @@
         },
         {
           "shape_name": "side_tr_to_bl",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"100px\" height=\"160px\" viewBox=\"0 0 100 160\" version=\"1.1\" id=\"svg1\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1-1-5-2\" transform=\"matrix(0,1,1,0,2.4462682e-5,1.6981438e-5)\"><g id=\"g2-7-6\" transform=\"translate(59.950177,-0.0498225)\"><path d=\"M 99.985628,7.0409139 V 0.01395264 H 92.959701 L -7.0119751,99.985628 h 14.052889 z\" style=\"stroke-width:0.128389\" id=\"path11-1-1-6\" /><path d=\"M 45.808654,61.191342 7,100 H 52.000001 C 51.258846,99.879883 50.471025,99.736288 49.635689,99.549146 45.732954,98.6748 41.036618,96.993287 37.879218,93.709414 34.721818,90.425543 33.150026,85.522219 35.497072,78.387069 37.037815,73.703123 40.267379,68.03938 45.808654,61.191342 Z\" id=\"path1-5-0-5\" style=\"stroke-width:0.214285\" /><path d=\"m -53.5,99.995448 c 5.29713,-0.379028 14.83191,-1.604416 27.07215,-5.55247 C -9.1931286,88.883963 13.30766,77.909293 36.5,56.423197 L -7.0769191,100 v -0.0047 z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.343048;enable-background:accumulate;\" id=\"path36-0-6-4\" /></g></g></svg>",
           "cell_orientation": "bottom right",
           "allowed_connection_points": "bottom left",
           "width": 1,
@@ -222,6 +249,7 @@
         },
         {
           "shape_name": "side_tl_to_br",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"100px\" height=\"160px\" viewBox=\"0 0 100 160\" version=\"1.1\" id=\"svg1\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1-1-4\" transform=\"rotate(90,50.000012,50.000007)\"><g id=\"g2-8\" transform=\"translate(59.950177,-0.0498225)\"><path d=\"M 99.985628,7.0409139 V 0.01395264 H 92.959701 L -7.0119751,99.985628 h 14.052889 z\" style=\"stroke-width:0.128389\" id=\"path11-1-6\" /><path d=\"M 45.808654,61.191342 7,100 H 52.000001 C 51.258846,99.879883 50.471025,99.736288 49.635689,99.549146 45.732954,98.6748 41.036618,96.993287 37.879218,93.709414 34.721818,90.425543 33.150026,85.522219 35.497072,78.387069 37.037815,73.703123 40.267379,68.03938 45.808654,61.191342 Z\" id=\"path1-5-1\" style=\"stroke-width:0.214285\" /><path d=\"m -53.5,99.995448 c 5.29713,-0.379028 14.83191,-1.604416 27.07215,-5.55247 C -9.1931286,88.883963 13.30766,77.909293 36.5,56.423197 L -7.0769191,100 v -0.0047 z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.343048;enable-background:accumulate;\" id=\"path36-0-5\" /></g></g></svg>",
           "cell_orientation": "bottom left",
           "allowed_connection_points": "bottom right",
           "width": 1,
@@ -235,6 +263,7 @@
       "22_5_deg": [
         {
           "shape_name": "horizontal_br",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"200px\" height=\"100px\" viewBox=\"0 0 200 100\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-3.3553176,120.79257)\">  <g id=\"g5-0\" transform=\"rotate(-90,-8.718604,-12.074154)\">  <path d=\"M 51.17132,84.2 9.75,184.20001 V 87.24329 c 0.308271,2.99164 0.664801,5.74292 1.076701,8.213383 1.47822,8.865877 3.5736,14.491397 6.22276,17.669137 1.32459,1.58887 2.81003,2.56304 4.3991,2.94427 1.58907,0.38122 3.25212,0.16455 4.91469,-0.50022 3.32515,-1.32954 6.720539,-4.41987 10.11172,-8.48767 C 41.643551,100.88229 46.782691,92.3684 51.17132,84.2 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.668557;enable-background:accumulate;\" id=\"path32-9\" />  <path d=\"M 3.2421794,199.91751 H 9.9683838 V 183.67923 Z\" style=\"stroke-width:0.164733\" id=\"path5-0\" />  <path d=\"M 3.2421794,199.91751 9.9683838,183.67923 V 0.08216553 H 0.08216553 V 199.91751 Z\" style=\"stroke-width:0.164733\" id=\"path4-7\" />  <path d=\"M 96.757402,0.08216553 H 86.016972 L 9.9683838,183.67923 v 16.23828 h 4.0147422 z\" style=\"stroke-width:0.164733\" id=\"path2-6\" />  </g></g></svg>",
           "cell_orientation": "bottom right",
           "allowed_connection_points": "bottom left 0_deg.horizontal, top left 22_5_deg.vertical_slash",
           "width": 2,
@@ -242,6 +271,7 @@
         },
         {
           "shape_name": "horizontal_bl",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"200px\" height=\"100px\" viewBox=\"0 0 200 100\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\">  <g id=\"g5\" transform=\"matrix(0,-1,-1,0,199.99988,99.999799)\">  <path d=\"M 51.17132,84.2 9.75,184.20001 V 87.24329 c 0.308271,2.99164 0.664801,5.74292 1.076701,8.213383 1.47822,8.865877 3.5736,14.491397 6.22276,17.669137 1.32459,1.58887 2.81003,2.56304 4.3991,2.94427 1.58907,0.38122 3.25212,0.16455 4.91469,-0.50022 3.32515,-1.32954 6.720539,-4.41987 10.11172,-8.48767 C 41.643551,100.88229 46.782691,92.3684 51.17132,84.2 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.668557;enable-background:accumulate;\" id=\"path32\" />  <path d=\"M 3.2421794,199.91751 H 9.9683838 V 183.67923 Z\" style=\"stroke-width:0.164733\" id=\"path5\" />  <path d=\"M 3.2421794,199.91751 9.9683838,183.67923 V 0.08216553 H 0.08216553 V 199.91751 Z\" style=\"stroke-width:0.164733\" id=\"path4\" />  <path d=\"M 96.757402,0.08216553 H 86.016972 L 9.9683838,183.67923 v 16.23828 h 4.0147422 z\" style=\"stroke-width:0.164733\" id=\"path2\" />  </g></g></svg>",
           "cell_orientation": "bottom left",
           "allowed_connection_points": "bottom right 0_deg.horizontal, top right 22_5_deg.vertical_backslash",
           "width": 2,
@@ -249,6 +279,7 @@
         },
         {
           "shape_name": "horizontal_tr",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"200px\" height=\"100px\" viewBox=\"0 0 200 100\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(23.487456,-135.89164)\">  <g id=\"g5-0-73\" transform=\"matrix(0,1,1,0,-23.487241,135.89183)\">  <path d=\"M 51.17132,84.2 9.75,184.20001 V 87.24329 c 0.308271,2.99164 0.664801,5.74292 1.076701,8.213383 1.47822,8.865877 3.5736,14.491397 6.22276,17.669137 1.32459,1.58887 2.81003,2.56304 4.3991,2.94427 1.58907,0.38122 3.25212,0.16455 4.91469,-0.50022 3.32515,-1.32954 6.720539,-4.41987 10.11172,-8.48767 C 41.643551,100.88229 46.782691,92.3684 51.17132,84.2 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.668557;enable-background:accumulate;\" id=\"path32-9-87\" />  <path d=\"M 3.2421794,199.91751 H 9.9683838 V 183.67923 Z\" style=\"stroke-width:0.164733\" id=\"path5-0-0\" />  <path d=\"M 3.2421794,199.91751 9.9683838,183.67923 V 0.08216553 H 0.08216553 V 199.91751 Z\" style=\"stroke-width:0.164733\" id=\"path4-7-3\" />  <path d=\"M 96.757402,0.08216553 H 86.016972 L 9.9683838,183.67923 v 16.23828 h 4.0147422 z\" style=\"stroke-width:0.164733\" id=\"path2-6-6\" />  </g></g></svg>",
           "cell_orientation": "top right",
           "allowed_connection_points": "bottom left 22_5_deg.vertical_slash, top left 0_deg.horizontal",
           "width": 2,
@@ -256,6 +287,7 @@
         },
         {
           "shape_name": "horizontal_tl",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"200px\" height=\"100px\" viewBox=\"0 0 200 100\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(36.908837,-253.32884)\">  <g id=\"g5-4\" transform=\"rotate(90,-45.119041,208.21)\">  <path d=\"M 51.17132,84.2 9.75,184.20001 V 87.24329 c 0.308271,2.99164 0.664801,5.74292 1.076701,8.213383 1.47822,8.865877 3.5736,14.491397 6.22276,17.669137 1.32459,1.58887 2.81003,2.56304 4.3991,2.94427 1.58907,0.38122 3.25212,0.16455 4.91469,-0.50022 3.32515,-1.32954 6.720539,-4.41987 10.11172,-8.48767 C 41.643551,100.88229 46.782691,92.3684 51.17132,84.2 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.668557;enable-background:accumulate;\" id=\"path32-0\" />  <path d=\"M 3.2421794,199.91751 H 9.9683838 V 183.67923 Z\" style=\"stroke-width:0.164733\" id=\"path5-43\" />  <path d=\"M 3.2421794,199.91751 9.9683838,183.67923 V 0.08216553 H 0.08216553 V 199.91751 Z\" style=\"stroke-width:0.164733\" id=\"path4-1\" />  <path d=\"M 96.757402,0.08216553 H 86.016972 L 9.9683838,183.67923 v 16.23828 h 4.0147422 z\" style=\"stroke-width:0.164733\" id=\"path2-7\" />  </g></g></svg>",
           "cell_orientation": "top left",
           "allowed_connection_points": "bottom right 22_5_deg.vertical_backslash, top right 0_deg.horizontal",
           "width": 2,
@@ -263,6 +295,7 @@
         },
         {
           "shape_name": "vertical_br",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"100px\" height=\"200px\" viewBox=\"0 0 100 200\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-535.17814,132.53628)\">  <g id=\"g5-9\" transform=\"matrix(-1,0,0,1,635.17797,-132.53612)\">  <path d=\"M 51.17132,84.2 9.75,184.20001 V 87.24329 c 0.308271,2.99164 0.664801,5.74292 1.076701,8.213383 1.47822,8.865877 3.5736,14.491397 6.22276,17.669137 1.32459,1.58887 2.81003,2.56304 4.3991,2.94427 1.58907,0.38122 3.25212,0.16455 4.91469,-0.50022 3.32515,-1.32954 6.720539,-4.41987 10.11172,-8.48767 C 41.643551,100.88229 46.782691,92.3684 51.17132,84.2 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.668557;enable-background:accumulate;\" id=\"path32-4\" />  <path d=\"M 3.2421794,199.91751 H 9.9683838 V 183.67923 Z\" style=\"stroke-width:0.164733\" id=\"path5-4\" />  <path d=\"M 3.2421794,199.91751 9.9683838,183.67923 V 0.08216553 H 0.08216553 V 199.91751 Z\" style=\"stroke-width:0.164733\" id=\"path4-79\" />  <path d=\"M 96.757402,0.08216553 H 86.016972 L 9.9683838,183.67923 v 16.23828 h 4.0147422 z\" style=\"stroke-width:0.164733\" id=\"path2-5\" />  </g></g></svg>",
           "cell_orientation": "bottom right",
           "allowed_connection_points": "top left 22_5_deg.horizontal_slash, top right 0_deg.vertical",
           "width": 1,
@@ -270,6 +303,7 @@
         },
         {
           "shape_name": "vertical_bl",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"100px\" height=\"200px\" viewBox=\"0 0 100 200\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-315.40281,134.21395)\">  <g id=\"g5-9-5\" transform=\"translate(315.403,-134.2138)\">  <path d=\"M 51.17132,84.2 9.75,184.20001 V 87.24329 c 0.308271,2.99164 0.664801,5.74292 1.076701,8.213383 1.47822,8.865877 3.5736,14.491397 6.22276,17.669137 1.32459,1.58887 2.81003,2.56304 4.3991,2.94427 1.58907,0.38122 3.25212,0.16455 4.91469,-0.50022 3.32515,-1.32954 6.720539,-4.41987 10.11172,-8.48767 C 41.643551,100.88229 46.782691,92.3684 51.17132,84.2 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.668557;enable-background:accumulate;\" id=\"path32-4-9\" />  <path d=\"M 3.2421794,199.91751 H 9.9683838 V 183.67923 Z\" style=\"stroke-width:0.164733\" id=\"path5-4-1\" />  <path d=\"M 3.2421794,199.91751 9.9683838,183.67923 V 0.08216553 H 0.08216553 V 199.91751 Z\" style=\"stroke-width:0.164733\" id=\"path4-79-3\" />  <path d=\"M 96.757402,0.08216553 H 86.016972 L 9.9683838,183.67923 v 16.23828 h 4.0147422 z\" style=\"stroke-width:0.164733\" id=\"path2-5-8\" />  </g></g></svg>",
           "cell_orientation": "bottom left",
           "allowed_connection_points": "top left 0_deg.vertical, top right 22_5_deg.horizontal_backslash",
           "width": 1,
@@ -277,6 +311,7 @@
         },
         {
           "shape_name": "vertical_tr",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"100px\" height=\"200px\" viewBox=\"0 0 100 200\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-342.24558,-177.83347)\">  <g id=\"g5-0-7\" transform=\"rotate(180,221.12269,188.91667)\">  <path d=\"M 51.17132,84.2 9.75,184.20001 V 87.24329 c 0.308271,2.99164 0.664801,5.74292 1.076701,8.213383 1.47822,8.865877 3.5736,14.491397 6.22276,17.669137 1.32459,1.58887 2.81003,2.56304 4.3991,2.94427 1.58907,0.38122 3.25212,0.16455 4.91469,-0.50022 3.32515,-1.32954 6.720539,-4.41987 10.11172,-8.48767 C 41.643551,100.88229 46.782691,92.3684 51.17132,84.2 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.668557;enable-background:accumulate;\" id=\"path32-9-8\" />  <path d=\"M 3.2421794,199.91751 H 9.9683838 V 183.67923 Z\" style=\"stroke-width:0.164733\" id=\"path5-0-9\" />  <path d=\"M 3.2421794,199.91751 9.9683838,183.67923 V 0.08216553 H 0.08216553 V 199.91751 Z\" style=\"stroke-width:0.164733\" id=\"path4-7-7\" />  <path d=\"M 96.757402,0.08216553 H 86.016972 L 9.9683838,183.67923 v 16.23828 h 4.0147422 z\" style=\"stroke-width:0.164733\" id=\"path2-6-5\" />  </g></g></svg>",
           "cell_orientation": "top right",
           "allowed_connection_points": "bottom left 22_5_deg.horizontal_slash, bottom right 0_deg.vertical",
           "width": 1,
@@ -284,6 +319,7 @@
         },
         {
           "shape_name": "vertical_tl",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"100px\" height=\"200px\" viewBox=\"0 0 100 200\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-541.88883,-169.4451)\">  <g id=\"g5-0-7-5\" transform=\"matrix(1,0,0,-1,541.88906,369.44495)\">  <path d=\"M 51.17132,84.2 9.75,184.20001 V 87.24329 c 0.308271,2.99164 0.664801,5.74292 1.076701,8.213383 1.47822,8.865877 3.5736,14.491397 6.22276,17.669137 1.32459,1.58887 2.81003,2.56304 4.3991,2.94427 1.58907,0.38122 3.25212,0.16455 4.91469,-0.50022 3.32515,-1.32954 6.720539,-4.41987 10.11172,-8.48767 C 41.643551,100.88229 46.782691,92.3684 51.17132,84.2 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.668557;enable-background:accumulate;\" id=\"path32-9-8-1\" />  <path d=\"M 3.2421794,199.91751 H 9.9683838 V 183.67923 Z\" style=\"stroke-width:0.164733\" id=\"path5-0-9-7\" />  <path d=\"M 3.2421794,199.91751 9.9683838,183.67923 V 0.08216553 H 0.08216553 V 199.91751 Z\" style=\"stroke-width:0.164733\" id=\"path4-7-7-4\" />  <path d=\"M 96.757402,0.08216553 H 86.016972 L 9.9683838,183.67923 v 16.23828 h 4.0147422 z\" style=\"stroke-width:0.164733\" id=\"path2-6-5-5\" />  </g></g></svg>",
           "cell_orientation": "top left",
           "allowed_connection_points": "bottom left 0_deg.vertical, bottom right 22_5_deg.horizontal_backslash",
           "width": 1,
@@ -293,6 +329,7 @@
       "45_deg": [
         {
           "shape_name": "horizontal_br",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"120px\" height=\"120px\" viewBox=\"0 0 120 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(14.965794,194.55533)\">  <g id=\"g2\" transform=\"matrix(-1,0,0,1,105.02706,-194.56238)\">  <path d=\"m 17.002063,110.02429 -9.9513306,9.95133 H 119.97562 v -9.95133 z\" style=\"stroke-width:0.0487215\" id=\"path5-5\" />  <path d=\"M 102.99145,24 16.75,110.2415 h 99.99999 c -1.647,-0.26692 -3.39773,-0.58604 -5.25403,-1.00192 -8.67273,-1.943 -19.109025,-5.67969 -26.125479,-12.977215 C 78.354036,88.964904 74.861163,78.068631 80.076827,62.21273 83.500708,51.803975 90.677509,39.217883 102.99145,24 Z\" id=\"path1-2\" style=\"stroke-width:0.476189\" />  <path d=\"M 17.002063,110.02429 H 2.949174 l -2.92488608,2.92489 v 7.02644 H 7.0507324 Z\" style=\"stroke-width:0.0628574\" id=\"path4-2\" />  <path d=\"M 127.17518,-14.201717 2.949174,110.02429 H 17.002063 L 134.20163,-7.1752726 Z\" style=\"stroke-width:0.0628574\" id=\"path3-2\" />  </g></g></svg>",
           "cell_orientation": "bottom right",
           "allowed_connection_points": "bottom left 0_deg.horizontal, top left 45_deg.slash",
           "width": 1,
@@ -300,6 +337,7 @@
         },
         {
           "shape_name": "horizontal_bl",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"120px\" height=\"120px\" viewBox=\"0 0 120 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\">  <g id=\"g1\">  <path d=\"m 17.002063,110.02429 -9.9513306,9.95133 H 119.97562 v -9.95133 z\" style=\"stroke-width:0.0487215\" id=\"path5\" />  <path d=\"M 102.99145,24 16.75,110.2415 h 99.99999 c -1.647,-0.26692 -3.39773,-0.58604 -5.25403,-1.00192 -8.67273,-1.943 -19.109025,-5.67969 -26.125479,-12.977215 C 78.354036,88.964904 74.861163,78.068631 80.076827,62.21273 83.500708,51.803975 90.677509,39.217883 102.99145,24 Z\" id=\"path1\" style=\"stroke-width:0.476189\" />  <path d=\"M 17.002063,110.02429 H 2.949174 l -2.92488608,2.92489 v 7.02644 H 7.0507324 Z\" style=\"stroke-width:0.0628574\" id=\"path4\" />  <path d=\"M 127.17518,-14.201717 2.949174,110.02429 H 17.002063 L 134.20163,-7.1752726 Z\" style=\"stroke-width:0.0628574\" id=\"path3\" />  </g></g></svg>",
           "cell_orientation": "bottom left",
           "allowed_connection_points": "bottom right 0_deg.horizontal, top right 45_deg.backslash",
           "width": 1,
@@ -307,6 +345,7 @@
         },
         {
           "shape_name": "horizontal_tr",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"120px\" height=\"120px\" viewBox=\"0 0 120 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(8.9794764,-167.61691)\">  <g id=\"g2-29\" transform=\"rotate(180,55.506691,143.81197)\">  <path d=\"m 17.002063,110.02429 -9.9513306,9.95133 H 119.97562 v -9.95133 z\" style=\"stroke-width:0.0487215\" id=\"path5-6\" />  <path d=\"M 102.99145,24 16.75,110.2415 h 99.99999 c -1.647,-0.26692 -3.39773,-0.58604 -5.25403,-1.00192 -8.67273,-1.943 -19.109025,-5.67969 -26.125479,-12.977215 C 78.354036,88.964904 74.861163,78.068631 80.076827,62.21273 83.500708,51.803975 90.677509,39.217883 102.99145,24 Z\" id=\"path1-0\" style=\"stroke-width:0.476189\" />  <path d=\"M 17.002063,110.02429 H 2.949174 l -2.92488608,2.92489 v 7.02644 H 7.0507324 Z\" style=\"stroke-width:0.0628574\" id=\"path4-28\" />  <path d=\"M 127.17518,-14.201717 2.949174,110.02429 H 17.002063 L 134.20163,-7.1752726 Z\" style=\"stroke-width:0.0628574\" id=\"path3-4\" />  </g></g></svg>",
           "cell_orientation": "top right",
           "allowed_connection_points": "bottom left 45_deg.slash, top left 0_deg.horizontal",
           "width": 1,
@@ -314,6 +353,7 @@
         },
         {
           "shape_name": "horizontal_tl",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"120px\" height=\"120px\" viewBox=\"0 0 120 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(2.9931588,-356.18588)\">  <g id=\"g2-2\" transform=\"matrix(1,0,0,-1,-2.9860183,476.19296)\">  <path d=\"m 17.002063,110.02429 -9.9513306,9.95133 H 119.97562 v -9.95133 z\" style=\"stroke-width:0.0487215\" id=\"path5-0\" />  <path d=\"M 102.99145,24 16.75,110.2415 h 99.99999 c -1.647,-0.26692 -3.39773,-0.58604 -5.25403,-1.00192 -8.67273,-1.943 -19.109025,-5.67969 -26.125479,-12.977215 C 78.354036,88.964904 74.861163,78.068631 80.076827,62.21273 83.500708,51.803975 90.677509,39.217883 102.99145,24 Z\" id=\"path1-9\" style=\"stroke-width:0.476189\" />  <path d=\"M 17.002063,110.02429 H 2.949174 l -2.92488608,2.92489 v 7.02644 H 7.0507324 Z\" style=\"stroke-width:0.0628574\" id=\"path4-0\" />  <path d=\"M 127.17518,-14.201717 2.949174,110.02429 H 17.002063 L 134.20163,-7.1752726 Z\" style=\"stroke-width:0.0628574\" id=\"path3-7\" />  </g></g></svg>",
           "cell_orientation": "top left",
           "allowed_connection_points": "bottom right 45_deg.backslash, top right 0_deg.horizontal",
           "width": 1,
@@ -321,6 +361,7 @@
         },
         {
           "shape_name": "vertical_br",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"120px\" height=\"120px\" viewBox=\"0 0 120 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-206.52798)\">  <g id=\"g2-24\" transform=\"rotate(-90,163.25688,-43.264034)\">  <path d=\"m 17.002063,110.02429 -9.9513306,9.95133 H 119.97562 v -9.95133 z\" style=\"stroke-width:0.0487215\" id=\"path5-8\" />  <path d=\"M 102.99145,24 16.75,110.2415 h 99.99999 c -1.647,-0.26692 -3.39773,-0.58604 -5.25403,-1.00192 -8.67273,-1.943 -19.109025,-5.67969 -26.125479,-12.977215 C 78.354036,88.964904 74.861163,78.068631 80.076827,62.21273 83.500708,51.803975 90.677509,39.217883 102.99145,24 Z\" id=\"path1-3\" style=\"stroke-width:0.476189\" />  <path d=\"M 17.002063,110.02429 H 2.949174 l -2.92488608,2.92489 v 7.02644 H 7.0507324 Z\" style=\"stroke-width:0.0628574\" id=\"path4-5\" />  <path d=\"M 127.17518,-14.201717 2.949174,110.02429 H 17.002063 L 134.20163,-7.1752726 Z\" style=\"stroke-width:0.0628574\" id=\"path3-0\" />  </g></g></svg>",
           "cell_orientation": "bottom right",
           "allowed_connection_points": "top left 45_deg.slash, top right 0_deg.vertical",
           "width": 1,
@@ -328,6 +369,7 @@
         },
         {
           "shape_name": "vertical_bl",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"120px\" height=\"120px\" viewBox=\"0 0 120 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-202.03825,-357.68252)\">  <g id=\"g2-2-7\" transform=\"matrix(0,-1,-1,0,322.04529,477.67535)\">  <path d=\"m 17.002063,110.02429 -9.9513306,9.95133 H 119.97562 v -9.95133 z\" style=\"stroke-width:0.0487215\" id=\"path5-0-3\" />  <path d=\"M 102.99145,24 16.75,110.2415 h 99.99999 c -1.647,-0.26692 -3.39773,-0.58604 -5.25403,-1.00192 -8.67273,-1.943 -19.109025,-5.67969 -26.125479,-12.977215 C 78.354036,88.964904 74.861163,78.068631 80.076827,62.21273 83.500708,51.803975 90.677509,39.217883 102.99145,24 Z\" id=\"path1-9-8\" style=\"stroke-width:0.476189\" />  <path d=\"M 17.002063,110.02429 H 2.949174 l -2.92488608,2.92489 v 7.02644 H 7.0507324 Z\" style=\"stroke-width:0.0628574\" id=\"path4-0-4\" />  <path d=\"M 127.17518,-14.201717 2.949174,110.02429 H 17.002063 L 134.20163,-7.1752726 Z\" style=\"stroke-width:0.0628574\" id=\"path3-7-5\" />  </g></g></svg>",
           "cell_orientation": "bottom left",
           "allowed_connection_points": "top left 0_deg.vertical, top right 45_deg.backslash",
           "width": 1,
@@ -335,6 +377,7 @@
         },
         {
           "shape_name": "vertical_tr",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"120px\" height=\"120px\" viewBox=\"0 0 120 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-209.52114,196.05191)\">  <g id=\"g2-0\" transform=\"matrix(0,1,1,0,209.51408,-196.04478)\">  <path d=\"m 17.002063,110.02429 -9.9513306,9.95133 H 119.97562 v -9.95133 z\" style=\"stroke-width:0.0487215\" id=\"path5-5-4\" />  <path d=\"M 102.99145,24 16.75,110.2415 h 99.99999 c -1.647,-0.26692 -3.39773,-0.58604 -5.25403,-1.00192 -8.67273,-1.943 -19.109025,-5.67969 -26.125479,-12.977215 C 78.354036,88.964904 74.861163,78.068631 80.076827,62.21273 83.500708,51.803975 90.677509,39.217883 102.99145,24 Z\" id=\"path1-2-9\" style=\"stroke-width:0.476189\" />  <path d=\"M 17.002063,110.02429 H 2.949174 l -2.92488608,2.92489 v 7.02644 H 7.0507324 Z\" style=\"stroke-width:0.0628574\" id=\"path4-2-0\" />  <path d=\"M 127.17518,-14.201717 2.949174,110.02429 H 17.002063 L 134.20163,-7.1752726 Z\" style=\"stroke-width:0.0628574\" id=\"path3-2-0\" />  </g></g></svg>",
           "cell_orientation": "top right",
           "allowed_connection_points": "bottom left 45_deg.slash, bottom right 0_deg.vertical",
           "width": 1,
@@ -342,6 +385,7 @@
         },
         {
           "shape_name": "vertical_tl",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"120px\" height=\"120px\" viewBox=\"0 0 120 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-203.53482,-167.61691)\">  <g id=\"g2-29-7\" transform=\"rotate(90,77.958907,245.58295)\">  <path d=\"m 17.002063,110.02429 -9.9513306,9.95133 H 119.97562 v -9.95133 z\" style=\"stroke-width:0.0487215\" id=\"path5-6-3\" />  <path d=\"M 102.99145,24 16.75,110.2415 h 99.99999 c -1.647,-0.26692 -3.39773,-0.58604 -5.25403,-1.00192 -8.67273,-1.943 -19.109025,-5.67969 -26.125479,-12.977215 C 78.354036,88.964904 74.861163,78.068631 80.076827,62.21273 83.500708,51.803975 90.677509,39.217883 102.99145,24 Z\" id=\"path1-0-3\" style=\"stroke-width:0.476189\" />  <path d=\"M 17.002063,110.02429 H 2.949174 l -2.92488608,2.92489 v 7.02644 H 7.0507324 Z\" style=\"stroke-width:0.0628574\" id=\"path4-28-2\" />  <path d=\"M 127.17518,-14.201717 2.949174,110.02429 H 17.002063 L 134.20163,-7.1752726 Z\" style=\"stroke-width:0.0628574\" id=\"path3-4-1\" />  </g></g></svg>",
           "cell_orientation": "top left",
           "allowed_connection_points": "bottom left 0_deg.vertical, bottom right 45_deg.backslash",
           "width": 1,
@@ -351,6 +395,7 @@
       "67_5_deg": [
         {
           "shape_name": "horizontal_br",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"200px\" height=\"120px\" viewBox=\"0 0 200 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-237.33119,-270.5576)\">  <g id=\"g2-3-2\" transform=\"matrix(0,1,1,0,237.31732,270.55758)\">  <path d=\"m 18.081067,190.02458 -4.121712,9.95081 H 119.97562 v -9.95081 z\" style=\"stroke-width:0.0487215\" id=\"path4-7-3\" />  <path d=\"M 102.80406,-40.445076 7.3401204,190.02458 H 18.081067 L 111.97146,-36.647892 Z\" style=\"stroke-width:0.0769319\" id=\"path5-4-1\" />  <path d=\"M 18.081067,190.02458 H 7.3401204 l -4.1217122,9.95081 H 13.959355 Z\" style=\"stroke-width:0.0769319\" id=\"path3-3-3\" />  <path d=\"M 107.75005,190.56785 C 89.885539,188.31253 77.285259,182.48443 68.609349,174.58188 57.369095,164.34352 52.720484,150.69038 51.514788,137.09511 50.375285,124.24618 52.300724,111.45631 54.642969,101.5 L 17.75,190.56785 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.559629;enable-background:accumulate;\" id=\"path28-48-2\" />  </g></g></svg>",
           "cell_orientation": "bottom right",
           "allowed_connection_points": "bottom left 22_5_deg.vertical_slash, bottom right 45_deg.slash",
           "width": 2,
@@ -358,6 +403,7 @@
         },
         {
           "shape_name": "horizontal_bl",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"200px\" height=\"120px\" viewBox=\"0 0 200 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-192.23828,372.60994)\">  <g id=\"g2-6-3\" transform=\"rotate(90,382.43103,9.8210939)\">  <path d=\"m 18.081067,190.02458 -4.121712,9.95081 H 119.97562 v -9.95081 z\" style=\"stroke-width:0.0487215\" id=\"path4-42-2\" />  <path d=\"M 102.80406,-40.445076 7.3401204,190.02458 H 18.081067 L 111.97146,-36.647892 Z\" style=\"stroke-width:0.0769319\" id=\"path5-8-1\" />  <path d=\"M 18.081067,190.02458 H 7.3401204 l -4.1217122,9.95081 H 13.959355 Z\" style=\"stroke-width:0.0769319\" id=\"path3-4-1\" />  <path d=\"M 107.75005,190.56785 C 89.885539,188.31253 77.285259,182.48443 68.609349,174.58188 57.369095,164.34352 52.720484,150.69038 51.514788,137.09511 50.375285,124.24618 52.300724,111.45631 54.642969,101.5 L 17.75,190.56785 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.559629;enable-background:accumulate;\" id=\"path28-4-0\" />  </g></g></svg>",
           "cell_orientation": "bottom left",
           "allowed_connection_points": "bottom left 45_deg.backslash, bottom right 22_5_deg.vertical_backslash",
           "width": 2,
@@ -365,6 +411,7 @@
         },
         {
           "shape_name": "horizontal_tr",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"200px\" height=\"120px\" viewBox=\"0 0 200 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-218.34471,9.4932429)\">  <g id=\"g2-0\" transform=\"rotate(-90,164.41878,-53.912053)\">  <path d=\"m 18.081067,190.02458 -4.121712,9.95081 H 119.97562 v -9.95081 z\" style=\"stroke-width:0.0487215\" id=\"path4-9\" />  <path d=\"M 102.80406,-40.445076 7.3401204,190.02458 H 18.081067 L 111.97146,-36.647892 Z\" style=\"stroke-width:0.0769319\" id=\"path5-42\" />  <path d=\"M 18.081067,190.02458 H 7.3401204 l -4.1217122,9.95081 H 13.959355 Z\" style=\"stroke-width:0.0769319\" id=\"path3-40\" />  <path d=\"M 107.75005,190.56785 C 89.885539,188.31253 77.285259,182.48443 68.609349,174.58188 57.369095,164.34352 52.720484,150.69038 51.514788,137.09511 50.375285,124.24618 52.300724,111.45631 54.642969,101.5 L 17.75,190.56785 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.559629;enable-background:accumulate;\" id=\"path28-2\" />  </g></g></svg>",
           "cell_orientation": "top right",
           "allowed_connection_points": "top left 22_5_deg.vertical_slash, top right 45_deg.slash",
           "width": 2,
@@ -372,6 +419,7 @@
         },
         {
           "shape_name": "horizontal_tl",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"200px\" height=\"120px\" viewBox=\"0 0 200 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-175.62509,-602.82127)\">  <g id=\"g2-06\" transform=\"matrix(0,-1,-1,0,375.63893,722.82121)\">  <path d=\"m 18.081067,190.02458 -4.121712,9.95081 H 119.97562 v -9.95081 z\" style=\"stroke-width:0.0487215\" id=\"path4-4-0\" />  <path d=\"M 102.80406,-40.445076 7.3401204,190.02458 H 18.081067 L 111.97146,-36.647892 Z\" style=\"stroke-width:0.0769319\" id=\"path5-7-4\" />  <path d=\"M 18.081067,190.02458 H 7.3401204 l -4.1217122,9.95081 H 13.959355 Z\" style=\"stroke-width:0.0769319\" id=\"path3-6-9\" />  <path d=\"M 107.75005,190.56785 C 89.885539,188.31253 77.285259,182.48443 68.609349,174.58188 57.369095,164.34352 52.720484,150.69038 51.514788,137.09511 50.375285,124.24618 52.300724,111.45631 54.642969,101.5 L 17.75,190.56785 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.559629;enable-background:accumulate;\" id=\"path28-1-9\" />  </g></g></svg>",
           "cell_orientation": "top left",
           "allowed_connection_points": "top left 45_deg.backslash, top right 22_5_deg.vertical_backslash",
           "width": 2,
@@ -379,6 +427,7 @@
         },
         {
           "shape_name": "vertical_br",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"120px\" height=\"200px\" viewBox=\"0 0 120 200\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\">  <g id=\"g1\">  <path d=\"m 18.081067,190.02458 -4.121712,9.95081 H 119.97562 v -9.95081 z\" style=\"stroke-width:0.0487215\" id=\"path4\" />  <path d=\"M 102.80406,-40.445076 7.3401204,190.02458 H 18.081067 L 111.97146,-36.647892 Z\" style=\"stroke-width:0.0769319\" id=\"path5\" />  <path d=\"M 18.081067,190.02458 H 7.3401204 l -4.1217122,9.95081 H 13.959355 Z\" style=\"stroke-width:0.0769319\" id=\"path3\" />  <path d=\"M 107.75005,190.56785 C 89.885539,188.31253 77.285259,182.48443 68.609349,174.58188 57.369095,164.34352 52.720484,150.69038 51.514788,137.09511 50.375285,124.24618 52.300724,111.45631 54.642969,101.5 L 17.75,190.56785 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.559629;enable-background:accumulate;\" id=\"path28\" />  </g></g></svg>",
           "cell_orientation": "bottom right",
           "allowed_connection_points": "top right 45_deg.slash, bottom right 22_5_deg.horizontal_slash",
           "width": 1,
@@ -386,6 +435,7 @@
         },
         {
           "shape_name": "vertical_bl",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"120px\" height=\"200px\" viewBox=\"0 0 120 200\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(40.346302,-268.18424)\">  <g id=\"g2-3\" transform=\"matrix(-1,0,0,1,79.653679,268.17038)\">  <path d=\"m 18.081067,190.02458 -4.121712,9.95081 H 119.97562 v -9.95081 z\" style=\"stroke-width:0.0487215\" id=\"path4-7\" />  <path d=\"M 102.80406,-40.445076 7.3401204,190.02458 H 18.081067 L 111.97146,-36.647892 Z\" style=\"stroke-width:0.0769319\" id=\"path5-4\" />  <path d=\"M 18.081067,190.02458 H 7.3401204 l -4.1217122,9.95081 H 13.959355 Z\" style=\"stroke-width:0.0769319\" id=\"path3-3\" />  <path d=\"M 107.75005,190.56785 C 89.885539,188.31253 77.285259,182.48443 68.609349,174.58188 57.369095,164.34352 52.720484,150.69038 51.514788,137.09511 50.375285,124.24618 52.300724,111.45631 54.642969,101.5 L 17.75,190.56785 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.559629;enable-background:accumulate;\" id=\"path28-48\" />  </g></g></svg>",
           "cell_orientation": "bottom left",
           "allowed_connection_points": "top left 45_deg.backslash, bottom left 22_5_deg.horizontal_backslash",
           "width": 1,
@@ -393,6 +443,7 @@
         },
         {
           "shape_name": "vertical_tr",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"120px\" height=\"200px\" viewBox=\"0 0 120 200\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(18.986494,-552.98167)\">  <g id=\"g2\" transform=\"matrix(1,0,0,-1,-18.986475,752.99549)\">  <path d=\"m 18.081067,190.02458 -4.121712,9.95081 H 119.97562 v -9.95081 z\" style=\"stroke-width:0.0487215\" id=\"path4-4\" />  <path d=\"M 102.80406,-40.445076 7.3401204,190.02458 H 18.081067 L 111.97146,-36.647892 Z\" style=\"stroke-width:0.0769319\" id=\"path5-7\" />  <path d=\"M 18.081067,190.02458 H 7.3401204 l -4.1217122,9.95081 H 13.959355 Z\" style=\"stroke-width:0.0769319\" id=\"path3-6\" />  <path d=\"M 107.75005,190.56785 C 89.885539,188.31253 77.285259,182.48443 68.609349,174.58188 57.369095,164.34352 52.720484,150.69038 51.514788,137.09511 50.375285,124.24618 52.300724,111.45631 54.642969,101.5 L 17.75,190.56785 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.559629;enable-background:accumulate;\" id=\"path28-1\" />  </g></g></svg>",
           "cell_orientation": "top right",
           "allowed_connection_points": "top right 22_5_deg.horizontal_slash, bottom right 45_deg.slash",
           "width": 1,
@@ -400,6 +451,7 @@
         },
         {
           "shape_name": "vertical_tl",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"120px\" height=\"200px\" viewBox=\"0 0 120 200\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(23.733118,379.72989)\">  <g id=\"g2-6\" transform=\"rotate(180,48.133431,-89.858018)\">  <path d=\"m 18.081067,190.02458 -4.121712,9.95081 H 119.97562 v -9.95081 z\" style=\"stroke-width:0.0487215\" id=\"path4-42\" />  <path d=\"M 102.80406,-40.445076 7.3401204,190.02458 H 18.081067 L 111.97146,-36.647892 Z\" style=\"stroke-width:0.0769319\" id=\"path5-8\" />  <path d=\"M 18.081067,190.02458 H 7.3401204 l -4.1217122,9.95081 H 13.959355 Z\" style=\"stroke-width:0.0769319\" id=\"path3-4\" />  <path d=\"M 107.75005,190.56785 C 89.885539,188.31253 77.285259,182.48443 68.609349,174.58188 57.369095,164.34352 52.720484,150.69038 51.514788,137.09511 50.375285,124.24618 52.300724,111.45631 54.642969,101.5 L 17.75,190.56785 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.559629;enable-background:accumulate;\" id=\"path28-4\" />  </g></g></svg>",
           "cell_orientation": "top left",
           "allowed_connection_points": "top left 22_5_deg.horizontal_backslash, bottom left 45_deg.backslash",
           "width": 1,
@@ -409,6 +461,7 @@
       "90_deg": [
         {
           "shape_name": "horizontal_br",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"120px\" height=\"120px\" viewBox=\"0 0 120 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-12.451783,161.87318)\">  <g id=\"g2-8\" transform=\"rotate(-90,-4.7107009,-37.162483)\">  <rect style=\"stroke-width:0.0487215\" id=\"rect3-4-0\" width=\"9.9512787\" height=\"119.95128\" x=\"0.024360657\" y=\"-19.975639\" />  <rect style=\"stroke-width:0.0487215\" id=\"rect3-4-9-2\" width=\"9.9512787\" height=\"119.95128\" x=\"90.024361\" y=\"-119.97564\" transform=\"rotate(90)\" />  <path d=\"m 9.95,-9.95 v 100 h 93.62552 C 61.008959,86.346243 37.540802,62.050158 24.749652,37.777742 14.482648,18.29513 11.05109,-1.11101 9.95,-9.95 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke:none;stroke-width:0.502581;enable-background:accumulate;\" id=\"path16-2\" />  </g></g></svg>",
           "cell_orientation": "bottom right",
           "allowed_connection_points": "bottom left 45_deg.slash, top right 90_deg.horizontal_tl",
           "width": 1,
@@ -416,6 +469,7 @@
         },
         {
           "shape_name": "horizontal_bl",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"120px\" height=\"120px\" viewBox=\"0 0 120 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\">  <g id=\"g1\" transform=\"translate(9.3132257e-8,20)\">  <rect style=\"stroke-width:0.0487215\" id=\"rect3-4\" width=\"9.9512787\" height=\"119.95128\" x=\"0.024360657\" y=\"-19.975639\" />  <rect style=\"stroke-width:0.0487215\" id=\"rect3-4-9\" width=\"9.9512787\" height=\"119.95128\" x=\"90.024361\" y=\"-119.97564\" transform=\"rotate(90)\" />  <path d=\"m 9.95,-9.95 v 100 h 93.62552 C 61.008959,86.346243 37.540802,62.050158 24.749652,37.777742 14.482648,18.29513 11.05109,-1.11101 9.95,-9.95 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke:none;stroke-width:0.502581;enable-background:accumulate;\" id=\"path16\" />  </g></g></svg>",
           "cell_orientation": "bottom left",
           "allowed_connection_points": "top left 90_deg.horizontal_tr, bottom right 45_deg.backslash",
           "width": 1,
@@ -423,6 +477,7 @@
         },
         {
           "shape_name": "horizontal_tr",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"120px\" height=\"120px\" viewBox=\"0 0 120 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(1.3835317,-152.18846)\">  <g id=\"g2-2\" transform=\"rotate(180,59.308234,126.09423)\">  <rect style=\"stroke-width:0.0487215\" id=\"rect3-4-1\" width=\"9.9512787\" height=\"119.95128\" x=\"0.024360657\" y=\"-19.975639\" />  <rect style=\"stroke-width:0.0487215\" id=\"rect3-4-9-3\" width=\"9.9512787\" height=\"119.95128\" x=\"90.024361\" y=\"-119.97564\" transform=\"rotate(90)\" />  <path d=\"m 9.95,-9.95 v 100 h 93.62552 C 61.008959,86.346243 37.540802,62.050158 24.749652,37.777742 14.482648,18.29513 11.05109,-1.11101 9.95,-9.95 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke:none;stroke-width:0.502581;enable-background:accumulate;\" id=\"path16-6\" />  </g></g></svg>",
           "cell_orientation": "top right",
           "allowed_connection_points": "top left 45_deg.slash, bottom right 90_deg.horizontal_bl",
           "width": 1,
@@ -430,6 +485,7 @@
         },
         {
           "shape_name": "horizontal_tl",
+          "svg": "<svg fill=\"currentColor\" stroke=\"currentColor\" stop-color=\"currentColor\" width=\"120px\" height=\"120px\" viewBox=\"0 0 120 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-11.068251,-305.76048)\">  <g id=\"g2\" transform=\"rotate(90,-97.346106,208.41436)\">  <rect style=\"stroke-width:0.0487215\" id=\"rect3-4-8\" width=\"9.9512787\" height=\"119.95128\" x=\"0.024360657\" y=\"-19.975639\" />  <rect style=\"stroke-width:0.0487215\" id=\"rect3-4-9-6\" width=\"9.9512787\" height=\"119.95128\" x=\"90.024361\" y=\"-119.97564\" transform=\"rotate(90)\" />  <path d=\"m 9.95,-9.95 v 100 h 93.62552 C 61.008959,86.346243 37.540802,62.050158 24.749652,37.777742 14.482648,18.29513 11.05109,-1.11101 9.95,-9.95 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke:none;stroke-width:0.502581;enable-background:accumulate;\" id=\"path16-1\" />  </g></g></svg>",
           "cell_orientation": "top left",
           "allowed_connection_points": "bottom left 90_deg.horizontal_br, top right 45_deg.backslash",
           "width": 1,
@@ -439,6 +495,7 @@
       "112_5_deg": [
         {
           "shape_name": "horizontal_br",
+          "svg": "<svg fill=\"currentColor\" width=\"200px\" height=\"120px\" viewBox=\"0 0 200 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\">  <g id=\"g6\" transform=\"translate(2.4925013e-4,-79.999751)\">  <path d=\"m -2.8039632,-40.445076 -9.1679158,3.797184 93.89091,226.672472 H 92.65946 Z\" style=\"stroke-width:0.0769319\" id=\"path2\" />  <path d=\"m 92.65946,190.02458 4.121713,9.95081 H 199.97539 v -9.95081 z\" style=\"stroke-width:0.0487215\" id=\"path6\" />  <path d=\"M 92.65946,190.02458 H 81.919031 l 4.121712,9.95081 h 10.74043 z\" style=\"stroke-width:0.0487215\" id=\"path5\" />  <path d=\"M 92.417336,190.32685 H 186.99985 C 109.82125,181.74095 67.49305,120.60925 52,92.75 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.538257;enable-background:accumulate;\" id=\"path45\" />  </g></g></svg>",
           "cell_orientation": "bottom right",
           "allowed_connection_points": "bottom right 0_deg.horizontal, top left 22_5_deg.vertical_slash",
           "width": 2,
@@ -446,6 +503,7 @@
         },
         {
           "shape_name": "horizontal_bl",
+          "svg": "<svg fill=\"currentColor\" width=\"200px\" height=\"120px\" viewBox=\"0 0 200 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(20.838881,312.58322)\">  <g id=\"g6-8\" transform=\"matrix(-1,0,0,1,179.16087,-392.58297)\">  <path d=\"m -2.8039632,-40.445076 -9.1679158,3.797184 93.89091,226.672472 H 92.65946 Z\" style=\"stroke-width:0.0769319\" id=\"path2-0\" />  <path d=\"m 92.65946,190.02458 4.121713,9.95081 H 199.97539 v -9.95081 z\" style=\"stroke-width:0.0487215\" id=\"path6-0\" />  <path d=\"M 92.65946,190.02458 H 81.919031 l 4.121712,9.95081 h 10.74043 z\" style=\"stroke-width:0.0487215\" id=\"path5-8\" />  <path d=\"M 92.417336,190.32685 H 186.99985 C 109.82125,181.74095 67.49305,120.60925 52,92.75 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.538257;enable-background:accumulate;\" id=\"path45-2\" />  </g></g></svg>",
           "cell_orientation": "bottom left",
           "allowed_connection_points": "bottom left 0_deg.horizontal, top right 22_5_deg.vertical_backslash",
           "width": 2,
@@ -453,6 +511,7 @@
         },
         {
           "shape_name": "horizontal_tr",
+          "svg": "<svg fill=\"currentColor\" width=\"200px\" height=\"120px\" viewBox=\"0 0 200 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(26.0486,-593.9081)\">  <g id=\"g6-2\" transform=\"matrix(1,0,0,-1,-26.048349,793.90783)\">  <path d=\"m -2.8039632,-40.445076 -9.1679158,3.797184 93.89091,226.672472 H 92.65946 Z\" style=\"stroke-width:0.0769319\" id=\"path2-8\" />  <path d=\"m 92.65946,190.02458 4.121713,9.95081 H 199.97539 v -9.95081 z\" style=\"stroke-width:0.0487215\" id=\"path6-9\" />  <path d=\"M 92.65946,190.02458 H 81.919031 l 4.121712,9.95081 h 10.74043 z\" style=\"stroke-width:0.0487215\" id=\"path5-2\" />  <path d=\"M 92.417336,190.32685 H 186.99985 C 109.82125,181.74095 67.49305,120.60925 52,92.75 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.538257;enable-background:accumulate;\" id=\"path45-5\" />  </g></g></svg>",
           "cell_orientation": "top right",
           "allowed_connection_points": "top right 0_deg.horizontal, bottom left 22_5_deg.vertical_slash",
           "width": 2,
@@ -460,6 +519,7 @@
         },
         {
           "shape_name": "horizontal_tl",
+          "svg": "<svg fill=\"currentColor\" width=\"200px\" height=\"120px\" viewBox=\"0 0 200 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(5.209721,-270.90542)\">  <g id=\"g6-3\" transform=\"rotate(180,97.395015,235.4526)\">  <path d=\"m -2.8039632,-40.445076 -9.1679158,3.797184 93.89091,226.672472 H 92.65946 Z\" style=\"stroke-width:0.0769319\" id=\"path2-2\" />  <path d=\"m 92.65946,190.02458 4.121713,9.95081 H 199.97539 v -9.95081 z\" style=\"stroke-width:0.0487215\" id=\"path6-3\" />  <path d=\"M 92.65946,190.02458 H 81.919031 l 4.121712,9.95081 h 10.74043 z\" style=\"stroke-width:0.0487215\" id=\"path5-3\" />  <path d=\"M 92.417336,190.32685 H 186.99985 C 109.82125,181.74095 67.49305,120.60925 52,92.75 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.538257;enable-background:accumulate;\" id=\"path45-21\" />  </g></g></svg>",
           "cell_orientation": "top left",
           "allowed_connection_points": "top left 0_deg.horizontal, bottom right 22_5_deg.vertical_backslash",
           "width": 2,
@@ -467,6 +527,7 @@
         },
         {
           "shape_name": "vertical_br",
+          "svg": "<svg fill=\"currentColor\" width=\"120px\" height=\"200px\" viewBox=\"0 0 120 200\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-437.23429,388.95378)\">  <g id=\"g6-8-4\" transform=\"matrix(0,1,1,0,357.23457,-388.95352)\">  <path d=\"m -2.8039632,-40.445076 -9.1679158,3.797184 93.89091,226.672472 H 92.65946 Z\" style=\"stroke-width:0.0769319\" id=\"path2-0-2\" />  <path d=\"m 92.65946,190.02458 4.121713,9.95081 H 199.97539 v -9.95081 z\" style=\"stroke-width:0.0487215\" id=\"path6-0-2\" />  <path d=\"M 92.65946,190.02458 H 81.919031 l 4.121712,9.95081 h 10.74043 z\" style=\"stroke-width:0.0487215\" id=\"path5-8-9\" />  <path d=\"M 92.417336,190.32685 H 186.99985 C 109.82125,181.74095 67.49305,120.60925 52,92.75 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.538257;enable-background:accumulate;\" id=\"path45-2-1\" />  </g></g></svg>",
           "cell_orientation": "bottom right",
           "allowed_connection_points": "top left 22_5_deg.horizontal_slash, bottom right 0_deg.vertical",
           "width": 1,
@@ -474,6 +535,7 @@
         },
         {
           "shape_name": "vertical_bl",
+          "svg": "<svg fill=\"currentColor\" width=\"120px\" height=\"200px\" viewBox=\"0 0 120 200\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-427.6952,-202.73891)\">  <g id=\"g6-3-3\" transform=\"rotate(90,212.47791,415.21707)\">  <path d=\"m -2.8039632,-40.445076 -9.1679158,3.797184 93.89091,226.672472 H 92.65946 Z\" style=\"stroke-width:0.0769319\" id=\"path2-2-7\" />  <path d=\"m 92.65946,190.02458 4.121713,9.95081 H 199.97539 v -9.95081 z\" style=\"stroke-width:0.0487215\" id=\"path6-3-6\" />  <path d=\"M 92.65946,190.02458 H 81.919031 l 4.121712,9.95081 h 10.74043 z\" style=\"stroke-width:0.0487215\" id=\"path5-3-4\" />  <path d=\"M 92.417336,190.32685 H 186.99985 C 109.82125,181.74095 67.49305,120.60925 52,92.75 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.538257;enable-background:accumulate;\" id=\"path45-21-3\" />  </g></g></svg>",
           "cell_orientation": "bottom left",
           "allowed_connection_points": "top right 22_5_deg.horizontal_backslash, bottom left 0_deg.vertical",
           "width": 1,
@@ -481,6 +543,7 @@
         },
         {
           "shape_name": "vertical_tr",
+          "svg": "<svg fill=\"currentColor\" width=\"120px\" height=\"200px\" viewBox=\"0 0 120 200\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-443.30985,81.16911)\">  <g id=\"g6-0\" transform=\"rotate(-90,241.07039,-122.23973)\">  <path d=\"m -2.8039632,-40.445076 -9.1679158,3.797184 93.89091,226.672472 H 92.65946 Z\" style=\"stroke-width:0.0769319\" id=\"path2-4\" />  <path d=\"m 92.65946,190.02458 4.121713,9.95081 H 199.97539 v -9.95081 z\" style=\"stroke-width:0.0487215\" id=\"path6-08\" />  <path d=\"M 92.65946,190.02458 H 81.919031 l 4.121712,9.95081 h 10.74043 z\" style=\"stroke-width:0.0487215\" id=\"path5-5\" />  <path d=\"M 92.417336,190.32685 H 186.99985 C 109.82125,181.74095 67.49305,120.60925 52,92.75 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.538257;enable-background:accumulate;\" id=\"path45-59\" />  </g></g></svg>",
           "cell_orientation": "top right",
           "allowed_connection_points": "top right 0_deg.vertical, bottom left 22_5_deg.horizontal_slash",
           "width": 1,
@@ -488,6 +551,7 @@
         },
         {
           "shape_name": "vertical_tl",
+          "svg": "<svg fill=\"currentColor\" width=\"120px\" height=\"200px\" viewBox=\"0 0 120 200\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-428.13539,-517.91976)\">  <g id=\"g6-2-6\" transform=\"matrix(0,-1,-1,0,628.13516,717.91949)\">  <path d=\"m -2.8039632,-40.445076 -9.1679158,3.797184 93.89091,226.672472 H 92.65946 Z\" style=\"stroke-width:0.0769319\" id=\"path2-8-9\" />  <path d=\"m 92.65946,190.02458 4.121713,9.95081 H 199.97539 v -9.95081 z\" style=\"stroke-width:0.0487215\" id=\"path6-9-4\" />  <path d=\"M 92.65946,190.02458 H 81.919031 l 4.121712,9.95081 h 10.74043 z\" style=\"stroke-width:0.0487215\" id=\"path5-2-3\" />  <path d=\"M 92.417336,190.32685 H 186.99985 C 109.82125,181.74095 67.49305,120.60925 52,92.75 Z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.538257;enable-background:accumulate;\" id=\"path45-5-6\" />  </g></g></svg>",
           "cell_orientation": "top left",
           "allowed_connection_points": "top left 0_deg.vertical, bottom right 22_5_deg.horizontal_backslash",
           "width": 1,
@@ -497,6 +561,7 @@
       "135_deg": [
         {
           "shape_name": "horizontal_br",
+          "svg": "<svg fill=\"currentColor\" width=\"220px\" height=\"120px\" viewBox=\"0 0 220 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\">  <g id=\"g5\">  <path d=\"m 117.05074,110.02429 9.95133,9.95133 h 92.97365 v -9.95133 z\" style=\"stroke-width:0.0487215\" id=\"path4\" />  <path d=\"M 209.79999,110.14443 C 199.20574,109.38639 180.13618,106.93561 155.65572,99.039506 121.18627,87.921526 76.184685,65.972196 29.8,23 l 87.15385,87.15354 v -0.009 z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.686097;enable-background:accumulate;\" id=\"path36\" />  <path d=\"m 117.05074,110.02429 h -14.05289 l 9.95133,9.95133 h 14.05289 z\" style=\"stroke-width:0.0628574\" id=\"path5\" />  <path d=\"M -7.1752726,-14.201717 -14.201717,-7.1752726 102.99785,110.02429 h 14.05289 z\" style=\"stroke-width:0.0628574\" id=\"path1\" />  </g></g></svg>",
           "cell_orientation": "bottom right",
           "allowed_connection_points": "bottom right 0_deg.horizontal, top left 45_deg.slash",
           "width": 2,
@@ -504,6 +569,7 @@
         },
         {
           "shape_name": "horizontal_bl",
+          "svg": "<svg fill=\"currentColor\" width=\"220.00002px\" height=\"120px\" viewBox=\"0 0 220.00001 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-9.2725872,256.54156)\">  <g id=\"g5-7\" transform=\"matrix(-1,0,0,1,229.27267,-256.54861)\">  <path d=\"m 117.05074,110.02429 9.95133,9.95133 h 92.97365 v -9.95133 z\" style=\"stroke-width:0.0487215\" id=\"path4-4\" />  <path d=\"M 209.79999,110.14443 C 199.20574,109.38639 180.13618,106.93561 155.65572,99.039506 121.18627,87.921526 76.184685,65.972196 29.8,23 l 87.15385,87.15354 v -0.009 z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.686097;enable-background:accumulate;\" id=\"path36-8\" />  <path d=\"m 117.05074,110.02429 h -14.05289 l 9.95133,9.95133 h 14.05289 z\" style=\"stroke-width:0.0628574\" id=\"path5-0\" />  <path d=\"M -7.1752726,-14.201717 -14.201717,-7.1752726 102.99785,110.02429 h 14.05289 z\" style=\"stroke-width:0.0628574\" id=\"path1-6\" />  </g></g></svg>",
           "cell_orientation": "bottom left",
           "allowed_connection_points": "bottom left 0_deg.horizontal, top right 45_deg.backslash",
           "width": 2,
@@ -511,6 +577,7 @@
         },
         {
           "shape_name": "horizontal_tr",
+          "svg": "<svg fill=\"currentColor\" width=\"220.00002px\" height=\"120px\" viewBox=\"0 0 220.00001 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-43.272075,-389.44867)\">  <g id=\"g5-2\" transform=\"matrix(1,0,0,-1,43.272001,509.45569)\">  <path d=\"m 117.05074,110.02429 9.95133,9.95133 h 92.97365 v -9.95133 z\" style=\"stroke-width:0.0487215\" id=\"path4-5\" />  <path d=\"M 209.79999,110.14443 C 199.20574,109.38639 180.13618,106.93561 155.65572,99.039506 121.18627,87.921526 76.184685,65.972196 29.8,23 l 87.15385,87.15354 v -0.009 z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.686097;enable-background:accumulate;\" id=\"path36-4\" />  <path d=\"m 117.05074,110.02429 h -14.05289 l 9.95133,9.95133 h 14.05289 z\" style=\"stroke-width:0.0628574\" id=\"path5-2\" />  <path d=\"M -7.1752726,-14.201717 -14.201717,-7.1752726 102.99785,110.02429 h 14.05289 z\" style=\"stroke-width:0.0628574\" id=\"path1-1\" />  </g></g></svg>",
           "cell_orientation": "top right",
           "allowed_connection_points": "top right 0_deg.horizontal, bottom left 45_deg.slash",
           "width": 2,
@@ -518,6 +585,7 @@
         },
         {
           "shape_name": "horizontal_tl",
+          "svg": "<svg fill=\"currentColor\" width=\"220.00002px\" height=\"120px\" viewBox=\"0 0 220.00001 120\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-46.362934,-176.17917)\">  <g id=\"g5-0\" transform=\"rotate(180,133.18151,148.0931)\">  <path d=\"m 117.05074,110.02429 9.95133,9.95133 h 92.97365 v -9.95133 z\" style=\"stroke-width:0.0487215\" id=\"path4-0\" />  <path d=\"M 209.79999,110.14443 C 199.20574,109.38639 180.13618,106.93561 155.65572,99.039506 121.18627,87.921526 76.184685,65.972196 29.8,23 l 87.15385,87.15354 v -0.009 z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.686097;enable-background:accumulate;\" id=\"path36-2\" />  <path d=\"m 117.05074,110.02429 h -14.05289 l 9.95133,9.95133 h 14.05289 z\" style=\"stroke-width:0.0628574\" id=\"path5-3\" />  <path d=\"M -7.1752726,-14.201717 -14.201717,-7.1752726 102.99785,110.02429 h 14.05289 z\" style=\"stroke-width:0.0628574\" id=\"path1-0\" />  </g></g></svg>",
           "cell_orientation": "top left",
           "allowed_connection_points": "top left 0_deg.horizontal, bottom right 45_deg.backslash",
           "width": 2,
@@ -525,6 +593,7 @@
         },
         {
           "shape_name": "vertical_br",
+          "svg": "<svg fill=\"currentColor\" width=\"120px\" height=\"220px\" viewBox=\"0 0 120 220\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-497.62884,411.08468)\">  <g id=\"g5-7-5\" transform=\"matrix(0,1,1,0,497.62178,-411.08477)\">  <path d=\"m 117.05074,110.02429 9.95133,9.95133 h 92.97365 v -9.95133 z\" style=\"stroke-width:0.0487215\" id=\"path4-4-9\" />  <path d=\"M 209.79999,110.14443 C 199.20574,109.38639 180.13618,106.93561 155.65572,99.039506 121.18627,87.921526 76.184685,65.972196 29.8,23 l 87.15385,87.15354 v -0.009 z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.686097;enable-background:accumulate;\" id=\"path36-8-1\" />  <path d=\"m 117.05074,110.02429 h -14.05289 l 9.95133,9.95133 h 14.05289 z\" style=\"stroke-width:0.0628574\" id=\"path5-0-1\" />  <path d=\"M -7.1752726,-14.201717 -14.201717,-7.1752726 102.99785,110.02429 h 14.05289 z\" style=\"stroke-width:0.0628574\" id=\"path1-6-4\" />  </g></g></svg>",
           "cell_orientation": "bottom right",
           "allowed_connection_points": "top left 45_deg.slash, bottom right 0_deg.vertical",
           "width": 1,
@@ -532,6 +601,7 @@
         },
         {
           "shape_name": "vertical_bl",
+          "svg": "<svg fill=\"currentColor\" width=\"120px\" height=\"220px\" viewBox=\"0 0 120 220\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-516.174,-188.5426)\">  <g id=\"g5-0-1\" transform=\"rotate(90,223.81927,412.36178)\">  <path d=\"m 117.05074,110.02429 9.95133,9.95133 h 92.97365 v -9.95133 z\" style=\"stroke-width:0.0487215\" id=\"path4-0-6\" />  <path d=\"M 209.79999,110.14443 C 199.20574,109.38639 180.13618,106.93561 155.65572,99.039506 121.18627,87.921526 76.184685,65.972196 29.8,23 l 87.15385,87.15354 v -0.009 z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.686097;enable-background:accumulate;\" id=\"path36-2-0\" />  <path d=\"m 117.05074,110.02429 h -14.05289 l 9.95133,9.95133 h 14.05289 z\" style=\"stroke-width:0.0628574\" id=\"path5-3-8\" />  <path d=\"M -7.1752726,-14.201717 -14.201717,-7.1752726 102.99785,110.02429 h 14.05289 z\" style=\"stroke-width:0.0628574\" id=\"path1-0-4\" />  </g></g></svg>",
           "cell_orientation": "bottom left",
           "allowed_connection_points": "top right 45_deg.backslash, bottom left 0_deg.vertical",
           "width": 1,
@@ -539,6 +609,7 @@
         },
         {
           "shape_name": "vertical_tr",
+          "svg": "<svg fill=\"currentColor\" width=\"120px\" height=\"220px\" viewBox=\"0 0 120 220\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-543.99175,86.54414)\">  <g id=\"g5-3\" transform=\"rotate(-90,338.72031,-205.26438)\">  <path d=\"m 117.05074,110.02429 9.95133,9.95133 h 92.97365 v -9.95133 z\" style=\"stroke-width:0.0487215\" id=\"path4-6\" />  <path d=\"M 209.79999,110.14443 C 199.20574,109.38639 180.13618,106.93561 155.65572,99.039506 121.18627,87.921526 76.184685,65.972196 29.8,23 l 87.15385,87.15354 v -0.009 z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.686097;enable-background:accumulate;\" id=\"path36-9\" />  <path d=\"m 117.05074,110.02429 h -14.05289 l 9.95133,9.95133 h 14.05289 z\" style=\"stroke-width:0.0628574\" id=\"path5-1\" />  <path d=\"M -7.1752726,-14.201717 -14.201717,-7.1752726 102.99785,110.02429 h 14.05289 z\" style=\"stroke-width:0.0628574\" id=\"path1-04\" />  </g></g></svg>",
           "cell_orientation": "top right",
           "allowed_connection_points": "top right 0_deg.vertical, bottom left 45_deg.slash",
           "width": 1,
@@ -546,6 +617,7 @@
         },
         {
           "shape_name": "vertical_tl",
+          "svg": "<svg fill=\"currentColor\" width=\"120px\" height=\"220px\" viewBox=\"0 0 120 220\" version=\"1.1\" id=\"svg1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><defs id=\"defs1\" /><g id=\"layer1\" transform=\"translate(-547.08263,-503.81055)\">  <g id=\"g5-2-7\" transform=\"matrix(0,-1,-1,0,667.08967,723.81062)\">  <path d=\"m 117.05074,110.02429 9.95133,9.95133 h 92.97365 v -9.95133 z\" style=\"stroke-width:0.0487215\" id=\"path4-5-0\" />  <path d=\"M 209.79999,110.14443 C 199.20574,109.38639 180.13618,106.93561 155.65572,99.039506 121.18627,87.921526 76.184685,65.972196 29.8,23 l 87.15385,87.15354 v -0.009 z\" style=\"baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke-width:0.686097;enable-background:accumulate;\" id=\"path36-4-4\" />  <path d=\"m 117.05074,110.02429 h -14.05289 l 9.95133,9.95133 h 14.05289 z\" style=\"stroke-width:0.0628574\" id=\"path5-2-6\" />  <path d=\"M -7.1752726,-14.201717 -14.201717,-7.1752726 102.99785,110.02429 h 14.05289 z\" style=\"stroke-width:0.0628574\" id=\"path1-1-9\" />  </g></g></svg>",
           "cell_orientation": "top left",
           "allowed_connection_points": "top left 0_deg.vertical, bottom right 45_deg.backslash",
           "width": 1,
