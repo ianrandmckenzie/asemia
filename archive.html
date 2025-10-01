@@ -26,76 +26,6 @@
   <link rel="canonical" href="https://asemia.relentlesscurious.com/archive">
 
   <link href="/src/style.css" rel="stylesheet" />
-  <style>
-    .grid-container {
-      display: grid;
-      border: 2px solid #e2e8f0;
-      background: #f8fafc;
-      padding: 1rem;
-      border-radius: 0.5rem;
-    }
-    
-    .grid-serifs {
-      grid-template-columns: repeat(5, 1fr);
-      gap: 2px;
-    }
-    
-    .grid-joins {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2px;
-    }
-    
-    .grid-cell {
-      aspect-ratio: 1;
-      border: 1px solid #cbd5e0;
-      background: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-    
-    .grid-cell img, .grid-cell svg {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-    }
-    
-    .size-xs .grid-cell { width: 12px; height: 12px; }
-    .size-sm .grid-cell { width: 20px; height: 20px; }
-    .size-md .grid-cell { width: 32px; height: 32px; }
-    .size-lg .grid-cell { width: 48px; height: 48px; }
-    .size-xl .grid-cell { width: 64px; height: 64px; }
-    .size-2xl .grid-cell { width: 80px; height: 80px; }
-    
-    .form-card {
-      background: white;
-      border-radius: 0.75rem;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    
-    .form-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
-    }
-    
-    .dark .form-card {
-      background: #1e293b;
-      border: 1px solid #334155;
-    }
-    
-    .dark .grid-container {
-      background: #0f172a;
-      border-color: #334155;
-    }
-    
-    .dark .grid-cell {
-      background: #1e293b;
-      border-color: #475569;
-    }
-  </style>
 </head>
 <body class="bg-gray-50 dark:bg-slate-900 min-h-screen">
   <!-- Header -->
@@ -130,21 +60,23 @@
     <!-- Error State -->
     <div id="error" class="hidden text-center py-12">
       <div class="text-red-500 text-xl mb-4">⚠️</div>
-      <p class="text-gray-600 dark:text-gray-300">Failed to load archived forms</p>
+      <p class="text-gray-600 dark:text-gray-300 mb-4">Failed to load archived forms</p>
+      <p class="text-gray-500 dark:text-gray-400 text-sm">Check the browser console for more details</p>
     </div>
 
     <!-- Archive Grid -->
-    <div id="archive-grid" class="hidden space-y-12">
-      <!-- Forms will be rendered here -->
+    <div id="archive-grid" class="hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" id="archive-forms">
+        <!-- Forms will be rendered here -->
+      </div>
     </div>
   </main>
 
   <!-- Scripts -->
-  <script src="/src/svg.js"></script>
   <script>
     let rulesData = null;
 
-    // Load SVG rules data
+    // Load rules data to get SVG strings
     async function loadRulesData() {
       if (rulesData) return rulesData;
 
@@ -159,53 +91,72 @@
     }
 
     // Get SVG string from rules data
-    function getSVGByPath(category, angle, shapeName) {
-      if (!rulesData?.shapes?.[category]?.[angle]) {
-        console.warn(`SVG not found: ${category}/${angle}/${shapeName}`);
+    function getSVGByPath(category, angleKey, shapeName) {
+      if (!rulesData?.shapes?.[category]?.[angleKey]) {
+        console.warn(`SVG not found: ${category}/${angleKey}/${shapeName}`);
         return null;
       }
 
-      const shapes = rulesData.shapes[category][angle];
+      const shapes = rulesData.shapes[category][angleKey];
       const shape = shapes.find(s => s.shape_name === shapeName);
 
       if (!shape) {
-        console.warn(`Shape not found: ${shapeName} in ${category}/${angle}`);
+        console.warn(`Shape not found: ${shapeName} in ${category}/${angleKey}`);
         return null;
       }
 
       return shape.svg;
     }
 
-    // Create a grid for a form
+    // Create a grid for a form that displays the complete composition
     function createFormGrid(gridData, size = 'md') {
       const gridContainer = document.createElement('div');
-      gridContainer.className = `grid-container grid-${gridData.gridType} size-${size}`;
-
-      // Create empty cells for the full grid
+      
+      // Size-specific cell classes
+      const sizeClasses = {
+        'xs': 'w-6 h-6',    // Smaller for overview
+        'sm': 'w-8 h-8', 
+        'md': 'w-12 h-12',  // Good default size
+        'lg': 'w-16 h-16',
+        'xl': 'w-20 h-20',
+        '2xl': 'w-24 h-24'  // Large for detail
+      };
+      
+      // Grid layout classes
+      const gridCols = gridData.gridType === 'serifs' ? 'grid-cols-5' : 'grid-cols-4';
       const totalCells = gridData.gridType === 'serifs' ? 25 : 16;
       
+      gridContainer.className = `grid ${gridCols} gap-px border-2 border-gray-300 dark:border-slate-600 bg-gray-300 dark:bg-slate-600 p-2 rounded-lg max-w-fit mx-auto`;
+
+      // Create all cells for the complete grid
       for (let i = 0; i < totalCells; i++) {
         const cell = document.createElement('div');
-        cell.className = 'grid-cell';
+        cell.className = `${sizeClasses[size]} bg-white dark:bg-slate-800 flex items-center justify-center relative overflow-hidden`;
         gridContainer.appendChild(cell);
       }
 
-      // Fill in the shapes
+      // Fill in the shapes to show the complete composition
       gridData.shapes.forEach(shapeInfo => {
         const cell = gridContainer.children[shapeInfo.index];
         if (cell) {
           const svgString = getSVGByPath(shapeInfo.category, shapeInfo.angleKey, shapeInfo.shapeName);
           if (svgString) {
-            cell.innerHTML = svgString;
+            // Create a container for the SVG
+            const svgContainer = document.createElement('div');
+            svgContainer.className = 'w-full h-full flex items-center justify-center';
+            svgContainer.innerHTML = svgString;
+            
+            // Style the SVG to fit the cell
+            const svg = svgContainer.querySelector('svg');
+            if (svg) {
+              svg.classList.add('w-full', 'h-full', 'text-gray-900', 'dark:text-gray-100');
+              svg.style.maxWidth = '100%';
+              svg.style.maxHeight = '100%';
+            }
+            
+            cell.appendChild(svgContainer);
           } else {
-            // Fallback to image if SVG not found
-            const img = document.createElement('img');
-            img.src = shapeInfo.imagePath;
-            img.alt = shapeInfo.shapeName;
-            img.style.width = '100%';
-            img.style.height = '100%';
-            img.style.objectFit = 'contain';
-            cell.appendChild(img);
+            console.warn(`Could not load SVG for ${shapeInfo.category}/${shapeInfo.angleKey}/${shapeInfo.shapeName}`);
           }
         }
       });
@@ -231,8 +182,8 @@
         const button = document.createElement('button');
         button.textContent = size.label;
         button.className = `px-3 py-1 text-sm rounded transition-colors ${
-          size.key === currentSize 
-            ? 'bg-blue-600 text-white' 
+          size.key === currentSize
+            ? 'bg-blue-600 text-white'
             : 'bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600'
         }`;
         button.onclick = () => onSizeChange(size.key);
@@ -242,82 +193,89 @@
       return container;
     }
 
-    // Render a single form
+    // Render a single form showing the complete composition
     function renderForm(formData) {
       const formCard = document.createElement('div');
-      formCard.className = 'form-card p-6';
+      formCard.className = 'bg-white dark:bg-slate-800 dark:border dark:border-slate-600 rounded-xl shadow-lg hover:-translate-y-0.5 hover:shadow-xl transition-all duration-200 overflow-hidden p-6';
 
       // Form header
       const header = document.createElement('div');
       header.className = 'text-center mb-6';
-      
+
       const title = document.createElement('h2');
       title.textContent = formData.metadata.name || 'Untitled';
       title.className = 'text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2';
-      
+
       const meta = document.createElement('p');
       const createdDate = new Date(formData.metadata.created).toLocaleDateString();
       meta.textContent = `Created: ${createdDate}`;
       meta.className = 'text-gray-600 dark:text-gray-400 text-sm';
-      
+
       header.appendChild(title);
       header.appendChild(meta);
 
-      // Grids container
-      const gridsContainer = document.createElement('div');
-      gridsContainer.className = 'space-y-8';
-
+      // Size controls
       let currentSize = 'md';
+      const sizeControls = createSizeControls(formData.metadata.name, currentSize, (newSize) => {
+        currentSize = newSize;
+        updateComposition();
+      });
 
-      function updateGrids() {
-        gridsContainer.innerHTML = '';
+      // Main composition container
+      const compositionContainer = document.createElement('div');
+      compositionContainer.className = 'space-y-6 mt-6';
 
-        // Serifs grid
+      function updateComposition() {
+        compositionContainer.innerHTML = '';
+
+        // Show grids that have shapes
         if (formData.grids.serifs && formData.grids.serifs.shapes.length > 0) {
           const serifsSection = document.createElement('div');
           serifsSection.className = 'text-center';
           
           const serifsTitle = document.createElement('h3');
-          serifsTitle.textContent = 'Serifs';
-          serifsTitle.className = 'text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4';
+          serifsTitle.textContent = 'Serifs Grid';
+          serifsTitle.className = 'text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3';
           
           const serifsGrid = createFormGrid(formData.grids.serifs, currentSize);
           
           serifsSection.appendChild(serifsTitle);
           serifsSection.appendChild(serifsGrid);
-          gridsContainer.appendChild(serifsSection);
+          compositionContainer.appendChild(serifsSection);
         }
 
-        // Joins grid
         if (formData.grids.joins && formData.grids.joins.shapes.length > 0) {
           const joinsSection = document.createElement('div');
           joinsSection.className = 'text-center';
           
           const joinsTitle = document.createElement('h3');
-          joinsTitle.textContent = 'Joins';
-          joinsTitle.className = 'text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4';
+          joinsTitle.textContent = 'Joins Grid';
+          joinsTitle.className = 'text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3';
           
           const joinsGrid = createFormGrid(formData.grids.joins, currentSize);
           
           joinsSection.appendChild(joinsTitle);
           joinsSection.appendChild(joinsGrid);
-          gridsContainer.appendChild(joinsSection);
+          compositionContainer.appendChild(joinsSection);
+        }
+
+        // If no shapes in either grid, show a message
+        if ((!formData.grids.serifs || formData.grids.serifs.shapes.length === 0) && 
+            (!formData.grids.joins || formData.grids.joins.shapes.length === 0)) {
+          const emptyMessage = document.createElement('p');
+          emptyMessage.textContent = 'This composition appears to be empty.';
+          emptyMessage.className = 'text-gray-500 dark:text-gray-400 text-center italic';
+          compositionContainer.appendChild(emptyMessage);
         }
       }
 
-      // Size controls
-      const sizeControls = createSizeControls(formData.metadata.name, currentSize, (newSize) => {
-        currentSize = newSize;
-        updateGrids();
-      });
-
       // Initial render
-      updateGrids();
+      updateComposition();
 
       // Assemble the card
       formCard.appendChild(header);
       formCard.appendChild(sizeControls);
-      formCard.appendChild(gridsContainer);
+      formCard.appendChild(compositionContainer);
 
       return formCard;
     }
@@ -329,24 +287,38 @@
       const gridEl = document.getElementById('archive-grid');
 
       try {
-        // Load rules data first
-        await loadRulesData();
+        console.log('Loading rules data...');
         
+        // Load rules data first (required for SVG rendering)
+        await loadRulesData();
+        if (!rulesData) {
+          throw new Error('Failed to load rules data');
+        }
+        console.log('Rules data loaded successfully');
+
+        console.log('Loading archived forms...');
+
         // Load all archived forms
         const archiveFiles = ['apek.json', 'cam.json', 'cam_v2.json'];
         const forms = [];
 
         for (const filename of archiveFiles) {
           try {
+            console.log(`Fetching ${filename}...`);
             const response = await fetch(`/archive/${filename}`);
             if (response.ok) {
               const formData = await response.json();
+              console.log(`Loaded ${filename}:`, formData.metadata?.name);
               forms.push(formData);
+            } else {
+              console.warn(`Failed to fetch ${filename}: ${response.status}`);
             }
           } catch (error) {
             console.warn(`Failed to load ${filename}:`, error);
           }
         }
+
+        console.log(`Loaded ${forms.length} forms total`);
 
         if (forms.length === 0) {
           throw new Error('No forms found');
@@ -356,11 +328,16 @@
         loadingEl.classList.add('hidden');
         gridEl.classList.remove('hidden');
 
-        // Render each form
+        const formsContainer = document.getElementById('archive-forms');
+
+        // Render each form as a complete composition
         forms.forEach(formData => {
+          console.log('Rendering form composition:', formData.metadata?.name);
           const formElement = renderForm(formData);
-          gridEl.appendChild(formElement);
+          formsContainer.appendChild(formElement);
         });
+
+        console.log('Archive loaded successfully!');
 
       } catch (error) {
         console.error('Failed to load archived forms:', error);

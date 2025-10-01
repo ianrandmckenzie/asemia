@@ -1,0 +1,63 @@
+{
+  "metadata": {
+    "name": "A",
+    "created": "2025-10-01T22:33:28.514Z",
+    "version": "1.0"
+  },
+  "grids": {
+    "serifs": {
+      "gridType": "serifs",
+      "gridSize": 5,
+      "shapes": [
+        {
+          "index": 11,
+          "category": "bodies",
+          "angleKey": "22_5_deg",
+          "shapeName": "vertical_slash",
+          "imagePath": "./assets/shapes/bodies/22_5_deg/vertical_slash.svg"
+        },
+        {
+          "index": 12,
+          "category": "bodies",
+          "angleKey": "0_deg",
+          "shapeName": "vertical",
+          "imagePath": "./assets/shapes/bodies/0_deg/vertical.svg"
+        },
+        {
+          "index": 17,
+          "category": "bodies",
+          "angleKey": "0_deg",
+          "shapeName": "vertical",
+          "imagePath": "./assets/shapes/bodies/0_deg/vertical.svg"
+        },
+        {
+          "index": 20,
+          "category": "serifs",
+          "angleKey": "22_5_deg",
+          "shapeName": "bl_to_tr",
+          "imagePath": "./assets/shapes/serifs/22_5_deg/bl_to_tr.svg"
+        },
+        {
+          "index": 22,
+          "category": "serifs",
+          "angleKey": "0_deg",
+          "shapeName": "bottom",
+          "imagePath": "./assets/shapes/serifs/0_deg/bottom.svg"
+        }
+      ]
+    },
+    "joins": {
+      "gridType": "joins",
+      "gridSize": 4,
+      "shapes": [
+        {
+          "index": 5,
+          "category": "joins",
+          "angleKey": "22_5_deg",
+          "shapeName": "vertical_tr",
+          "imagePath": "./assets/shapes/joins/22_5_deg/vertical_tr.svg"
+        }
+      ]
+    }
+  }
+}
