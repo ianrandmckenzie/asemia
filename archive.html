@@ -90,8 +90,8 @@
       }
     }
 
-    // Get SVG string from rules data
-    function getSVGByPath(category, angleKey, shapeName) {
+    // Get SVG string and shape properties from rules data
+    function getShapeData(category, angleKey, shapeName) {
       if (!rulesData?.shapes?.[category]?.[angleKey]) {
         console.warn(`SVG not found: ${category}/${angleKey}/${shapeName}`);
         return null;
@@ -105,58 +105,223 @@
         return null;
       }
 
-      return shape.svg;
+      return {
+        svg: shape.svg,
+        width: shape.width || 1,
+        height: shape.height || 1,
+        orientation: shape.cell_orientation || 'center center'
+      };
     }
 
-    // Create a grid for a form that displays the complete composition
-    function createFormGrid(gridData, size = 'md') {
+    // Create a complete overlapped composition exactly like the builder
+    function createOverlappedComposition(serifsData, joinsData, size = 'md') {
+      const compositionContainer = document.createElement('div');
+      compositionContainer.className = 'relative inline-block mx-auto';
+      compositionContainer.style.overflow = 'visible'; // Allow shapes to overflow composition boundaries
+
+      // Size scaling factors (all based on builder's 100px base cell size)
+      const scaleFactors = {
+        'xs': 0.25,    // 25px cells
+        'sm': 0.4,     // 40px cells
+        'md': 0.7,     // 70px cells
+        'lg': 1.0,     // 100px cells (same as builder)
+        'xl': 1.3,     // 130px cells
+        '2xl': 1.6     // 160px cells
+      };
+
+      const scale = scaleFactors[size];
+      const cellSize = 100 * scale;  // Base 100px cell scaled
+
+      // Builder measurements scaled proportionally
+      const serifsSize = 500 * scale;  // 5 × 100px cells
+      const joinsSize = 400 * scale;   // 4 × 100px cells
+      const offset = 50 * scale;       // 50px offset scaled
+
+      // Create serifs grid (5x5, on top)
+      if (serifsData && serifsData.shapes.length > 0) {
+        const serifsGrid = createBuilderGrid(serifsData, serifsSize, 5, cellSize);
+        serifsGrid.className += ' relative z-10';
+        compositionContainer.appendChild(serifsGrid);
+      }
+
+      // Create joins grid (4x4, positioned absolutely behind and inset)
+      if (joinsData && joinsData.shapes.length > 0) {
+        const joinsGrid = createBuilderGrid(joinsData, joinsSize, 4, cellSize);
+        joinsGrid.className += ` absolute z-0`;
+        joinsGrid.style.top = `${offset}px`;
+        joinsGrid.style.left = `${offset}px`;
+        compositionContainer.appendChild(joinsGrid);
+      }
+
+      return compositionContainer;
+    }
+
+    // Create a grid that exactly matches the builder's structure and positioning
+    function createBuilderGrid(gridData, gridSize, cols, cellSize) {
       const gridContainer = document.createElement('div');
       
-      // Size-specific cell classes
-      const sizeClasses = {
-        'xs': 'w-6 h-6',    // Smaller for overview
-        'sm': 'w-8 h-8', 
-        'md': 'w-12 h-12',  // Good default size
-        'lg': 'w-16 h-16',
-        'xl': 'w-20 h-20',
-        '2xl': 'w-24 h-24'  // Large for detail
-      };
-      
-      // Grid layout classes
-      const gridCols = gridData.gridType === 'serifs' ? 'grid-cols-5' : 'grid-cols-4';
-      const totalCells = gridData.gridType === 'serifs' ? 25 : 16;
-      
-      gridContainer.className = `grid ${gridCols} gap-px border-2 border-gray-300 dark:border-slate-600 bg-gray-300 dark:bg-slate-600 p-2 rounded-lg max-w-fit mx-auto`;
+      gridContainer.className = `grid grid-cols-${cols} gap-0`;  // Exact same as builder
+      gridContainer.style.width = `${gridSize}px`;
+      gridContainer.style.height = `${gridSize}px`;
+      gridContainer.style.overflow = 'visible'; // Allow shapes to overflow grid boundaries      // Create all cells exactly like the builder
+      const totalCells = cols * cols;
+      const cellElements = [];
 
-      // Create all cells for the complete grid
       for (let i = 0; i < totalCells; i++) {
         const cell = document.createElement('div');
-        cell.className = `${sizeClasses[size]} bg-white dark:bg-slate-800 flex items-center justify-center relative overflow-hidden`;
+        cell.className = 'relative'; // Same as builder: 'w-[100px] h-[100px] relative' but using dynamic sizing
+        cell.style.width = `${cellSize}px`;
+        cell.style.height = `${cellSize}px`;
         gridContainer.appendChild(cell);
+        cellElements.push(cell);
       }
+
+      // Place shapes using the same logic as the builder
+      gridData.shapes.forEach(shapeInfo => {
+        const cellIndex = shapeInfo.index;
+        const shapeData = getShapeData(shapeInfo.category, shapeInfo.angleKey, shapeInfo.shapeName);
+
+        if (!shapeData) {
+          console.warn(`Could not load shape data for ${shapeInfo.category}/${shapeInfo.angleKey}/${shapeInfo.shapeName}`);
+          return;
+        }
+
+        const { svg, width, height } = shapeData;
+        const cell = cellElements[cellIndex];
+
+        if (!cell) return;
+
+        // Create shape element exactly like the builder does
+        const shapeElement = document.createElement('div');
+        shapeElement.className = 'absolute'; // Remove inset-0 to allow overflow positioning
+        
+        // Add SVG content
+        shapeElement.innerHTML = svg;
+        
+        // Style the SVG to allow overflow like the builder
+        const svgElement = shapeElement.querySelector('svg');
+        if (svgElement) {
+          svgElement.classList.add('text-gray-900', 'dark:text-gray-100');
+          // Remove size constraints to allow overflow - let SVG use its natural dimensions
+          // The SVG viewBox and builder's percentage positioning will handle sizing
+        }        // Handle multi-cell shapes by spanning across cells
+        if (width > 1 || height > 1) {
+          // Calculate position for multi-cell shape
+          const row = Math.floor(cellIndex / cols);
+          const col = cellIndex % cols;
+
+          // Position relative to the grid, not the cell
+          shapeElement.style.position = 'absolute';
+          shapeElement.style.left = `${col * cellSize}px`;
+          shapeElement.style.top = `${row * cellSize}px`;
+          shapeElement.style.width = `${width * cellSize}px`;
+          shapeElement.style.height = `${height * cellSize}px`;
+          shapeElement.style.zIndex = '10';
+
+          // Add to grid container instead of cell
+          gridContainer.appendChild(shapeElement);
+        } else {
+          // Single cell shape - add to the cell
+          cell.appendChild(shapeElement);
+        }
+      });
+
+      return gridContainer;
+    }
+
+    // Create a single grid (either serifs or joins) with proper multi-cell support
+    function createSingleGrid(gridData, gridSize, cols) {
+      const gridContainer = document.createElement('div');
+      const cellSize = gridSize / cols;
+
+      gridContainer.className = `grid grid-cols-${cols} gap-0`;  // No background colors
+      gridContainer.style.width = `${gridSize}px`;
+      gridContainer.style.height = `${gridSize}px`;
+
+      // Create all cells for the complete grid
+      const totalCells = cols * cols;
+      const cellElements = [];
+
+      for (let i = 0; i < totalCells; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'flex items-center justify-center relative'; // No borders for clean positioning
+        cell.style.width = `${cellSize}px`;
+        cell.style.height = `${cellSize}px`;
+        gridContainer.appendChild(cell);
+        cellElements.push(cell);
+      }
+
+      // Track which cells are occupied by multi-cell shapes
+      const occupiedCells = new Set();
 
       // Fill in the shapes to show the complete composition
       gridData.shapes.forEach(shapeInfo => {
-        const cell = gridContainer.children[shapeInfo.index];
-        if (cell) {
-          const svgString = getSVGByPath(shapeInfo.category, shapeInfo.angleKey, shapeInfo.shapeName);
-          if (svgString) {
-            // Create a container for the SVG
+        const cellIndex = shapeInfo.index;
+        const shapeData = getShapeData(shapeInfo.category, shapeInfo.angleKey, shapeInfo.shapeName);
+
+        if (!shapeData) {
+          console.warn(`Could not load shape data for ${shapeInfo.category}/${shapeInfo.angleKey}/${shapeInfo.shapeName}`);
+          return;
+        }
+
+        const { svg, width, height } = shapeData;
+
+        // Calculate which cells this shape should occupy
+        const row = Math.floor(cellIndex / cols);
+        const col = cellIndex % cols;
+
+        // Check if this is a multi-cell shape
+        if (width > 1 || height > 1) {
+          // Multi-cell shape - create a container that spans multiple cells
+          const shapeContainer = document.createElement('div');
+          shapeContainer.className = 'absolute flex items-center justify-center';
+          shapeContainer.style.width = `${cellSize * width}px`;
+          shapeContainer.style.height = `${cellSize * height}px`;
+          shapeContainer.style.left = `${col * cellSize}px`;
+          shapeContainer.style.top = `${row * cellSize}px`;
+          shapeContainer.style.zIndex = '10';
+
+          // Create SVG container
+          const svgContainer = document.createElement('div');
+          svgContainer.className = 'w-full h-full flex items-center justify-center';
+          svgContainer.innerHTML = svg;
+
+          // Style the SVG
+          const svgElement = svgContainer.querySelector('svg');
+          if (svgElement) {
+            svgElement.classList.add('w-full', 'h-full', 'text-gray-900', 'dark:text-gray-100');
+            svgElement.style.maxWidth = '100%';
+            svgElement.style.maxHeight = '100%';
+          }
+
+          shapeContainer.appendChild(svgContainer);
+          gridContainer.appendChild(shapeContainer);
+
+          // Mark all cells occupied by this shape
+          for (let r = row; r < row + height && r < cols; r++) {
+            for (let c = col; c < col + width && c < cols; c++) {
+              occupiedCells.add(r * cols + c);
+            }
+          }
+        } else {
+          // Single-cell shape
+          const cell = cellElements[cellIndex];
+          if (cell && !occupiedCells.has(cellIndex)) {
+            // Create SVG container
             const svgContainer = document.createElement('div');
             svgContainer.className = 'w-full h-full flex items-center justify-center';
-            svgContainer.innerHTML = svgString;
-            
-            // Style the SVG to fit the cell
-            const svg = svgContainer.querySelector('svg');
-            if (svg) {
-              svg.classList.add('w-full', 'h-full', 'text-gray-900', 'dark:text-gray-100');
-              svg.style.maxWidth = '100%';
-              svg.style.maxHeight = '100%';
+            svgContainer.innerHTML = svg;
+
+            // Style the SVG
+            const svgElement = svgContainer.querySelector('svg');
+            if (svgElement) {
+              svgElement.classList.add('w-full', 'h-full', 'text-gray-900', 'dark:text-gray-100');
+              svgElement.style.maxWidth = '100%';
+              svgElement.style.maxHeight = '100%';
             }
-            
+
             cell.appendChild(svgContainer);
-          } else {
-            console.warn(`Could not load SVG for ${shapeInfo.category}/${shapeInfo.angleKey}/${shapeInfo.shapeName}`);
+            occupiedCells.add(cellIndex);
           }
         }
       });
@@ -193,7 +358,7 @@
       return container;
     }
 
-    // Render a single form showing the complete composition
+    // Render a single form showing the complete overlapped composition
     function renderForm(formData) {
       const formCard = document.createElement('div');
       formCard.className = 'bg-white dark:bg-slate-800 dark:border dark:border-slate-600 rounded-xl shadow-lg hover:-translate-y-0.5 hover:shadow-xl transition-all duration-200 overflow-hidden p-6';
@@ -223,48 +388,37 @@
 
       // Main composition container
       const compositionContainer = document.createElement('div');
-      compositionContainer.className = 'space-y-6 mt-6';
+      compositionContainer.className = 'flex justify-center mt-6';
 
       function updateComposition() {
         compositionContainer.innerHTML = '';
 
-        // Show grids that have shapes
-        if (formData.grids.serifs && formData.grids.serifs.shapes.length > 0) {
-          const serifsSection = document.createElement('div');
-          serifsSection.className = 'text-center';
-          
-          const serifsTitle = document.createElement('h3');
-          serifsTitle.textContent = 'Serifs Grid';
-          serifsTitle.className = 'text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3';
-          
-          const serifsGrid = createFormGrid(formData.grids.serifs, currentSize);
-          
-          serifsSection.appendChild(serifsTitle);
-          serifsSection.appendChild(serifsGrid);
-          compositionContainer.appendChild(serifsSection);
-        }
+        // Create overlapped composition like the builder
+        const hasSerifs = formData.grids.serifs && formData.grids.serifs.shapes.length > 0;
+        const hasJoins = formData.grids.joins && formData.grids.joins.shapes.length > 0;
 
-        if (formData.grids.joins && formData.grids.joins.shapes.length > 0) {
-          const joinsSection = document.createElement('div');
-          joinsSection.className = 'text-center';
-          
-          const joinsTitle = document.createElement('h3');
-          joinsTitle.textContent = 'Joins Grid';
-          joinsTitle.className = 'text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3';
-          
-          const joinsGrid = createFormGrid(formData.grids.joins, currentSize);
-          
-          joinsSection.appendChild(joinsTitle);
-          joinsSection.appendChild(joinsGrid);
-          compositionContainer.appendChild(joinsSection);
-        }
+        if (hasSerifs || hasJoins) {
+          const overlappedComposition = createOverlappedComposition(
+            hasSerifs ? formData.grids.serifs : null,
+            hasJoins ? formData.grids.joins : null,
+            currentSize
+          );
 
-        // If no shapes in either grid, show a message
-        if ((!formData.grids.serifs || formData.grids.serifs.shapes.length === 0) && 
-            (!formData.grids.joins || formData.grids.joins.shapes.length === 0)) {
+          const compositionWrapper = document.createElement('div');
+          compositionWrapper.className = 'text-center';
+
+          const compositionTitle = document.createElement('h3');
+          compositionTitle.textContent = 'Typeform Composition';
+          compositionTitle.className = 'text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4';
+
+          compositionWrapper.appendChild(compositionTitle);
+          compositionWrapper.appendChild(overlappedComposition);
+          compositionContainer.appendChild(compositionWrapper);
+        } else {
+          // If no shapes in either grid, show a message
           const emptyMessage = document.createElement('p');
           emptyMessage.textContent = 'This composition appears to be empty.';
-          emptyMessage.className = 'text-gray-500 dark:text-gray-400 text-center italic';
+          emptyMessage.className = 'text-gray-500 dark:text-gray-400 text-center italic py-8';
           compositionContainer.appendChild(emptyMessage);
         }
       }
@@ -288,7 +442,7 @@
 
       try {
         console.log('Loading rules data...');
-        
+
         // Load rules data first (required for SVG rendering)
         await loadRulesData();
         if (!rulesData) {
