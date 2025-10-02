@@ -22,8 +22,8 @@ export function createNav() {
         <!-- Left Section: Logo and Home -->
         <div class="flex items-center space-x-4">
           <a href="/" class="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-            <img src="/public/darkmode-logo-fullbleed.png" alt="Asemia Logo" class="h-6 md:h-12 w-auto dark:hidden rounded-md" />
-            <img src="/public/lightmode-logo-fullbleed.png" alt="Asemia Logo" class="h-6 md:h-12 w-auto hidden dark:block rounded-md" />
+            <img src="/public/darkmode-logo-fullbleed.png" alt="Asemia Logo" class="h-8 md:h-12 w-auto dark:hidden rounded-md" />
+            <img src="/public/lightmode-logo-fullbleed.png" alt="Asemia Logo" class="h-8 md:h-12 w-auto hidden dark:block rounded-md" />
             <span class="text-sm md:text-lg font-thin uppercase tracking-widest text-gray-900 dark:text-gray-100 font-sans">Asemia</span>
           </a>
         </div>

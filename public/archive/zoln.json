@@ -1,0 +1,77 @@
+{
+  "metadata": {
+    "name": "zoln",
+    "created": "2025-10-02T21:51:07.531Z",
+    "version": "1.0"
+  },
+  "grids": {
+    "serifs": {
+      "gridType": "serifs",
+      "gridSize": 5,
+      "shapes": [
+        {
+          "index": 0,
+          "category": "serifs",
+          "angleKey": "0_deg",
+          "shapeName": "top",
+          "imagePath": "./assets/shapes/serifs/0_deg/top.svg"
+        },
+        {
+          "index": 5,
+          "category": "bodies",
+          "angleKey": "0_deg",
+          "shapeName": "vertical",
+          "imagePath": "./assets/shapes/bodies/0_deg/vertical.svg"
+        },
+        {
+          "index": 6,
+          "category": "bodies",
+          "angleKey": "22_5_deg",
+          "shapeName": "vertical_slash",
+          "imagePath": "./assets/shapes/bodies/22_5_deg/vertical_slash.svg"
+        },
+        {
+          "index": 8,
+          "category": "serifs",
+          "angleKey": "45_deg",
+          "shapeName": "side_tr_to_bl",
+          "imagePath": "./assets/shapes/serifs/45_deg/side_tr_to_bl.svg"
+        },
+        {
+          "index": 10,
+          "category": "bodies",
+          "angleKey": "0_deg",
+          "shapeName": "vertical",
+          "imagePath": "./assets/shapes/bodies/0_deg/vertical.svg"
+        }
+      ]
+    },
+    "joins": {
+      "gridType": "joins",
+      "gridSize": 4,
+      "shapes": [
+        {
+          "index": 1,
+          "category": "joins",
+          "angleKey": "22_5_deg",
+          "shapeName": "vertical_tr",
+          "imagePath": "./assets/shapes/joins/22_5_deg/vertical_tr.svg"
+        },
+        {
+          "index": 6,
+          "category": "joins",
+          "angleKey": "45_deg",
+          "shapeName": "vertical_bl",
+          "imagePath": "./assets/shapes/joins/45_deg/vertical_bl.svg"
+        },
+        {
+          "index": 8,
+          "category": "joins",
+          "angleKey": "22_5_deg",
+          "shapeName": "vertical_bl",
+          "imagePath": "./assets/shapes/joins/22_5_deg/vertical_bl.svg"
+        }
+      ]
+    }
+  }
+}

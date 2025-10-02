@@ -510,6 +510,13 @@ function clearCellHighlights() {
 
 // Handle grid cell click
 function handleGridCellClick(event) {
+  // Check if erase mode is active (mobile)
+  if (window.isEraseMode && window.isEraseMode()) {
+    const cell = event.currentTarget;
+    cell.innerHTML = '';
+    return;
+  }
+
   if (!selectedShape) {
     alert('Please select a shape from the sidebar first');
     return;

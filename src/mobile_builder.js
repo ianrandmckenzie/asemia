@@ -36,6 +36,9 @@ async function initMobileBuilder() {
   // Listen for window resize to adjust scale
   window.addEventListener('resize', applyResponsiveScale);
 
+  // Open serifs tab by default
+  switchMobileTab('serifs');
+
   console.log('Mobile builder initialized');
 }
 
@@ -287,7 +290,59 @@ function setupMobileToolbar() {
       icon.src = previewActive ? '/assets/icons/eye-slash.svg' : '/assets/icons/eye.svg';
     }
   });
+
+  // Erase mode toggle
+  const mobileEraseBtn = document.getElementById('mobileEraseBtn');
+  if (mobileEraseBtn) {
+    setupEraseMode(mobileEraseBtn);
+  }
 }
+
+// Setup erase mode functionality
+let eraseMode = false;
+
+function setupEraseMode(eraseBtn) {
+  eraseBtn.addEventListener('click', () => {
+    eraseMode = !eraseMode;
+
+    // Update button appearance and icon
+    const textSpan = eraseBtn.querySelector('span');
+    const icon = document.getElementById('mobileEraseIcon');
+
+    if (eraseMode) {
+      eraseBtn.classList.add('bg-red-100', 'dark:bg-red-900');
+      if (textSpan) {
+        textSpan.classList.remove('text-gray-600', 'dark:text-gray-300');
+        textSpan.classList.add('text-red-700', 'dark:text-red-300');
+      }
+      if (icon) {
+        icon.src = '/assets/icons/erasing.svg';
+      }
+    } else {
+      eraseBtn.classList.remove('bg-red-100', 'dark:bg-red-900');
+      if (textSpan) {
+        textSpan.classList.remove('text-red-700', 'dark:text-red-300');
+        textSpan.classList.add('text-gray-600', 'dark:text-gray-300');
+      }
+      if (icon) {
+        icon.src = '/assets/icons/erase.svg';
+      }
+    }
+
+    // Update cursor for grid cells
+    const gridsWrapper = document.querySelector('.builder-grids-wrapper');
+    if (gridsWrapper) {
+      if (eraseMode) {
+        gridsWrapper.style.cursor = 'crosshair';
+      } else {
+        gridsWrapper.style.cursor = '';
+      }
+    }
+  });
+}
+
+// Export erase mode state
+window.isEraseMode = () => eraseMode;
 
 // Setup size options
 function setupSizeOptions() {
