@@ -31,6 +31,9 @@ async function initSentenceGenerator() {
     // Generate initial sentences
     generateSentences();
 
+    // Apply default size (base)
+    updateSizeDisplay('base');
+
     // Show the controls
     setupControls();
 
@@ -166,8 +169,8 @@ function createRandomSentence(index) {
 
   const wordsWrapper = document.createElement('div');
   wordsWrapper.className = 'flex flex-wrap items-center justify-center sentence-words-wrapper';
-  // Using gap for vertical spacing between wrapped lines only
-  wordsWrapper.style.rowGap = 'calc(0.6 * 24px)'; // 24px base row spacing
+  // Using gap for vertical spacing between wrapped lines only (default base = 0.133)
+  wordsWrapper.style.rowGap = 'calc(0.133 * 24px)'; // 24px base row spacing
 
   // Generate random words for this sentence, inserting empty grids as spaces
   for (let i = 0; i < sentenceLength; i++) {
@@ -195,8 +198,8 @@ function createRandomWord() {
   // Random word length (2-5 forms)
   const wordLength = Math.floor(Math.random() * 4) + 2; // 2 to 5 forms
 
-  // Set gap based on current scale (default 7xl = 0.6)
-  wordWrapper.style.gap = 'calc(0.6 * 8px)'; // Will be updated by size changes
+  // Set gap based on current scale (default base = 0.133)
+  wordWrapper.style.gap = 'calc(0.133 * 8px)'; // Will be updated by size changes
 
   // Generate random forms for this word
   for (let i = 0; i < wordLength; i++) {
@@ -211,13 +214,13 @@ function createRandomWord() {
 function createWordSpace() {
   const spaceWrapper = document.createElement('div');
   spaceWrapper.className = 'inline-block word-space';
-  // Set to the scaled size (500px * 0.6 = 300px at default)
-  spaceWrapper.style.width = '300px';
-  spaceWrapper.style.height = '300px';
+  // Set to the scaled size (500px * 0.133 = 66.5px at default base)
+  spaceWrapper.style.width = '66.5px';
+  spaceWrapper.style.height = '66.5px';
 
   const gridsWrapper = document.createElement('div');
   gridsWrapper.className = 'relative sentence-grids-wrapper';
-  gridsWrapper.style.transform = 'scale(0.6)'; // Default 7xl scale
+  gridsWrapper.style.transform = 'scale(0.133)'; // Default base scale
   gridsWrapper.style.transformOrigin = 'top left';
 
   // Create empty serifs grid (5x5) - no shapes will be added
@@ -245,14 +248,14 @@ function createRandomFormForWord() {
 
   const formWrapper = document.createElement('div');
   formWrapper.className = 'inline-block';
-  // Set formWrapper to the scaled size (500px * 0.6 = 300px at default)
-  formWrapper.style.width = '300px';
-  formWrapper.style.height = '300px';
+  // Set formWrapper to the scaled size (500px * 0.133 = 66.5px at default base)
+  formWrapper.style.width = '66.5px';
+  formWrapper.style.height = '66.5px';
   formWrapper.style.overflow = 'hidden';
 
   const gridsWrapper = document.createElement('div');
   gridsWrapper.className = 'relative sentence-grids-wrapper';
-  gridsWrapper.style.transform = 'scale(0.6)'; // Default 7xl scale
+  gridsWrapper.style.transform = 'scale(0.133)'; // Default base scale
   gridsWrapper.style.transformOrigin = 'top left'; // Scale from top-left corner
 
   // Create serifs grid (5x5)
@@ -493,7 +496,7 @@ const SIZE_SCALES = {
 
 // Update size display across all grid wrappers
 function updateSizeDisplay(size) {
-  const scale = SIZE_SCALES[size] || SIZE_SCALES['7xl'];
+  const scale = SIZE_SCALES[size] || SIZE_SCALES['base'];
   const allGridWrappers = document.querySelectorAll('.sentence-grids-wrapper');
   const allWordWrappers = document.querySelectorAll('.word-forms-wrapper');
   const allSentenceWrappers = document.querySelectorAll('.sentence-words-wrapper');

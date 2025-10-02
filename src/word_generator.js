@@ -31,6 +31,9 @@ async function initWordGenerator() {
     // Generate initial words
     generateWords();
 
+    // Apply default size (4xl)
+    updateSizeDisplay('4xl');
+
     // Show the controls
     setupControls();
 
@@ -166,8 +169,8 @@ function createRandomWord(index) {
 
   const formsWrapper = document.createElement('div');
   formsWrapper.className = 'flex items-center justify-center word-forms-wrapper';
-  // Set gap based on current scale (default 7xl = 0.6)
-  formsWrapper.style.gap = 'calc(0.6 * 8px)'; // Will be updated by size changes
+  // Set gap based on current scale (default 4xl = 0.3)
+  formsWrapper.style.gap = 'calc(0.3 * 8px)'; // Will be updated by size changes
 
   // Generate random forms for this word
   for (let i = 0; i < wordLength; i++) {
@@ -188,14 +191,14 @@ function createRandomFormForWord() {
 
   const formWrapper = document.createElement('div');
   formWrapper.className = 'inline-block';
-  // Set formWrapper to the scaled size (500px * 0.6 = 300px at default)
-  formWrapper.style.width = '300px';
-  formWrapper.style.height = '300px';
+  // Set formWrapper to the scaled size (500px * 0.3 = 150px at default 4xl)
+  formWrapper.style.width = '150px';
+  formWrapper.style.height = '150px';
   formWrapper.style.overflow = 'hidden';
 
   const gridsWrapper = document.createElement('div');
   gridsWrapper.className = 'relative word-grids-wrapper';
-  gridsWrapper.style.transform = 'scale(0.6)'; // Default 7xl scale
+  gridsWrapper.style.transform = 'scale(0.3)'; // Default 4xl scale
   gridsWrapper.style.transformOrigin = 'top left'; // Scale from top-left corner
 
   // Create serifs grid (5x5)
@@ -438,7 +441,7 @@ const SIZE_SCALES = {
 
 // Update size display across all grid wrappers
 function updateSizeDisplay(size) {
-  const scale = SIZE_SCALES[size] || SIZE_SCALES['7xl'];
+  const scale = SIZE_SCALES[size] || SIZE_SCALES['4xl'];
   const allGridWrappers = document.querySelectorAll('.word-grids-wrapper');
   const allFormsWrappers = document.querySelectorAll('.word-forms-wrapper');
 
