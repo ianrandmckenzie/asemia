@@ -111,6 +111,9 @@ async function loadArchivedForms() {
 
     console.log(`🎉 Successfully loaded ${compositions.length} archived forms`);
 
+    // Setup borders toggle after forms are rendered
+    setupBordersToggle();
+
   } catch (error) {
     console.error('Failed to load archived forms:', error);
     loadingElement.classList.add('hidden');
@@ -199,7 +202,7 @@ function createArchiveForm(composition) {
 function createArchiveGridCells(grid, cellCount) {
   for (let i = 0; i < cellCount; i++) {
     const cell = document.createElement('div');
-    cell.className = 'w-[100px] h-[100px] relative border border-gray-200 dark:border-gray-600 border-opacity-20';
+    cell.className = 'w-[100px] h-[100px] relative archive-grid-cell';
     cell.dataset.index = i;
     grid.appendChild(cell);
   }
@@ -297,6 +300,39 @@ function showError() {
 
   loadingElement.classList.add('hidden');
   errorElement.classList.remove('hidden');
+}
+
+// Setup borders toggle
+function setupBordersToggle() {
+  const bordersToggle = document.getElementById('bordersToggle');
+
+  if (!bordersToggle) {
+    console.warn('Borders toggle not found');
+    return;
+  }
+
+  // Apply initial state (borders on by default)
+  updateBordersDisplay(bordersToggle.checked);
+
+  // Listen for toggle changes
+  bordersToggle.addEventListener('change', (e) => {
+    updateBordersDisplay(e.target.checked);
+  });
+}
+
+// Update borders display across all grid cells
+function updateBordersDisplay(showBorders) {
+  const allCells = document.querySelectorAll('.archive-grid-cell');
+
+  allCells.forEach(cell => {
+    if (showBorders) {
+      cell.classList.add('border', 'border-gray-200', 'dark:border-gray-600', 'border-opacity-20');
+    } else {
+      cell.classList.remove('border', 'border-gray-200', 'dark:border-gray-600', 'border-opacity-20');
+    }
+  });
+
+  console.log(`Borders ${showBorders ? 'enabled' : 'disabled'} for ${allCells.length} cells`);
 }
 
 // Wait for DOM to be ready, then initialize
