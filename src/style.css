@@ -196,6 +196,10 @@
   -webkit-overflow-scrolling: touch;
 }
 
+.mobile-shape-selector.hidden {
+  display: none !important;
+}
+
 /* Custom scrollbar for webkit browsers (Safari, Chrome) */
 .mobile-shape-selector::-webkit-scrollbar {
   height: 8px;
@@ -244,8 +248,8 @@
 /* Mobile shape button */
 .mobile-shape-btn {
   flex-shrink: 0;
-  width: 4rem;
-  height: 4rem;
+  width: 3rem;
+  height: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;

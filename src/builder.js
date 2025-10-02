@@ -183,17 +183,10 @@ async function initBuilder() {
   await loadRules();
   createGrids();
   setupSidebar();
-  setupMobileUI();
   setupTabSwitching();
   setupClearSelection();
   setupPreviewToggle();
-  setupMobileToolbar();
-  setupSizeOptions();
   updateGridLayers();
-  applyResponsiveScale();
-
-  // Listen for window resize to adjust scale
-  window.addEventListener('resize', applyResponsiveScale);
 
   // Make necessary functions globally accessible for constrained builder and save/load
   window.getCellPosition = getCellPosition;
@@ -207,9 +200,21 @@ async function initBuilder() {
 
   // Make selectedShape accessible via a getter function since it changes
   window.getSelectedShape = () => selectedShape;
+  window.setSelectedShape = (shape) => { selectedShape = shape; };
   window.handleGridCellClick = handleGridCellClick;
   window.handleGridCellRightClick = handleGridCellRightClick;
   window.handleGridCellLeave = handleGridCellLeave;
+
+  // Make functions accessible to mobile_builder.js
+  window.updateSelectedShapeDisplay = updateSelectedShapeDisplay;
+  window.updateGridLayers = updateGridLayers;
+  window.getCurrentTab = () => currentTab;
+  window.setCurrentTab = (tab) => { currentTab = tab; };
+  window.getPreviewMode = () => previewMode;
+  window.setPreviewMode = (mode) => {
+    previewMode = mode;
+    document.body.classList.toggle('preview-mode', mode);
+  };
 
   console.log('Builder functions made globally accessible');
 }

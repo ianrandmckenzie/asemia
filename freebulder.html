@@ -45,26 +45,26 @@
   <link href="/src/style.css" rel="stylesheet" />
 </head>
 <body>
-  <div class="flex flex-col md:flex-row h-screen text-black dark:text-white">
+  <div class="flex flex-col md:flex-row h-[calc(80vh)] md:h-screen text-black dark:text-white">
     <!-- Mobile Top Tabs (visible below md breakpoint) -->
     <div class="md:hidden flex flex-col bg-gray-100 dark:bg-slate-800 border-b border-gray-300 dark:border-gray-700">
       <!-- Tab Buttons -->
       <div class="flex border-b border-gray-300 dark:border-gray-700">
-        <button id="mobileSerifTab" class="mobile-tab flex-1 py-3 px-2 border-r border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-slate-700" data-category="serifs">
+        <button id="mobileSerifTab" class="mobile-tab flex-1 pb-1 pt-2 border-r border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-slate-700" data-category="serifs">
           <div class="flex flex-col items-center gap-1">
-            <img src="/assets/shapes/serifs/0_deg/top.svg" alt="Serifs" class="w-6 h-6 object-contain dark:invert">
+            <svg class="h-6 w-auto" fill="currentColor" stroke="currentColor" stop-color="currentColor" width="100px" height="100px" viewBox="0 0 99.999999 100" version="1.1" id="svg1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"><defs id="defs1" /><g id="g1"><rect style="stroke-width:0.0487215" id="rect3-4" width="9.9512787" height="119.95128" x="45.024361" y="-19.975639" /><path d="M 45.25,51.936182 V 100 h -45 C 20.70912,98.219833 31.98881,86.542207 38.13672,74.875959 43.07144,65.511871 44.72077,56.184537 45.25,51.936182 Z" style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke:none;stroke-width:0.24156;enable-background:accumulate;" id="path16" /><path d="M 54.75,51.93619 V 100 h 45 C 79.290883,98.21984 68.011192,86.54221 61.863277,74.87597 56.928563,65.51188 55.279226,56.18454 54.75,51.93619 Z" style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;stroke:none;stroke-width:0.24156;enable-background:accumulate;" id="path16-9" /></g></svg>
             <span class="text-xs font-medium">Serifs</span>
           </div>
         </button>
-        <button id="mobileBodiesTab" class="mobile-tab flex-1 py-3 px-2 border-r border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-slate-700" data-category="bodies">
+        <button id="mobileBodiesTab" class="mobile-tab flex-1 pb-1 pt-2 border-r border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-slate-700" data-category="bodies">
           <div class="flex flex-col items-center gap-1">
-            <img src="/assets/shapes/bodies/0_deg/horizontal.svg" alt="Bodies" class="w-6 h-6 object-contain dark:invert">
+            <svg class="h-6 w-auto" fill="currentColor" stroke="currentColor" stop-color="currentColor" width="120px" height="100px" viewBox="0 0 120 100" version="1.1" id="svg1" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"><defs id="defs1" /><rect style="stroke-width:0.0487215" id="rect3-4-4" width="9.9512787" height="119.95128" x="-54.975639" y="0.024369435" transform="rotate(-90)" /></svg>
             <span class="text-xs font-medium">Bodies</span>
           </div>
         </button>
-        <button id="mobileJoinsTab" class="mobile-tab flex-1 py-3 px-2 bg-gray-200 dark:bg-slate-700" data-category="joins">
+        <button id="mobileJoinsTab" class="mobile-tab flex-1 pb-1 pt-2 bg-gray-200 dark:bg-slate-700" data-category="joins">
           <div class="flex flex-col items-center gap-1">
-            <img src="/assets/shapes/joins/45_deg/horizontal_br.svg" alt="Joins" class="w-6 h-6 object-contain dark:invert">
+            <svg class="h-6 w-auto" fill="currentColor" stroke="currentColor" stop-color="currentColor" width="120px" height="120px" viewBox="0 0 120 120" version="1.1" id="svg1" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"><defs id="defs1" /><g id="layer1" transform="translate(14.965794,194.55533)">  <g id="g2" transform="matrix(-1,0,0,1,105.02706,-194.56238)">  <path d="m 17.002063,110.02429 -9.9513306,9.95133 H 119.97562 v -9.95133 z" style="stroke-width:0.0487215" id="path5-5" />  <path d="M 102.99145,24 16.75,110.2415 h 99.99999 c -1.647,-0.26692 -3.39773,-0.58604 -5.25403,-1.00192 -8.67273,-1.943 -19.109025,-5.67969 -26.125479,-12.977215 C 78.354036,88.964904 74.861163,78.068631 80.076827,62.21273 83.500708,51.803975 90.677509,39.217883 102.99145,24 Z" id="path1-2" style="stroke-width:0.476189" />  <path d="M 17.002063,110.02429 H 2.949174 l -2.92488608,2.92489 v 7.02644 H 7.0507324 Z" style="stroke-width:0.0628574" id="path4-2" />  <path d="M 127.17518,-14.201717 2.949174,110.02429 H 17.002063 L 134.20163,-7.1752726 Z" style="stroke-width:0.0628574" id="path3-2" />  </g></g></svg>
             <span class="text-xs font-medium">Joins</span>
           </div>
         </button>

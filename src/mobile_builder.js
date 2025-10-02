@@ -17,7 +17,27 @@ const SIZE_SCALES = {
   'xs': 0.1
 };
 
-let currentSize = '5xl'; // Default mobile size
+let currentSize = '7xl'; // Default mobile size
+
+// Initialize mobile builder
+async function initMobileBuilder() {
+  // Wait for builder core to be ready
+  if (!window.rulesData) {
+    console.warn('rulesData not available yet, waiting...');
+    setTimeout(initMobileBuilder, 50);
+    return;
+  }
+
+  setupMobileUI();
+  setupMobileToolbar();
+  setupSizeOptions();
+  applyResponsiveScale();
+
+  // Listen for window resize to adjust scale
+  window.addEventListener('resize', applyResponsiveScale);
+
+  console.log('Mobile builder initialized');
+}
 
 // Setup mobile UI - tabs and horizontal scrollable shape selectors
 function setupMobileUI() {
@@ -37,18 +57,17 @@ function setupMobileUI() {
   mobileBodiesTab.addEventListener('click', () => switchMobileTab('bodies'));
   mobileJoinsTab.addEventListener('click', () => switchMobileTab('joins'));
 
-  // Set initial tab
-  switchMobileTab('serifs');
+  // Start with all hidden (no initial tab)
 }
 
 // Populate mobile shape selector
 function populateMobileShapes(category, containerId) {
   const container = document.getElementById(containerId);
-  if (!container || !rulesData?.shapes) return;
+  if (!container || !window.rulesData?.shapes) return;
 
   container.innerHTML = '';
 
-  const categoryData = rulesData.shapes[category];
+  const categoryData = window.rulesData.shapes[category];
   if (!categoryData) return;
 
   Object.keys(categoryData).forEach(angleKey => {
@@ -75,7 +94,7 @@ function createMobileShapeButton(category, angleKey, shape) {
     category,
     angleKey,
     shape.shape_name,
-    'w-12 h-12 object-contain pointer-events-none'
+    'h-8 w-auto object-contain pointer-events-none'
   );
 
   if (svgElement) {
@@ -105,14 +124,20 @@ function handleMobileShapeSelection(button, category, angleKey, shape) {
   button.classList.add('selected');
 
   // Update selected shape (same as desktop)
-  selectedShape = {
+  const selectedShape = {
     category,
     angleKey,
     shape,
     imagePath: `./assets/shapes/${category}/${angleKey}/${shape.shape_name}.svg`
   };
 
-  updateSelectedShapeDisplay();
+  if (window.setSelectedShape) {
+    window.setSelectedShape(selectedShape);
+  }
+
+  if (window.updateSelectedShapeDisplay) {
+    window.updateSelectedShapeDisplay();
+  }
 }
 
 // Switch mobile tab
@@ -190,15 +215,19 @@ function switchMobileTab(category) {
   activeTab = category;
 
   // Update current tab for grid layer management
-  if (category === 'bodies') {
-    currentTab = 'bodies';
-  } else if (category === 'serifs') {
-    currentTab = 'bodies'; // Serifs use the same grid as bodies
-  } else if (category === 'joins') {
-    currentTab = 'joins';
+  if (window.setCurrentTab) {
+    if (category === 'bodies') {
+      window.setCurrentTab('bodies');
+    } else if (category === 'serifs') {
+      window.setCurrentTab('bodies'); // Serifs use the same grid as bodies
+    } else if (category === 'joins') {
+      window.setCurrentTab('joins');
+    }
   }
 
-  updateGridLayers();
+  if (window.updateGridLayers) {
+    window.updateGridLayers();
+  }
 }
 
 // Setup mobile toolbar buttons
@@ -248,8 +277,10 @@ function setupMobileToolbar() {
   let previewActive = false;
   mobilePreviewBtn.addEventListener('click', () => {
     previewActive = !previewActive;
-    previewMode = previewActive;
-    document.body.classList.toggle('preview-mode', previewActive);
+
+    if (window.setPreviewMode) {
+      window.setPreviewMode(previewActive);
+    }
 
     const icon = document.getElementById('mobilePreviewIcon');
     if (icon) {
@@ -315,4 +346,15 @@ function applyResponsiveScale() {
       gridsWrapper.style.transform = 'scale(1)';
     }
   }
+}
+
+// Initialize when DOM is ready and builder is loaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    // Wait a bit for builder.js to initialize
+    setTimeout(initMobileBuilder, 100);
+  });
+} else {
+  // DOM already loaded
+  setTimeout(initMobileBuilder, 100);
 }
