@@ -114,6 +114,9 @@ async function loadArchivedForms() {
     // Setup borders toggle after forms are rendered
     setupBordersToggle();
 
+    // Setup size tabs after forms are rendered
+    setupSizeTabs();
+
   } catch (error) {
     console.error('Failed to load archived forms:', error);
     loadingElement.classList.add('hidden');
@@ -158,8 +161,8 @@ function createArchiveForm(composition) {
   gridContainer.style.minHeight = '400px';
 
   const gridsWrapper = document.createElement('div');
-  gridsWrapper.className = 'relative';
-  gridsWrapper.style.transform = 'scale(0.6)'; // Scale down to fit in archive view
+  gridsWrapper.className = 'relative archive-grids-wrapper';
+  gridsWrapper.style.transform = 'scale(0.6)'; // Scale down to fit in archive view (7xl default)
 
   // Create serifs grid (5x5)
   const serifsGrid = document.createElement('div');
@@ -333,6 +336,59 @@ function updateBordersDisplay(showBorders) {
   });
 
   console.log(`Borders ${showBorders ? 'enabled' : 'disabled'} for ${allCells.length} cells`);
+}
+
+// Setup size tabs
+function setupSizeTabs() {
+  const sizeTabs = document.getElementById('size-tabs');
+
+  if (!sizeTabs) {
+    console.warn('Size tabs container not found');
+    return;
+  }
+
+  // Show the size tabs now that forms are loaded
+  sizeTabs.classList.remove('hidden');
+  sizeTabs.classList.add('flex');
+
+  // Get all size tab buttons
+  const sizeButtons = document.querySelectorAll('.size-tab');
+
+  sizeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const size = button.dataset.size;
+
+      // Update active state
+      sizeButtons.forEach(btn => {
+        if (btn === button) {
+          btn.className = 'size-tab px-4 py-2 text-sm font-medium rounded-md transition-colors bg-blue-500 text-white';
+        } else {
+          btn.className = 'size-tab px-4 py-2 text-sm font-medium rounded-md transition-colors text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700';
+        }
+      });
+
+      // Apply the size change
+      updateSizeDisplay(size);
+    });
+  });
+}
+
+// Size scale mapping (7xl is the default/current scale of 0.6)
+const SIZE_SCALES = {
+  '7xl': 0.6,      // text-7xl equivalent (72px / 4.5rem) - current default
+  '6xl': 0.5       // text-6xl equivalent (60px / 3.75rem) - 83.3% of 7xl
+};
+
+// Update size display across all grid wrappers
+function updateSizeDisplay(size) {
+  const scale = SIZE_SCALES[size] || SIZE_SCALES['7xl'];
+  const allGridWrappers = document.querySelectorAll('.archive-grids-wrapper');
+
+  allGridWrappers.forEach(wrapper => {
+    wrapper.style.transform = `scale(${scale})`;
+  });
+
+  console.log(`Size changed to ${size} (scale: ${scale}) for ${allGridWrappers.length} forms`);
 }
 
 // Wait for DOM to be ready, then initialize
