@@ -379,7 +379,11 @@ const SIZE_SCALES = {
   '4xl': 0.3,      // text-4xl equivalent (36px / 2.25rem) - 50% of 7xl
   '3xl': 0.25,     // text-3xl equivalent (30px / 1.875rem) - 41.7% of 7xl
   '2xl': 0.2,      // text-2xl equivalent (24px / 1.5rem) - 33.3% of 7xl
-  'xl': 0.167      // text-xl equivalent (20px / 1.25rem) - 27.8% of 7xl
+  'xl': 0.167,     // text-xl equivalent (20px / 1.25rem) - 27.8% of 7xl
+  'lg': 0.15,      // text-lg equivalent (18px / 1.125rem) - 25% of 7xl
+  'base': 0.133,   // text-base equivalent (16px / 1rem) - 22.2% of 7xl
+  'sm': 0.117,     // text-sm equivalent (14px / 0.875rem) - 19.4% of 7xl
+  'xs': 0.1        // text-xs equivalent (12px / 0.75rem) - 16.7% of 7xl
 };
 
 // Update size display across all grid wrappers
