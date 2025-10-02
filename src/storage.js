@@ -61,14 +61,15 @@ async function saveToBrowser(compositionData) {
 }
 
 // Save composition to computer as JSON file
-function saveToComputer(compositionData) {
+async function saveToComputer(compositionData) {
   const jsonString = JSON.stringify(compositionData, null, 2);
   const blob = new Blob([jsonString], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
 
   const a = document.createElement('a');
   a.href = url;
-  a.download = `${compositionData.metadata.name.replace(/[^a-z0-9]/gi, '_')}.json`;
+  const filename = `${compositionData.metadata.name.replace(/[^a-z0-9]/gi, '_')}.json`;
+  a.download = filename;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -76,6 +77,58 @@ function saveToComputer(compositionData) {
 
   console.log('Composition downloaded:', compositionData.metadata.name);
   showNotification(`"${compositionData.metadata.name}" downloaded`, 'success');
+
+  // If on localhost, also trigger download of updated manifest
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    await saveUpdatedManifest(filename);
+  }
+}
+
+// Generate and download an updated manifest file (localhost only)
+async function saveUpdatedManifest(newFilename) {
+  try {
+    // Load current manifest
+    const response = await fetch('./archive/manifest.json');
+    let manifest;
+
+    if (response.ok) {
+      manifest = await response.json();
+    } else {
+      // Create new manifest if it doesn't exist
+      manifest = {
+        files: [],
+        lastUpdated: new Date().toISOString().split('T')[0]
+      };
+    }
+
+    // Add the new file if it's not already in the list
+    if (!manifest.files.includes(newFilename)) {
+      manifest.files.push(newFilename);
+      manifest.files.sort(); // Keep alphabetically sorted
+    }
+
+    // Update the lastUpdated timestamp
+    manifest.lastUpdated = new Date().toISOString().split('T')[0];
+
+    // Download the updated manifest
+    const manifestString = JSON.stringify(manifest, null, 2);
+    const manifestBlob = new Blob([manifestString], { type: 'application/json' });
+    const manifestUrl = URL.createObjectURL(manifestBlob);
+
+    const a = document.createElement('a');
+    a.href = manifestUrl;
+    a.download = 'manifest.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(manifestUrl);
+
+    console.log('📋 Updated manifest downloaded with', manifest.files.length, 'files');
+    showNotification('Updated manifest.json also downloaded', 'info');
+  } catch (error) {
+    console.warn('Could not generate updated manifest:', error);
+    // Don't show error to user, this is a nice-to-have feature
+  }
 }
 
 // Get all compositions from browser storage
@@ -417,9 +470,9 @@ async function saveComposition() {
 
 // Save to computer function (called from dropdown)
 async function saveCompositionToComputer() {
-  showNameInputModal('Save to Computer', 'Enter composition name...', (name) => {
+  showNameInputModal('Save to Computer', 'Enter composition name...', async (name) => {
     const compositionData = createCompositionData(name);
-    saveToComputer(compositionData);
+    await saveToComputer(compositionData);
   });
 }
 

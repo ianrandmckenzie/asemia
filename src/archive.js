@@ -54,21 +54,37 @@ async function loadRules() {
 
 // Load all archived forms from the public/archive directory
 async function loadArchivedForms() {
-  const archiveFiles = [
-    'cam.json',
-    'cam_v2.json',
-    'pyraflare.json',
-    'phoenetic/A.json',
-    'phoenetic/B.json',
-    'phoenetic/C.json'
-  ];
-
   const loadingElement = document.getElementById('loading');
   const errorElement = document.getElementById('error');
   const archiveGrid = document.getElementById('archive-grid');
   const archiveFormsContainer = document.getElementById('archive-forms');
 
   try {
+    // Load the manifest file to get list of available archives
+    let archiveFiles;
+    try {
+      const manifestResponse = await fetch('./archive/manifest.json');
+      if (manifestResponse.ok) {
+        const manifest = await manifestResponse.json();
+        archiveFiles = manifest.files;
+        console.log(`📋 Loaded manifest with ${archiveFiles.length} files`);
+      } else {
+        throw new Error('Manifest not found');
+      }
+    } catch (manifestError) {
+      console.warn('Could not load manifest, falling back to hardcoded list:', manifestError);
+      // Fallback to hardcoded list if manifest doesn't exist
+      archiveFiles = [
+        'cam.json',
+        'cam_v2.json',
+        'pyraflare.json',
+        'apek.json',
+        'phoenetic/A.json',
+        'phoenetic/B.json',
+        'phoenetic/C.json'
+      ];
+    }
+
     const compositions = [];
 
     // Load all archive files
