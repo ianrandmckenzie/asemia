@@ -340,21 +340,18 @@ function updateBordersDisplay(showBorders) {
 
 // Setup size tabs
 function setupSizeTabs() {
-  const sizeTabs = document.getElementById('size-tabs');
+  const stickySubnav = document.getElementById('sticky-subnav');
 
-  if (!sizeTabs) {
-    console.warn('Size tabs container not found');
+  if (!stickySubnav) {
+    console.warn('Sticky subnav not found');
     return;
   }
 
-  // Show the size tabs now that forms are loaded
-  sizeTabs.classList.remove('hidden');
-  sizeTabs.classList.add('flex');
+  // Show the sticky subnav now that forms are loaded
+  stickySubnav.classList.remove('hidden');
 
   // Get all size tab buttons
-  const sizeButtons = document.querySelectorAll('.size-tab');
-
-  sizeButtons.forEach(button => {
+  const sizeButtons = document.querySelectorAll('.size-tab');  sizeButtons.forEach(button => {
     button.addEventListener('click', () => {
       const size = button.dataset.size;
 
