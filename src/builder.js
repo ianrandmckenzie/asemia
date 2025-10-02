@@ -194,7 +194,9 @@ async function initBuilder() {
   window.getOccupiedCells = getOccupiedCells;
   window.clearCellHighlights = clearCellHighlights;
   window.placeShapeInCell = placeShapeInCell;
+  window.applyPositioning = applyPositioning;
   window.rulesData = rulesData;
+  window.shapeConfig = shapeConfig;
 
   // Make selectedShape accessible via a getter function since it changes
   window.getSelectedShape = () => selectedShape;
@@ -203,6 +205,23 @@ async function initBuilder() {
   window.handleGridCellLeave = handleGridCellLeave;
 
   console.log('Builder functions made globally accessible');
+}
+
+// Minimal initialization for pages that only need the rendering functions
+async function initBuilderCore() {
+  await loadRules();
+
+  // Make necessary functions globally accessible
+  window.getCellPosition = getCellPosition;
+  window.getCellByPosition = getCellByPosition;
+  window.getOccupiedCells = getOccupiedCells;
+  window.clearCellHighlights = clearCellHighlights;
+  window.placeShapeInCell = placeShapeInCell;
+  window.applyPositioning = applyPositioning;
+  window.rulesData = rulesData;
+  window.shapeConfig = shapeConfig;
+
+  console.log('Builder core functions initialized');
 }
 
 // Load the rules.json file
@@ -221,39 +240,44 @@ function createGrids() {
   createJoinsGrid();
 }
 
-// Create 0x5 serifs grid
+// Create 5x5 serifs grid
 function createSerifsGrid() {
   const serifsGrid = document.getElementById('serifsGrid');
-  serifsGrid.innerHTML = '';
+  if (serifsGrid) {
+    serifsGrid.innerHTML = '';
 
-  for (let i = 0; i < 25; i++) {
-    const cell = document.createElement('div');
-    cell.className = 'w-[100px] h-[100px] relative cursor-pointer grid-cell';
-    cell.dataset.grid = 'serifs';
-    cell.dataset.index = i;
-    cell.addEventListener('click', handleGridCellClick);
-    cell.addEventListener('contextmenu', handleGridCellRightClick);
-    cell.addEventListener('mouseenter', handleGridCellHover);
-    cell.addEventListener('mouseleave', handleGridCellLeave);
-    serifsGrid.appendChild(cell);
+    for (let i = 0; i < 25; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'w-[100px] h-[100px] relative cursor-pointer grid-cell';
+      cell.dataset.grid = 'serifs';
+      cell.dataset.index = i;
+      cell.addEventListener('click', handleGridCellClick);
+      cell.addEventListener('contextmenu', handleGridCellRightClick);
+      cell.addEventListener('mouseenter', handleGridCellHover);
+      cell.addEventListener('mouseleave', handleGridCellLeave);
+      serifsGrid.appendChild(cell);
+    }
   }
 }
 
 // Create 4x4 joins grid
 function createJoinsGrid() {
   const joinsGrid = document.getElementById('joinsGrid');
-  joinsGrid.innerHTML = '';
 
-  for (let i = 0; i < 16; i++) {
-    const cell = document.createElement('div');
-    cell.className = 'w-[100px] h-[100px] relative cursor-pointer grid-cell';
-    cell.dataset.grid = 'joins';
-    cell.dataset.index = i;
-    cell.addEventListener('click', handleGridCellClick);
-    cell.addEventListener('contextmenu', handleGridCellRightClick);
-    cell.addEventListener('mouseenter', handleGridCellHover);
-    cell.addEventListener('mouseleave', handleGridCellLeave);
-    joinsGrid.appendChild(cell);
+  if (joinsGrid) {
+    joinsGrid.innerHTML = '';
+
+    for (let i = 0; i < 16; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'w-[100px] h-[100px] relative cursor-pointer grid-cell';
+      cell.dataset.grid = 'joins';
+      cell.dataset.index = i;
+      cell.addEventListener('click', handleGridCellClick);
+      cell.addEventListener('contextmenu', handleGridCellRightClick);
+      cell.addEventListener('mouseenter', handleGridCellHover);
+      cell.addEventListener('mouseleave', handleGridCellLeave);
+      joinsGrid.appendChild(cell);
+    }
   }
 }
 
@@ -267,55 +291,61 @@ function setupSidebar() {
 // Populate bodies shapes in sidebar
 function populateBodiesShapes() {
   const container = document.getElementById('bodiesShapes');
-  container.innerHTML = '';
+  if (container) {
+    container.innerHTML = '';
 
-  if (!rulesData?.shapes?.bodies) return;
+    if (!rulesData?.shapes?.bodies) return;
 
-  Object.keys(rulesData.shapes.bodies).forEach(angleKey => {
-    if (angleKey === 'grid') return;
+    Object.keys(rulesData.shapes.bodies).forEach(angleKey => {
+      if (angleKey === 'grid') return;
 
-    const shapes = rulesData.shapes.bodies[angleKey];
-    shapes.forEach(shape => {
-      const shapeButton = createShapeButton('bodies', angleKey, shape);
-      container.appendChild(shapeButton);
+      const shapes = rulesData.shapes.bodies[angleKey];
+      shapes.forEach(shape => {
+        const shapeButton = createShapeButton('bodies', angleKey, shape);
+        container.appendChild(shapeButton);
+      });
     });
-  });
+  }
 }
 
 // Populate serifs shapes in sidebar
 function populateSerifsShapes() {
   const container = document.getElementById('serifsShapes');
-  container.innerHTML = '';
+  if (container) {
+    container.innerHTML = '';
 
-  if (!rulesData?.shapes?.serifs) return;
+    if (!rulesData?.shapes?.serifs) return;
 
-  Object.keys(rulesData.shapes.serifs).forEach(angleKey => {
-    if (angleKey === 'grid') return;
+    Object.keys(rulesData.shapes.serifs).forEach(angleKey => {
+      if (angleKey === 'grid') return;
 
-    const shapes = rulesData.shapes.serifs[angleKey];
-    shapes.forEach(shape => {
-      const shapeButton = createShapeButton('serifs', angleKey, shape);
-      container.appendChild(shapeButton);
+      const shapes = rulesData.shapes.serifs[angleKey];
+      shapes.forEach(shape => {
+        const shapeButton = createShapeButton('serifs', angleKey, shape);
+        container.appendChild(shapeButton);
+      });
     });
-  });
+  }
 }
 
 // Populate joins shapes in sidebar
 function populateJoinsShapes() {
   const container = document.getElementById('joinsShapes');
-  container.innerHTML = '';
+  if (container) {
+    container.innerHTML = '';
 
-  if (!rulesData?.shapes?.joins) return;
+    if (!rulesData?.shapes?.joins) return;
 
-  Object.keys(rulesData.shapes.joins).forEach(angleKey => {
-    if (angleKey === 'grid') return;
+    Object.keys(rulesData.shapes.joins).forEach(angleKey => {
+      if (angleKey === 'grid') return;
 
-    const shapes = rulesData.shapes.joins[angleKey];
-    shapes.forEach(shape => {
-      const shapeButton = createShapeButton('joins', angleKey, shape);
-      container.appendChild(shapeButton);
+      const shapes = rulesData.shapes.joins[angleKey];
+      shapes.forEach(shape => {
+        const shapeButton = createShapeButton('joins', angleKey, shape);
+        container.appendChild(shapeButton);
+      });
     });
-  });
+  }
 }
 
 // Create a shape button for the sidebar
@@ -377,10 +407,10 @@ function selectShape(button, category, angleKey, shape) {
 // Helper function to get cell position in grid
 function getCellPosition(cellIndex, gridType) {
   if (gridType === 'serifs') {
-    // 0x5 grid
-    const row = Math.floor(cellIndex / 0);
-    const col = cellIndex % 0;
-    return { row, col, gridSize: 0 };
+    // 5x5 grid
+    const row = Math.floor(cellIndex / 5);
+    const col = cellIndex % 5;
+    return { row, col, gridSize: 5 };
   } else if (gridType === 'joins') {
     // 4x4 grid
     const row = Math.floor(cellIndex / 4);
@@ -391,7 +421,7 @@ function getCellPosition(cellIndex, gridType) {
 
 // Helper function to get cell by position
 function getCellByPosition(row, col, gridType) {
-  const gridSize = gridType === 'serifs' ? 0 : 4;
+  const gridSize = gridType === 'serifs' ? 5 : 4;
   if (row < 0 || col < 0 || row >= gridSize || col >= gridSize) {
     return null;
   }
@@ -763,23 +793,25 @@ function setupTabSwitching() {
   const bodiesContent = document.getElementById('bodiesContent');
   const joinsContent = document.getElementById('joinsContent');
 
-  bodiesTab.addEventListener('click', () => {
-    currentTab = 'bodies';
-  bodiesTab.className = 'flex-1 py-3 px-4 bg-white dark:bg-slate-800 border-r border-gray-300 dark:border-gray-700 font-medium text-gray-900 dark:text-gray-100';
-  joinsTab.className = 'flex-1 py-3 px-4 bg-gray-200 dark:bg-slate-700 font-medium text-gray-700 dark:text-gray-200';
-    bodiesContent.classList.remove('hidden');
-    joinsContent.classList.add('hidden');
-    updateGridLayers();
-  });
+  if (bodiesTab) {
+    bodiesTab.addEventListener('click', () => {
+      currentTab = 'bodies';
+    bodiesTab.className = 'flex-1 py-3 px-4 bg-white dark:bg-slate-800 border-r border-gray-300 dark:border-gray-700 font-medium text-gray-900 dark:text-gray-100';
+    joinsTab.className = 'flex-1 py-3 px-4 bg-gray-200 dark:bg-slate-700 font-medium text-gray-700 dark:text-gray-200';
+      bodiesContent.classList.remove('hidden');
+      joinsContent.classList.add('hidden');
+      updateGridLayers();
+    });
 
-  joinsTab.addEventListener('click', () => {
-    currentTab = 'joins';
-  joinsTab.className = 'flex-1 py-3 px-4 bg-white dark:bg-slate-800 border-r border-gray-300 dark:border-gray-700 font-medium text-gray-900 dark:text-gray-100';
-  bodiesTab.className = 'flex-1 py-3 px-4 bg-gray-200 dark:bg-slate-700 font-medium text-gray-700 dark:text-gray-200';
-    joinsContent.classList.remove('hidden');
-    bodiesContent.classList.add('hidden');
-    updateGridLayers();
-  });
+    joinsTab.addEventListener('click', () => {
+      currentTab = 'joins';
+    joinsTab.className = 'flex-1 py-3 px-4 bg-white dark:bg-slate-800 border-r border-gray-300 dark:border-gray-700 font-medium text-gray-900 dark:text-gray-100';
+    bodiesTab.className = 'flex-1 py-3 px-4 bg-gray-200 dark:bg-slate-700 font-medium text-gray-700 dark:text-gray-200';
+      joinsContent.classList.remove('hidden');
+      bodiesContent.classList.add('hidden');
+      updateGridLayers();
+    });
+  }
 }
 
 // Handle right-click to clear cell
@@ -804,22 +836,27 @@ function updateSelectedShapeDisplay() {
 
 // Setup clear selection button
 function setupClearSelection() {
-  document.getElementById('clearSelection').addEventListener('click', () => {
-    selectedShape = null;
-    document.querySelectorAll('.shape-selected').forEach(el => {
-      el.classList.remove('shape-selected', 'bg-blue-200', 'border-blue-500');
+  const clearSelectionBtn = document.getElementById('clearSelection');
+  if (clearSelectionBtn) {
+    document.getElementById('clearSelection').addEventListener('click', () => {
+      selectedShape = null;
+      document.querySelectorAll('.shape-selected').forEach(el => {
+        el.classList.remove('shape-selected', 'bg-blue-200', 'border-blue-500');
+      });
+      updateSelectedShapeDisplay();
     });
-    updateSelectedShapeDisplay();
-  });
+  }
 }
 
 // Setup preview toggle
 function setupPreviewToggle() {
   const previewToggle = document.getElementById('previewToggle');
-  previewToggle.addEventListener('change', (e) => {
-    previewMode = e.target.checked;
-    document.body.classList.toggle('preview-mode', previewMode);
-  });
+  if (previewToggle) {
+    previewToggle.addEventListener('change', (e) => {
+      previewMode = e.target.checked;
+      document.body.classList.toggle('preview-mode', previewMode);
+    });
+  }
 }
 
 // Update grid layers and interactivity based on current tab
@@ -827,22 +864,24 @@ function updateGridLayers() {
   const serifsGrid = document.getElementById('serifsGrid');
   const joinsGrid = document.getElementById('joinsGrid');
 
-  if (currentTab === 'bodies') {
-    // Bodies/Serifs tab: serifs grid on top and active
-    serifsGrid.style.zIndex = '20';
-    joinsGrid.style.zIndex = '10';
-    serifsGrid.classList.remove('grid-inactive');
-    serifsGrid.classList.add('grid-active');
-    joinsGrid.classList.remove('grid-active');
-    joinsGrid.classList.add('grid-inactive');
-  } else if (currentTab === 'joins') {
-    // Joins tab: joins grid on top and active
-    joinsGrid.style.zIndex = '20';
-    serifsGrid.style.zIndex = '10';
-    joinsGrid.classList.remove('grid-inactive');
-    joinsGrid.classList.add('grid-active');
-    serifsGrid.classList.remove('grid-active');
-    serifsGrid.classList.add('grid-inactive');
+  if (serifsGrid) {
+    if (currentTab === 'bodies') {
+      // Bodies/Serifs tab: serifs grid on top and active
+      serifsGrid.style.zIndex = '20';
+      joinsGrid.style.zIndex = '10';
+      serifsGrid.classList.remove('grid-inactive');
+      serifsGrid.classList.add('grid-active');
+      joinsGrid.classList.remove('grid-active');
+      joinsGrid.classList.add('grid-inactive');
+    } else if (currentTab === 'joins') {
+      // Joins tab: joins grid on top and active
+      joinsGrid.style.zIndex = '20';
+      serifsGrid.style.zIndex = '10';
+      joinsGrid.classList.remove('grid-inactive');
+      joinsGrid.classList.add('grid-active');
+      serifsGrid.classList.remove('grid-active');
+      serifsGrid.classList.add('grid-inactive');
+    }
   }
 }
 
@@ -863,3 +902,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 100);
   }
 });
+
+// Export initBuilderCore globally for use by other pages (like archive)
+window.initBuilderCore = initBuilderCore;
