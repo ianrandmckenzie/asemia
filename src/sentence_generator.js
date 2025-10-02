@@ -1,9 +1,9 @@
-// Word Generator - Randomly assemble typographic forms into words
-// This module creates random "words" by combining archived form compositions
+// Sentence Generator - Compose typographic sentences from assembled forms
+// This module creates random "sentences" by combining multiple "words" (form groups)
 
-// Initialize the word generator page
-async function initWordGenerator() {
-  console.log('Initializing word generator...');
+// Initialize the sentence generator page
+async function initSentenceGenerator() {
+  console.log('Initializing sentence generator...');
 
   // Update loading message to show progress
   const loadingElement = document.getElementById('loading');
@@ -28,17 +28,17 @@ async function initWordGenerator() {
     // Load archived forms to use as source material
     await loadArchivedForms();
 
-    // Generate initial words
-    generateWords();
+    // Generate initial sentences
+    generateSentences();
 
     // Show the controls
     setupControls();
 
   } catch (error) {
-    console.error('Failed to initialize word generator:', error);
+    console.error('Failed to initialize sentence generator:', error);
     loadingElement.innerHTML = `
       <div class="text-red-500 text-xl mb-4">⚠️</div>
-      <p class="text-gray-600 dark:text-gray-300 mb-4">Failed to initialize word generator</p>
+      <p class="text-gray-600 dark:text-gray-300 mb-4">Failed to initialize sentence generator</p>
       <p class="text-gray-500 dark:text-gray-400 text-sm">Error: ${error.message}</p>
     `;
   }
@@ -95,38 +95,38 @@ async function loadArchivedForms() {
   }
 }
 
-// Generate random words
-function generateWords() {
+// Generate random sentences
+function generateSentences() {
   const loadingElement = document.getElementById('loading');
-  const wordsGrid = document.getElementById('words-grid');
-  const wordsContainer = document.getElementById('words-container');
-  const wordCountInput = document.getElementById('wordCount');
+  const sentencesGrid = document.getElementById('sentences-grid');
+  const sentencesContainer = document.getElementById('sentences-container');
+  const sentenceCountInput = document.getElementById('sentenceCount');
 
-  const wordCount = parseInt(wordCountInput?.value || 6);
+  const sentenceCount = parseInt(sentenceCountInput?.value || 3);
 
-  // Hide loading, show words grid
+  // Hide loading, show sentences grid
   loadingElement.classList.add('hidden');
-  wordsGrid.classList.remove('hidden');
+  sentencesGrid.classList.remove('hidden');
 
-  // Clear existing words
-  wordsContainer.innerHTML = '';
+  // Clear existing sentences
+  sentencesContainer.innerHTML = '';
 
-  // Generate the specified number of words
-  for (let i = 0; i < wordCount; i++) {
-    const wordElement = createRandomWord(i);
-    wordsContainer.appendChild(wordElement);
+  // Generate the specified number of sentences
+  for (let i = 0; i < sentenceCount; i++) {
+    const sentenceElement = createRandomSentence(i);
+    sentencesContainer.appendChild(sentenceElement);
   }
 
-  console.log(`Generated ${wordCount} random words`);
+  console.log(`Generated ${sentenceCount} random sentences`);
 }
 
-// Create a single random "word" by combining random forms
-function createRandomWord(index) {
-  const wordContainer = document.createElement('div');
-  wordContainer.className = 'bg-white dark:bg-slate-800 rounded-lg shadow-md border border-gray-200 dark:border-slate-700 p-6';
+// Create a single random "sentence" by combining multiple words
+function createRandomSentence(index) {
+  const sentenceContainer = document.createElement('div');
+  sentenceContainer.className = 'bg-white dark:bg-slate-800 rounded-lg shadow-md border border-gray-200 dark:border-slate-700 p-6';
 
-  // Random word length (2-5 forms)
-  const wordLength = Math.floor(Math.random() * 4) + 2; // 2 to 5 forms
+  // Random sentence length (3-7 words)
+  const sentenceLength = Math.floor(Math.random() * 5) + 3; // 3 to 7 words
 
   // Header
   const header = document.createElement('div');
@@ -134,36 +134,93 @@ function createRandomWord(index) {
 
   const title = document.createElement('h3');
   title.className = 'text-lg font-semibold text-gray-900 dark:text-gray-100';
-  title.textContent = `Word ${index + 1}`;
+  title.textContent = `Sentence ${index + 1}`;
 
   const meta = document.createElement('div');
   meta.className = 'text-sm text-gray-600 dark:text-gray-400 mt-1';
-  meta.textContent = `${wordLength} form${wordLength > 1 ? 's' : ''}`;
+  meta.textContent = `${sentenceLength} word${sentenceLength > 1 ? 's' : ''}`;
 
   header.appendChild(title);
   header.appendChild(meta);
-  wordContainer.appendChild(header);
+  sentenceContainer.appendChild(header);
 
-  // Create container for the word (horizontal layout of forms)
-  const wordDisplay = document.createElement('div');
-  wordDisplay.className = 'relative bg-gray-50 dark:bg-slate-900 rounded-lg p-4 flex items-center justify-center overflow-x-auto';
-  wordDisplay.style.minHeight = '350px';
+  // Create container for the sentence (horizontal layout of words with line wrapping)
+  const sentenceDisplay = document.createElement('div');
+  sentenceDisplay.className = 'relative bg-gray-50 dark:bg-slate-900 rounded-lg p-4 flex items-center justify-center';
+  sentenceDisplay.style.minHeight = '400px';
 
-  const formsWrapper = document.createElement('div');
-  formsWrapper.className = 'flex items-center justify-center word-forms-wrapper';
+  const wordsWrapper = document.createElement('div');
+  wordsWrapper.className = 'flex flex-wrap items-center justify-center sentence-words-wrapper';
+  // Using gap for vertical spacing between wrapped lines only
+  wordsWrapper.style.rowGap = 'calc(0.6 * 24px)'; // 24px base row spacing
+
+  // Generate random words for this sentence, inserting empty grids as spaces
+  for (let i = 0; i < sentenceLength; i++) {
+    const wordElement = createRandomWord();
+    wordsWrapper.appendChild(wordElement);
+
+    // Add empty grid as space between words (but not after the last word)
+    if (i < sentenceLength - 1) {
+      const spaceElement = createWordSpace();
+      wordsWrapper.appendChild(spaceElement);
+    }
+  }
+
+  sentenceDisplay.appendChild(wordsWrapper);
+  sentenceContainer.appendChild(sentenceDisplay);
+
+  return sentenceContainer;
+}
+
+// Create a random "word" (2-5 forms) - reusing word generator logic
+function createRandomWord() {
+  const wordWrapper = document.createElement('div');
+  wordWrapper.className = 'inline-flex items-center word-forms-wrapper';
+
+  // Random word length (2-5 forms)
+  const wordLength = Math.floor(Math.random() * 4) + 2; // 2 to 5 forms
+
   // Set gap based on current scale (default 7xl = 0.6)
-  formsWrapper.style.gap = 'calc(0.6 * 8px)'; // Will be updated by size changes
+  wordWrapper.style.gap = 'calc(0.6 * 8px)'; // Will be updated by size changes
 
   // Generate random forms for this word
   for (let i = 0; i < wordLength; i++) {
     const formElement = createRandomFormForWord();
-    formsWrapper.appendChild(formElement);
+    wordWrapper.appendChild(formElement);
   }
 
-  wordDisplay.appendChild(formsWrapper);
-  wordContainer.appendChild(wordDisplay);
+  return wordWrapper;
+}
 
-  return wordContainer;
+// Create an empty grid to serve as a space between words
+function createWordSpace() {
+  const spaceWrapper = document.createElement('div');
+  spaceWrapper.className = 'inline-block word-space';
+  // Set to the scaled size (500px * 0.6 = 300px at default)
+  spaceWrapper.style.width = '300px';
+  spaceWrapper.style.height = '300px';
+
+  const gridsWrapper = document.createElement('div');
+  gridsWrapper.className = 'relative sentence-grids-wrapper';
+  gridsWrapper.style.transform = 'scale(0.6)'; // Default 7xl scale
+  gridsWrapper.style.transformOrigin = 'top left';
+
+  // Create empty serifs grid (5x5) - no shapes will be added
+  const serifsGrid = document.createElement('div');
+  serifsGrid.className = 'grid grid-cols-5 gap-0 z-10';
+  serifsGrid.style.width = '500px';
+  serifsGrid.style.height = '500px';
+
+  // Create grid cells (empty)
+  createSentenceGridCells(serifsGrid, 25);
+
+  gridsWrapper.appendChild(serifsGrid);
+  spaceWrapper.appendChild(gridsWrapper);
+
+  // Mark this as a space so kerning logic can skip it
+  spaceWrapper.dataset.isSpace = 'true';
+
+  return spaceWrapper;
 }
 
 // Create a random form by selecting a random composition from archives
@@ -179,7 +236,7 @@ function createRandomFormForWord() {
   formWrapper.style.overflow = 'hidden';
 
   const gridsWrapper = document.createElement('div');
-  gridsWrapper.className = 'relative word-grids-wrapper';
+  gridsWrapper.className = 'relative sentence-grids-wrapper';
   gridsWrapper.style.transform = 'scale(0.6)'; // Default 7xl scale
   gridsWrapper.style.transformOrigin = 'top left'; // Scale from top-left corner
 
@@ -198,8 +255,8 @@ function createRandomFormForWord() {
   joinsGrid.style.left = '50px';
 
   // Create grid cells
-  createWordGridCells(serifsGrid, 25); // 5x5 = 25 cells
-  createWordGridCells(joinsGrid, 16);  // 4x4 = 16 cells
+  createSentenceGridCells(serifsGrid, 25); // 5x5 = 25 cells
+  createSentenceGridCells(joinsGrid, 16);  // 4x4 = 16 cells
 
   gridsWrapper.appendChild(serifsGrid);
   gridsWrapper.appendChild(joinsGrid);
@@ -207,11 +264,11 @@ function createRandomFormForWord() {
 
   // Apply the composition data to the grids
   if (randomComposition.grids?.serifs) {
-    applyWordGridData(serifsGrid, randomComposition.grids.serifs);
+    applySentenceGridData(serifsGrid, randomComposition.grids.serifs);
   }
 
   if (randomComposition.grids?.joins) {
-    applyWordGridData(joinsGrid, randomComposition.grids.joins);
+    applySentenceGridData(joinsGrid, randomComposition.grids.joins);
   }
 
   // Calculate and apply kerning based on empty edge columns
@@ -272,22 +329,20 @@ function applyKerning(formWrapper, serifsGrid) {
   // Store kerning info for debugging
   formWrapper.dataset.leftKern = leftKern;
   formWrapper.dataset.rightKern = rightKern;
-
-  console.log(`Applied kerning: left=${leftEmptyColumns} cols (-${leftKern}px), right=${rightEmptyColumns} cols (-${rightKern}px)`);
 }
 
-// Create grid cells for word display
-function createWordGridCells(grid, cellCount) {
+// Create grid cells for sentence display
+function createSentenceGridCells(grid, cellCount) {
   for (let i = 0; i < cellCount; i++) {
     const cell = document.createElement('div');
-    cell.className = 'w-[100px] h-[100px] relative word-grid-cell';
+    cell.className = 'w-[100px] h-[100px] relative sentence-grid-cell';
     cell.dataset.index = i;
     grid.appendChild(cell);
   }
 }
 
-// Apply shape data to word grid (similar to archive display)
-function applyWordGridData(grid, gridData) {
+// Apply shape data to sentence grid
+function applySentenceGridData(grid, gridData) {
   gridData.shapes.forEach(shapeInfo => {
     const cell = grid.children[shapeInfo.index];
     if (cell) {
@@ -308,7 +363,7 @@ function applyWordGridData(grid, gridData) {
 
         if (foundShape) {
           shapeData.shape = foundShape;
-          placeShapeInWordCell(cell, shapeData);
+          placeShapeInSentenceCell(cell, shapeData);
         } else {
           console.warn('Shape not found in rulesData:', shapeInfo.shapeName);
         }
@@ -319,8 +374,8 @@ function applyWordGridData(grid, gridData) {
   });
 }
 
-// Place shape in word cell
-function placeShapeInWordCell(cell, shapeData) {
+// Place shape in sentence cell
+function placeShapeInSentenceCell(cell, shapeData) {
   // Clear existing content
   cell.innerHTML = '';
 
@@ -379,7 +434,7 @@ function setupControls() {
   // Setup generate button
   const generateBtn = document.getElementById('generateBtn');
   if (generateBtn) {
-    generateBtn.addEventListener('click', generateWords);
+    generateBtn.addEventListener('click', generateSentences);
   }
 }
 
@@ -406,7 +461,7 @@ function setupSizeTabs() {
   });
 }
 
-// Size scale mapping (same as archive)
+// Size scale mapping (same as word generator)
 const SIZE_SCALES = {
   '7xl': 0.6,
   '6xl': 0.5,
@@ -424,42 +479,51 @@ const SIZE_SCALES = {
 // Update size display across all grid wrappers
 function updateSizeDisplay(size) {
   const scale = SIZE_SCALES[size] || SIZE_SCALES['7xl'];
-  const allGridWrappers = document.querySelectorAll('.word-grids-wrapper');
-  const allFormsWrappers = document.querySelectorAll('.word-forms-wrapper');
+  const allGridWrappers = document.querySelectorAll('.sentence-grids-wrapper');
+  const allWordWrappers = document.querySelectorAll('.word-forms-wrapper');
+  const allSentenceWrappers = document.querySelectorAll('.sentence-words-wrapper');
 
   // Calculate the actual display size (500px grid * scale)
   const displaySize = 500 * scale;
 
-  // Update grid scale
+  // Update grid scale and form wrapper dimensions
   allGridWrappers.forEach(wrapper => {
     wrapper.style.transform = `scale(${scale})`;
-    // Update the parent formWrapper dimensions to match scaled size
+    // Update the parent formWrapper (or spaceWrapper) dimensions to match scaled size
     if (wrapper.parentElement) {
-      const formWrapper = wrapper.parentElement;
-      formWrapper.style.width = `${displaySize}px`;
-      formWrapper.style.height = `${displaySize}px`;
+      const container = wrapper.parentElement;
+      container.style.width = `${displaySize}px`;
+      container.style.height = `${displaySize}px`;
 
-      // Update kerning margins to scale with the size
-      const leftKern = parseFloat(formWrapper.dataset.leftKern || 0);
-      const rightKern = parseFloat(formWrapper.dataset.rightKern || 0);
+      // Only apply kerning to actual forms, not spaces
+      if (!container.dataset.isSpace) {
+        // Update kerning margins to scale with the size
+        const leftKern = parseFloat(container.dataset.leftKern || 0);
+        const rightKern = parseFloat(container.dataset.rightKern || 0);
 
-      if (leftKern > 0) {
-        formWrapper.style.marginLeft = `-${leftKern * scale}px`;
-      }
-      if (rightKern > 0) {
-        formWrapper.style.marginRight = `-${rightKern * scale}px`;
+        if (leftKern > 0) {
+          container.style.marginLeft = `-${leftKern * scale}px`;
+        }
+        if (rightKern > 0) {
+          container.style.marginRight = `-${rightKern * scale}px`;
+        }
       }
     }
   });
 
-  // Update gap between forms to scale proportionally
-  // Base gap is 8px, scaled by the size
-  const scaledGap = `calc(${scale} * 8px)`;
-  allFormsWrappers.forEach(wrapper => {
-    wrapper.style.gap = scaledGap;
+  // Update gap between forms within words
+  const scaledFormGap = `calc(${scale} * 8px)`;
+  allWordWrappers.forEach(wrapper => {
+    wrapper.style.gap = scaledFormGap;
   });
 
-  console.log(`Size changed to ${size} (scale: ${scale}, size: ${displaySize}px, gap: ${scaledGap}) for ${allGridWrappers.length} forms`);
+  // Update row gap for wrapped sentence lines (no columnGap since we use empty grids for spacing)
+  const scaledRowGap = `calc(${scale} * 24px)`; // Row spacing for wrapped lines
+  allSentenceWrappers.forEach(wrapper => {
+    wrapper.style.rowGap = scaledRowGap;
+  });
+
+  console.log(`Size changed to ${size} (scale: ${scale}, size: ${displaySize}px) for ${allGridWrappers.length} forms`);
 }
 
 // Setup borders toggle
@@ -482,7 +546,7 @@ function setupBordersToggle() {
 
 // Update borders display across all grid cells
 function updateBordersDisplay(showBorders) {
-  const allCells = document.querySelectorAll('.word-grid-cell');
+  const allCells = document.querySelectorAll('.sentence-grid-cell');
 
   allCells.forEach(cell => {
     if (showBorders) {
@@ -497,11 +561,11 @@ function updateBordersDisplay(showBorders) {
 
 // Wait for DOM to be ready, then initialize
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initWordGenerator);
+  document.addEventListener('DOMContentLoaded', initSentenceGenerator);
 } else {
-  initWordGenerator();
+  initSentenceGenerator();
 }
 
 // Make functions globally accessible for debugging
-window.initWordGenerator = initWordGenerator;
-window.generateWords = generateWords;
+window.initSentenceGenerator = initSentenceGenerator;
+window.generateSentences = generateSentences;
