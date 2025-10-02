@@ -1,17 +1,4 @@
-/**
- * Shared components for Asemia project
- * This module provides reusable UI components like footer and nav
- */
-
-/**
- * Creates and returns the fixed navigation bar element
- * @returns {HTMLElement} The nav element
- */
-export function createNav() {
-  const nav = document.createElement('nav');
-  nav.className = 'fixed top-0 left-0 right-0 z-50 bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 shadow-sm';
-
-  nav.innerHTML = `
+(function(){const s=document.createElement("link").relList;if(s&&s.supports&&s.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))o(e);new MutationObserver(e=>{for(const t of e)if(t.type==="childList")for(const a of t.addedNodes)a.tagName==="LINK"&&a.rel==="modulepreload"&&o(a)}).observe(document,{childList:!0,subtree:!0});function l(e){const t={};return e.integrity&&(t.integrity=e.integrity),e.referrerPolicy&&(t.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?t.credentials="include":e.crossOrigin==="anonymous"?t.credentials="omit":t.credentials="same-origin",t}function o(e){if(e.ep)return;e.ep=!0;const t=l(e);fetch(e.href,t)}})();function d(){const r=document.createElement("nav");return r.className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 shadow-sm",r.innerHTML=`
     <div class="max-w-7xl mx-auto px-4">
       <div class="flex items-center justify-between h-16">
         <!-- Left Section: Logo and Home -->
@@ -69,91 +56,7 @@ export function createNav() {
         </div>
       </div>
     </div>
-  `;
-
-  return nav;
-}
-
-/**
- * Initializes the navigation bar
- * Sets up theme switching and adds nav to top of page
- */
-export function initNav() {
-  const nav = createNav();
-  document.body.insertBefore(nav, document.body.firstChild);
-
-  // Add padding to body to account for fixed nav
-  document.body.style.paddingTop = '4rem';
-
-  // Theme management
-  const themeSystem = document.getElementById('themeSystem');
-  const themeLight = document.getElementById('themeLight');
-  const themeDark = document.getElementById('themeDark');
-  const html = document.documentElement;
-
-  // Get stored theme or default to system
-  let currentTheme = localStorage.getItem('theme') || 'system';
-
-  // Apply theme
-  function applyTheme(theme) {
-    currentTheme = theme;
-    localStorage.setItem('theme', theme);
-
-    // Remove active class from all buttons
-    document.querySelectorAll('.theme-btn').forEach(btn => {
-      btn.classList.remove('bg-white', 'dark:bg-slate-600', 'text-gray-900', 'dark:text-gray-100', 'shadow-sm');
-      btn.classList.add('text-gray-600', 'dark:text-gray-400');
-    });
-
-    // Add active class to current button
-    let activeBtn;
-    if (theme === 'system') {
-      activeBtn = themeSystem;
-      // Apply system preference
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        html.classList.add('dark');
-      } else {
-        html.classList.remove('dark');
-      }
-    } else if (theme === 'light') {
-      activeBtn = themeLight;
-      html.classList.remove('dark');
-    } else if (theme === 'dark') {
-      activeBtn = themeDark;
-      html.classList.add('dark');
-    }
-
-    if (activeBtn) {
-      activeBtn.classList.remove('text-gray-600', 'dark:text-gray-400');
-      activeBtn.classList.add('bg-white', 'dark:bg-slate-600', 'text-gray-900', 'dark:text-gray-100', 'shadow-sm');
-    }
-  }
-
-  // Set initial theme
-  applyTheme(currentTheme);
-
-  // Theme button event listeners
-  themeSystem.addEventListener('click', () => applyTheme('system'));
-  themeLight.addEventListener('click', () => applyTheme('light'));
-  themeDark.addEventListener('click', () => applyTheme('dark'));
-
-  // Listen for system theme changes when in system mode
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    if (currentTheme === 'system') {
-      applyTheme('system');
-    }
-  });
-}
-
-/**
- * Creates and returns the footer HTML element
- * @returns {HTMLElement} The footer element
- */
-export function createFooter() {
-  const footer = document.createElement('footer');
-  footer.className = 'bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700 mt-16';
-
-  footer.innerHTML = `
+  `,r}function g(){const r=d();document.body.insertBefore(r,document.body.firstChild),document.body.style.paddingTop="4rem";const s=document.getElementById("themeSystem"),l=document.getElementById("themeLight"),o=document.getElementById("themeDark"),e=document.documentElement;let t=localStorage.getItem("theme")||"system";function a(i){t=i,localStorage.setItem("theme",i),document.querySelectorAll(".theme-btn").forEach(c=>{c.classList.remove("bg-white","dark:bg-slate-600","text-gray-900","dark:text-gray-100","shadow-sm"),c.classList.add("text-gray-600","dark:text-gray-400")});let n;i==="system"?(n=s,window.matchMedia("(prefers-color-scheme: dark)").matches?e.classList.add("dark"):e.classList.remove("dark")):i==="light"?(n=l,e.classList.remove("dark")):i==="dark"&&(n=o,e.classList.add("dark")),n&&(n.classList.remove("text-gray-600","dark:text-gray-400"),n.classList.add("bg-white","dark:bg-slate-600","text-gray-900","dark:text-gray-100","shadow-sm"))}a(t),s.addEventListener("click",()=>a("system")),l.addEventListener("click",()=>a("light")),o.addEventListener("click",()=>a("dark")),window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",i=>{t==="system"&&a("system")})}function m(){const r=document.createElement("footer");return r.className="bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700 mt-16",r.innerHTML=`
     <div class="max-w-7xl mx-auto px-4 py-12">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <!-- Column 1: Navigation Links -->
@@ -210,30 +113,4 @@ export function createFooter() {
         </div>
       </div>
     </div>
-  `;
-
-  return footer;
-}
-
-/**
- * Initializes the footer by appending it to the document body
- * Also sets up the current year and handles year range display
- */
-export function initFooter() {
-  const footer = createFooter();
-  document.body.appendChild(footer);
-
-  // Set current year
-  const currentYear = new Date().getFullYear();
-  const thisYearElement = document.getElementById('thisYear');
-  const startYearElement = document.getElementById('startYear');
-
-  if (thisYearElement) {
-    thisYearElement.textContent = currentYear.toString();
-  }
-
-  // Show start year with range only if current year is not 2025
-  if (startYearElement && currentYear !== 2025) {
-    startYearElement.classList.remove('hidden');
-  }
-}
+  `,r}function h(){const r=m();document.body.appendChild(r);const s=new Date().getFullYear(),l=document.getElementById("thisYear"),o=document.getElementById("startYear");l&&(l.textContent=s.toString()),o&&s!==2025&&o.classList.remove("hidden")}export{h as a,g as i};

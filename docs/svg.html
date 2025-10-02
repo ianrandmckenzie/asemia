@@ -1,9 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SVG Grid Viewer - Rules.json</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- Security Headers -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
+
+  <meta name="description" content="SVG Grid Viewer - Visual verification tool for typographic shapes from rules.json" />
+  <meta name="keywords" content="typography, typeforms, svg, shapes, grid viewer, validation" />
+  <title>SVG Grid Viewer - Asemic Typeform Crafter</title>
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="en">
+
+  <!-- Open Graph Meta Tags for Social Sharing -->
+  <meta property="og:title" content="SVG Grid Viewer - Asemic Typeform Crafter">
+  <meta property="og:description" content="Visual grid of all SVGs from rules.json to verify integrity during copy/paste operations">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://asemia.relentlesscurious.com/svg">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://asemia.relentlesscurious.com/svg">
 
   <!-- Favicon and Icons -->
   <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
@@ -11,37 +31,37 @@
   <link rel="shortcut icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {}
-      }
-    }
-  </script>
+  <script type="module" crossorigin src="/assets/svg-BAVOe4PM.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/components-as-40zzb.js">
+  <link rel="stylesheet" crossorigin href="/assets/components-CWZWzRNa.css">
 </head>
-<body class="bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100 p-8">
-  <div class="max-w-7xl mx-auto">
-    <header class="mb-8">
-      <h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">SVG Grid Viewer</h1>
-      <p class="text-lg text-gray-600 dark:text-gray-300 mb-4">
-        Visual grid of all SVGs from rules.json to verify integrity during copy/paste operations
-      </p>
-      <div class="flex items-center space-x-4">
-        <label class="flex items-center space-x-2">
-          <input type="checkbox" id="darkToggle" class="rounded">
-          <span class="text-sm">Dark Mode</span>
-        </label>
-        <button id="refreshBtn" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm">
-          Refresh Data
-        </button>
+<body class="bg-gray-50 dark:bg-slate-900 min-h-screen">
+  <!-- Header -->
+  <header class="bg-white dark:bg-slate-800 shadow-sm border-b border-gray-200 dark:border-slate-700">
+    <div class="max-w-7xl mx-auto px-4 py-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-3xl font-serif font-black text-gray-900 dark:text-gray-100">
+            SVG Grid Viewer
+          </h1>
+          <p class="text-gray-600 dark:text-gray-300 mt-2">
+            Visual grid of all SVGs from rules.json to verify integrity during copy/paste operations
+          </p>
+        </div>
+        <nav class="flex items-center gap-4">
+          <a href="/" class="text-blue-600 hover:text-blue-700 dark:text-blue-400 font-medium">
+            ← Back to Builder
+          </a>
+        </nav>
       </div>
-    </header>
+    </div>
+  </header>
 
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 py-8">
     <div id="loading" class="text-center py-8">
       <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-      <p class="mt-2">Loading SVGs...</p>
+      <p class="mt-2 text-gray-700 dark:text-gray-300">Loading SVGs...</p>
     </div>
 
     <div id="error" class="hidden bg-red-100 dark:bg-red-900/40 border border-red-400 dark:border-red-600 text-red-700 dark:text-red-200 px-4 py-3 rounded mb-4">
@@ -51,61 +71,15 @@
     <div id="content" class="hidden space-y-12">
       <!-- SVG grids will be populated here -->
     </div>
-
-    <div id="stats" class="hidden mt-8 p-4 bg-white dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-gray-700">
-      <h3 class="text-lg font-semibold mb-2">Statistics</h3>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-        <div>
-          <span class="text-gray-600 dark:text-gray-400">Total SVGs:</span>
-          <span id="totalCount" class="font-mono font-bold ml-2">0</span>
-        </div>
-        <div>
-          <span class="text-gray-600 dark:text-gray-400">Valid SVGs:</span>
-          <span id="validCount" class="font-mono font-bold ml-2 text-green-600 dark:text-green-400">0</span>
-        </div>
-        <div>
-          <span class="text-gray-600 dark:text-gray-400">Empty SVGs:</span>
-          <span id="emptyCount" class="font-mono font-bold ml-2 text-yellow-600 dark:text-yellow-400">0</span>
-        </div>
-        <div>
-          <span class="text-gray-600 dark:text-gray-400">Invalid SVGs:</span>
-          <span id="invalidCount" class="font-mono font-bold ml-2 text-red-600 dark:text-red-400">0</span>
-        </div>
-      </div>
-    </div>
-  </div>
+  </main>
 
   <script>
-    let rulesData = null;
-    let stats = {
-      total: 0,
-      valid: 0,
-      empty: 0,
-      invalid: 0
-    };
-
-    // Dark mode toggle
-    const darkToggle = document.getElementById('darkToggle');
-    const html = document.documentElement;
-
-    // Initialize dark mode
-    darkToggle.checked = html.classList.contains('dark');
-
-    darkToggle.addEventListener('change', (e) => {
-      if (e.target.checked) {
-        html.classList.add('dark');
-      } else {
-        html.classList.remove('dark');
-      }
-    });
-
     // Load and display SVGs
     async function loadRulesData() {
       try {
         document.getElementById('loading').classList.remove('hidden');
         document.getElementById('error').classList.add('hidden');
         document.getElementById('content').classList.add('hidden');
-        document.getElementById('stats').classList.add('hidden');
 
         const response = await fetch('./public/assets/rules.json');
         if (!response.ok) {
@@ -114,11 +88,9 @@
 
         rulesData = await response.json();
         displaySVGs();
-        updateStats();
 
         document.getElementById('loading').classList.add('hidden');
         document.getElementById('content').classList.remove('hidden');
-        document.getElementById('stats').classList.remove('hidden');
       } catch (error) {
         console.error('Error loading rules.json:', error);
         document.getElementById('loading').classList.add('hidden');
@@ -157,8 +129,6 @@
 
     function createSVGDisplay(shape, category, angleKey) {
       const validation = validateSVG(shape.svg);
-      stats.total++;
-      stats[validation]++;
 
       const container = document.createElement('div');
       container.className = 'border border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-white dark:bg-slate-800';
@@ -200,9 +170,6 @@
     function displaySVGs() {
       const content = document.getElementById('content');
       content.innerHTML = '';
-
-      // Reset stats
-      stats = { total: 0, valid: 0, empty: 0, invalid: 0 };
 
       if (!rulesData || !rulesData.shapes) {
         content.innerHTML = '<p class="text-center text-gray-500 dark:text-gray-400">No shapes data found in rules.json</p>';
@@ -253,18 +220,10 @@
       });
     }
 
-    function updateStats() {
-      document.getElementById('totalCount').textContent = stats.total;
-      document.getElementById('validCount').textContent = stats.valid;
-      document.getElementById('emptyCount').textContent = stats.empty;
-      document.getElementById('invalidCount').textContent = stats.invalid;
-    }
-
-    // Refresh button
-    document.getElementById('refreshBtn').addEventListener('click', loadRulesData);
-
     // Load data on page load
     document.addEventListener('DOMContentLoaded', loadRulesData);
   </script>
+
+  <!-- Nav and Footer components -->
 </body>
 </html>
