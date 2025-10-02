@@ -4,6 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SVG Grid Viewer - Rules.json</title>
+
+  <!-- Favicon and Icons -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -80,10 +87,10 @@
     // Dark mode toggle
     const darkToggle = document.getElementById('darkToggle');
     const html = document.documentElement;
-    
+
     // Initialize dark mode
     darkToggle.checked = html.classList.contains('dark');
-    
+
     darkToggle.addEventListener('change', (e) => {
       if (e.target.checked) {
         html.classList.add('dark');
@@ -104,11 +111,11 @@
         if (!response.ok) {
           throw new Error(`Failed to fetch rules.json: ${response.status} ${response.statusText}`);
         }
-        
+
         rulesData = await response.json();
         displaySVGs();
         updateStats();
-        
+
         document.getElementById('loading').classList.add('hidden');
         document.getElementById('content').classList.remove('hidden');
         document.getElementById('stats').classList.remove('hidden');
@@ -124,24 +131,24 @@
       if (!svgString || svgString.trim() === '') {
         return 'empty';
       }
-      
+
       try {
         // Basic SVG validation - check if it's valid XML and contains SVG tag
         const parser = new DOMParser();
         const doc = parser.parseFromString(svgString, 'image/svg+xml');
-        
+
         // Check for parsing errors
         const parserError = doc.querySelector('parsererror');
         if (parserError) {
           return 'invalid';
         }
-        
+
         // Check if it contains an SVG element
         const svgElement = doc.querySelector('svg');
         if (!svgElement) {
           return 'invalid';
         }
-        
+
         return 'valid';
       } catch (error) {
         return 'invalid';
@@ -152,14 +159,14 @@
       const validation = validateSVG(shape.svg);
       stats.total++;
       stats[validation]++;
-      
+
       const container = document.createElement('div');
       container.className = 'border border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-white dark:bg-slate-800';
-      
+
       let svgContent = '';
       let statusClass = '';
       let statusText = '';
-      
+
       if (validation === 'valid') {
         svgContent = shape.svg;
         statusClass = 'text-green-600 dark:text-green-400';
@@ -173,7 +180,7 @@
         statusClass = 'text-red-600 dark:text-red-400';
         statusText = '✗ Invalid';
       }
-      
+
       container.innerHTML = `
         <div class="flex flex-col items-center space-y-2">
           <div class="w-24 h-24 flex items-center justify-center border border-gray-200 dark:border-gray-600 rounded bg-gray-50 dark:bg-slate-700">
@@ -186,62 +193,62 @@
           </div>
         </div>
       `;
-      
+
       return container;
     }
 
     function displaySVGs() {
       const content = document.getElementById('content');
       content.innerHTML = '';
-      
+
       // Reset stats
       stats = { total: 0, valid: 0, empty: 0, invalid: 0 };
-      
+
       if (!rulesData || !rulesData.shapes) {
         content.innerHTML = '<p class="text-center text-gray-500 dark:text-gray-400">No shapes data found in rules.json</p>';
         return;
       }
-      
+
       const categories = ['bodies', 'serifs', 'joins'];
-      
+
       categories.forEach(category => {
         if (!rulesData.shapes[category]) return;
-        
+
         const categorySection = document.createElement('div');
         categorySection.className = 'space-y-6';
-        
+
         const categoryTitle = document.createElement('h2');
         categoryTitle.className = 'text-2xl font-bold text-gray-900 dark:text-gray-100 border-b border-gray-300 dark:border-gray-700 pb-2';
         categoryTitle.textContent = category.charAt(0).toUpperCase() + category.slice(1);
         categorySection.appendChild(categoryTitle);
-        
+
         // Skip the 'grid' property and process angle groups
         Object.keys(rulesData.shapes[category]).forEach(angleKey => {
           if (angleKey === 'grid') return;
-          
+
           const shapes = rulesData.shapes[category][angleKey];
           if (!Array.isArray(shapes) || shapes.length === 0) return;
-          
+
           const angleSection = document.createElement('div');
           angleSection.className = 'space-y-3';
-          
+
           const angleTitle = document.createElement('h3');
           angleTitle.className = 'text-lg font-semibold text-gray-800 dark:text-gray-200';
           angleTitle.textContent = `${angleKey} (${shapes.length} shapes)`;
           angleSection.appendChild(angleTitle);
-          
+
           const grid = document.createElement('div');
           grid.className = 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4';
-          
+
           shapes.forEach(shape => {
             const svgDisplay = createSVGDisplay(shape, category, angleKey);
             grid.appendChild(svgDisplay);
           });
-          
+
           angleSection.appendChild(grid);
           categorySection.appendChild(angleSection);
         });
-        
+
         content.appendChild(categorySection);
       });
     }

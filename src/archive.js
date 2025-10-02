@@ -55,7 +55,6 @@ async function loadRules() {
 // Load all archived forms from the public/archive directory
 async function loadArchivedForms() {
   const archiveFiles = [
-    'apek.json',
     'cam.json',
     'cam_v2.json',
     'pyraflare.json',
