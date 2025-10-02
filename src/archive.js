@@ -358,9 +358,9 @@ function setupSizeTabs() {
       // Update active state
       sizeButtons.forEach(btn => {
         if (btn === button) {
-          btn.className = 'size-tab px-4 py-2 text-sm font-medium rounded-md transition-colors bg-blue-500 text-white';
+          btn.className = 'size-tab px-3 py-2 text-sm font-medium rounded-md transition-colors bg-blue-500 text-white';
         } else {
-          btn.className = 'size-tab px-4 py-2 text-sm font-medium rounded-md transition-colors text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700';
+          btn.className = 'size-tab px-3 py-2 text-sm font-medium rounded-md transition-colors text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700';
         }
       });
 
@@ -371,9 +371,15 @@ function setupSizeTabs() {
 }
 
 // Size scale mapping (7xl is the default/current scale of 0.6)
+// Each scale is proportional to Tailwind text sizes
 const SIZE_SCALES = {
   '7xl': 0.6,      // text-7xl equivalent (72px / 4.5rem) - current default
-  '6xl': 0.5       // text-6xl equivalent (60px / 3.75rem) - 83.3% of 7xl
+  '6xl': 0.5,      // text-6xl equivalent (60px / 3.75rem) - 83.3% of 7xl
+  '5xl': 0.4,      // text-5xl equivalent (48px / 3rem) - 66.7% of 7xl
+  '4xl': 0.3,      // text-4xl equivalent (36px / 2.25rem) - 50% of 7xl
+  '3xl': 0.25,     // text-3xl equivalent (30px / 1.875rem) - 41.7% of 7xl
+  '2xl': 0.2,      // text-2xl equivalent (24px / 1.5rem) - 33.3% of 7xl
+  'xl': 0.167      // text-xl equivalent (20px / 1.25rem) - 27.8% of 7xl
 };
 
 // Update size display across all grid wrappers
