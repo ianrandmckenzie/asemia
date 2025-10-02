@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- Security Headers -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
+
+  <meta name="description" content="Word Generator - Randomly assemble typographic forms into words" />
+  <meta name="keywords" content="typography, typeforms, letterforms, design, word generator, random" />
+  <title>Word Generator - Typographic Tinkerer</title>
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="en">
+
+  <!-- Open Graph Meta Tags for Social Sharing -->
+  <meta property="og:title" content="Word Generator - Typographic Tinkerer">
+  <meta property="og:description" content="Randomly assemble typographic forms into word-like compositions">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://asemia.relentlesscurious.com/word-generator">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://asemia.relentlesscurious.com/word-generator">
+
+  <link href="/src/style.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-50 dark:bg-slate-900 min-h-screen">
+  <!-- Header -->
+  <header class="bg-white dark:bg-slate-800 shadow-sm border-b border-gray-200 dark:border-slate-700">
+    <div class="max-w-7xl mx-auto px-4 py-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100">
+            Word Generator
+          </h1>
+          <p class="text-gray-600 dark:text-gray-300 mt-2">
+            Randomly assemble typographic forms into word-like compositions
+          </p>
+        </div>
+        <nav class="flex items-center gap-4">
+          <a href="/" class="text-blue-600 hover:text-blue-700 dark:text-blue-400 font-medium">
+            ← Back to Builder
+          </a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sticky Subnav (Size Tabs + Controls) -->
+  <div id="sticky-subnav" class="sticky top-0 z-40 bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 shadow-sm hidden">
+    <div class="max-w-7xl mx-auto px-4 py-3">
+      <div class="flex items-center justify-center gap-4 flex-wrap">
+        <!-- Size Tabs -->
+        <div id="size-tabs-container" class="inline-flex rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-slate-900 p-1">
+          <button id="size-7xl" class="size-tab px-3 py-2 text-sm font-medium rounded-md transition-colors bg-blue-500 text-white" data-size="7xl">
+            7xl
+          </button>
+          <button id="size-6xl" class="size-tab px-3 py-2 text-sm font-medium rounded-md transition-colors text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700" data-size="6xl">
+            6xl
+          </button>
+          <button id="size-5xl" class="size-tab px-3 py-2 text-sm font-medium rounded-md transition-colors text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700" data-size="5xl">
+            5xl
+          </button>
+          <button id="size-4xl" class="size-tab px-3 py-2 text-sm font-medium rounded-md transition-colors text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700" data-size="4xl">
+            4xl
+          </button>
+          <button id="size-3xl" class="size-tab px-3 py-2 text-sm font-medium rounded-md transition-colors text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700" data-size="3xl">
+            3xl
+          </button>
+          <button id="size-2xl" class="size-tab px-3 py-2 text-sm font-medium rounded-md transition-colors text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700" data-size="2xl">
+            2xl
+          </button>
+          <button id="size-xl" class="size-tab px-3 py-2 text-sm font-medium rounded-md transition-colors text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700" data-size="xl">
+            xl
+          </button>
+          <button id="size-lg" class="size-tab px-3 py-2 text-sm font-medium rounded-md transition-colors text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700" data-size="lg">
+            lg
+          </button>
+          <button id="size-base" class="size-tab px-3 py-2 text-sm font-medium rounded-md transition-colors text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700" data-size="base">
+            base
+          </button>
+          <button id="size-sm" class="size-tab px-3 py-2 text-sm font-medium rounded-md transition-colors text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700" data-size="sm">
+            sm
+          </button>
+          <button id="size-xs" class="size-tab px-3 py-2 text-sm font-medium rounded-md transition-colors text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700" data-size="xs">
+            xs
+          </button>
+        </div>
+
+        <!-- Borders Toggle -->
+        <label class="flex items-center space-x-2 bg-gray-100 dark:bg-slate-700 px-3 py-2 rounded-lg border border-gray-300 dark:border-slate-600 cursor-pointer hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors">
+          <input type="checkbox" id="bordersToggle" class="rounded" checked>
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Show Borders</span>
+        </label>
+
+        <!-- Generate Button -->
+        <button id="generateBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
+          🎲 Generate New Words
+        </button>
+
+        <!-- Word Count Control -->
+        <div class="flex items-center space-x-2 bg-gray-100 dark:bg-slate-700 px-3 py-2 rounded-lg border border-gray-300 dark:border-slate-600">
+          <label class="text-sm font-medium text-gray-700 dark:text-gray-200">Words:</label>
+          <input type="number" id="wordCount" min="1" max="20" value="6" class="w-16 px-2 py-1 text-sm rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-900 text-gray-900 dark:text-gray-100">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 py-8">
+    <!-- Loading State -->
+    <div id="loading" class="text-center py-12">
+      <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <p class="mt-4 text-gray-600 dark:text-gray-300">Loading word generator...</p>
+    </div>
+
+    <!-- Error State -->
+    <div id="error" class="hidden text-center py-12">
+      <div class="text-red-500 text-xl mb-4">⚠️</div>
+      <p class="text-gray-600 dark:text-gray-300 mb-4">Failed to load word generator</p>
+      <p class="text-gray-500 dark:text-gray-400 text-sm">Check the browser console for more details</p>
+    </div>
+
+    <!-- Words Grid -->
+    <div id="words-grid" class="hidden text-black dark:text-white">
+      <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8" id="words-container">
+        <!-- Generated words will be rendered here -->
+      </div>
+    </div>
+  </main>
+
+  <script src="/src/svg.js"></script>
+  <script type="module" src="/src/builder.js"></script>
+  <script type="module" src="/src/word_generator.js"></script>
+</body>
+</html>
