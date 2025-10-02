@@ -184,3 +184,91 @@
   opacity: 1;
   visibility: visible;
 }
+
+/* Mobile shape selector with custom scrollbar */
+.mobile-shape-selector {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(148 163 184) rgb(241 245 249);
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Custom scrollbar for webkit browsers (Safari, Chrome) */
+.mobile-shape-selector::-webkit-scrollbar {
+  height: 8px;
+}
+
+.mobile-shape-selector::-webkit-scrollbar-track {
+  background: rgb(241 245 249);
+  border-radius: 4px;
+}
+
+.mobile-shape-selector::-webkit-scrollbar-thumb {
+  background: rgb(148 163 184);
+  border-radius: 4px;
+}
+
+.mobile-shape-selector::-webkit-scrollbar-thumb:hover {
+  background: rgb(100 116 139);
+}
+
+/* Dark mode scrollbar */
+.dark .mobile-shape-selector {
+  scrollbar-color: rgb(71 85 105) rgb(30 41 59);
+}
+
+.dark .mobile-shape-selector::-webkit-scrollbar-track {
+  background: rgb(30 41 59);
+}
+
+.dark .mobile-shape-selector::-webkit-scrollbar-thumb {
+  background: rgb(71 85 105);
+}
+
+.dark .mobile-shape-selector::-webkit-scrollbar-thumb:hover {
+  background: rgb(100 116 139);
+}
+
+/* Mobile tab active state */
+.mobile-tab.active {
+  background-color: white;
+}
+
+.dark .mobile-tab.active {
+  background-color: rgb(30 41 59);
+}
+
+/* Mobile shape button */
+.mobile-shape-btn {
+  flex-shrink: 0;
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgb(229 231 235);
+  border-radius: 0.5rem;
+  background-color: white;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.dark .mobile-shape-btn {
+  background-color: rgb(51 65 85);
+  border-color: rgb(71 85 105);
+}
+
+.mobile-shape-btn:hover {
+  border-color: rgb(147 197 253);
+  transform: scale(1.05);
+}
+
+.mobile-shape-btn.selected {
+  border-color: rgb(59 130 246);
+  border-width: 3px;
+  box-shadow: 0 0 0 2px rgb(191 219 254);
+}
+

@@ -45,9 +45,41 @@
   <link href="/src/style.css" rel="stylesheet" />
 </head>
 <body>
-  <div class="flex h-screen text-black dark:text-white">
-    <!-- Sidebar Properties Menu -->
-  <div id="sidebar" class="w-80 bg-gray-100 dark:bg-slate-800 border-r border-gray-300 dark:border-gray-700 flex flex-col">
+  <div class="flex flex-col md:flex-row h-screen text-black dark:text-white">
+    <!-- Mobile Top Tabs (visible below md breakpoint) -->
+    <div class="md:hidden flex flex-col bg-gray-100 dark:bg-slate-800 border-b border-gray-300 dark:border-gray-700">
+      <!-- Tab Buttons -->
+      <div class="flex border-b border-gray-300 dark:border-gray-700">
+        <button id="mobileSerifTab" class="mobile-tab flex-1 py-3 px-2 border-r border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-slate-700" data-category="serifs">
+          <div class="flex flex-col items-center gap-1">
+            <img src="/assets/shapes/serifs/0_deg/top.svg" alt="Serifs" class="w-6 h-6 object-contain dark:invert">
+            <span class="text-xs font-medium">Serifs</span>
+          </div>
+        </button>
+        <button id="mobileBodiesTab" class="mobile-tab flex-1 py-3 px-2 border-r border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-slate-700" data-category="bodies">
+          <div class="flex flex-col items-center gap-1">
+            <img src="/assets/shapes/bodies/0_deg/horizontal.svg" alt="Bodies" class="w-6 h-6 object-contain dark:invert">
+            <span class="text-xs font-medium">Bodies</span>
+          </div>
+        </button>
+        <button id="mobileJoinsTab" class="mobile-tab flex-1 py-3 px-2 bg-gray-200 dark:bg-slate-700" data-category="joins">
+          <div class="flex flex-col items-center gap-1">
+            <img src="/assets/shapes/joins/45_deg/horizontal_br.svg" alt="Joins" class="w-6 h-6 object-contain dark:invert">
+            <span class="text-xs font-medium">Joins</span>
+          </div>
+        </button>
+      </div>
+
+      <!-- Horizontal Scrollable Shape Selector -->
+      <div id="mobileShapeSelectorWrapper" class="mobile-shape-selector-wrapper bg-white dark:bg-slate-900 border-b border-gray-300 dark:border-gray-700 py-3 hidden">
+        <div id="mobileSerifShapes" class="mobile-shape-selector px-3 hidden" data-category="serifs"></div>
+        <div id="mobileBodiesShapes" class="mobile-shape-selector hidden px-3" data-category="bodies"></div>
+        <div id="mobileJoinsShapes" class="mobile-shape-selector hidden px-3" data-category="joins"></div>
+      </div>
+    </div>
+
+    <!-- Desktop Sidebar (visible at md breakpoint and above) -->
+    <div id="sidebar" class="hidden md:flex md:w-80 bg-gray-100 dark:bg-slate-800 border-r border-gray-300 dark:border-gray-700 flex-col">
       <!-- Tabs -->
       <div class="flex border-b border-gray-300 dark:border-gray-700">
         <button id="bodiesTab" class="flex-1 py-3 px-4 bg-white dark:bg-slate-800 border-r border-gray-300 dark:border-gray-700 font-medium text-gray-900 dark:text-gray-100">
@@ -92,9 +124,9 @@
     </div>
 
     <!-- Main Content Area -->
-  <div class="flex-1 relative bg-gray-50 dark:bg-slate-900">
-      <!-- Home Link and Save/Load Controls -->
-      <div class="absolute top-4 left-4 z-50 flex gap-2">
+    <div class="flex-1 relative bg-gray-50 dark:bg-slate-900">
+      <!-- Desktop Controls (visible md and above) -->
+      <div class="hidden md:flex absolute top-4 left-4 z-50 gap-2">
         <a href="/" class="bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-800 text-gray-700 dark:text-gray-200 px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors border border-gray-300 dark:border-gray-700">
           ← Home
         </a>
@@ -139,17 +171,40 @@
         </button>
       </div>
 
-      <!-- Preview Toggle -->
-      <div class="absolute top-4 right-4 z-50">
+      <!-- Desktop Preview Toggle (visible md and above) -->
+      <div class="hidden md:block absolute top-4 right-4 z-50">
         <label class="flex items-center space-x-2 bg-white dark:bg-slate-800 px-3 py-2 rounded-lg shadow-md border border-gray-300 dark:border-gray-700">
           <input type="checkbox" id="previewToggle" class="rounded">
           <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Preview</span>
         </label>
       </div>
 
+      <!-- Mobile Toolbar (visible below md) -->
+      <div class="md:hidden fixed bottom-16 left-0 right-0 z-40 bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700 shadow-lg pb-[env(safe-area-inset-bottom)]">
+        <div class="flex items-center justify-around py-3 px-4">
+          <!-- Save Menu Button -->
+          <button id="mobileSaveMenuBtn" class="flex flex-col items-center gap-1 p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
+            <img src="/assets/icons/save-menu.svg" alt="Save Menu" class="h-6 w-6 dark:invert">
+            <span class="text-xs text-gray-600 dark:text-gray-300">Save</span>
+          </button>
+
+          <!-- Size Options Button -->
+          <button id="mobileSizeBtn" class="flex flex-col items-center gap-1 p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
+            <img src="/assets/icons/size-opt.svg" alt="Size Options" class="h-6 w-6 dark:invert">
+            <span class="text-xs text-gray-600 dark:text-gray-300">Size</span>
+          </button>
+
+          <!-- Preview Toggle Button -->
+          <button id="mobilePreviewBtn" class="flex flex-col items-center gap-1 p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
+            <img id="mobilePreviewIcon" src="/assets/icons/eye.svg" alt="Preview" class="h-6 w-6 dark:invert">
+            <span class="text-xs text-gray-600 dark:text-gray-300">Preview</span>
+          </button>
+        </div>
+      </div>
+
       <!-- Grids Container -->
-      <div class="absolute inset-0 flex items-center justify-center">
-        <div class="relative">
+      <div class="absolute inset-0 flex items-center justify-center overflow-hidden">
+        <div class="builder-grids-wrapper relative transition-transform duration-200" style="transform-origin: center center;">
           <!-- 5x5 Serifs Grid -->
           <div id="serifsGrid" class="grid grid-cols-5 gap-0 z-10" style="width: 500px; height: 500px;">
             <!-- Grid cells will be generated by JavaScript -->
@@ -165,7 +220,69 @@
     </div>
   </div>
 
+  <!-- Mobile Save Menu Modal -->
+  <div id="mobileSaveMenu" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 md:hidden">
+    <div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-800 rounded-t-2xl shadow-xl pb-[env(safe-area-inset-bottom)]">
+      <div class="p-4 border-b border-gray-200 dark:border-slate-700">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Save & Load</h3>
+          <button id="closeSaveMenu" class="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg">
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="p-4 space-y-2">
+        <button onclick="saveComposition(); document.getElementById('mobileSaveMenu').classList.add('hidden')" class="w-full text-left px-4 py-3 bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-lg transition-colors">
+          <div class="font-medium text-gray-900 dark:text-gray-100">💾 Save to browser</div>
+          <div class="text-sm text-gray-600 dark:text-gray-400">Save your work locally</div>
+        </button>
+        <button onclick="saveCompositionToComputer(); document.getElementById('mobileSaveMenu').classList.add('hidden')" class="w-full text-left px-4 py-3 bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-lg transition-colors">
+          <div class="font-medium text-gray-900 dark:text-gray-100">💾 Save to computer</div>
+          <div class="text-sm text-gray-600 dark:text-gray-400">Download as JSON file</div>
+        </button>
+        <button onclick="loadFromBrowser(); document.getElementById('mobileSaveMenu').classList.add('hidden')" class="w-full text-left px-4 py-3 bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-lg transition-colors">
+          <div class="font-medium text-gray-900 dark:text-gray-100">📁 Load from browser</div>
+          <div class="text-sm text-gray-600 dark:text-gray-400">Load saved work</div>
+        </button>
+        <button onclick="loadComposition(); document.getElementById('mobileSaveMenu').classList.add('hidden')" class="w-full text-left px-4 py-3 bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-lg transition-colors">
+          <div class="font-medium text-gray-900 dark:text-gray-100">📁 Load from computer</div>
+          <div class="text-sm text-gray-600 dark:text-gray-400">Upload JSON file</div>
+        </button>
+        <button onclick="manageCompositions(); document.getElementById('mobileSaveMenu').classList.add('hidden')" class="w-full text-left px-4 py-3 bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-lg transition-colors">
+          <div class="font-medium text-gray-900 dark:text-gray-100">⚙️ Manage</div>
+          <div class="text-sm text-gray-600 dark:text-gray-400">Manage saved compositions</div>
+        </button>
+        <button onclick="clearAllGrids(); document.getElementById('mobileSaveMenu').classList.add('hidden')" class="w-full text-left px-4 py-3 bg-red-50 dark:bg-red-900 hover:bg-red-100 dark:hover:bg-red-800 rounded-lg transition-colors">
+          <div class="font-medium text-red-900 dark:text-red-100">🗑️ Clear All</div>
+          <div class="text-sm text-red-600 dark:text-red-400">Remove all shapes from grids</div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Size Menu Modal -->
+  <div id="mobileSizeMenu" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 md:hidden">
+    <div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-800 rounded-t-2xl shadow-xl pb-[env(safe-area-inset-bottom)]">
+      <div class="p-4 border-b border-gray-200 dark:border-slate-700">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Grid Size</h3>
+          <button id="closeSizeMenu" class="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg">
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div id="mobileSizeButtons" class="p-4 grid grid-cols-3 gap-2">
+        <!-- Size buttons will be generated by JavaScript -->
+      </div>
+    </div>
+  </div>
+
   <script type="module" src="/src/svg.js"></script>
+  <script type="module" src="/src/mobile_builder.js"></script>
   <script type="module" src="/src/builder.js"></script>
   <script type="module" src="/src/storage.js"></script>
 

@@ -183,10 +183,17 @@ async function initBuilder() {
   await loadRules();
   createGrids();
   setupSidebar();
+  setupMobileUI();
   setupTabSwitching();
   setupClearSelection();
   setupPreviewToggle();
+  setupMobileToolbar();
+  setupSizeOptions();
   updateGridLayers();
+  applyResponsiveScale();
+
+  // Listen for window resize to adjust scale
+  window.addEventListener('resize', applyResponsiveScale);
 
   // Make necessary functions globally accessible for constrained builder and save/load
   window.getCellPosition = getCellPosition;
@@ -905,3 +912,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Export initBuilderCore globally for use by other pages (like archive)
 window.initBuilderCore = initBuilderCore;
+
