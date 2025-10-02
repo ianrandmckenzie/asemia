@@ -9,6 +9,34 @@
   --font-cursive: "Borel", cursive;
 }
 
+/* Local font faces: ensure fonts are loaded from /public/assets/fonts */
+/* Raleway Variable (normal) */
+@font-face {
+  font-family: "Raleway";
+  src: url("/assets/fonts/Raleway-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Raleway Variable (italic) */
+@font-face {
+  font-family: "Raleway";
+  src: url("/assets/fonts/Raleway-Italic-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Grenze Gotisch Variable */
+@font-face {
+  font-family: "Grenze Gotisch";
+  src: url("/assets/fonts/GrenzeGotisch-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Custom styles for the grids */
 #serifsGrid .grid-cell {
   border: 1px solid #e5e7eb;

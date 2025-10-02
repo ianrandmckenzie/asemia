@@ -9,7 +9,12 @@
  */
 export function createNav() {
   const nav = document.createElement('nav');
-  nav.className = 'fixed top-0 left-0 right-0 z-50 bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 shadow-sm';
+  // Bottom on mobile, top on md+
+  nav.className = 'fixed left-0 right-0 bottom-0 md:top-0 md:bottom-auto bg-white dark:bg-slate-800 border-t md:border-b md:border-t-0 border-gray-200 dark:border-slate-700 shadow-sm pb-[env(safe-area-inset-bottom)] md:pb-0';
+  nav.style.zIndex = 1000;
+
+  // Detect if we're on the freebuilder page
+  const isOnFreebuilder = window.location.pathname.includes('/freebulder.html');
 
   nav.innerHTML = `
     <div class="max-w-7xl mx-auto px-4">
@@ -17,8 +22,9 @@ export function createNav() {
         <!-- Left Section: Logo and Home -->
         <div class="flex items-center space-x-4">
           <a href="/" class="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-            <img src="/favicon.png" alt="Asemia Logo" class="h-8 w-8" />
-            <span class="text-lg font-semibold text-gray-900 dark:text-gray-100">Home</span>
+            <img src="/public/darkmode-logo-fullbleed.png" alt="Asemia Logo" class="h-6 md:h-12 w-auto dark:hidden rounded-md" />
+            <img src="/public/lightmode-logo-fullbleed.png" alt="Asemia Logo" class="h-6 md:h-12 w-auto hidden dark:block rounded-md" />
+            <span class="text-sm md:text-lg font-thin uppercase tracking-widest text-gray-900 dark:text-gray-100 font-sans">Asemia</span>
           </a>
         </div>
 
@@ -27,44 +33,47 @@ export function createNav() {
           <div class="flex items-center bg-gray-100 dark:bg-slate-700 rounded-lg p-1">
             <button
               id="themeSystem"
-              class="theme-btn flex items-center space-x-1 px-3 py-1.5 rounded transition-colors text-sm font-medium"
+              class="theme-btn flex items-center space-x-0 md:space-x-1 px-2 md:px-3 py-1.5 rounded transition-colors text-xs md:text-sm font-medium"
+              aria-label="System theme"
               title="System Theme"
             >
               <svg class="h-4 w-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M64 0C28.7 0 0 28.7 0 64L0 352c0 35.3 28.7 64 64 64l176 0-10.7 32L160 448c-17.7 0-32 14.3-32 32s14.3 32 32 32l256 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-69.3 0L336 416l176 0c35.3 0 64-28.7 64-64l0-288c0-35.3-28.7-64-64-64L64 0zM512 64l0 224L64 288 64 64l448 0z"/></svg>
-              <span>System</span>
+              <span class="hidden md:inline">System</span>
             </button>
             <button
               id="themeLight"
-              class="theme-btn flex items-center space-x-1 px-3 py-1.5 rounded transition-colors text-sm font-medium"
+              class="theme-btn flex items-center space-x-0 md:space-x-1 px-2 md:px-3 py-1.5 rounded transition-colors text-xs md:text-sm font-medium"
+              aria-label="Light theme"
               title="Light Theme"
             >
               <svg class="h-4 w-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"/></svg>
-              <span>Light</span>
+              <span class="hidden md:inline">Light</span>
             </button>
             <button
               id="themeDark"
-              class="theme-btn flex items-center space-x-1 px-3 py-1.5 rounded transition-colors text-sm font-medium"
+              class="theme-btn flex items-center space-x-0 md:space-x-1 px-2 md:px-3 py-1.5 rounded transition-colors text-xs md:text-sm font-medium"
+              aria-label="Dark theme"
               title="Dark Theme"
             >
               <svg class="h-4 w-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"/></svg>
-              <span>Dark</span>
+              <span class="hidden md:inline">Dark</span>
             </button>
           </div>
         </div>
 
         <!-- Right Section: Links -->
         <div class="flex items-center space-x-4">
-          <a
-            href="/freebulder.html"
-            class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
+          <a target="_blank"
+            href="https://www.relentlesscurious.com/not-built"
+            class="${isOnFreebuilder ? 'block' : 'hidden md:block'} text-xs md:text-base text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
           >
-            Freebuilder
+            Submit Typeform
           </a>
           <a
-            href="#"
-            class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+            href="/freebulder.html"
+            class="${isOnFreebuilder ? 'hidden' : 'block'} text-xs md:text-base px-4 py-2 bg-slate-800 hover:bg-slate-950 text-white font-medium transition-colors"
           >
-            Submit Your Form
+            Start Making
           </a>
         </div>
       </div>
@@ -82,8 +91,22 @@ export function initNav() {
   const nav = createNav();
   document.body.insertBefore(nav, document.body.firstChild);
 
-  // Add padding to body to account for fixed nav
-  document.body.style.paddingTop = '4rem';
+  // Add responsive padding to body to account for fixed nav (bottom on mobile, top on md+)
+  function updateBodyPadding() {
+    const mdUp = window.matchMedia('(min-width: 768px)').matches;
+    if (mdUp) {
+      document.body.style.paddingTop = '4rem';
+      document.body.style.paddingBottom = '';
+    } else {
+      document.body.style.paddingTop = '';
+      // Include iOS safe-area for bottom navigation
+      document.body.style.paddingBottom = 'calc(4rem + env(safe-area-inset-bottom))';
+    }
+  }
+  updateBodyPadding();
+  // Update on resize or orientation change
+  window.addEventListener('resize', updateBodyPadding);
+  window.addEventListener('orientationchange', updateBodyPadding);
 
   // Theme management
   const themeSystem = document.getElementById('themeSystem');
@@ -160,11 +183,6 @@ export function createFooter() {
         <div>
           <h3 class="text-lg font-serif font-semibold text-gray-900 dark:text-gray-100 mb-4">Explore</h3>
           <ul class="space-y-2">
-            <li>
-              <a href="/svg.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                Shapes
-              </a>
-            </li>
             <li>
               <a href="/archive.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                 Forms
