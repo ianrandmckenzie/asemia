@@ -1,0 +1,63 @@
+{
+  "metadata": {
+    "name": "C",
+    "created": "2025-10-01T22:43:30.264Z",
+    "version": "1.0"
+  },
+  "grids": {
+    "serifs": {
+      "gridType": "serifs",
+      "gridSize": 5,
+      "shapes": [
+        {
+          "index": 8,
+          "category": "serifs",
+          "angleKey": "0_deg",
+          "shapeName": "bottom",
+          "imagePath": "./assets/shapes/serifs/0_deg/bottom.svg"
+        },
+        {
+          "index": 19,
+          "category": "serifs",
+          "angleKey": "45_deg",
+          "shapeName": "side_tr_to_bl",
+          "imagePath": "./assets/shapes/serifs/45_deg/side_tr_to_bl.svg"
+        }
+      ]
+    },
+    "joins": {
+      "gridType": "joins",
+      "gridSize": 4,
+      "shapes": [
+        {
+          "index": 2,
+          "category": "joins",
+          "angleKey": "45_deg",
+          "shapeName": "vertical_tr",
+          "imagePath": "./assets/shapes/joins/45_deg/vertical_tr.svg"
+        },
+        {
+          "index": 5,
+          "category": "joins",
+          "angleKey": "135_deg",
+          "shapeName": "vertical_bl",
+          "imagePath": "./assets/shapes/joins/135_deg/vertical_bl.svg"
+        },
+        {
+          "index": 13,
+          "category": "joins",
+          "angleKey": "90_deg",
+          "shapeName": "horizontal_bl",
+          "imagePath": "./assets/shapes/joins/90_deg/horizontal_bl.svg"
+        },
+        {
+          "index": 15,
+          "category": "joins",
+          "angleKey": "135_deg",
+          "shapeName": "horizontal_bl",
+          "imagePath": "./assets/shapes/joins/135_deg/horizontal_bl.svg"
+        }
+      ]
+    }
+  }
+}
