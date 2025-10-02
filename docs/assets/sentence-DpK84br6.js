@@ -1,4 +1,4 @@
-import"./builder-CDpQHjwi.js";/* empty css              */async function m(){console.log("Initializing sentence generator...");const o=document.getElementById("loading");o.innerHTML=`
+import"./svg-Cd0-hoK8.js";import"./builder-DJxBjII2.js";async function m(){console.log("Initializing sentence generator...");const o=document.getElementById("loading");o.innerHTML=`
     <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
     <p class="mt-4 text-gray-600 dark:text-gray-300">Loading builder core...</p>
   `;try{if(window.initBuilderCore)await window.initBuilderCore();else throw new Error("Builder core not available");o.innerHTML=`
