@@ -4,6 +4,7 @@
 
 // Load rules and shapes data
 let rulesData = null;
+let texturesData = null;
 let selectedShape = null;
 let currentTab = 'bodies';
 let previewMode = false;
@@ -183,6 +184,7 @@ const shapeConfig = {
 // Initialize the builder application
 async function initBuilder() {
   await loadRules();
+  await loadTextures();
   createGrids();
   setupSidebar();
   setupTabSwitching();
@@ -199,6 +201,7 @@ async function initBuilder() {
   window.placeShapeInCell = placeShapeInCell;
   window.applyPositioning = applyPositioning;
   window.rulesData = rulesData;
+  window.texturesData = texturesData;
   window.shapeConfig = shapeConfig;
 
   // Make selectedShape accessible via a getter function since it changes
@@ -247,6 +250,16 @@ async function loadRules() {
     rulesData = await response.json();
   } catch (error) {
     console.error('Failed to load rules.json:', error);
+  }
+}
+
+// Load the textures manifest.json file
+async function loadTextures() {
+  try {
+    const response = await fetch('./assets/textures/manifest.json');
+    texturesData = await response.json();
+  } catch (error) {
+    console.error('Failed to load textures manifest.json:', error);
   }
 }
 
@@ -302,6 +315,7 @@ function setupSidebar() {
   populateBodiesShapes();
   populateSerifsShapes();
   populateJoinsShapes();
+  populateTexturesShapes();
 }
 
 // Populate bodies shapes in sidebar
@@ -362,6 +376,61 @@ function populateJoinsShapes() {
       });
     });
   }
+}
+
+// Populate textures in sidebar
+function populateTexturesShapes() {
+  const container = document.getElementById('texturesShapes');
+  if (container) {
+    container.innerHTML = '';
+
+    if (!texturesData?.textures) return;
+
+    texturesData.textures.forEach(texture => {
+      const textureButton = createTextureButton(texture);
+      container.appendChild(textureButton);
+    });
+  }
+}
+
+// Create a texture button for the sidebar
+function createTextureButton(texture) {
+  const button = document.createElement('button');
+  button.className = 'w-full aspect-square rounded border-2 border-gray-300 dark:border-gray-600 hover:border-blue-500 dark:hover:border-blue-400 overflow-hidden bg-white dark:bg-slate-900 flex flex-col items-center justify-center relative';
+
+  // Create a preview div with the texture
+  const preview = document.createElement('div');
+  preview.className = 'w-full h-3/4 bg-cover bg-center';
+  preview.style.backgroundImage = `url('/assets/textures/${texture.filename}')`;
+
+  // Add texture name label
+  const label = document.createElement('div');
+  label.className = 'w-full h-1/4 flex items-center justify-center text-xs font-medium text-gray-700 dark:text-gray-300 px-1 text-center';
+  label.textContent = texture.name;
+
+  button.appendChild(preview);
+  button.appendChild(label);
+
+  button.addEventListener('click', () => {
+    // Remove previous selection
+    document.querySelectorAll('#texturesShapes button').forEach(btn => {
+      btn.classList.remove('border-blue-500', 'dark:border-blue-400', 'bg-blue-50', 'dark:bg-blue-900');
+      btn.classList.add('border-gray-300', 'dark:border-gray-600');
+    });
+
+    // Mark this as selected
+    button.classList.remove('border-gray-300', 'dark:border-gray-600');
+    button.classList.add('border-blue-500', 'dark:border-blue-400', 'bg-blue-50', 'dark:bg-blue-900');
+
+    selectedShape = {
+      category: 'textures',
+      texture: texture
+    };
+
+    updateSelectedShapeDisplay();
+  });
+
+  return button;
 }
 
 // Create a shape button for the sidebar
@@ -594,6 +663,12 @@ function handleGridCellClick(event) {
     return;
   }
 
+  // Handle texture application differently
+  if (selectedShape.category === 'textures') {
+    applyTextureToCell(cell, selectedShape.texture);
+    return;
+  }
+
   const gridType = cell.dataset.grid;
 
   // Check if shape can be placed on this grid
@@ -667,6 +742,48 @@ function clearPendingEraseHighlight() {
     pendingEraseCell.classList.remove('cell-erase-pending');
     pendingEraseCell = null;
   }
+}
+
+// Apply texture to a cell by wrapping existing SVG content
+function applyTextureToCell(cell, texture) {
+  // Find the SVG element in the cell
+  const svgElement = cell.querySelector('svg');
+
+  if (!svgElement) {
+    alert('Please place a shape in this cell first before applying a texture');
+    return;
+  }
+
+  // Remove any existing texture wrapper
+  const existingTextureDiv = cell.querySelector('.texture-mask');
+  if (existingTextureDiv) {
+    existingTextureDiv.remove();
+  }
+
+  // Create a wrapper div for the texture
+  const textureDiv = document.createElement('div');
+  textureDiv.className = 'texture-mask absolute inset-0';
+  textureDiv.style.cssText = `
+    background-image: url('/assets/textures/${texture.filename}');
+    background-size: cover;
+    background-position: center;
+    -webkit-mask-image: url('data:image/svg+xml;base64,${btoa(svgElement.outerHTML)}');
+    mask-image: url('data:image/svg+xml;base64,${btoa(svgElement.outerHTML)}');
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+  `;
+
+  // Hide the original SVG and add the textured version
+  svgElement.style.display = 'none';
+
+  // Store texture data as a data attribute for potential save/load
+  cell.dataset.texture = texture.id;
+
+  cell.appendChild(textureDiv);
 }
 
 // Setup desktop erase mode
@@ -975,25 +1092,42 @@ function placeShapeInCell(cell, shapeData, allowOverlap = false) {
 function setupTabSwitching() {
   const bodiesTab = document.getElementById('bodiesTab');
   const joinsTab = document.getElementById('joinsTab');
+  const texturesTab = document.getElementById('texturesTab');
   const bodiesContent = document.getElementById('bodiesContent');
   const joinsContent = document.getElementById('joinsContent');
+  const texturesContent = document.getElementById('texturesContent');
 
   if (bodiesTab) {
     bodiesTab.addEventListener('click', () => {
       currentTab = 'bodies';
-    bodiesTab.className = 'flex-1 py-3 px-4 bg-white dark:bg-slate-800 border-r border-gray-300 dark:border-gray-700 font-medium text-gray-900 dark:text-gray-100';
-    joinsTab.className = 'flex-1 py-3 px-4 bg-gray-200 dark:bg-slate-700 font-medium text-gray-700 dark:text-gray-200';
+      bodiesTab.className = 'flex-1 py-3 px-4 bg-white dark:bg-slate-800 border-r border-gray-300 dark:border-gray-700 font-medium text-gray-900 dark:text-gray-100';
+      joinsTab.className = 'flex-1 py-3 px-4 bg-gray-200 dark:bg-slate-700 border-r border-gray-300 dark:border-gray-700 font-medium text-gray-700 dark:text-gray-200';
+      texturesTab.className = 'flex-1 py-3 px-4 bg-gray-200 dark:bg-slate-700 font-medium text-gray-700 dark:text-gray-200';
       bodiesContent.classList.remove('hidden');
       joinsContent.classList.add('hidden');
+      texturesContent.classList.add('hidden');
       updateGridLayers();
     });
 
     joinsTab.addEventListener('click', () => {
       currentTab = 'joins';
-    joinsTab.className = 'flex-1 py-3 px-4 bg-white dark:bg-slate-800 border-r border-gray-300 dark:border-gray-700 font-medium text-gray-900 dark:text-gray-100';
-    bodiesTab.className = 'flex-1 py-3 px-4 bg-gray-200 dark:bg-slate-700 font-medium text-gray-700 dark:text-gray-200';
+      joinsTab.className = 'flex-1 py-3 px-4 bg-white dark:bg-slate-800 border-r border-gray-300 dark:border-gray-700 font-medium text-gray-900 dark:text-gray-100';
+      bodiesTab.className = 'flex-1 py-3 px-4 bg-gray-200 dark:bg-slate-700 border-r border-gray-300 dark:border-gray-700 font-medium text-gray-700 dark:text-gray-200';
+      texturesTab.className = 'flex-1 py-3 px-4 bg-gray-200 dark:bg-slate-700 font-medium text-gray-700 dark:text-gray-200';
       joinsContent.classList.remove('hidden');
       bodiesContent.classList.add('hidden');
+      texturesContent.classList.add('hidden');
+      updateGridLayers();
+    });
+
+    texturesTab.addEventListener('click', () => {
+      currentTab = 'textures';
+      texturesTab.className = 'flex-1 py-3 px-4 bg-white dark:bg-slate-800 font-medium text-gray-900 dark:text-gray-100';
+      bodiesTab.className = 'flex-1 py-3 px-4 bg-gray-200 dark:bg-slate-700 border-r border-gray-300 dark:border-gray-700 font-medium text-gray-700 dark:text-gray-200';
+      joinsTab.className = 'flex-1 py-3 px-4 bg-gray-200 dark:bg-slate-700 border-r border-gray-300 dark:border-gray-700 font-medium text-gray-700 dark:text-gray-200';
+      texturesContent.classList.remove('hidden');
+      bodiesContent.classList.add('hidden');
+      joinsContent.classList.add('hidden');
       updateGridLayers();
     });
   }
@@ -1013,7 +1147,11 @@ function updateSelectedShapeDisplay() {
 
   if (selectedShape) {
     display.classList.remove('hidden');
-    info.textContent = `${selectedShape.category} > ${selectedShape.angleKey} > ${selectedShape.shape.shape_name}`;
+    if (selectedShape.category === 'textures') {
+      info.textContent = `Texture: ${selectedShape.texture.name}`;
+    } else {
+      info.textContent = `${selectedShape.category} > ${selectedShape.angleKey} > ${selectedShape.shape.shape_name}`;
+    }
   } else {
     display.classList.add('hidden');
   }

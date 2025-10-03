@@ -4,39 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-  <!-- Security Headers -->
-  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-  <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
-  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
-  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
-
-  <meta name="description" content="SVG Grid Viewer with Foil - Visual verification tool for typographic shapes from rules.json" />
-  <meta name="keywords" content="typography, typeforms, svg, shapes, grid viewer, validation, foil" />
-  <title>SVG Grid Viewer (Foil) - Asemic Typeform Crafter</title>
-  <meta name="robots" content="index, follow">
-  <meta name="language" content="en">
-
-  <!-- Open Graph Meta Tags for Social Sharing -->
-  <meta property="og:title" content="SVG Grid Viewer (Foil) - Asemic Typeform Crafter">
-  <meta property="og:description" content="Visual grid of all SVGs from rules.json with foil background texture">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://asemia.relentlesscurious.com/texture_svg">
-
   <!-- Canonical URL -->
   <link rel="canonical" href="https://asemia.relentlesscurious.com/texture_svg">
-
-  <!-- Favicon and Icons -->
-  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-  <link rel="icon" type="image/png" href="/favicon.png" />
-  <link rel="shortcut icon" href="/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
   <link href="/src/style.css" rel="stylesheet" />
 
   <style>
     /* Custom styles for texture background using CSS variable */
     :root {
-      --texture-url: url('/assets/foil.png');
+      --texture-url: url('/assets/textures/gold.png');
     }
 
     .texture-container {
@@ -58,10 +34,10 @@
       <div class="flex items-center justify-between">
         <div>
           <h1 class="text-3xl font-serif font-black text-gray-900 dark:text-gray-100">
-            SVG Grid Viewer (Foil)
+            SVG Grid Viewer (gold)
           </h1>
           <p class="text-gray-600 dark:text-gray-300 mt-2">
-            Visual grid of all SVGs from rules.json with foil background texture
+            Visual grid of all SVGs from rules.json with gold background texture
           </p>
         </div>
       </div>
@@ -73,14 +49,11 @@
     <div class="max-w-7xl mx-auto px-4 py-3">
       <div class="flex items-center gap-2">
         <span class="text-sm font-medium text-gray-700 dark:text-gray-300 mr-2">Texture:</span>
-        <button id="texture-foil" class="texture-btn px-4 py-2 rounded-md text-sm font-medium transition-colors bg-blue-600 text-white">
-          Foil
+        <button id="texture-gold" class="texture-btn px-4 py-2 rounded-md text-sm font-medium transition-colors bg-blue-600 text-white">
+          gold
         </button>
         <button id="texture-marble" class="texture-btn px-4 py-2 rounded-md text-sm font-medium transition-colors bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600">
           Marble 1
-        </button>
-        <button id="texture-marble2" class="texture-btn px-4 py-2 rounded-md text-sm font-medium transition-colors bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600">
-          Marble 2
         </button>
         <button id="texture-marble-red" class="texture-btn px-4 py-2 rounded-md text-sm font-medium transition-colors bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600">
           Marble Red
@@ -90,9 +63,6 @@
         </button>
         <button id="texture-blackmarble" class="texture-btn px-4 py-2 rounded-md text-sm font-medium transition-colors bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600">
           Black Marble
-        </button>
-        <button id="texture-blackmarble2" class="texture-btn px-4 py-2 rounded-md text-sm font-medium transition-colors bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600">
-          Black Marble 2
         </button>
         <button id="texture-blackmarble-gold" class="texture-btn px-4 py-2 rounded-md text-sm font-medium transition-colors bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600">
           Black Marble Gold
@@ -122,22 +92,21 @@
 
   <script>
     // Current texture state
-    let currentTexture = 'foil';
+    let currentTexture = 'gold';
 
     // Texture mappings
     const textures = {
-      'foil': '/assets/foil.png',
-      'marble': '/assets/marble.png',
-      'marble2': '/assets/marble2.png',
-      'marble-red': '/assets/marble-red.png',
-      'marble-red2': '/assets/marble-red2.png',
-      'blackmarble': '/assets/blackmarble.png',
-      'blackmarble2': '/assets/blackmarble2.png',
-      'blackmarble-gold': '/assets/blackmarble-gold.png',
-      'blackmarble-gold2': '/assets/blackmarble-gold2.png'
+      'gold': '/assets/textures/gold.png',
+      'marble': '/assets/textures/marble.png',
+      'marble2': '/assets/textures/marble2.png',
+      'marble-red': '/assets/textures/marble-red.png',
+      'marble-red2': '/assets/textures/marble-red2.png',
+      'blackmarble': '/assets/textures/blackmarble.png',
+      'blackmarble-gold': '/assets/textures/blackmarble-gold.png',
+      'blackmarble-gold2': '/assets/textures/blackmarble-gold2.png'
     };
 
-    // Load and display SVGs with foil background
+    // Load and display SVGs with texture background
     async function loadRulesData() {
       try {
         document.getElementById('loading').classList.remove('hidden');
@@ -201,7 +170,7 @@
       let statusText = '';
 
       if (validation === 'valid') {
-        // Parse the SVG and wrap it in foil container
+        // Parse the SVG and wrap it in texture container
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = shape.svg;
         const svgElement = tempDiv.querySelector('svg');
@@ -330,13 +299,12 @@
       loadRulesData();
 
       // Set up texture button listeners
-      document.getElementById('texture-foil').addEventListener('click', () => setTexture('foil'));
+      document.getElementById('texture-gold').addEventListener('click', () => setTexture('gold'));
       document.getElementById('texture-marble').addEventListener('click', () => setTexture('marble'));
       document.getElementById('texture-marble2').addEventListener('click', () => setTexture('marble2'));
       document.getElementById('texture-marble-red').addEventListener('click', () => setTexture('marble-red'));
       document.getElementById('texture-marble-red2').addEventListener('click', () => setTexture('marble-red2'));
       document.getElementById('texture-blackmarble').addEventListener('click', () => setTexture('blackmarble'));
-      document.getElementById('texture-blackmarble2').addEventListener('click', () => setTexture('blackmarble2'));
       document.getElementById('texture-blackmarble-gold').addEventListener('click', () => setTexture('blackmarble-gold'));
       document.getElementById('texture-blackmarble-gold2').addEventListener('click', () => setTexture('blackmarble-gold2'));
     });

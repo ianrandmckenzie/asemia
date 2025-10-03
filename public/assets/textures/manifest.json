@@ -1,0 +1,64 @@
+{
+  "textures": [
+    {
+      "id": "blackmarble-gold",
+      "name": "Black Marble Gold",
+      "filename": "blackmarble-gold.png"
+    },
+    {
+      "id": "blackmarble-gold2",
+      "name": "Black Marble Gold 2",
+      "filename": "blackmarble-gold2.png"
+    },
+    {
+      "id": "blackmarble",
+      "name": "Black Marble",
+      "filename": "blackmarble.png"
+    },
+    {
+      "id": "bronze",
+      "name": "Bronze",
+      "filename": "bronze.png"
+    },
+    {
+      "id": "damascus-steel",
+      "name": "Damascus Steel",
+      "filename": "damascus-steel.png"
+    },
+    {
+      "id": "gold",
+      "name": "Gold",
+      "filename": "gold.png"
+    },
+    {
+      "id": "iron",
+      "name": "Iron",
+      "filename": "iron.png"
+    },
+    {
+      "id": "marble-red",
+      "name": "Marble Red",
+      "filename": "marble-red.png"
+    },
+    {
+      "id": "marble-red2",
+      "name": "Marble Red 2",
+      "filename": "marble-red2.png"
+    },
+    {
+      "id": "marble",
+      "name": "Marble",
+      "filename": "marble.png"
+    },
+    {
+      "id": "marble2",
+      "name": "Marble 2",
+      "filename": "marble2.png"
+    },
+    {
+      "id": "silver",
+      "name": "Silver",
+      "filename": "silver.png"
+    }
+  ]
+}

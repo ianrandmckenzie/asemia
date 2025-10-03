@@ -54,6 +54,7 @@ function setupMobileUI() {
   const mobileSerifTab = document.getElementById('mobileSerifTab');
   const mobileBodiesTab = document.getElementById('mobileBodiesTab');
   const mobileJoinsTab = document.getElementById('mobileJoinsTab');
+  const mobileTexturesTab = document.getElementById('mobileTexturesTab');
 
   if (!mobileSerifTab) return; // Not on mobile or element doesn't exist
 
@@ -61,11 +62,13 @@ function setupMobileUI() {
   populateMobileShapes('serifs', 'mobileSerifShapes');
   populateMobileShapes('bodies', 'mobileBodiesShapes');
   populateMobileShapes('joins', 'mobileJoinsShapes');
+  populateMobileTextures('mobileTexturesShapes');
 
   // Tab switching - allow toggling off if clicking active tab
   mobileSerifTab.addEventListener('click', () => switchMobileTab('serifs'));
   mobileBodiesTab.addEventListener('click', () => switchMobileTab('bodies'));
   mobileJoinsTab.addEventListener('click', () => switchMobileTab('joins'));
+  mobileTexturesTab.addEventListener('click', () => switchMobileTab('textures'));
 
   // Start with all hidden (no initial tab)
 }
@@ -89,6 +92,89 @@ function populateMobileShapes(category, containerId) {
       container.appendChild(shapeButton);
     });
   });
+}
+
+// Populate mobile textures selector
+function populateMobileTextures(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container || !window.texturesData?.textures) return;
+
+  container.innerHTML = '';
+
+  window.texturesData.textures.forEach(texture => {
+    const textureButton = createMobileTextureButton(texture);
+    container.appendChild(textureButton);
+  });
+}
+
+// Create mobile texture button
+function createMobileTextureButton(texture) {
+  const button = document.createElement('button');
+  button.className = 'mobile-shape-btn';
+  button.dataset.category = 'textures';
+  button.dataset.textureId = texture.id;
+
+  // Create an image element for the texture
+  const img = document.createElement('img');
+  img.src = `/assets/textures/${texture.filename}`;
+  img.alt = texture.name;
+  img.className = 'h-8 w-auto object-contain pointer-events-none';
+
+  button.appendChild(img);
+
+  button.addEventListener('click', () => {
+    handleMobileTextureSelection(button, texture);
+  });
+
+  return button;
+}
+
+// Handle mobile texture selection
+function handleMobileTextureSelection(button, texture) {
+  // Remove previous selection
+  document.querySelectorAll('.mobile-shape-btn.selected').forEach(el => {
+    el.classList.remove('selected');
+  });
+  document.querySelectorAll('.shape-selected').forEach(el => {
+    el.classList.remove('shape-selected', 'bg-blue-200', 'border-blue-500');
+  });
+
+  // Add selection to clicked button
+  button.classList.add('selected');
+
+  // Update the mobile textures tab icon with the selected texture
+  const mobileTexturesTab = document.getElementById('mobileTexturesTab');
+  if (mobileTexturesTab) {
+    const iconContainer = mobileTexturesTab.querySelector('.flex.flex-col');
+    if (iconContainer) {
+      // Find the SVG or image element
+      const existingIcon = iconContainer.querySelector('svg, img');
+
+      if (existingIcon) {
+        // Replace with an image of the selected texture
+        const textureImg = document.createElement('img');
+        textureImg.src = `/assets/textures/${texture.filename}`;
+        textureImg.alt = texture.name;
+        textureImg.className = 'h-6 w-6 object-cover rounded';
+
+        existingIcon.replaceWith(textureImg);
+      }
+    }
+  }
+
+  // Update selected shape (for textures)
+  const selectedShape = {
+    category: 'textures',
+    texture: texture
+  };
+
+  if (window.setSelectedShape) {
+    window.setSelectedShape(selectedShape);
+  }
+
+  if (window.updateSelectedShapeDisplay) {
+    window.updateSelectedShapeDisplay();
+  }
 }
 
 // Create mobile shape button
@@ -157,13 +243,15 @@ function switchMobileTab(category) {
   const tabs = {
     serifs: document.getElementById('mobileSerifTab'),
     bodies: document.getElementById('mobileBodiesTab'),
-    joins: document.getElementById('mobileJoinsTab')
+    joins: document.getElementById('mobileJoinsTab'),
+    textures: document.getElementById('mobileTexturesTab')
   };
 
   const selectors = {
     serifs: document.getElementById('mobileSerifShapes'),
     bodies: document.getElementById('mobileBodiesShapes'),
-    joins: document.getElementById('mobileJoinsShapes')
+    joins: document.getElementById('mobileJoinsShapes'),
+    textures: document.getElementById('mobileTexturesShapes')
   };
 
   const selectorWrapper = document.getElementById('mobileShapeSelectorWrapper');
