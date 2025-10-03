@@ -744,48 +744,6 @@ function clearPendingEraseHighlight() {
   }
 }
 
-// Apply texture to a cell by wrapping existing SVG content
-function applyTextureToCell(cell, texture) {
-  // Find the SVG element in the cell
-  const svgElement = cell.querySelector('svg');
-
-  if (!svgElement) {
-    alert('Please place a shape in this cell first before applying a texture');
-    return;
-  }
-
-  // Remove any existing texture wrapper
-  const existingTextureDiv = cell.querySelector('.texture-mask');
-  if (existingTextureDiv) {
-    existingTextureDiv.remove();
-  }
-
-  // Create a wrapper div for the texture
-  const textureDiv = document.createElement('div');
-  textureDiv.className = 'texture-mask absolute inset-0';
-  textureDiv.style.cssText = `
-    background-image: url('/assets/textures/${texture.filename}');
-    background-size: cover;
-    background-position: center;
-    -webkit-mask-image: url('data:image/svg+xml;base64,${btoa(svgElement.outerHTML)}');
-    mask-image: url('data:image/svg+xml;base64,${btoa(svgElement.outerHTML)}');
-    -webkit-mask-size: contain;
-    mask-size: contain;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-  `;
-
-  // Hide the original SVG and add the textured version
-  svgElement.style.display = 'none';
-
-  // Store texture data as a data attribute for potential save/load
-  cell.dataset.texture = texture.id;
-
-  cell.appendChild(textureDiv);
-}
-
 // Setup desktop erase mode
 function setupDesktopEraseMode() {
   const desktopEraseBtn = document.getElementById('desktopEraseBtn');
