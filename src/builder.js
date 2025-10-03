@@ -1052,8 +1052,20 @@ function placeShapeInCell(cell, shapeData, allowOverlap = false) {
 function applyTextureToShape(svgElement, texture) {
   if (!svgElement || !texture) return svgElement;
 
-  // Convert SVG to base64 for use in CSS mask
-  const svgString = new XMLSerializer().serializeToString(svgElement);
+  // Clone the SVG to avoid modifying the original
+  const svgClone = svgElement.cloneNode(true);
+
+  // Remove all positioning styles from the clone for use as mask
+  // The mask should just be the pure shape without positioning
+  svgClone.style.top = '';
+  svgClone.style.bottom = '';
+  svgClone.style.left = '';
+  svgClone.style.right = '';
+  svgClone.style.transform = '';
+  svgClone.style.position = '';
+
+  // Convert cleaned SVG to base64 for use in CSS mask
+  const svgString = new XMLSerializer().serializeToString(svgClone);
   const svgBase64 = btoa(unescape(encodeURIComponent(svgString)));
   const svgDataUrl = `data:image/svg+xml;base64,${svgBase64}`;
 
@@ -1061,7 +1073,7 @@ function applyTextureToShape(svgElement, texture) {
   const textureContainer = document.createElement('div');
   textureContainer.className = 'absolute';
 
-  // Copy positioning from the SVG element
+  // Copy positioning from the ORIGINAL SVG element to the container
   textureContainer.style.width = svgElement.style.width;
   textureContainer.style.height = svgElement.style.height;
   textureContainer.style.top = svgElement.style.top || '';
@@ -1075,15 +1087,17 @@ function applyTextureToShape(svgElement, texture) {
   textureContainer.style.backgroundSize = 'cover';
   textureContainer.style.backgroundPosition = 'center';
 
-  // Apply SVG as mask
+  // Apply SVG as mask - use exact dimensions to match the SVG
   textureContainer.style.webkitMaskImage = `url('${svgDataUrl}')`;
   textureContainer.style.maskImage = `url('${svgDataUrl}')`;
-  textureContainer.style.webkitMaskSize = 'contain';
-  textureContainer.style.maskSize = 'contain';
+  // Use 100% 100% to make mask fill the entire container exactly
+  textureContainer.style.webkitMaskSize = '100% 100%';
+  textureContainer.style.maskSize = '100% 100%';
   textureContainer.style.webkitMaskRepeat = 'no-repeat';
   textureContainer.style.maskRepeat = 'no-repeat';
-  textureContainer.style.webkitMaskPosition = 'center';
-  textureContainer.style.maskPosition = 'center';
+  // Position mask at 0,0 since container already has the positioning
+  textureContainer.style.webkitMaskPosition = '0 0';
+  textureContainer.style.maskPosition = '0 0';
 
   // Store metadata for potential later use
   textureContainer.dataset.category = svgElement.dataset.category;
