@@ -15,8 +15,11 @@ const TUTORIAL_STEPS = [
   {
     id: 'welcome',
     title: 'Welcome to the Asemic Typeform Crafter!',
-    content: 'Build unique typographic forms using the fundamental elements of type: Serifs, Bodies, and Joins.\n\nLet\'s take a quick tour.',
-    targetSelector: null, // Full overlay
+    generalContent: 'Build unique typographic forms using the fundamental elements of type: Serifs, Bodies, and Joins.\n\nLet\'s take a quick tour.',
+    desktopContent: '',
+    mobileContent: '',
+    desktopTargetSelector: null, // Full overlay
+    mobileTargetSelector: '',
     position: 'center',
     showSkip: true,
     highlightPulse: false
@@ -24,8 +27,11 @@ const TUTORIAL_STEPS = [
   {
     id: 'grids',
     title: 'Understanding the Grids',
-    content: 'You work with two overlapping grids:\n\n• 5×5 Serifs Grid (white cells)\n• 4×4 Joins Grid (inset, connecting elements)\n\nClick anywhere in the grid to place shapes.',
-    targetSelector: '.builder-grids-wrapper',
+    generalContent: 'You work with two overlapping grids:\n\n• 5×5 Serifs Grid (white cells)\n• 4×4 Joins Grid (inset, connecting elements)\n\nClick anywhere in the grid to place shapes.',
+    desktopContent: '',
+    mobileContent: '',
+    desktopTargetSelector: '.builder-grids-wrapper',
+    mobileTargetSelector: '',
     position: 'bottom',
     highlightPulse: true,
     showSkip: true
@@ -33,8 +39,11 @@ const TUTORIAL_STEPS = [
   {
     id: 'mobile-tabs',
     title: 'Selecting Shapes',
-    content: 'Tap a tab to view available shapes in that category.\n\nThen tap a shape to select it.',
-    targetSelector: '#mobileSerifTab',
+    generalContent: 'Tap a tab to view available shapes in that category.\n\nThen tap a shape to select it.',
+    desktopContent: '',
+    mobileContent: '',
+    desktopTargetSelector: '#mobileSerifTab',
+    mobileTargetSelector: '',
     position: 'bottom',
     highlightPulse: true,
     showSkip: true,
@@ -43,8 +52,11 @@ const TUTORIAL_STEPS = [
   {
     id: 'desktop-sidebar',
     title: 'Selecting Shapes',
-    content: 'Choose from Bodies/Serifs or Joins in the sidebar.\n\nClick a shape to select it.\n\nYour selected shape appears at the top.',
-    targetSelector: '#sidebar',
+    generalContent: '',
+    desktopContent: 'Choose from Bodies/Serifs or Joins in the sidebar.\n\nClick a shape to select it.\n\nYour selected shape becomes highlighted.',
+    mobileContent: 'Choose from Bodies/Serifs or Joins in the topbar.\n\Tap a shape to select it.\n\nYour selected shape becomes highlighted.',
+    desktopTargetSelector: '#sidebar',
+    mobileTargetSelector: '',
     position: 'right',
     highlightPulse: true,
     showSkip: true,
@@ -53,8 +65,11 @@ const TUTORIAL_STEPS = [
   {
     id: 'placing-shapes',
     title: 'Placing Shapes',
-    content: 'Click or tap any grid cell to place your selected shape.\n\n• Serifs/Bodies go in the 5×5 grid\n• Joins go in the 4×4 grid\n\nRight-click (or long-press) to remove a shape.',
-    targetSelector: '.builder-grids-wrapper',
+    generalContent: '',
+    desktopContent: 'Click any grid cell to place your selected shape.\n\n• Serifs/Bodies go in the 5×5 grid\n• Joins go in the 4×4 grid.',
+    mobileContent: 'Tap any grid cell to place your selected shape.\n\n• Serifs/Bodies go in the 5×5 grid\n• Joins go in the 4×4 grid.',
+    desktopTargetSelector: '.builder-grids-wrapper',
+    mobileTargetSelector: '',
     position: 'bottom',
     highlightPulse: true,
     showSkip: true
@@ -62,44 +77,63 @@ const TUTORIAL_STEPS = [
   {
     id: 'erase-mode',
     title: 'Erase Mode',
-    content: 'Toggle Erase Mode to quickly remove shapes.\n\nTap the Erase button, then tap any shape to remove it.',
-    targetSelector: window.innerWidth < 768 ? '#mobileEraseBtn' : '#desktopEraseBtn',
-    position: window.innerWidth < 768 ? 'top' : 'bottom',
+    generalContent: 'Toggle Erase Mode to quickly remove shapes.',
+    desktopContent: 'Click the Erase button, then click any shape to remove it.',
+    mobileContent: 'Tap the Erase button, then tap any shape to target it for deletion. Tap again to confirm the removal.',
+    desktopTargetSelector: '#desktopEraseBtn',
+    mobileTargetSelector: '#mobileEraseBtn',
+    position: 'bottom', // desktop position
+    mobilePosition: 'top', // mobile position
     highlightPulse: true,
     showSkip: true
   },
   {
     id: 'preview-mode',
     title: 'Preview Mode',
-    content: 'Hide grid lines to see your form without distractions.\n\nToggle Preview Mode to view your composition cleanly.',
-    targetSelector: window.innerWidth < 768 ? '#mobilePreviewBtn' : '#desktopPreviewBtn',
-    position: window.innerWidth < 768 ? 'top' : 'bottom',
+    generalContent: 'Hide grid lines to see your form without distractions.\n\nToggle Preview Mode to view your composition cleanly.',
+    desktopContent: '',
+    mobileContent: '',
+    desktopTargetSelector: '#desktopPreviewBtn',
+    mobileTargetSelector: '#mobilePreviewBtn',
+    position: 'bottom', // desktop position
+    mobilePosition: 'top', // mobile position
     highlightPulse: true,
     showSkip: true
   },
   {
     id: 'saving',
     title: 'Saving & Loading',
-    content: 'Save your work to browser storage or download as JSON.\n\nUse the Save menu to manage your compositions.',
-    targetSelector: window.innerWidth < 768 ? '#mobileSaveMenuBtn' : null,
-    position: window.innerWidth < 768 ? 'top' : 'center',
+    generalContent: 'Save your work to browser storage or download as JSON.\n\nUse the Save menu to manage your compositions.',
+    desktopContent: '',
+    mobileContent: '',
+    desktopTargetSelector: null,
+    mobileTargetSelector: '#mobileSaveMenuBtn',
+    position: 'center', // desktop position
+    mobilePosition: 'top', // mobile position
     highlightPulse: true,
     showSkip: true
   },
   {
     id: 'size',
     title: 'Adjusting Size',
-    content: 'Change the grid size to view your form at different scales.\n\nExperiment with different sizes to see how your composition looks.',
-    targetSelector: window.innerWidth < 768 ? '#mobileSizeBtn' : null,
-    position: window.innerWidth < 768 ? 'top' : 'center',
+    generalContent: 'Change the grid size to view your form at different scales.\n\nExperiment with different sizes to see how your composition looks.',
+    desktopContent: '',
+    mobileContent: '',
+    desktopTargetSelector: null,
+    mobileTargetSelector: '#mobileSizeBtn',
+    position: 'center', // desktop position
+    mobilePosition: 'top', // mobile position
     highlightPulse: true,
     showSkip: true
   },
   {
     id: 'complete',
     title: 'You\'re Ready to Create!',
-    content: 'Start building your asemic typeforms.\n\nExperiment, explore, and have fun.\n\n💡 Tip: Check out the Archive to see examples, or try the Word and Sentence Generators for inspiration.',
-    targetSelector: null,
+    generalContent: 'Start building your asemic typeforms.\n\nExperiment, explore, and have fun.\n\n💡 Tip: Check out the Archive to see examples, or try the Word and Sentence Generators for inspiration.',
+    desktopContent: '',
+    mobileContent: '',
+    desktopTargetSelector: null,
+    mobileTargetSelector: '',
     position: 'center',
     highlightPulse: false,
     showSkip: false
@@ -155,6 +189,30 @@ window.skipTutorial = function() {
 }
 
 /**
+ * Reset tutorial state (for development/testing)
+ * Clears the localStorage flag so tutorial will show again on next init
+ */
+window.resetTutorial = function() {
+  console.log('Resetting tutorial state...');
+  localStorage.removeItem('hasSeenFreebuilderTutorial');
+
+  // Clean up any active tutorial elements
+  cleanupCurrentStep();
+
+  // Remove help button if it exists
+  const helpBtn = document.getElementById('tutorialHelpBtn');
+  if (helpBtn) {
+    helpBtn.remove();
+  }
+
+  // Reset state variables
+  tutorialActive = false;
+  currentStep = 0;
+
+  console.log('Tutorial reset complete. Reload the page to see the tutorial again.');
+}
+
+/**
  * Initialize tutorial system
  * Checks if user has seen tutorial before
  */
@@ -207,15 +265,28 @@ getFilteredSteps = function() {
 showStep = function(step) {
   console.log('Showing tutorial step:', step.id);
 
+  // Determine if we're on mobile (< md breakpoint which is 768px)
+  const isMobileView = window.innerWidth < 768;
+
+  // Select appropriate target selector based on screen size
+  const targetSelector = isMobileView
+    ? (step.mobileTargetSelector || step.desktopTargetSelector)
+    : (step.desktopTargetSelector || step.mobileTargetSelector);
+
+  // Select appropriate position based on screen size
+  const position = isMobileView && step.mobilePosition
+    ? step.mobilePosition
+    : step.position;
+
   // Create overlay
   const overlay = createTutorialOverlay();
   document.body.appendChild(overlay);
 
   // Highlight target element if specified
-  if (step.targetSelector) {
-    const success = highlightElement(step.targetSelector, step.highlightPulse);
+  if (targetSelector) {
+    const success = highlightElement(targetSelector, step.highlightPulse);
     if (!success) {
-      console.warn('Target element not found:', step.targetSelector);
+      console.warn('Target element not found:', targetSelector);
     }
   }
 
@@ -225,7 +296,7 @@ showStep = function(step) {
 
   // Position tooltip after adding to DOM
   requestAnimationFrame(() => {
-    positionTooltip(tooltip, step.targetSelector, step.position);
+    positionTooltip(tooltip, targetSelector, position);
   });
 
   // Fade in animations
@@ -241,7 +312,7 @@ showStep = function(step) {
 function createTutorialOverlay() {
   const overlay = document.createElement('div');
   overlay.id = 'tutorial-overlay';
-  overlay.className = 'fixed inset-0 bg-black/60 z-[9998] transition-opacity duration-300';
+  overlay.className = 'fixed inset-0 bg-black/30 z-[9998] transition-opacity duration-300';
   overlay.style.opacity = '0';
 
   // Allow clicking overlay to skip (if enabled)
@@ -271,6 +342,24 @@ function createTutorialTooltip(step) {
   const currentIndex = filteredSteps.findIndex(s => s.id === step.id);
   const totalSteps = filteredSteps.length;
 
+  // Determine if we're on mobile (< md breakpoint which is 768px)
+  const isMobileView = window.innerWidth < 768;
+
+  // Select appropriate content based on screen size
+  // Priority: specific content for device type, then generalContent, then empty string
+  let content = step.generalContent || '';
+  if (isMobileView && step.mobileContent) {
+    content = step.mobileContent;
+  } else if (!isMobileView && step.desktopContent) {
+    content = step.desktopContent;
+  }
+
+  // If there's both general and specific content, combine them
+  if (step.generalContent && ((isMobileView && step.mobileContent) || (!isMobileView && step.desktopContent))) {
+    const specificContent = isMobileView ? step.mobileContent : step.desktopContent;
+    content = step.generalContent + (specificContent ? '\n\n' + specificContent : '');
+  }
+
   tooltip.innerHTML = `
     <div class="space-y-3 md:space-y-4">
       <div class="flex items-start justify-between">
@@ -285,7 +374,7 @@ function createTutorialTooltip(step) {
       </div>
 
       <p class="text-sm md:text-base text-gray-600 dark:text-gray-300 leading-relaxed whitespace-pre-line">
-        ${step.content}
+        ${content}
       </p>
 
       <div class="flex items-center justify-between pt-3 md:pt-4">
