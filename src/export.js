@@ -1,4 +1,42 @@
 /**
+ * Helper function to convert an image URL to a data URL
+ * This ensures textures are embedded in exported SVGs and work in PNG/JPG exports
+ * @param {string} url - The image URL to convert
+ * @returns {Promise<string>} The data URL representation of the image
+ */
+async function imageUrlToDataUrl(url) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous'; // Handle CORS if needed
+
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+
+      try {
+        const dataUrl = canvas.toDataURL('image/png');
+        resolve(dataUrl);
+      } catch (error) {
+        // If toDataURL fails (CORS issue), fall back to original URL
+        console.warn('Failed to convert image to data URL:', error);
+        resolve(url);
+      }
+    };
+
+    img.onerror = () => {
+      console.warn('Failed to load image:', url);
+      resolve(url); // Fall back to original URL
+    };
+
+    img.src = url;
+  });
+}
+
+/**
  * Helper function to generate the combined SVG element from the composition
  * Processes both regular SVG shapes and textured shapes (with applied textures)
  * Textured shapes are exported as SVG patterns that preserve the texture appearance
@@ -46,14 +84,14 @@ async function generateCompositionSVG() {
   for (const grid of grids) {
     const cells = grid.element.querySelectorAll('.grid-cell');
 
-    cells.forEach((cell, index) => {
+    for (const cell of cells) {
       // Find SVG elements within the cell
       const svgElements = cell.querySelectorAll('svg');
 
       // Also find textured elements (divs with texture applied)
       const texturedElements = cell.querySelectorAll('[data-textured="true"]');
 
-      svgElements.forEach(svgElement => {
+      for (const svgElement of svgElements) {
         // Clone the SVG element
         const clonedSVG = svgElement.cloneNode(true);
 
@@ -142,10 +180,10 @@ async function generateCompositionSVG() {
         }
 
         mainGroup.appendChild(shapeGroup);
-      });
+      }
 
       // Process textured elements (divs with textures applied as masks)
-      texturedElements.forEach(texturedElement => {
+      for (const texturedElement of texturedElements) {
         // Get cell position
         const cellRect = cell.getBoundingClientRect();
 
@@ -242,7 +280,23 @@ async function generateCompositionSVG() {
                 const urlMatch = bgImage.match(/url\(['"]?([^'"]+)['"]?\)/);
 
                 if (urlMatch) {
-                  const textureUrl = urlMatch[1];
+                  let textureUrl = urlMatch[1];
+
+                  // Convert relative URL to absolute URL
+                  if (textureUrl.startsWith('/')) {
+                    textureUrl = window.location.origin + textureUrl;
+                  } else if (!textureUrl.startsWith('http') && !textureUrl.startsWith('data:')) {
+                    // Handle relative paths without leading slash
+                    textureUrl = new URL(textureUrl, window.location.href).href;
+                  }
+
+                  // Convert texture to data URL for embedding
+                  try {
+                    textureUrl = await imageUrlToDataUrl(textureUrl);
+                  } catch (error) {
+                    console.warn('Failed to convert texture to data URL, using absolute URL:', error);
+                  }
+
                   const image = document.createElementNS(svgNS, 'image');
                   image.setAttribute('href', textureUrl);
                   image.setAttribute('width', elementWidth);
@@ -266,15 +320,29 @@ async function generateCompositionSVG() {
 
                 // Clone all paths and shapes from mask, applying the texture pattern
                 const maskContent = maskSvg.cloneNode(true);
-                const fillableElements = maskContent.querySelectorAll('*');
+
+                // Apply texture pattern to all shape elements
+                const fillableElements = maskContent.querySelectorAll('path, polygon, circle, ellipse, rect, line, polyline');
                 fillableElements.forEach(el => {
-                  if (el.getAttribute('fill') && el.getAttribute('fill') !== 'none') {
+                  // Apply pattern to fill if element has a fill (including default fill)
+                  if (!el.hasAttribute('fill') || (el.getAttribute('fill') !== 'none' && el.getAttribute('fill') !== '')) {
                     el.setAttribute('fill', `url(#${patternId})`);
                   }
-                  if (el.getAttribute('stroke') && el.getAttribute('stroke') !== 'none') {
+                  // Apply pattern to stroke if element has a stroke
+                  if (el.hasAttribute('stroke') && el.getAttribute('stroke') !== 'none' && el.getAttribute('stroke') !== '') {
                     el.setAttribute('stroke', `url(#${patternId})`);
                   }
                 });
+
+                // If no fillable elements were found, try to apply to the SVG root
+                if (fillableElements.length === 0) {
+                  // Apply fill to all direct children
+                  Array.from(maskContent.children).forEach(child => {
+                    if (child.nodeName !== 'defs' && child.nodeName !== 'style') {
+                      child.setAttribute('fill', `url(#${patternId})`);
+                    }
+                  });
+                }
 
                 // If no specific elements have fill, set it on the root
                 if (maskContent.children.length > 0) {
@@ -293,8 +361,8 @@ async function generateCompositionSVG() {
             }
           }
         }
-      });
-    });
+      }
+    }
   }
 
   exportSVG.appendChild(mainGroup);
