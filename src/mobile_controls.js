@@ -259,6 +259,32 @@ export function setupMobileBordersToggle(cellSelector, updateFunction) {
   console.log('Mobile borders toggle event listener attached');
 }
 
+// Get current borders visibility state
+export function getBordersVisible() {
+  const bordersToggle = document.getElementById('bordersToggle');
+  const mobileBordersIcon = document.getElementById('mobileBordersIcon');
+
+  // Check desktop toggle first
+  if (bordersToggle) {
+    return bordersToggle.checked;
+  }
+
+  // Fallback to mobile icon state if no desktop toggle
+  if (mobileBordersIcon) {
+    return mobileBordersIcon.src.includes('eye.svg') && !mobileBordersIcon.src.includes('eye-slash.svg');
+  }
+
+  // Default to true if no controls found
+  return true;
+}
+
+// Get border classes based on current visibility state
+export function getBorderClasses() {
+  return getBordersVisible()
+    ? 'border border-gray-200 dark:border-gray-600 border-opacity-20'
+    : '';
+}
+
 // Default borders display update
 export function updateBordersDisplay(showBorders, cellSelector = '.archive-grid-cell') {
   const allCells = document.querySelectorAll(cellSelector);

@@ -79,7 +79,7 @@
         document.getElementById('error').classList.add('hidden');
         document.getElementById('content').classList.add('hidden');
 
-        const response = await fetch('./public/assets/rules.json');
+        const response = await fetch('./assets/rules.json');
         if (!response.ok) {
           throw new Error(`Failed to fetch rules.json: ${response.status} ${response.statusText}`);
         }

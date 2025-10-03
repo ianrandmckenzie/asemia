@@ -11,7 +11,8 @@ import {
   setupDesktopSizeTabs,
   setupMobileSizeMenu,
   setupMobileBordersToggle,
-  updateBordersDisplay
+  updateBordersDisplay,
+  getBorderClasses
 } from './mobile_controls.js';
 
 // Initialize the sentence generator page
@@ -370,9 +371,10 @@ function applyKerning(formWrapper, serifsGrid) {
 
 // Create grid cells for sentence display
 function createSentenceGridCells(grid, cellCount) {
+  const borderClasses = getBorderClasses();
   for (let i = 0; i < cellCount; i++) {
     const cell = document.createElement('div');
-    cell.className = 'w-[100px] h-[100px] relative sentence-grid-cell border border-gray-200 dark:border-gray-600 border-opacity-20';
+    cell.className = `w-[100px] h-[100px] relative sentence-grid-cell ${borderClasses}`;
     cell.dataset.index = i;
     grid.appendChild(cell);
   }

@@ -8,7 +8,8 @@ import {
   setupDesktopSizeTabs,
   setupMobileSizeMenu,
   setupMobileBordersToggle,
-  updateBordersDisplay
+  updateBordersDisplay,
+  getBorderClasses
 } from './mobile_controls.js';
 
 // Initialize the word generator page
@@ -312,9 +313,10 @@ function applyKerning(formWrapper, serifsGrid) {
 
 // Create grid cells for word display
 function createWordGridCells(grid, cellCount) {
+  const borderClasses = getBorderClasses();
   for (let i = 0; i < cellCount; i++) {
     const cell = document.createElement('div');
-    cell.className = 'w-[100px] h-[100px] relative word-grid-cell border border-gray-200 dark:border-gray-600 border-opacity-20';
+    cell.className = `w-[100px] h-[100px] relative word-grid-cell ${borderClasses}`;
     cell.dataset.index = i;
     grid.appendChild(cell);
   }
