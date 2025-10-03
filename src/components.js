@@ -63,15 +63,15 @@ export function createNav() {
 
         <!-- Right Section: Links -->
         <div class="flex items-center space-x-4">
-          <a target="_blank"
+          <!--<a target="_blank"
             href="https://www.relentlesscurious.com/not-built"
             class="${isOnFreebuilder ? 'block' : 'hidden md:block'} text-xs md:text-base text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
           >
             Submit Typeform
-          </a>
+          </a>-->
           <a
             href="/freebulder.html"
-            class="${isOnFreebuilder ? 'hidden' : 'block'} text-xs md:text-base px-4 py-2 bg-slate-800 hover:bg-slate-950 text-white dark:bg-white dark:text-slate-800 font-medium transition-colors"
+            class="${isOnFreebuilder ? 'hidden' : 'block'} text-xs md:text-base px-4 py-2 bg-slate-800 hover:bg-slate-950 text-white dark:bg-white dark:hover:bg-slate-200 dark:text-slate-800 font-medium transition-colors"
           >
             Start Making
           </a>
