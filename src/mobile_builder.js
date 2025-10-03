@@ -110,7 +110,7 @@ function populateMobileTextures(containerId) {
 // Create mobile texture button
 function createMobileTextureButton(texture) {
   const button = document.createElement('button');
-  button.className = 'mobile-shape-btn';
+  button.className = 'mobile-shape-btn overflow-hidden';
   button.dataset.category = 'textures';
   button.dataset.textureId = texture.id;
 
@@ -118,7 +118,7 @@ function createMobileTextureButton(texture) {
   const img = document.createElement('img');
   img.src = `/assets/textures/${texture.filename}`;
   img.alt = texture.name;
-  img.className = 'h-8 w-auto object-contain pointer-events-none';
+  img.className = 'h-full w-auto object-contain pointer-events-none';
 
   button.appendChild(img);
 
