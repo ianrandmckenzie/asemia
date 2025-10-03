@@ -151,6 +151,9 @@ function generateSentences() {
     sentencesContainer.appendChild(sentenceElement);
   }
 
+  // Apply the current size settings to the newly generated sentences
+  updateSizeDisplay(getCurrentSize());
+
   console.log(`Generated ${sentenceCount} random sentences`);
 }
 

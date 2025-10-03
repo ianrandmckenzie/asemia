@@ -4,6 +4,7 @@
     "attent.json",
     "cam.json",
     "cam_v2.json",
+    "norvme.json",
     "nost.json",
     "phoenetic/A.json",
     "phoenetic/C.json",
@@ -12,5 +13,5 @@
     "vone.json",
     "zoln.json"
   ],
-  "lastUpdated": "2025-10-02"
+  "lastUpdated": "2025-10-03"
 }

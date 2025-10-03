@@ -148,6 +148,9 @@ function generateWords() {
     wordsContainer.appendChild(wordElement);
   }
 
+  // Apply the current size settings to the newly generated words
+  updateSizeDisplay(getCurrentSize());
+
   console.log(`Generated ${wordCount} random words`);
 }
 
