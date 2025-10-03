@@ -178,7 +178,7 @@ function switchMobileTab(category) {
     // Reset all tabs to inactive state
     Object.keys(tabs).forEach(key => {
       if (tabs[key]) {
-        tabs[key].className = 'mobile-tab flex-1 py-3 px-2 bg-gray-200 dark:bg-slate-700 border-r border-gray-300 dark:border-gray-700';
+        tabs[key].className = 'mobile-tab flex-1 py-3 px-2 bg-gray-200 dark:bg-slate-800 border-r border-gray-300 dark:border-gray-700';
       }
     });
 
@@ -214,9 +214,9 @@ function switchMobileTab(category) {
   Object.keys(tabs).forEach(key => {
     if (tabs[key]) {
       if (key === category) {
-        tabs[key].className = 'mobile-tab flex-1 py-3 px-2 bg-white dark:bg-slate-800 border-r border-gray-300 dark:border-gray-700';
+        tabs[key].className = 'mobile-tab flex-1 py-3 px-2 bg-white dark:bg-slate-700 border-r border-gray-300 dark:border-gray-700';
       } else {
-        tabs[key].className = 'mobile-tab flex-1 py-3 px-2 bg-gray-200 dark:bg-slate-700 border-r border-gray-300 dark:border-gray-700';
+        tabs[key].className = 'mobile-tab flex-1 py-3 px-2 bg-gray-200 dark:bg-slate-800 border-r border-gray-300 dark:border-gray-700';
       }
     }
   });

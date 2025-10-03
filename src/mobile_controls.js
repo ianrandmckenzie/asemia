@@ -157,17 +157,52 @@ export function setupMobileSizeMenu(wrapperSelector = '.archive-grids-wrapper', 
   // Only set up event listeners once
   if (!mobileSizeBtn.dataset.listenerAttached) {
     mobileSizeBtn.addEventListener('click', () => {
-      mobileSizeMenu.classList.toggle('hidden');
+      const isHidden = mobileSizeMenu.classList.contains('hidden');
+      const panel = mobileSizeMenu.querySelector('.absolute');
+
+      if (isHidden) {
+        // Show menu: remove hidden and translate
+        mobileSizeMenu.classList.remove('hidden');
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            panel.classList.remove('translate-y-full');
+            panel.classList.add('translate-y-0');
+          });
+        });
+      } else {
+        // Hide menu: slide down then hide
+        mobileSizeMenu.classList.add('opacity-0');
+        panel.classList.remove('translate-y-0');
+        panel.classList.add('translate-y-full');
+        setTimeout(() => {
+          mobileSizeMenu.classList.add('hidden');
+          mobileSizeMenu.classList.remove('opacity-0');
+        }, 200);
+      }
     });
     mobileSizeBtn.dataset.listenerAttached = 'true';
 
     closeSizeMenu.addEventListener('click', () => {
-      mobileSizeMenu.classList.add('hidden');
+      const panel = mobileSizeMenu.querySelector('.absolute');
+      mobileSizeMenu.classList.add('opacity-0');
+      panel.classList.remove('translate-y-0');
+      panel.classList.add('translate-y-full');
+      setTimeout(() => {
+        mobileSizeMenu.classList.add('hidden');
+        mobileSizeMenu.classList.remove('opacity-0');
+      }, 150);
     });
 
     mobileSizeMenu.addEventListener('click', (e) => {
       if (e.target === mobileSizeMenu) {
-        mobileSizeMenu.classList.add('hidden');
+        const panel = mobileSizeMenu.querySelector('.absolute');
+        mobileSizeMenu.classList.add('opacity-0');
+        panel.classList.remove('translate-y-0');
+        panel.classList.add('translate-y-full');
+        setTimeout(() => {
+          mobileSizeMenu.classList.add('hidden');
+          mobileSizeMenu.classList.remove('opacity-0');
+        }, 150);
       }
     });
 
@@ -235,7 +270,4 @@ export function updateBordersDisplay(showBorders, cellSelector = '.archive-grid-
       cell.classList.remove('border', 'border-gray-200', 'dark:border-gray-600', 'border-opacity-20');
     }
   });
-
-  console.log(`Borders ${showBorders ? 'enabled' : 'disabled'} for ${allCells.length} cells`);
-  console.log(cellSelector)
 }
