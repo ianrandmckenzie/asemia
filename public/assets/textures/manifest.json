@@ -16,11 +16,6 @@
       "filename": "blackmarble.png"
     },
     {
-      "id": "bronze",
-      "name": "Bronze",
-      "filename": "bronze.png"
-    },
-    {
       "id": "damascus-steel",
       "name": "Damascus Steel",
       "filename": "damascus-steel.png"
@@ -54,11 +49,6 @@
       "id": "marble2",
       "name": "Marble 2",
       "filename": "marble2.png"
-    },
-    {
-      "id": "silver",
-      "name": "Silver",
-      "filename": "silver.png"
     }
   ]
 }
