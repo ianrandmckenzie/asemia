@@ -389,11 +389,11 @@ function showNotification(message, type = 'info') {
 function showNameInputModal(title, placeholder, onConfirm) {
   // Create modal overlay
   const overlay = document.createElement('div');
-  overlay.className = 'fixed inset-0 bg-black bg-opacity-50 dark:bg-black dark:bg-opacity-60 z-50 flex items-center justify-center';
+  overlay.className = 'fixed inset-0 bg-black/50 dark:bg-black/60 z-50 flex items-center justify-center';
 
   // Create modal content
   const modal = document.createElement('div');
-  modal.className = 'bg-white dark:bg-slate-900 rounded-lg shadow-xl max-w-sm w-full mx-4';
+  modal.className = 'bg-white dark:bg-slate-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-xl max-w-sm w-full mx-4';
 
   // Create modal header
   const header = document.createElement('div');
@@ -519,11 +519,11 @@ async function loadFromBrowser() {
 function showDeleteConfirmation(composition, parentOverlay, onSuccess) {
   // Create confirmation overlay
   const confirmOverlay = document.createElement('div');
-  confirmOverlay.className = 'fixed inset-0 bg-black bg-opacity-50 dark:bg-black dark:bg-opacity-60 z-50 flex items-center justify-center';
+  confirmOverlay.className = 'fixed inset-0 bg-black/50 dark:bg-black/60 z-50 flex items-center justify-center';
 
   // Create confirmation modal
   const confirmModal = document.createElement('div');
-  confirmModal.className = 'bg-white dark:bg-slate-900 rounded-lg shadow-xl max-w-sm w-full mx-4';
+  confirmModal.className = 'bg-white dark:bg-slate-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-xl max-w-sm w-full mx-4';
 
   // Create header
   const header = document.createElement('div');
@@ -598,11 +598,11 @@ function showDeleteConfirmation(composition, parentOverlay, onSuccess) {
 function showCompositionSelector(compositions) {
   // Create modal overlay
   const overlay = document.createElement('div');
-  overlay.className = 'fixed inset-0 bg-black bg-opacity-50 dark:bg-black dark:bg-opacity-60 z-50 flex items-center justify-center';
+  overlay.className = 'fixed inset-0 bg-black/50 dark:bg-black/60 z-50 flex items-center justify-center';
 
   // Create modal content
   const modal = document.createElement('div');
-  modal.className = 'bg-white dark:bg-slate-900 rounded-lg shadow-xl max-w-md w-full mx-4 max-h-96 overflow-hidden';
+  modal.className = 'bg-white dark:bg-slate-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-xl max-w-md w-full mx-4 max-h-96 overflow-hidden';
 
   // Create modal header
   const header = document.createElement('div');
@@ -700,11 +700,11 @@ async function manageCompositions() {
 
   // Create modal overlay
   const overlay = document.createElement('div');
-  overlay.className = 'fixed inset-0 bg-black bg-opacity-50 dark:bg-black dark:bg-opacity-60 z-50 flex items-center justify-center';
+  overlay.className = 'fixed inset-0 bg-black/50 dark:bg-black/60 z-50 flex items-center justify-center';
 
   // Create modal content
   const modal = document.createElement('div');
-  modal.className = 'bg-white dark:bg-slate-900 rounded-lg shadow-xl max-w-md w-full mx-4 max-h-96 overflow-hidden';
+  modal.className = 'bg-white dark:bg-slate-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-xl max-w-md w-full mx-4 max-h-108 overflow-hidden';
 
     // Create modal header
     const header = document.createElement('div');
