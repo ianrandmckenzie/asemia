@@ -42,12 +42,12 @@
   <!-- Canonical URL -->
   <link rel="canonical" href="https://asemia.relentlesscurious.com/">
 
-  <script type="module" crossorigin src="/assets/freebuilder-uvJe9qwD.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/components-CWgY0-4y.js">
+  <script type="module" crossorigin src="/assets/freebuilder-Bsh1wdp9.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/components-cO3_4e1u.js">
   <link rel="modulepreload" crossorigin href="/assets/svg-ckjYZtu2.js">
-  <link rel="modulepreload" crossorigin href="/assets/builder-BBwI1okp.js">
+  <link rel="modulepreload" crossorigin href="/assets/builder-eHfHUSQk.js">
   <link rel="modulepreload" crossorigin href="/assets/storage-BsTmBsHt.js">
-  <link rel="stylesheet" crossorigin href="/assets/components-CeEe6Wlj.css">
+  <link rel="stylesheet" crossorigin href="/assets/components-CqRz8ZZC.css">
 </head>
 <body class="bg-white dark:bg-slate-900">
   <div class="flex flex-col md:flex-row h-[calc(85vh)] md:h-[calc(100vh-4rem)] text-black dark:text-white">
@@ -67,10 +67,21 @@
             <span class="text-xs font-medium">Bodies</span>
           </div>
         </button>
-        <button id="mobileJoinsTab" class="mobile-tab flex-1 pb-1 pt-2 bg-gray-200 dark:bg-slate-800" data-category="joins">
+        <button id="mobileJoinsTab" class="mobile-tab flex-1 pb-1 pt-2 border-r border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-slate-800" data-category="joins">
           <div class="flex flex-col items-center gap-1">
             <svg class="h-6 w-auto" fill="currentColor" stroke="currentColor" stop-color="currentColor" width="120px" height="120px" viewBox="0 0 120 120" version="1.1" id="svg1" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"><defs id="defs1" /><g id="layer1" transform="translate(14.965794,194.55533)">  <g id="g2" transform="matrix(-1,0,0,1,105.02706,-194.56238)">  <path d="m 17.002063,110.02429 -9.9513306,9.95133 H 119.97562 v -9.95133 z" style="stroke-width:0.0487215" id="path5-5" />  <path d="M 102.99145,24 16.75,110.2415 h 99.99999 c -1.647,-0.26692 -3.39773,-0.58604 -5.25403,-1.00192 -8.67273,-1.943 -19.109025,-5.67969 -26.125479,-12.977215 C 78.354036,88.964904 74.861163,78.068631 80.076827,62.21273 83.500708,51.803975 90.677509,39.217883 102.99145,24 Z" id="path1-2" style="stroke-width:0.476189" />  <path d="M 17.002063,110.02429 H 2.949174 l -2.92488608,2.92489 v 7.02644 H 7.0507324 Z" style="stroke-width:0.0628574" id="path4-2" />  <path d="M 127.17518,-14.201717 2.949174,110.02429 H 17.002063 L 134.20163,-7.1752726 Z" style="stroke-width:0.0628574" id="path3-2" />  </g></g></svg>
             <span class="text-xs font-medium">Joins</span>
+          </div>
+        </button>
+        <button id="mobileTexturesTab" class="mobile-tab flex-1 pb-1 pt-2 bg-gray-200 dark:bg-slate-800" data-category="textures">
+          <div class="flex flex-col items-center gap-1">
+            <svg class="h-6 w-auto" fill="currentColor" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <rect width="40" height="40" x="0" y="0" opacity="0.8"/>
+              <rect width="40" height="40" x="60" y="0" opacity="0.5"/>
+              <rect width="40" height="40" x="0" y="60" opacity="0.3"/>
+              <rect width="40" height="40" x="60" y="60" opacity="0.9"/>
+            </svg>
+            <span class="text-xs font-medium">Textures</span>
           </div>
         </button>
       </div>
@@ -80,6 +91,7 @@
         <div id="mobileSerifShapes" class="mobile-shape-selector px-3 py-3 hidden" data-category="serifs"></div>
         <div id="mobileBodiesShapes" class="mobile-shape-selector hidden px-3 py-3" data-category="bodies"></div>
         <div id="mobileJoinsShapes" class="mobile-shape-selector hidden px-3 py-3" data-category="joins"></div>
+        <div id="mobileTexturesShapes" class="mobile-shape-selector hidden px-3 py-3" data-category="textures"></div>
       </div>
     </div>
 
@@ -90,8 +102,11 @@
         <button id="bodiesTab" class="flex-1 py-3 px-4 bg-white dark:bg-slate-800 border-r border-gray-300 dark:border-gray-700 font-medium text-gray-900 dark:text-gray-100">
           Bodies/Serifs
         </button>
-        <button id="joinsTab" class="flex-1 py-3 px-4 bg-gray-200 dark:bg-slate-700 font-medium text-gray-700 dark:text-gray-200">
+        <button id="joinsTab" class="flex-1 py-3 px-4 bg-gray-200 dark:bg-slate-700 border-r border-gray-300 dark:border-gray-700 font-medium text-gray-700 dark:text-gray-200">
           Joins
+        </button>
+        <button id="texturesTab" class="flex-1 py-3 px-4 bg-gray-200 dark:bg-slate-700 font-medium text-gray-700 dark:text-gray-200">
+          Textures
         </button>
       </div>
 
@@ -123,6 +138,14 @@
           <div class="space-y-2">
             <h3 class="font-serif font-semibold text-sm text-gray-700 dark:text-gray-200">Joins</h3>
             <div id="joinsShapes" class="grid grid-cols-4 gap-2"></div>
+          </div>
+        </div>
+
+        <!-- Textures Content -->
+        <div id="texturesContent" class="hidden space-y-4">
+          <div class="space-y-2">
+            <h3 class="font-serif font-semibold text-sm text-gray-700 dark:text-gray-200">Textures</h3>
+            <div id="texturesShapes" class="grid grid-cols-2 gap-2"></div>
           </div>
         </div>
       </div>
@@ -258,7 +281,7 @@
 
               <!-- Back Button to return to main toolbar -->
               <button id="mobileSettingsBackBtn" class="flex flex-col items-center gap-1 py-1 px-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
-                <svg class="h-6 w-6 dark:invert" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="h-6 w-6 dark:invert" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
                 </svg>
                 <span class="text-xs text-gray-600 dark:text-gray-300">Back</span>
