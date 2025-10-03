@@ -107,7 +107,7 @@ const TUTORIAL_STEPS = [
     desktopContent: '',
     mobileContent: '',
     desktopTargetSelector: null,
-    mobileTargetSelector: '#mobileSaveMenuBtn',
+    mobileTargetSelector: '#mobileSettingsBtn',
     position: 'center', // desktop position
     mobilePosition: 'top', // mobile position
     highlightPulse: true,
@@ -296,7 +296,7 @@ showStep = function(step) {
 
   // Position tooltip after adding to DOM
   requestAnimationFrame(() => {
-    positionTooltip(tooltip, targetSelector, position);
+    positionTooltip(tooltip, targetSelector, position, step.id);
   });
 
   // Fade in animations
@@ -430,7 +430,7 @@ function highlightElement(selector, pulse = false) {
 /**
  * Position tooltip relative to target
  */
-function positionTooltip(tooltip, targetSelector, position) {
+function positionTooltip(tooltip, targetSelector, position, stepId = null) {
   if (!targetSelector || position === 'center') {
     // Center on screen
     tooltip.style.cssText += `
@@ -512,21 +512,85 @@ function positionTooltip(tooltip, targetSelector, position) {
       transform = 'translate(-50%, -50%)';
   }
 
-  // Ensure tooltip stays within viewport with some padding
-  if (left < padding) left = padding;
-  if (left + tooltipRect.width > windowWidth - padding) {
-    left = windowWidth - tooltipRect.width - padding;
+  // Apply step-specific adjustments
+  if (stepId === 'erase-mode') {
+    top -= 80; // Move up by 80px for erase mode (50px + 30px additional)
   }
-  if (top < padding) top = padding;
-  if (top + tooltipRect.height > windowHeight - padding) {
-    top = windowHeight - tooltipRect.height - padding;
+  if (stepId === 'preview-mode') {
+    top -= 80; // Move up by 80px for preview mode (same as erase mode)
   }
 
-  tooltip.style.cssText += `
-    top: ${top}px;
-    left: ${left}px;
-    transform: ${transform};
-  `;
+  // For steps 7 and 8 on mobile, we'll use special positioning
+  const isMobileView = window.innerWidth < 768;
+  const useMobileSpecialPositioning = isMobileView && (stepId === 'saving' || stepId === 'size');
+
+  // Calculate effective position after transform is applied
+  let effectiveLeft = left;
+  let effectiveTop = top;
+
+  if (transform.includes('translateX(-50%)')) {
+    effectiveLeft = left - (tooltipRect.width / 2);
+  }
+  if (transform.includes('translateY(-50%)')) {
+    effectiveTop = top - (tooltipRect.height / 2);
+  }
+  if (transform === 'translate(-50%, -50%)') {
+    effectiveLeft = left - (tooltipRect.width / 2);
+    effectiveTop = top - (tooltipRect.height / 2);
+  }
+
+  // Ensure tooltip stays within viewport with padding
+  // Check horizontal bounds
+  if (effectiveLeft < padding) {
+    left = padding;
+    if (transform.includes('translateX(-50%)')) {
+      left = padding + (tooltipRect.width / 2);
+    }
+    transform = transform.replace('translateX(-50%)', '');
+  }
+  if (effectiveLeft + tooltipRect.width > windowWidth - padding) {
+    left = windowWidth - tooltipRect.width - padding;
+    if (transform.includes('translateX(-50%)')) {
+      left = windowWidth - (tooltipRect.width / 2) - padding;
+    }
+    transform = transform.replace('translateX(-50%)', '');
+  }
+
+  // Check vertical bounds
+  if (effectiveTop < padding) {
+    top = padding;
+    if (transform.includes('translateY(-50%)')) {
+      top = padding + (tooltipRect.height / 2);
+    }
+    transform = transform.replace('translateY(-50%)', '');
+  }
+  if (effectiveTop + tooltipRect.height > windowHeight - padding) {
+    top = windowHeight - tooltipRect.height - padding;
+    if (transform.includes('translateY(-50%)')) {
+      top = windowHeight - (tooltipRect.height / 2) - padding;
+    }
+    transform = transform.replace('translateY(-50%)', '');
+  }
+
+  // Clean up transform string (remove extra spaces)
+  transform = transform.trim();
+
+  // Apply special mobile positioning for steps 7 and 8
+  if (useMobileSpecialPositioning) {
+    tooltip.style.cssText += `
+      top: ${top}px;
+      right: 30px;
+      margin-left: 100px;
+      left: auto;
+      ${transform ? `transform: ${transform};` : ''}
+    `;
+  } else {
+    tooltip.style.cssText += `
+      top: ${top}px;
+      left: ${left}px;
+      ${transform ? `transform: ${transform};` : ''}
+    `;
+  }
 }
 
 /**
