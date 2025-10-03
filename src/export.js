@@ -1,5 +1,7 @@
 /**
  * Helper function to generate the combined SVG element from the composition
+ * Processes both regular SVG shapes and textured shapes (with applied textures)
+ * Textured shapes are exported as SVG patterns that preserve the texture appearance
  * @returns {Object} Object containing the SVG element, width, and height
  */
 async function generateCompositionSVG() {
@@ -47,6 +49,9 @@ async function generateCompositionSVG() {
     cells.forEach((cell, index) => {
       // Find SVG elements within the cell
       const svgElements = cell.querySelectorAll('svg');
+
+      // Also find textured elements (divs with texture applied)
+      const texturedElements = cell.querySelectorAll('[data-textured="true"]');
 
       svgElements.forEach(svgElement => {
         // Clone the SVG element
@@ -137,6 +142,157 @@ async function generateCompositionSVG() {
         }
 
         mainGroup.appendChild(shapeGroup);
+      });
+
+      // Process textured elements (divs with textures applied as masks)
+      texturedElements.forEach(texturedElement => {
+        // Get cell position
+        const cellRect = cell.getBoundingClientRect();
+
+        // Calculate position relative to the export SVG
+        const x = cellRect.left - minX;
+        const y = cellRect.top - minY;
+
+        // Get the computed styles of the textured div
+        const computedStyle = window.getComputedStyle(texturedElement);
+        const elementWidth = parseFloat(computedStyle.width) || cellRect.width;
+        const elementHeight = parseFloat(computedStyle.height) || cellRect.height;
+
+        // Get positioning styles
+        const position = computedStyle.position;
+        const top = computedStyle.top;
+        const left = computedStyle.left;
+        const right = computedStyle.right;
+        const bottom = computedStyle.bottom;
+        const transform = computedStyle.transform;
+
+        // Calculate actual position considering absolute positioning within cell
+        let finalX = x;
+        let finalY = y;
+
+        if (position === 'absolute') {
+          if (left !== 'auto' && left !== '') {
+            const leftVal = parseFloat(left);
+            finalX += leftVal;
+          } else if (right !== 'auto' && right !== '') {
+            const rightVal = parseFloat(right);
+            finalX += cellRect.width - elementWidth - rightVal;
+          }
+
+          if (top !== 'auto' && top !== '') {
+            const topVal = parseFloat(top);
+            finalY += topVal;
+          } else if (bottom !== 'auto' && bottom !== '') {
+            const bottomVal = parseFloat(bottom);
+            finalY += cellRect.height - elementHeight - bottomVal;
+          }
+        }
+
+        // Get texture information from the element
+        const textureId = texturedElement.dataset.textureId;
+
+        // Extract the mask SVG from the CSS mask-image property
+        const maskImage = computedStyle.webkitMaskImage || computedStyle.maskImage;
+
+        if (maskImage && maskImage.includes('data:image/svg+xml;base64,')) {
+          // Extract base64 SVG from mask
+          const base64Match = maskImage.match(/data:image\/svg\+xml;base64,([^)'"]+)/);
+          if (base64Match) {
+            try {
+              // Decode the base64 SVG
+              const base64Svg = base64Match[1];
+              const svgString = decodeURIComponent(escape(atob(base64Svg)));
+
+              // Parse the SVG
+              const parser = new DOMParser();
+              const svgDoc = parser.parseFromString(svgString, 'image/svg+xml');
+              const maskSvg = svgDoc.querySelector('svg');
+
+              if (maskSvg) {
+                // Create a group for this textured shape
+                const shapeGroup = document.createElementNS(svgNS, 'g');
+                let transformString = `translate(${finalX}, ${finalY})`;
+
+                // Parse and apply CSS transforms if present
+                if (transform && transform !== 'none') {
+                  const matrixMatch = transform.match(/matrix\(([^)]+)\)/);
+                  if (matrixMatch) {
+                    const values = matrixMatch[1].split(',').map(v => parseFloat(v.trim()));
+                    if (values.length === 6) {
+                      const translateX = values[4];
+                      const translateY = values[5];
+                      transformString += ` translate(${translateX}, ${translateY})`;
+                    }
+                  }
+                }
+
+                shapeGroup.setAttribute('transform', transformString);
+
+                // Create defs section for pattern
+                const defs = document.createElementNS(svgNS, 'defs');
+                const pattern = document.createElementNS(svgNS, 'pattern');
+                const patternId = `texture-${textureId}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+                pattern.setAttribute('id', patternId);
+                pattern.setAttribute('patternUnits', 'userSpaceOnUse');
+                pattern.setAttribute('width', elementWidth);
+                pattern.setAttribute('height', elementHeight);
+
+                // Get texture image URL from background-image
+                const bgImage = computedStyle.backgroundImage;
+                const urlMatch = bgImage.match(/url\(['"]?([^'"]+)['"]?\)/);
+
+                if (urlMatch) {
+                  const textureUrl = urlMatch[1];
+                  const image = document.createElementNS(svgNS, 'image');
+                  image.setAttribute('href', textureUrl);
+                  image.setAttribute('width', elementWidth);
+                  image.setAttribute('height', elementHeight);
+                  image.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+                  pattern.appendChild(image);
+                }
+
+                defs.appendChild(pattern);
+                shapeGroup.appendChild(defs);
+
+                // Clone the mask SVG content and apply the texture pattern as fill
+                const viewBox = maskSvg.getAttribute('viewBox');
+                const nestedSVG = document.createElementNS(svgNS, 'svg');
+                nestedSVG.setAttribute('width', elementWidth);
+                nestedSVG.setAttribute('height', elementHeight);
+
+                if (viewBox) {
+                  nestedSVG.setAttribute('viewBox', viewBox);
+                }
+
+                // Clone all paths and shapes from mask, applying the texture pattern
+                const maskContent = maskSvg.cloneNode(true);
+                const fillableElements = maskContent.querySelectorAll('*');
+                fillableElements.forEach(el => {
+                  if (el.getAttribute('fill') && el.getAttribute('fill') !== 'none') {
+                    el.setAttribute('fill', `url(#${patternId})`);
+                  }
+                  if (el.getAttribute('stroke') && el.getAttribute('stroke') !== 'none') {
+                    el.setAttribute('stroke', `url(#${patternId})`);
+                  }
+                });
+
+                // If no specific elements have fill, set it on the root
+                if (maskContent.children.length > 0) {
+                  Array.from(maskContent.children).forEach(child => {
+                    nestedSVG.appendChild(child);
+                  });
+                } else {
+                  nestedSVG.innerHTML = maskContent.innerHTML;
+                }
+
+                shapeGroup.appendChild(nestedSVG);
+                mainGroup.appendChild(shapeGroup);
+              }
+            } catch (error) {
+              console.warn('Failed to process textured element:', error);
+            }
+          }
+        }
       });
     });
   }
