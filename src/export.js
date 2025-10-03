@@ -51,18 +51,71 @@ async function generateCompositionSVG() {
     throw new Error('Grid not found. Please ensure the builder is loaded.');
   }
 
-  // Get grid dimensions and positions
-  const serifsRect = serifsGrid.getBoundingClientRect();
-  const joinsRect = joinsGrid.getBoundingClientRect();
+  // Detect the scale factor applied to the grids
+  // Look for a parent wrapper element that has transform: scale() applied
+  let scaleFactor = 1;
+  let gridWrapper = serifsGrid.parentElement;
+
+  // Traverse up to find an element with a scale transform
+  while (gridWrapper && gridWrapper !== document.body) {
+    const computedStyle = window.getComputedStyle(gridWrapper);
+    const transform = computedStyle.transform;
+
+    if (transform && transform !== 'none') {
+      // Extract scale from matrix or scale transform
+      const matrixMatch = transform.match(/matrix\(([^)]+)\)/);
+      if (matrixMatch) {
+        const values = matrixMatch[1].split(',').map(v => parseFloat(v.trim()));
+        if (values.length >= 6) {
+          // matrix(a, b, c, d, e, f) where a is scaleX
+          scaleFactor = values[0];
+          console.log(`Detected grid scale factor: ${scaleFactor}`);
+          break;
+        }
+      }
+    }
+    gridWrapper = gridWrapper.parentElement;
+  }
+
+  // Use the hardcoded grid dimensions from the HTML
+  // These are the actual unscaled dimensions
+  const serifsWidth = 500;
+  const serifsHeight = 500;
+  const joinsWidth = 400;
+  const joinsHeight = 400;
+
+  // Get the position offsets of the joins grid (from inline styles)
+  const joinsStyle = window.getComputedStyle(joinsGrid);
+  const joinsTop = parseFloat(joinsStyle.top) || 50;
+  const joinsLeft = parseFloat(joinsStyle.left) || 50;
 
   // Calculate the bounding box for the entire composition
-  const minX = Math.min(serifsRect.left, joinsRect.left);
-  const minY = Math.min(serifsRect.top, joinsRect.top);
-  const maxX = Math.max(serifsRect.right, joinsRect.right);
-  const maxY = Math.max(serifsRect.bottom, joinsRect.bottom);
+  // Using actual unscaled dimensions
+  const minX = 0;
+  const minY = 0;
+  const maxX = Math.max(serifsWidth, joinsLeft + joinsWidth);
+  const maxY = Math.max(serifsHeight, joinsTop + joinsHeight);
 
   const width = maxX - minX;
   const height = maxY - minY;
+
+  // Get bounding rects for position calculations
+  const serifsRect = serifsGrid.getBoundingClientRect();
+  const joinsRect = joinsGrid.getBoundingClientRect();
+
+  // Calculate reference positions in scaled screen coordinates
+  const screenMinX = Math.min(serifsRect.left, joinsRect.left);
+  const screenMinY = Math.min(serifsRect.top, joinsRect.top);
+
+  console.log(`Export debug info:
+    - Scale factor: ${scaleFactor}
+    - Serifs grid: ${serifsWidth}x${serifsHeight}
+    - Joins grid: ${joinsWidth}x${joinsHeight} at (${joinsLeft}, ${joinsTop})
+    - Export dimensions: ${width}x${height}
+    - Serifs screen rect: ${serifsRect.width}x${serifsRect.height}
+    - Joins screen rect: ${joinsRect.width}x${joinsRect.height}
+    - Screen reference: (${screenMinX}, ${screenMinY})
+  `);
 
   // Create SVG container with proper namespace
   const svgNS = 'http://www.w3.org/2000/svg';
@@ -99,13 +152,17 @@ async function generateCompositionSVG() {
         const cellRect = cell.getBoundingClientRect();
 
         // Calculate position relative to the export SVG
-        const x = cellRect.left - minX;
-        const y = cellRect.top - minY;
+        // Convert from scaled screen coordinates to actual SVG coordinates
+        const x = (cellRect.left - screenMinX) / scaleFactor;
+        const y = (cellRect.top - screenMinY) / scaleFactor;
 
         // Get the computed styles of the original SVG
         const computedStyle = window.getComputedStyle(svgElement);
-        const svgWidth = parseFloat(computedStyle.width) || cellRect.width;
-        const svgHeight = parseFloat(computedStyle.height) || cellRect.height;
+        // These CSS values are NOT affected by parent scale transforms
+        const svgWidth = parseFloat(computedStyle.width) || 100;
+        const svgHeight = parseFloat(computedStyle.height) || 100;
+
+        console.log(`Shape export - Cell screen: (${cellRect.left}, ${cellRect.top}), ${cellRect.width}x${cellRect.height}, Computed SVG: ${computedStyle.width}x${computedStyle.height}, Final pos: (${x}, ${y}), Size: ${svgWidth}x${svgHeight}`);
 
         // Get positioning styles
         const position = computedStyle.position;
@@ -119,13 +176,17 @@ async function generateCompositionSVG() {
         let finalX = x;
         let finalY = y;
 
+        // Cell dimensions are fixed: 100px x 100px for both grids
+        const cellWidth = 100;
+        const cellHeight = 100;
+
         if (position === 'absolute') {
           if (left !== 'auto' && left !== '') {
             const leftVal = parseFloat(left);
             finalX += leftVal;
           } else if (right !== 'auto' && right !== '') {
             const rightVal = parseFloat(right);
-            finalX += cellRect.width - svgWidth - rightVal;
+            finalX += cellWidth - svgWidth - rightVal;
           }
 
           if (top !== 'auto' && top !== '') {
@@ -133,7 +194,7 @@ async function generateCompositionSVG() {
             finalY += topVal;
           } else if (bottom !== 'auto' && bottom !== '') {
             const bottomVal = parseFloat(bottom);
-            finalY += cellRect.height - svgHeight - bottomVal;
+            finalY += cellHeight - svgHeight - bottomVal;
           }
         }
 
@@ -188,13 +249,15 @@ async function generateCompositionSVG() {
         const cellRect = cell.getBoundingClientRect();
 
         // Calculate position relative to the export SVG
-        const x = cellRect.left - minX;
-        const y = cellRect.top - minY;
+        // Convert from scaled screen coordinates to actual SVG coordinates
+        const x = (cellRect.left - screenMinX) / scaleFactor;
+        const y = (cellRect.top - screenMinY) / scaleFactor;
 
         // Get the computed styles of the textured div
         const computedStyle = window.getComputedStyle(texturedElement);
-        const elementWidth = parseFloat(computedStyle.width) || cellRect.width;
-        const elementHeight = parseFloat(computedStyle.height) || cellRect.height;
+        // These CSS values are NOT affected by parent scale transforms
+        const elementWidth = parseFloat(computedStyle.width) || 100;
+        const elementHeight = parseFloat(computedStyle.height) || 100;
 
         // Get positioning styles
         const position = computedStyle.position;
@@ -208,13 +271,17 @@ async function generateCompositionSVG() {
         let finalX = x;
         let finalY = y;
 
+        // Cell dimensions are fixed: 100px x 100px for both grids
+        const cellWidth = 100;
+        const cellHeight = 100;
+
         if (position === 'absolute') {
           if (left !== 'auto' && left !== '') {
             const leftVal = parseFloat(left);
             finalX += leftVal;
           } else if (right !== 'auto' && right !== '') {
             const rightVal = parseFloat(right);
-            finalX += cellRect.width - elementWidth - rightVal;
+            finalX += cellWidth - elementWidth - rightVal;
           }
 
           if (top !== 'auto' && top !== '') {
@@ -222,7 +289,7 @@ async function generateCompositionSVG() {
             finalY += topVal;
           } else if (bottom !== 'auto' && bottom !== '') {
             const bottomVal = parseFloat(bottom);
-            finalY += cellRect.height - elementHeight - bottomVal;
+            finalY += cellHeight - elementHeight - bottomVal;
           }
         }
 
