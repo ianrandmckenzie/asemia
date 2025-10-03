@@ -62,7 +62,7 @@ async function loadRules() {
   }
 }
 
-// Load all archived forms from the public/archive directory
+// Load all archived forms from the public/archive directory AND browser storage
 async function loadArchivedForms() {
   const loadingElement = document.getElementById('loading');
   const errorElement = document.getElementById('error');
@@ -70,7 +70,9 @@ async function loadArchivedForms() {
   const archiveFormsContainer = document.getElementById('archive-forms');
 
   try {
-    // Load the manifest file to get list of available archives
+    const compositions = [];
+
+    // PART 1: Load from archive folder
     let archiveFiles;
     try {
       const manifestResponse = await fetch('./archive/manifest.json');
@@ -95,8 +97,6 @@ async function loadArchivedForms() {
       ];
     }
 
-    const compositions = [];
-
     // Load all archive files
     for (const filename of archiveFiles) {
       try {
@@ -105,6 +105,7 @@ async function loadArchivedForms() {
         if (response.ok) {
           const composition = await response.json();
           composition.filename = filename;
+          composition.source = 'archive';
           compositions.push(composition);
           console.log(`✅ Loaded ${filename}:`, composition.metadata?.name || 'Unknown');
         } else {
@@ -115,7 +116,30 @@ async function loadArchivedForms() {
       }
     }
 
-    console.log(`Total compositions loaded: ${compositions.length}`);
+    console.log(`Total compositions loaded from archive: ${compositions.length}`);
+
+    // PART 2: Load from browser storage
+    try {
+      if (window.getAllCompositions) {
+        const browserCompositions = await window.getAllCompositions();
+        console.log(`📦 Found ${browserCompositions.length} compositions in browser storage`);
+
+        // Add browser compositions to the list
+        browserCompositions.forEach((comp, index) => {
+          comp.source = 'browser';
+          comp.filename = `browser-${comp.id || index}`;
+          compositions.push(comp);
+          console.log(`✅ Loaded from browser:`, comp.metadata?.name || 'Unknown');
+        });
+      } else {
+        console.warn('Browser storage not available (getAllCompositions function not found)');
+      }
+    } catch (browserError) {
+      console.warn('Could not load compositions from browser storage:', browserError);
+      // Don't throw - browser storage is optional
+    }
+
+    console.log(`Total compositions loaded: ${compositions.length} (archive + browser)`);
 
     if (compositions.length === 0) {
       throw new Error('No compositions could be loaded');
@@ -170,9 +194,21 @@ function createArchiveForm(composition) {
   const header = document.createElement('div');
   header.className = 'mb-6';
 
+  const titleRow = document.createElement('div');
+  titleRow.className = 'flex items-center gap-3 mb-2';
+
   const title = document.createElement('h2');
-  title.className = 'text-xl font-bold text-gray-900 dark:text-gray-100 mb-2';
+  title.className = 'text-xl font-bold text-gray-900 dark:text-gray-100';
   title.textContent = composition.metadata?.name || 'Untitled';
+  titleRow.appendChild(title);
+
+  // Add "Made by you!" badge if from browser storage
+  if (composition.source === 'browser') {
+    const badge = document.createElement('span');
+    badge.className = 'inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
+    badge.textContent = 'Made by you!';
+    titleRow.appendChild(badge);
+  }
 
   const metadata = document.createElement('div');
   metadata.className = 'text-sm text-gray-600 dark:text-gray-400 flex flex-wrap gap-4';
@@ -184,11 +220,14 @@ function createArchiveForm(composition) {
     metadata.appendChild(dateSpan);
   }
 
-  const filenameSpan = document.createElement('span');
-  filenameSpan.textContent = `File: ${composition.filename}`;
-  metadata.appendChild(filenameSpan);
+  // Only show filename for archive items, not for browser items
+  if (composition.source === 'archive') {
+    const filenameSpan = document.createElement('span');
+    filenameSpan.textContent = `File: ${composition.filename}`;
+    metadata.appendChild(filenameSpan);
+  }
 
-  header.appendChild(title);
+  header.appendChild(titleRow);
   header.appendChild(metadata);
   formContainer.appendChild(header);
 

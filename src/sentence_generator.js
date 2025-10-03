@@ -67,10 +67,12 @@ async function initSentenceGenerator() {
 // Store loaded compositions globally
 let archivedCompositions = [];
 
-// Load all archived forms from the public/archive directory
+// Load all archived forms from the public/archive directory AND browser storage
 async function loadArchivedForms() {
   try {
-    // Load the manifest file to get list of available archives
+    const compositions = [];
+
+    // PART 1: Load from archive folder
     let archiveFiles;
     try {
       const manifestResponse = await fetch('./archive/manifest.json');
@@ -95,8 +97,6 @@ async function loadArchivedForms() {
       ];
     }
 
-    const compositions = [];
-
     // Load all archive files
     for (const filename of archiveFiles) {
       try {
@@ -105,6 +105,7 @@ async function loadArchivedForms() {
         if (response.ok) {
           const composition = await response.json();
           composition.filename = filename;
+          composition.source = 'archive';
           compositions.push(composition);
           console.log(`✅ Loaded ${filename}:`, composition.metadata?.name || 'Unknown');
         } else {
@@ -115,14 +116,36 @@ async function loadArchivedForms() {
       }
     }
 
-    console.log(`Total compositions loaded: ${compositions.length}`);
+    console.log(`Total compositions loaded from archive: ${compositions.length}`);
+
+    // PART 2: Load from browser storage
+    try {
+      if (window.getAllCompositions) {
+        const browserCompositions = await window.getAllCompositions();
+        console.log(`📦 Found ${browserCompositions.length} compositions in browser storage`);
+
+        // Add browser compositions to the list
+        browserCompositions.forEach(comp => {
+          comp.source = 'browser';
+          compositions.push(comp);
+          console.log(`✅ Loaded from browser:`, comp.metadata?.name || 'Unknown');
+        });
+      } else {
+        console.warn('Browser storage not available (getAllCompositions function not found)');
+      }
+    } catch (browserError) {
+      console.warn('Could not load compositions from browser storage:', browserError);
+      // Don't throw - browser storage is optional
+    }
+
+    console.log(`Total compositions loaded: ${compositions.length} (archive + browser)`);
 
     if (compositions.length === 0) {
       throw new Error('No compositions could be loaded');
     }
 
     archivedCompositions = compositions;
-    console.log(`🎉 Successfully loaded ${compositions.length} archived forms as source material`);
+    console.log(`🎉 Successfully loaded ${compositions.length} forms as source material`);
 
   } catch (error) {
     console.error('Failed to load archived forms:', error);
