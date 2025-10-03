@@ -126,12 +126,29 @@
   animation: pulse-erase 2s infinite;
 }
 
+/* Pending placement state for mobile - blue highlight with pulse */
+.cell-placement-pending {
+  background-color: rgba(59, 130, 246, 0.2) !important;
+  border-color: #3b82f6 !important;
+  border-width: 2px !important;
+  animation: pulse-placement 2s infinite;
+}
+
 @keyframes pulse-erase {
   0%, 100% {
     background-color: rgba(239, 68, 68, 0.2);
   }
   50% {
     background-color: rgba(239, 68, 68, 0.4);
+  }
+}
+
+@keyframes pulse-placement {
+  0%, 100% {
+    background-color: rgba(59, 130, 246, 0.2);
+  }
+  50% {
+    background-color: rgba(59, 130, 246, 0.4);
   }
 }
 

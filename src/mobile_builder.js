@@ -200,6 +200,11 @@ function createMobileShapeButton(category, angleKey, shape) {
 
 // Handle mobile shape selection
 function handleMobileShapeSelection(button, category, angleKey, shape) {
+  // Clear any pending placement when selecting a new shape
+  if (window.clearPendingPlacement) {
+    window.clearPendingPlacement();
+  }
+
   // Remove previous selection from shape buttons only
   document.querySelectorAll('.mobile-shape-btn.selected').forEach(el => {
     // Only clear if it's not a texture button
@@ -252,6 +257,11 @@ function switchMobileTab(category) {
   };
 
   const selectorWrapper = document.getElementById('mobileShapeSelectorWrapper');
+
+  // Clear any pending placement when switching tabs
+  if (window.clearPendingPlacement) {
+    window.clearPendingPlacement();
+  }
 
   // If clicking the active tab, toggle it off
   if (activeTab === category) {
@@ -493,6 +503,11 @@ function setupEraseMode(eraseBtn) {
     // Clear any pending erase highlight when toggling
     if (window.clearPendingEraseHighlight) {
       window.clearPendingEraseHighlight();
+    }
+
+    // Clear any pending placement when toggling erase mode
+    if (window.clearPendingPlacement) {
+      window.clearPendingPlacement();
     }
 
     // Update button appearance and icon

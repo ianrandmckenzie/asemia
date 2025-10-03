@@ -11,6 +11,8 @@ let currentTab = 'bodies';
 let previewMode = false;
 let eraseMode = false;
 let pendingEraseCell = null; // Track cell pending erase confirmation
+let pendingPlacementCell = null; // Track cell pending placement confirmation (mobile)
+let pendingPlacementShape = null; // Track shape data for pending placement
 
 // Configuration object for shape positioning
 const shapeConfig = {
@@ -217,6 +219,7 @@ async function initBuilder() {
 
   // Make functions accessible to mobile_builder.js
   window.clearPendingEraseHighlight = clearPendingEraseHighlight;
+  window.clearPendingPlacement = clearPendingPlacement;
   window.updateSelectedShapeDisplay = updateSelectedShapeDisplay;
   window.updateGridLayers = updateGridLayers;
   window.getCurrentTab = () => currentTab;
@@ -647,6 +650,8 @@ function clearCellHighlights() {
   document.querySelectorAll('.shape-preview').forEach(preview => {
     preview.remove();
   });
+  // Clear pending placement state
+  clearPendingPlacement();
 }
 
 // Handle grid cell click
@@ -693,14 +698,61 @@ function handleGridCellClick(event) {
     }
   }
 
+  // Check if we're on mobile (viewport width < 768px)
+  const isMobile = window.innerWidth < 768;
+
+  // MOBILE: Two-tap confirmation system
+  if (isMobile) {
+    // If this is the same cell as pending placement, confirm the placement
+    if (pendingPlacementCell === cell && pendingPlacementShape === selectedShape) {
+      // Clear the pending state
+      clearPendingPlacement();
+
+      // Proceed with actual placement
+      proceedWithPlacement(cell, selectedShape);
+      return;
+    }
+
+    // Clear any previous pending placement
+    clearPendingPlacement();
+
+    // Set up new pending placement with preview
+    pendingPlacementCell = cell;
+    pendingPlacementShape = selectedShape;
+
+    // Show semi-transparent preview and highlight cells
+    occupiedCells.forEach(occupiedCell => {
+      if (occupiedCell) {
+        // Add preview to the primary cell
+        if (occupiedCell === cell) {
+          showShapePreview(occupiedCell, selectedShape);
+          occupiedCell.classList.add('cell-placement-pending');
+        } else {
+          // Add subtle highlight to secondary cells
+          occupiedCell.classList.add('cell-highlight-preview');
+        }
+      }
+    });
+    return;
+  }
+
+  // DESKTOP: Immediate placement (existing behavior)
+  proceedWithPlacement(cell, selectedShape);
+}
+
+// Proceed with actual shape placement
+function proceedWithPlacement(cell, shapeData) {
+  // Get all cells this shape would occupy
+  const occupiedCells = getOccupiedCells(cell, shapeData);
+
   // Check if we're in constrained builder mode (has validation function)
   const isConstrainedBuilder = typeof validateShapeConnections === 'function';
 
   // For freebuilder: allow bodies and joins to overlap (only clear for serifs and multi-cell shapes)
   // For constrained builder: always clear cells as before
   const shouldClearCells = isConstrainedBuilder ||
-                          (selectedShape.category !== 'bodies' && selectedShape.category !== 'joins') ||
-                          (selectedShape.shape.width > 1 || selectedShape.shape.height > 1);
+                          (shapeData.category !== 'bodies' && shapeData.category !== 'joins') ||
+                          (shapeData.shape.width > 1 || shapeData.shape.height > 1);
 
   if (shouldClearCells) {
     // Clear all occupied cells first
@@ -712,7 +764,7 @@ function handleGridCellClick(event) {
   }
 
   // Place the shape in the primary cell (the one clicked)
-  placeShapeInCell(cell, selectedShape, !shouldClearCells);
+  placeShapeInCell(cell, shapeData, !shouldClearCells);
 }
 
 // Handle erase mode click with confirmation
@@ -739,6 +791,24 @@ function clearPendingEraseHighlight() {
   if (pendingEraseCell) {
     pendingEraseCell.classList.remove('cell-erase-pending');
     pendingEraseCell = null;
+  }
+}
+
+// Clear pending placement preview (mobile)
+function clearPendingPlacement() {
+  if (pendingPlacementCell) {
+    // Remove the pending class and preview
+    const occupiedCells = getOccupiedCells(pendingPlacementCell, pendingPlacementShape);
+    occupiedCells.forEach(cell => {
+      if (cell) {
+        cell.classList.remove('cell-placement-pending', 'cell-highlight-preview');
+        // Remove any shape previews
+        const previews = cell.querySelectorAll('.shape-preview');
+        previews.forEach(preview => preview.remove());
+      }
+    });
+    pendingPlacementCell = null;
+    pendingPlacementShape = null;
   }
 }
 
