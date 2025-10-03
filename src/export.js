@@ -81,10 +81,7 @@ async function exportAsPNG() {
           const relativeX = svgRect.left - gridRect.left;
           const relativeY = svgRect.top - gridRect.top;
 
-          // Clone the SVG for serialization
-          const svgClone = svg.cloneNode(true);
-
-          // Get the actual dimensions
+          // Get the actual dimensions from the rendered element
           let width = svgRect.width;
           let height = svgRect.height;
 
@@ -104,7 +101,12 @@ async function exportAsPNG() {
             if (height === 0) height = 100;
           }
 
-          // Serialize the SVG
+          // Clone the SVG and ensure it has explicit width/height attributes
+          // This is critical because when the SVG is converted to an image,
+          // the browser needs these attributes to render it at the correct size
+          const svgClone = svg.cloneNode(true);
+          svgClone.setAttribute('width', `${width}px`);
+          svgClone.setAttribute('height', `${height}px`);
           const svgData = new XMLSerializer().serializeToString(svgClone);
           const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
           const url = URL.createObjectURL(svgBlob);
