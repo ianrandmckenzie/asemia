@@ -163,6 +163,7 @@ async function deleteFromBrowser(id) {
 }
 
 // Create composition data from current grid state
+// Captures both regular shapes and textured shapes (with applied textures)
 function createCompositionData(name) {
   return {
     metadata: {
@@ -178,6 +179,7 @@ function createCompositionData(name) {
 }
 
 // Extract data from a grid
+// Handles regular SVG shapes and textured elements (divs with texture applied)
 function extractGridData(gridId, gridType) {
   const grid = document.getElementById(gridId);
   const cells = [];
@@ -188,6 +190,7 @@ function extractGridData(gridId, gridType) {
     const cell = grid.children[i];
     const imgs = cell.querySelectorAll('img');
     const svgs = cell.querySelectorAll('svg');
+    const texturedElements = cell.querySelectorAll('[data-textured="true"]');
 
     // Handle all img elements in the cell
     imgs.forEach(img => {
@@ -226,6 +229,30 @@ function extractGridData(gridId, gridType) {
           angleKey: angleKey,
           shapeName: shapeName,
           imagePath: `./assets/shapes/${category}/${angleKey}/${shapeName}.svg`
+        });
+      }
+    });
+
+    // Handle textured elements (divs with texture applied)
+    texturedElements.forEach(texturedElement => {
+      console.log(`Found textured element in cell ${i}:`, texturedElement);
+
+      const category = texturedElement.dataset.category;
+      const angleKey = texturedElement.dataset.angleKey;
+      const shapeName = texturedElement.dataset.shapeName;
+      const textureId = texturedElement.dataset.textureId;
+
+      if (category && angleKey && shapeName && textureId) {
+        cells.push({
+          index: i,
+          category: category,
+          angleKey: angleKey,
+          shapeName: shapeName,
+          imagePath: `./assets/shapes/${category}/${angleKey}/${shapeName}.svg`,
+          texture: {
+            id: textureId,
+            applied: true
+          }
         });
       }
     });
@@ -292,6 +319,7 @@ function applyComposition(composition) {
 }
 
 // Apply shape data to a specific grid
+// Re-applies both regular shapes and textures from saved composition data
 function applyGridData(gridId, gridData) {
   const grid = document.getElementById(gridId);
 
@@ -333,6 +361,36 @@ function applyGridData(gridId, gridData) {
             // Clear cell for the first shape, allow overlap for subsequent shapes
             const allowOverlap = shapeIndex > 0;
             window.placeShapeInCell(cell, shapeData, allowOverlap);
+
+            // Apply texture if the shape had one
+            if (shapeInfo.texture && shapeInfo.texture.applied && shapeInfo.texture.id) {
+              // Find the texture data
+              if (window.texturesData && window.applyTextureToShape) {
+                const texture = window.texturesData.textures.find(t => t.id === shapeInfo.texture.id);
+
+                if (texture) {
+                  // Find the SVG element that was just placed
+                  const placedSvg = cell.querySelector(`svg[data-shape-name="${shapeInfo.shapeName}"]`);
+
+                  if (placedSvg) {
+                    // Apply the texture to the shape
+                    const texturedElement = window.applyTextureToShape(placedSvg, texture);
+
+                    // Replace the SVG with the textured element
+                    if (texturedElement && texturedElement !== placedSvg) {
+                      placedSvg.parentNode.replaceChild(texturedElement, placedSvg);
+                      console.log(`Applied texture "${texture.name}" to shape "${shapeInfo.shapeName}"`);
+                    }
+                  } else {
+                    console.warn('Could not find placed SVG to apply texture');
+                  }
+                } else {
+                  console.warn(`Texture not found: ${shapeInfo.texture.id}`);
+                }
+              } else {
+                console.warn('Texture system not available');
+              }
+            }
           } else {
             console.warn('placeShapeInCell function not available');
           }
