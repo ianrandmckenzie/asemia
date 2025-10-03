@@ -1,0 +1,77 @@
+{
+  "metadata": {
+    "name": "postev",
+    "created": "2025-10-03T05:23:38.546Z",
+    "version": "1.0"
+  },
+  "grids": {
+    "serifs": {
+      "gridType": "serifs",
+      "gridSize": 5,
+      "shapes": [
+        {
+          "index": 7,
+          "category": "bodies",
+          "angleKey": "0_deg",
+          "shapeName": "horizontal",
+          "imagePath": "./assets/shapes/bodies/0_deg/horizontal.svg"
+        },
+        {
+          "index": 8,
+          "category": "bodies",
+          "angleKey": "0_deg",
+          "shapeName": "horizontal",
+          "imagePath": "./assets/shapes/bodies/0_deg/horizontal.svg"
+        },
+        {
+          "index": 9,
+          "category": "serifs",
+          "angleKey": "0_deg",
+          "shapeName": "right",
+          "imagePath": "./assets/shapes/serifs/0_deg/right.svg"
+        },
+        {
+          "index": 11,
+          "category": "bodies",
+          "angleKey": "22_5_deg",
+          "shapeName": "vertical_backslash",
+          "imagePath": "./assets/shapes/bodies/22_5_deg/vertical_backslash.svg"
+        },
+        {
+          "index": 12,
+          "category": "serifs",
+          "angleKey": "45_deg",
+          "shapeName": "side_bl_to_tr",
+          "imagePath": "./assets/shapes/serifs/45_deg/side_bl_to_tr.svg"
+        },
+        {
+          "index": 22,
+          "category": "serifs",
+          "angleKey": "22_5_deg",
+          "shapeName": "br_to_tl",
+          "imagePath": "./assets/shapes/serifs/22_5_deg/br_to_tl.svg"
+        }
+      ]
+    },
+    "joins": {
+      "gridType": "joins",
+      "gridSize": 4,
+      "shapes": [
+        {
+          "index": 4,
+          "category": "joins",
+          "angleKey": "67_5_deg",
+          "shapeName": "vertical_tr",
+          "imagePath": "./assets/shapes/joins/67_5_deg/vertical_tr.svg"
+        },
+        {
+          "index": 6,
+          "category": "joins",
+          "angleKey": "45_deg",
+          "shapeName": "horizontal_tr",
+          "imagePath": "./assets/shapes/joins/45_deg/horizontal_tr.svg"
+        }
+      ]
+    }
+  }
+}

@@ -12,7 +12,7 @@
 
         <!-- Middle Section: Theme Toggle -->
         <div class="flex items-center">
-          <div class="flex items-center bg-gray-100 dark:bg-slate-700 rounded-lg p-1">
+          <div class="flex items-center bg-gray-100 dark:bg-slate-700/50 rounded-lg p-1">
             <button
               id="themeSystem"
               class="theme-btn flex items-center space-x-0 md:space-x-1 px-2 md:px-3 py-1.5 rounded transition-colors text-xs md:text-sm font-medium"

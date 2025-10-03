@@ -42,15 +42,15 @@
   <!-- Canonical URL -->
   <link rel="canonical" href="https://asemia.relentlesscurious.com/">
 
-  <script type="module" crossorigin src="/assets/freebuilder-CpBQe2eW.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/components-BqqpHy2F.js">
+  <script type="module" crossorigin src="/assets/freebuilder-DfoA-S-1.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/components-DpEschgT.js">
   <link rel="modulepreload" crossorigin href="/assets/svg-ckjYZtu2.js">
-  <link rel="modulepreload" crossorigin href="/assets/builder-DZqdfq5t.js">
+  <link rel="modulepreload" crossorigin href="/assets/builder-BaRL6B5b.js">
   <link rel="modulepreload" crossorigin href="/assets/storage-DtapjSkL.js">
-  <link rel="stylesheet" crossorigin href="/assets/components-C7dVQbar.css">
+  <link rel="stylesheet" crossorigin href="/assets/components-CU33i1qA.css">
 </head>
 <body class="bg-white dark:bg-slate-900">
-  <div class="flex flex-col md:flex-row h-[calc(85vh)] md:h-screen text-black dark:text-white">
+  <div class="flex flex-col md:flex-row h-[calc(85vh)] md:h-[calc(100vh-4rem)] text-black dark:text-white">
     <!-- Mobile Top Tabs (visible below md breakpoint) -->
     <div class="md:hidden flex flex-col bg-gray-100 dark:bg-slate-800 border-b border-gray-300 dark:border-gray-700">
       <!-- Tab Buttons -->
@@ -132,14 +132,10 @@
     <div class="flex-1 relative bg-gray-50 dark:bg-slate-900">
       <!-- Desktop Controls (visible md and above) -->
       <div class="hidden md:flex absolute top-4 left-4 z-50 gap-2">
-        <a href="/" class="bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-800 text-gray-700 dark:text-gray-200 px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors border border-gray-300 dark:border-gray-700">
-          ← Home
-        </a>
-
         <!-- Save Dropdown -->
         <div class="relative group">
-          <button onclick="saveComposition()" class="bg-slate-600 hover:bg-slate-700 text-white px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors flex items-center space-x-2">
-            <img src="/assets/icons/save.svg" alt="Save" class="h-4 w-4 invert">
+          <button onclick="saveComposition()" class="flex items-center space-x-2 bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 px-3 py-2 rounded-lg shadow-md border border-gray-300 dark:border-gray-700 transition-colors text-sm">
+            <img src="/assets/icons/save.svg" alt="Save" class="h-4 w-4 dark:invert">
             <span>Save</span>
           </button>
           <!-- Dropdown Menu -->
@@ -155,8 +151,8 @@
 
         <!-- Load Dropdown -->
         <div class="relative group">
-          <button onclick="loadComposition()" class="bg-slate-600 hover:bg-slate-700 text-white px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors flex items-center space-x-2">
-            <img src="/assets/icons/load.svg" alt="Load" class="h-4 w-4 invert">
+          <button onclick="loadComposition()" class="flex items-center space-x-2 bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 px-3 py-2 rounded-lg shadow-md border border-gray-300 dark:border-gray-700 transition-colors text-sm">
+            <img src="/assets/icons/load.svg" alt="Load" class="h-4 w-4 dark:invert">
             <span>Load</span>
           </button>
           <!-- Dropdown Menu -->
@@ -170,12 +166,12 @@
           </div>
         </div>
 
-        <button onclick="manageCompositions()" class="bg-slate-600 hover:bg-slate-700 dark:bg-slate-500 dark:hover:bg-slate-600 text-white px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors flex items-center space-x-2">
-          <img src="/assets/icons/manage.svg" alt="Manage" class="h-4 w-4 invert">
+        <button onclick="manageCompositions()" class="flex items-center space-x-2 bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 px-3 py-2 rounded-lg shadow-md border border-gray-300 dark:border-gray-700 transition-colors text-sm">
+          <img src="/assets/icons/manage.svg" alt="Manage" class="h-4 w-4 dark:invert">
           <span>Manage</span>
         </button>
-        <button onclick="clearAllGrids()" class="bg-slate-600 hover:bg-red-700 dark:bg-slate-600 dark:hover:bg-red-600 text-white px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors flex items-center space-x-2">
-          <img src="/assets/icons/clear.svg" alt="Clear" class="h-4 w-4 invert">
+        <button onclick="clearAllGrids()" class="flex items-center space-x-2 bg-white dark:bg-slate-800 hover:bg-red-200 dark:hover:bg-red-600 px-3 py-2 rounded-lg shadow-md border border-gray-300 dark:border-gray-700 transition-colors text-sm">
+          <img src="/assets/icons/clear.svg" alt="Clear" class="h-4 w-4 dark:invert">
           <span>Clear</span>
         </button>
       </div>
