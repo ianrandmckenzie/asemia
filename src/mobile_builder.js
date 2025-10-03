@@ -131,15 +131,10 @@ function createMobileTextureButton(texture) {
 
 // Handle mobile texture selection
 function handleMobileTextureSelection(button, texture) {
-  // Remove previous selection from texture buttons only
-  document.querySelectorAll('.mobile-shape-btn.selected').forEach(el => {
-    // Only clear if it's a texture button
-    if (el.dataset.textureId) {
-      el.classList.remove('selected');
-    }
+  // Remove previous selection from texture buttons
+  document.querySelectorAll('.mobile-shape-btn[data-category="textures"]').forEach(el => {
+    el.classList.remove('selected');
   });
-
-  // DON'T clear shape selections - textures and shapes should coexist
 
   // Add selection to clicked button
   button.classList.add('selected');
@@ -164,22 +159,7 @@ function handleMobileTextureSelection(button, texture) {
     }
   }
 
-  // Update selected shape and texture (for textures)
-  // Only update selectedShape if no shape is currently selected
-  const currentShape = window.getSelectedShape ? window.getSelectedShape() : null;
-
-  if (!currentShape || currentShape.category === 'textures') {
-    const selectedShape = {
-      category: 'textures',
-      texture: texture
-    };
-
-    if (window.setSelectedShape) {
-      window.setSelectedShape(selectedShape);
-    }
-  }
-
-  // Always set the selectedTexture
+  // Update selectedTexture (not selectedShape)
   if (window.setSelectedTexture) {
     window.setSelectedTexture(texture);
   }
