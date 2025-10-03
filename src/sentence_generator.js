@@ -1,6 +1,19 @@
 // Sentence Generator - Compose typographic sentences from assembled forms
 // This module creates random "sentences" by combining multiple "words" (form groups)
 
+// Sentence Generator - Randomly assemble typographic forms into sentences
+// This module creates random "sentences" by combining archived form compositions
+
+import {
+  initializeSize,
+  getCurrentSize,
+  updateSizeDisplay as updateSizeDisplayDefault,
+  setupDesktopSizeTabs,
+  setupMobileSizeMenu,
+  setupMobileBordersToggle,
+  updateBordersDisplay
+} from './mobile_controls.js';
+
 // Initialize the sentence generator page
 async function initSentenceGenerator() {
   console.log('Initializing sentence generator...');
@@ -31,8 +44,11 @@ async function initSentenceGenerator() {
     // Generate initial sentences
     generateSentences();
 
-    // Apply default size (base)
-    updateSizeDisplay('base');
+    // Initialize size based on viewport (xs for sentence generator)
+    initializeSize('xs', 'xs');
+
+    // Apply initial size
+    updateSizeDisplay(getCurrentSize(), '.sentence-grids-wrapper');
 
     // Show the controls
     setupControls();
@@ -141,7 +157,7 @@ function generateSentences() {
 // Create a single random "sentence" by combining multiple words
 function createRandomSentence(index) {
   const sentenceContainer = document.createElement('div');
-  sentenceContainer.className = 'bg-white dark:bg-slate-800 rounded-lg shadow-md border border-gray-200 dark:border-slate-700 p-6';
+  sentenceContainer.className = 'bg-white dark:bg-slate-800 rounded-lg shadow-md border border-gray-200 dark:border-slate-700 p-2 md:p-6';
 
   // Random sentence length (3-7 words)
   const sentenceLength = Math.floor(Math.random() * 5) + 3; // 3 to 7 words
@@ -164,7 +180,7 @@ function createRandomSentence(index) {
 
   // Create container for the sentence (horizontal layout of words with line wrapping)
   const sentenceDisplay = document.createElement('div');
-  sentenceDisplay.className = 'relative bg-gray-50 dark:bg-slate-900 rounded-lg p-4 flex items-center justify-center';
+  sentenceDisplay.className = 'relative bg-gray-50 dark:bg-slate-900 rounded-lg p-4 flex items-center justify-center overflow-x-auto';
   sentenceDisplay.style.minHeight = '400px';
 
   const wordsWrapper = document.createElement('div');
@@ -353,7 +369,7 @@ function applyKerning(formWrapper, serifsGrid) {
 function createSentenceGridCells(grid, cellCount) {
   for (let i = 0; i < cellCount; i++) {
     const cell = document.createElement('div');
-    cell.className = 'w-[100px] h-[100px] relative sentence-grid-cell';
+    cell.className = 'w-[100px] h-[100px] relative sentence-grid-cell border border-gray-200 dark:border-gray-600 border-opacity-20';
     cell.dataset.index = i;
     grid.appendChild(cell);
   }
@@ -440,43 +456,36 @@ function setupControls() {
     return;
   }
 
-  // Show the sticky subnav
-  stickySubnav.classList.remove('hidden');
+  // Show the sticky subnav only on desktop (md breakpoint and above)
+  // On mobile, it stays hidden due to the md:block class
+  const isMobile = window.innerWidth < 768;
+  if (!isMobile) {
+    stickySubnav.classList.remove('hidden');
+  }
 
-  // Setup size tabs
-  setupSizeTabs();
+  // Setup desktop size tabs
+  setupDesktopSizeTabs(updateSizeDisplay);
+
+  // Setup mobile size menu
+  setupMobileSizeMenu('.sentence-grids-wrapper', updateSizeDisplay);
 
   // Setup borders toggle
   setupBordersToggle();
+
+  // Setup mobile borders toggle
+  setupMobileBordersToggle('.sentence-grid-cell', updateBordersDisplay);
 
   // Setup generate button
   const generateBtn = document.getElementById('generateBtn');
   if (generateBtn) {
     generateBtn.addEventListener('click', generateSentences);
   }
-}
 
-// Setup size tabs
-function setupSizeTabs() {
-  const sizeButtons = document.querySelectorAll('.size-tab');
-
-  sizeButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const size = button.dataset.size;
-
-      // Update active state
-      sizeButtons.forEach(btn => {
-        if (btn === button) {
-          btn.className = 'size-tab px-3 py-2 text-sm font-medium rounded-md transition-colors bg-blue-500 text-white';
-        } else {
-          btn.className = 'size-tab px-3 py-2 text-sm font-medium rounded-md transition-colors text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700';
-        }
-      });
-
-      // Apply the size change
-      updateSizeDisplay(size);
-    });
-  });
+  // Setup mobile generate button
+  const mobileGenerateBtn = document.getElementById('mobileGenerateBtn');
+  if (mobileGenerateBtn) {
+    mobileGenerateBtn.addEventListener('click', generateSentences);
+  }
 }
 
 // Size scale mapping (same as word generator)
@@ -554,27 +563,12 @@ function setupBordersToggle() {
   }
 
   // Apply initial state (borders on by default)
-  updateBordersDisplay(bordersToggle.checked);
+  updateBordersDisplay(bordersToggle.checked, '.sentence-grid-cell');
 
   // Listen for toggle changes
   bordersToggle.addEventListener('change', (e) => {
-    updateBordersDisplay(e.target.checked);
+    updateBordersDisplay(e.target.checked, '.sentence-grid-cell');
   });
-}
-
-// Update borders display across all grid cells
-function updateBordersDisplay(showBorders) {
-  const allCells = document.querySelectorAll('.sentence-grid-cell');
-
-  allCells.forEach(cell => {
-    if (showBorders) {
-      cell.classList.add('border', 'border-gray-200', 'dark:border-gray-600', 'border-opacity-20');
-    } else {
-      cell.classList.remove('border', 'border-gray-200', 'dark:border-gray-600', 'border-opacity-20');
-    }
-  });
-
-  console.log(`Borders ${showBorders ? 'enabled' : 'disabled'} for ${allCells.length} cells`);
 }
 
 // Wait for DOM to be ready, then initialize

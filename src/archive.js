@@ -1,6 +1,16 @@
 // Archive viewer - Load and display archived typographic forms
 // This module handles loading archive JSON files and rendering them in a grid layout
 
+import {
+  initializeSize,
+  getCurrentSize,
+  updateSizeDisplay,
+  setupDesktopSizeTabs,
+  setupMobileSizeMenu,
+  setupMobileBordersToggle,
+  updateBordersDisplay
+} from './mobile_controls.js';
+
 // Initialize the archive page
 async function initArchive() {
   console.log('Initializing archive...');
@@ -126,11 +136,23 @@ async function loadArchivedForms() {
 
     console.log(`🎉 Successfully loaded ${compositions.length} archived forms`);
 
+    // Set initial size based on viewport FIRST (5xl for archive page)
+    initializeSize('5xl', '5xl');
+
     // Setup borders toggle after forms are rendered
     setupBordersToggle();
 
     // Setup size tabs after forms are rendered
-    setupSizeTabs();
+    setupDesktopSizeTabs();
+
+    // Setup mobile size menu
+    setupMobileSizeMenu('.archive-grids-wrapper');
+
+    // Setup mobile borders toggle
+    setupMobileBordersToggle('.archive-grid-cell', updateBordersDisplay);
+
+    // Apply initial size based on viewport
+    updateSizeDisplay(getCurrentSize(), '.archive-grids-wrapper');
 
   } catch (error) {
     console.error('Failed to load archived forms:', error);
@@ -172,12 +194,14 @@ function createArchiveForm(composition) {
 
   // Create the grid display (same structure as freebuilder)
   const gridContainer = document.createElement('div');
-  gridContainer.className = 'relative bg-gray-50 dark:bg-slate-900 rounded-lg p-4 flex items-center justify-center';
+  gridContainer.className = 'relative bg-gray-50 dark:bg-slate-900 rounded-lg p-4 flex items-center justify-center max-h-[300px] md:max-h-none overflow-hidden';
   gridContainer.style.minHeight = '400px';
 
   const gridsWrapper = document.createElement('div');
   gridsWrapper.className = 'relative archive-grids-wrapper';
-  gridsWrapper.style.transform = 'scale(0.6)'; // Scale down to fit in archive view (7xl default)
+  // Default scale will be set by updateSizeDisplay based on viewport
+  // No need to import SIZE_SCALES or isMobile, just let updateSizeDisplay handle it
+  gridsWrapper.style.transform = 'scale(0.3)'; // Will be updated by updateSizeDisplay
 
   // Create serifs grid (5x5)
   const serifsGrid = document.createElement('div');
@@ -336,81 +360,6 @@ function setupBordersToggle() {
   bordersToggle.addEventListener('change', (e) => {
     updateBordersDisplay(e.target.checked);
   });
-}
-
-// Update borders display across all grid cells
-function updateBordersDisplay(showBorders) {
-  const allCells = document.querySelectorAll('.archive-grid-cell');
-
-  allCells.forEach(cell => {
-    if (showBorders) {
-      cell.classList.add('border', 'border-gray-200', 'dark:border-gray-600', 'border-opacity-20');
-    } else {
-      cell.classList.remove('border', 'border-gray-200', 'dark:border-gray-600', 'border-opacity-20');
-    }
-  });
-
-  console.log(`Borders ${showBorders ? 'enabled' : 'disabled'} for ${allCells.length} cells`);
-}
-
-// Setup size tabs
-function setupSizeTabs() {
-  const stickySubnav = document.getElementById('sticky-subnav');
-
-  if (!stickySubnav) {
-    console.warn('Sticky subnav not found');
-    return;
-  }
-
-  // Show the sticky subnav now that forms are loaded
-  stickySubnav.classList.remove('hidden');
-
-  // Get all size tab buttons
-  const sizeButtons = document.querySelectorAll('.size-tab');  sizeButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const size = button.dataset.size;
-
-      // Update active state
-      sizeButtons.forEach(btn => {
-        if (btn === button) {
-          btn.className = 'size-tab px-3 py-2 text-sm font-medium rounded-md transition-colors bg-blue-500 text-white';
-        } else {
-          btn.className = 'size-tab px-3 py-2 text-sm font-medium rounded-md transition-colors text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700';
-        }
-      });
-
-      // Apply the size change
-      updateSizeDisplay(size);
-    });
-  });
-}
-
-// Size scale mapping (7xl is the default/current scale of 0.6)
-// Each scale is proportional to Tailwind text sizes
-const SIZE_SCALES = {
-  '7xl': 0.6,      // text-7xl equivalent (72px / 4.5rem) - current default
-  '6xl': 0.5,      // text-6xl equivalent (60px / 3.75rem) - 83.3% of 7xl
-  '5xl': 0.4,      // text-5xl equivalent (48px / 3rem) - 66.7% of 7xl
-  '4xl': 0.3,      // text-4xl equivalent (36px / 2.25rem) - 50% of 7xl
-  '3xl': 0.25,     // text-3xl equivalent (30px / 1.875rem) - 41.7% of 7xl
-  '2xl': 0.2,      // text-2xl equivalent (24px / 1.5rem) - 33.3% of 7xl
-  'xl': 0.167,     // text-xl equivalent (20px / 1.25rem) - 27.8% of 7xl
-  'lg': 0.15,      // text-lg equivalent (18px / 1.125rem) - 25% of 7xl
-  'base': 0.133,   // text-base equivalent (16px / 1rem) - 22.2% of 7xl
-  'sm': 0.117,     // text-sm equivalent (14px / 0.875rem) - 19.4% of 7xl
-  'xs': 0.1        // text-xs equivalent (12px / 0.75rem) - 16.7% of 7xl
-};
-
-// Update size display across all grid wrappers
-function updateSizeDisplay(size) {
-  const scale = SIZE_SCALES[size] || SIZE_SCALES['7xl'];
-  const allGridWrappers = document.querySelectorAll('.archive-grids-wrapper');
-
-  allGridWrappers.forEach(wrapper => {
-    wrapper.style.transform = `scale(${scale})`;
-  });
-
-  console.log(`Size changed to ${size} (scale: ${scale}) for ${allGridWrappers.length} forms`);
 }
 
 // Wait for DOM to be ready, then initialize

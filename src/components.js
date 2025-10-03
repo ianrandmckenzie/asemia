@@ -174,7 +174,7 @@ export function initNav() {
  */
 export function createFooter() {
   const footer = document.createElement('footer');
-  footer.className = 'bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700 mt-16';
+  footer.className = 'bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700 mt-16 mb-16 md:mb-0';
 
   footer.innerHTML = `
     <div class="max-w-7xl mx-auto px-4 py-12">

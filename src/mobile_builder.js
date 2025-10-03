@@ -21,6 +21,13 @@ let currentSize = '7xl'; // Default mobile size
 
 // Initialize mobile builder
 async function initMobileBuilder() {
+  // Check if this is a builder page (has mobile shape tabs)
+  const mobileSerifTab = document.getElementById('mobileSerifTab');
+  if (!mobileSerifTab) {
+    console.log('Mobile builder not needed on this page (no shape tabs found)');
+    return;
+  }
+
   // Wait for builder core to be ready
   if (!window.rulesData) {
     console.warn('rulesData not available yet, waiting...');
@@ -247,7 +254,7 @@ function setupMobileToolbar() {
 
   // Save menu
   mobileSaveMenuBtn.addEventListener('click', () => {
-    mobileSaveMenu.classList.remove('hidden');
+    mobileSaveMenu.classList.toggle('hidden');
   });
 
   closeSaveMenu.addEventListener('click', () => {
@@ -263,7 +270,7 @@ function setupMobileToolbar() {
 
   // Size menu
   mobileSizeBtn.addEventListener('click', () => {
-    mobileSizeMenu.classList.remove('hidden');
+    mobileSizeMenu.classList.toggle('hidden');
   });
 
   closeSizeMenu.addEventListener('click', () => {

@@ -1,6 +1,16 @@
 // Word Generator - Randomly assemble typographic forms into words
 // This module creates random "words" by combining archived form compositions
 
+import {
+  initializeSize,
+  getCurrentSize,
+  updateSizeDisplay as updateSizeDisplayDefault,
+  setupDesktopSizeTabs,
+  setupMobileSizeMenu,
+  setupMobileBordersToggle,
+  updateBordersDisplay
+} from './mobile_controls.js';
+
 // Initialize the word generator page
 async function initWordGenerator() {
   console.log('Initializing word generator...');
@@ -31,8 +41,11 @@ async function initWordGenerator() {
     // Generate initial words
     generateWords();
 
-    // Apply default size (4xl)
-    updateSizeDisplay('4xl');
+    // Initialize size based on viewport (base for word generator)
+    initializeSize('base', 'base');
+
+    // Apply initial size
+    updateSizeDisplay(getCurrentSize(), '.word-grids-wrapper');
 
     // Show the controls
     setupControls();
@@ -141,7 +154,7 @@ function generateWords() {
 // Create a single random "word" by combining random forms
 function createRandomWord(index) {
   const wordContainer = document.createElement('div');
-  wordContainer.className = 'bg-white dark:bg-slate-800 rounded-lg shadow-md border border-gray-200 dark:border-slate-700 p-6';
+  wordContainer.className = 'bg-white dark:bg-slate-800 rounded-lg shadow-md border border-gray-200 dark:border-slate-700 p-2 md:p-6';
 
   // Random word length (2-5 forms)
   const wordLength = Math.floor(Math.random() * 4) + 2; // 2 to 5 forms
@@ -298,7 +311,7 @@ function applyKerning(formWrapper, serifsGrid) {
 function createWordGridCells(grid, cellCount) {
   for (let i = 0; i < cellCount; i++) {
     const cell = document.createElement('div');
-    cell.className = 'w-[100px] h-[100px] relative word-grid-cell';
+    cell.className = 'w-[100px] h-[100px] relative word-grid-cell border border-gray-200 dark:border-gray-600 border-opacity-20';
     cell.dataset.index = i;
     grid.appendChild(cell);
   }
@@ -385,43 +398,36 @@ function setupControls() {
     return;
   }
 
-  // Show the sticky subnav
-  stickySubnav.classList.remove('hidden');
+  // Show the sticky subnav only on desktop (md breakpoint and above)
+  // On mobile, it stays hidden due to the md:block class
+  const isMobile = window.innerWidth < 768;
+  if (!isMobile) {
+    stickySubnav.classList.remove('hidden');
+  }
 
-  // Setup size tabs
-  setupSizeTabs();
+  // Setup desktop size tabs
+  setupDesktopSizeTabs(updateSizeDisplay);
+
+  // Setup mobile size menu
+  setupMobileSizeMenu('.word-grids-wrapper', updateSizeDisplay);
 
   // Setup borders toggle
   setupBordersToggle();
+
+  // Setup mobile borders toggle
+  setupMobileBordersToggle('.word-grid-cell', updateBordersDisplay);
 
   // Setup generate button
   const generateBtn = document.getElementById('generateBtn');
   if (generateBtn) {
     generateBtn.addEventListener('click', generateWords);
   }
-}
 
-// Setup size tabs
-function setupSizeTabs() {
-  const sizeButtons = document.querySelectorAll('.size-tab');
-
-  sizeButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const size = button.dataset.size;
-
-      // Update active state
-      sizeButtons.forEach(btn => {
-        if (btn === button) {
-          btn.className = 'size-tab px-3 py-2 text-sm font-medium rounded-md transition-colors bg-blue-500 text-white';
-        } else {
-          btn.className = 'size-tab px-3 py-2 text-sm font-medium rounded-md transition-colors text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700';
-        }
-      });
-
-      // Apply the size change
-      updateSizeDisplay(size);
-    });
-  });
+  // Setup mobile generate button
+  const mobileGenerateBtn = document.getElementById('mobileGenerateBtn');
+  if (mobileGenerateBtn) {
+    mobileGenerateBtn.addEventListener('click', generateWords);
+  }
 }
 
 // Size scale mapping (same as archive)
@@ -490,27 +496,12 @@ function setupBordersToggle() {
   }
 
   // Apply initial state (borders on by default)
-  updateBordersDisplay(bordersToggle.checked);
+  updateBordersDisplay(bordersToggle.checked, '.word-grid-cell');
 
   // Listen for toggle changes
   bordersToggle.addEventListener('change', (e) => {
-    updateBordersDisplay(e.target.checked);
+    updateBordersDisplay(e.target.checked, '.word-grid-cell');
   });
-}
-
-// Update borders display across all grid cells
-function updateBordersDisplay(showBorders) {
-  const allCells = document.querySelectorAll('.word-grid-cell');
-
-  allCells.forEach(cell => {
-    if (showBorders) {
-      cell.classList.add('border', 'border-gray-200', 'dark:border-gray-600', 'border-opacity-20');
-    } else {
-      cell.classList.remove('border', 'border-gray-200', 'dark:border-gray-600', 'border-opacity-20');
-    }
-  });
-
-  console.log(`Borders ${showBorders ? 'enabled' : 'disabled'} for ${allCells.length} cells`);
 }
 
 // Wait for DOM to be ready, then initialize
