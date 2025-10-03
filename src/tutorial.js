@@ -638,32 +638,26 @@ function addHelpButton() {
     return;
   }
 
-  // Find the middle section (theme toggle container)
-  const middleSection = nav.querySelector('.flex.items-center.bg-gray-100');
-  if (!middleSection) {
-    console.warn('Middle section not found, cannot add help button');
+  // Find the right section (where other primary buttons are)
+  const rightSection = nav.querySelector('.flex.items-center.space-x-4:last-child');
+  if (!rightSection) {
+    console.warn('Right section not found, cannot add help button');
     return;
   }
 
-  // Create help button
+  // Create help button as a primary CTA
   const helpBtn = document.createElement('button');
   helpBtn.id = 'tutorialHelpBtn';
-  helpBtn.className = 'theme-btn flex items-center space-x-0 md:space-x-1 px-2 md:px-3 py-1.5 rounded transition-colors text-xs md:text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-600';
-  helpBtn.title = 'Tutorial';
-  helpBtn.innerHTML = `
-    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-    <span class="hidden md:inline">Help</span>
-  `;
+  helpBtn.className = 'px-3 md:px-4 py-1.5 md:py-2 hover:underline text-black dark:text-white rounded-lg transition-colors text-sm md:text-base font-medium shadow-md';
+  helpBtn.textContent = 'Help';
 
   helpBtn.addEventListener('click', () => {
     console.log('Help button clicked, restarting tutorial');
     startTutorial();
   });
 
-  // Insert help button before theme buttons
-  middleSection.insertBefore(helpBtn, middleSection.firstChild);
+  // Insert help button at the end of the right section
+  rightSection.appendChild(helpBtn);
 
   console.log('Help button added to navigation');
 }
