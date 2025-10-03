@@ -1,39 +1,15 @@
 /**
- * Export the current composition as an SVG file
- *
- * This function:
- * 1. Temporarily enables preview mode to hide grid lines and UI elements
- * 2. Collects all SVG shapes from both serifs and joins grids
- * 3. Calculates their exact visual positions (including absolute positioning)
- * 4. Combines them into a single SVG document
- * 5. Preserves the exact positioning as seen in preview mode
- * 6. Downloads the result as an SVG file
- * 7. Restores the original preview mode state
+ * Helper function to generate the combined SVG element from the composition
+ * @returns {Object} Object containing the SVG element, width, and height
  */
-async function exportAsSVG() {
-  console.log('Starting SVG export...');
+async function generateCompositionSVG() {
+  // Get both grids
+  const serifsGrid = document.getElementById('serifsGrid');
+  const joinsGrid = document.getElementById('joinsGrid');
 
-  // Store current preview mode state
-  const wasInPreviewMode = window.getPreviewMode ? window.getPreviewMode() : false;
-
-  // Enable preview mode for export (hides grid lines, etc.)
-  if (window.setPreviewMode && !wasInPreviewMode) {
-    window.setPreviewMode(true);
-    document.body.classList.add('preview-mode');
-
-    // Wait a brief moment for the preview mode to fully apply
-    await new Promise(resolve => setTimeout(resolve, 100));
+  if (!serifsGrid || !joinsGrid) {
+    throw new Error('Grid not found. Please ensure the builder is loaded.');
   }
-
-  try {
-    // Get both grids
-    const serifsGrid = document.getElementById('serifsGrid');
-    const joinsGrid = document.getElementById('joinsGrid');
-
-    if (!serifsGrid || !joinsGrid) {
-      alert('Grid not found. Please ensure the builder is loaded.');
-      return;
-    }
 
   // Get grid dimensions and positions
   const serifsRect = serifsGrid.getBoundingClientRect();
@@ -167,26 +143,63 @@ async function exportAsSVG() {
 
   exportSVG.appendChild(mainGroup);
 
-  // Serialize the SVG to string
-  const serializer = new XMLSerializer();
-  const svgString = serializer.serializeToString(exportSVG);
+  return { svg: exportSVG, width, height };
+}
 
-  // Create blob and download
-  const blob = new Blob([svgString], { type: 'image/svg+xml' });
-  const url = URL.createObjectURL(blob);
+/**
+ * Export the current composition as an SVG file
+ *
+ * This function:
+ * 1. Temporarily enables preview mode to hide grid lines and UI elements
+ * 2. Collects all SVG shapes from both serifs and joins grids
+ * 3. Calculates their exact visual positions (including absolute positioning)
+ * 4. Combines them into a single SVG document
+ * 5. Preserves the exact positioning as seen in preview mode
+ * 6. Downloads the result as an SVG file
+ * 7. Restores the original preview mode state
+ */
+async function exportAsSVG() {
+  console.log('Starting SVG export...');
 
-  // Create download link
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = `asemia-composition-${Date.now()}.svg`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  // Store current preview mode state
+  const wasInPreviewMode = window.getPreviewMode ? window.getPreviewMode() : false;
 
-  // Clean up
-  URL.revokeObjectURL(url);
+  // Enable preview mode for export (hides grid lines, etc.)
+  if (window.setPreviewMode && !wasInPreviewMode) {
+    window.setPreviewMode(true);
+    document.body.classList.add('preview-mode');
 
-  console.log('SVG export complete!');
+    // Wait a brief moment for the preview mode to fully apply
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+
+  try {
+    // Generate the composed SVG
+    const { svg: exportSVG } = await generateCompositionSVG();
+
+    // Serialize the SVG to string
+    const serializer = new XMLSerializer();
+    const svgString = serializer.serializeToString(exportSVG);
+
+    // Create blob and download
+    const blob = new Blob([svgString], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+
+    // Create download link
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `asemia-composition-${Date.now()}.svg`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // Clean up
+    URL.revokeObjectURL(url);
+
+    console.log('SVG export complete!');
+  } catch (error) {
+    console.error('SVG export failed:', error);
+    alert('Export failed: ' + error.message);
   } finally {
     // Restore original preview mode state
     if (window.setPreviewMode && !wasInPreviewMode) {
@@ -197,8 +210,228 @@ async function exportAsSVG() {
 }
 
 // Export composition as PNG
+/**
+ * Export the current composition as a PNG file with transparent background
+ *
+ * This function:
+ * 1. Temporarily enables preview mode to hide grid lines and UI elements
+ * 2. Uses the SVG generation function to create a composed SVG
+ * 3. Converts the SVG to a PNG using an HTML canvas
+ * 4. Maintains transparency in the background
+ * 5. Downloads the result as a PNG file
+ * 6. Restores the original preview mode state
+ */
 async function exportAsPNG() {
-  // todo
+  console.log('Starting PNG export...');
+
+  // Store current preview mode state
+  const wasInPreviewMode = window.getPreviewMode ? window.getPreviewMode() : false;
+
+  // Enable preview mode for export (hides grid lines, etc.)
+  if (window.setPreviewMode && !wasInPreviewMode) {
+    window.setPreviewMode(true);
+    document.body.classList.add('preview-mode');
+
+    // Wait a brief moment for the preview mode to fully apply
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+
+  try {
+    // Generate the composed SVG
+    const { svg: exportSVG, width, height } = await generateCompositionSVG();
+
+    // Serialize the SVG to string
+    const serializer = new XMLSerializer();
+    const svgString = serializer.serializeToString(exportSVG);
+
+    // Create a blob URL for the SVG
+    const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+    const svgUrl = URL.createObjectURL(svgBlob);
+
+    // Create an Image element to load the SVG
+    const img = new Image();
+
+    // Wait for the image to load
+    await new Promise((resolve, reject) => {
+      img.onload = resolve;
+      img.onerror = reject;
+      img.src = svgUrl;
+    });
+
+    // Create a canvas with the same dimensions
+    const canvas = document.createElement('canvas');
+    const scale = 2; // 2x for higher quality
+    canvas.width = width * scale;
+    canvas.height = height * scale;
+
+    const ctx = canvas.getContext('2d');
+
+    // Scale the context to maintain quality
+    ctx.scale(scale, scale);
+
+    // Draw the image onto the canvas (canvas starts with transparent background by default)
+    ctx.drawImage(img, 0, 0, width, height);
+
+    // Clean up the SVG URL
+    URL.revokeObjectURL(svgUrl);
+
+    // Convert canvas to blob
+    const pngBlob = await new Promise(resolve => {
+      canvas.toBlob(resolve, 'image/png');
+    });
+
+    // Create download link
+    const url = URL.createObjectURL(pngBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `asemia-composition-${Date.now()}.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // Clean up
+    URL.revokeObjectURL(url);
+
+    console.log('PNG export complete!');
+  } catch (error) {
+    console.error('PNG export failed:', error);
+    alert('Export failed: ' + error.message);
+  } finally {
+    // Restore original preview mode state
+    if (window.setPreviewMode && !wasInPreviewMode) {
+      window.setPreviewMode(false);
+      document.body.classList.remove('preview-mode');
+    }
+  }
+}
+
+/**
+ * Export the current composition as a JPEG file with background color
+ *
+ * This function:
+ * 1. Temporarily enables preview mode to hide grid lines and UI elements
+ * 2. Uses the SVG generation function to create a composed SVG
+ * 3. Detects the current theme (light/dark mode)
+ * 4. Converts the SVG to a JPEG using an HTML canvas
+ * 5. Fills the background with the current background color
+ * 6. Applies the current fill color to the shapes
+ * 7. Downloads the result as a JPEG file
+ * 8. Restores the original preview mode state
+ */
+async function exportAsJPEG() {
+  console.log('Starting JPEG export...');
+
+  // Store current preview mode state
+  const wasInPreviewMode = window.getPreviewMode ? window.getPreviewMode() : false;
+
+  // Enable preview mode for export (hides grid lines, etc.)
+  if (window.setPreviewMode && !wasInPreviewMode) {
+    window.setPreviewMode(true);
+    document.body.classList.add('preview-mode');
+
+    // Wait a brief moment for the preview mode to fully apply
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+
+  try {
+    // Detect current theme (light or dark mode)
+    const isDarkMode = document.documentElement.classList.contains('dark');
+
+    // Get computed styles from body element
+    const bodyStyles = window.getComputedStyle(document.body);
+    const backgroundColor = isDarkMode ? '#0f172a' : '#ffffff'; // slate-900 : white
+    const fillColor = isDarkMode ? '#ffffff' : '#000000'; // white : black
+
+    console.log('Theme:', isDarkMode ? 'dark' : 'light');
+    console.log('Background color:', backgroundColor);
+    console.log('Fill color:', fillColor);
+
+    // Generate the composed SVG
+    const { svg: exportSVG, width, height } = await generateCompositionSVG();
+
+    // Clone the SVG to modify colors
+    const clonedSVG = exportSVG.cloneNode(true);
+
+    // Apply fill color to all paths in the SVG
+    const allPaths = clonedSVG.querySelectorAll('path, polygon, circle, ellipse, rect, line, polyline');
+    allPaths.forEach(element => {
+      // Set fill color if the element has a fill attribute or uses default fill
+      if (!element.hasAttribute('fill') || element.getAttribute('fill') !== 'none') {
+        element.setAttribute('fill', fillColor);
+      }
+      // Set stroke color if the element has a stroke
+      if (element.hasAttribute('stroke') && element.getAttribute('stroke') !== 'none') {
+        element.setAttribute('stroke', fillColor);
+      }
+    });
+
+    // Serialize the modified SVG to string
+    const serializer = new XMLSerializer();
+    const svgString = serializer.serializeToString(clonedSVG);
+
+    // Create a blob URL for the SVG
+    const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+    const svgUrl = URL.createObjectURL(svgBlob);
+
+    // Create an Image element to load the SVG
+    const img = new Image();
+
+    // Wait for the image to load
+    await new Promise((resolve, reject) => {
+      img.onload = resolve;
+      img.onerror = reject;
+      img.src = svgUrl;
+    });
+
+    // Create a canvas with the same dimensions
+    const canvas = document.createElement('canvas');
+    const scale = 2; // 2x for higher quality
+    canvas.width = width * scale;
+    canvas.height = height * scale;
+
+    const ctx = canvas.getContext('2d');
+
+    // Scale the context to maintain quality
+    ctx.scale(scale, scale);
+
+    // Fill with background color
+    ctx.fillStyle = backgroundColor;
+    ctx.fillRect(0, 0, width, height);
+
+    // Draw the image onto the canvas
+    ctx.drawImage(img, 0, 0, width, height);
+
+    // Clean up the SVG URL
+    URL.revokeObjectURL(svgUrl);
+
+    // Convert canvas to blob with JPEG format and quality
+    const jpegBlob = await new Promise(resolve => {
+      canvas.toBlob(resolve, 'image/jpeg', 0.95); // 95% quality
+    });
+
+    // Create download link
+    const url = URL.createObjectURL(jpegBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `asemia-composition-${Date.now()}.jpg`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // Clean up
+    URL.revokeObjectURL(url);
+
+    console.log('JPEG export complete!');
+  } catch (error) {
+    console.error('JPEG export failed:', error);
+    alert('Export failed: ' + error.message);
+  } finally {
+    // Restore original preview mode state
+    if (window.setPreviewMode && !wasInPreviewMode) {
+      window.setPreviewMode(false);
+      document.body.classList.remove('preview-mode');
+    }
+  }
 }
 
 
@@ -207,6 +440,7 @@ async function exportAsPNG() {
 document.addEventListener('DOMContentLoaded', () => {
   window.exportAsPNG = exportAsPNG;
   window.exportAsSVG = exportAsSVG;
+  window.exportAsJPEG = exportAsJPEG;
 
   console.log('Export functionality initialized');
 });

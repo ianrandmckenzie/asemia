@@ -176,6 +176,10 @@
               <img src="/assets/icons/png.svg" alt="Export PNG" class="h-4 w-4 dark:invert">
               <span>Export as PNG</span>
             </button>
+            <button onclick="exportAsJPEG()" class="flex items-center space-x-2 w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-slate-700 border-t border-gray-200 dark:border-gray-600">
+              <img src="/assets/icons/image.svg" alt="Export JPEG" class="h-4 w-4 dark:invert">
+              <span>Export as JPEG</span>
+            </button>
             <button onclick="exportAsSVG()" class="flex items-center space-x-2 w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-b-lg border-t border-gray-200 dark:border-gray-600">
               <img src="/assets/icons/vector.svg" alt="Export SVG" class="h-4 w-4 dark:invert">
               <span>Export as SVG</span>
@@ -355,7 +359,14 @@
           <img src="/assets/icons/png.svg" alt="Export PNG" class="h-5 w-5 mt-0.5 dark:invert">
           <div>
             <div class="font-medium text-gray-900 dark:text-gray-100">Export as PNG</div>
-            <div class="text-sm text-gray-600 dark:text-gray-400">Download composition as image</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">Transparent background</div>
+          </div>
+        </button>
+        <button onclick="exportAsJPEG(); hideMobileExportMenu()" class="w-full text-left px-4 py-3 bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-lg transition-colors flex items-start space-x-3">
+          <img src="/assets/icons/image.svg" alt="Export JPEG" class="h-5 w-5 mt-0.5 dark:invert">
+          <div>
+            <div class="font-medium text-gray-900 dark:text-gray-100">Export as JPEG</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">With current theme colors</div>
           </div>
         </button>
         <button onclick="exportAsSVG(); hideMobileExportMenu()" class="w-full text-left px-4 py-3 bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-lg transition-colors flex items-start space-x-3">
