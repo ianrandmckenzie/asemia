@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Occasional Shimmer Effect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Define the keyframe animation for the shimmer.
+         It moves the element from left to right across the image.
+        */
+        @keyframes shimmer-animation {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        /*
+         When the 'shimmering' class is added,
+         apply the animation to the shimmer effect.
+        */
+        .shimmering {
+            animation: shimmer-animation 0.6s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 flex items-center justify-center min-h-screen">
+
+    <div id="image-container" class="relative w-full max-w-lg overflow-hidden rounded-xl shadow-2xl shadow-black/50">
+
+        <img
+            src="./public/assets/blackmarble-gold.png"
+            alt="Black granite with golden veins"
+            class="w-full h-auto block"
+        >
+
+        <div class="absolute -right-[0%] top-0 w-full h-full
+                    bg-[linear-gradient(100deg,transparent,rgba(255,255,255,0.07),transparent)]
+                    -translate-x-full
+                    pointer-events-none"
+             id="shimmer-effect">
+        </div>
+
+    </div>
+
+    <script>
+        // Get the image container and the shimmer effect element
+        const imageContainer = document.getElementById('image-container');
+        const shimmerEffect = document.getElementById('shimmer-effect');
+
+        // This function adds and then removes the class that triggers the animation
+        function triggerShimmer() {
+            // First, remove any existing animation class to reset it
+            shimmerEffect.classList.remove('shimmering');
+
+            // Force a reflow to ensure the animation can restart
+            void shimmerEffect.offsetWidth;
+
+            // Add the shimmering class to start the animation
+            shimmerEffect.classList.add('shimmering');
+
+            // Remove the class after the animation completes (1.5s) to reset position
+            setTimeout(() => {
+                shimmerEffect.classList.remove('shimmering');
+            }, 1500); // Match the animation duration
+        }
+
+        // This function starts the loop with a random delay
+        function startShimmerLoop() {
+            // Calculate a random delay between 1 to 3 seconds (1000ms to 3000ms)
+            const randomDelay = Math.random() * 2000 + 1000;
+
+            setTimeout(() => {
+                triggerShimmer();
+                // Schedule the next shimmer after the current one runs
+                startShimmerLoop();
+            }, randomDelay);
+        }
+
+        // Start the shimmer effect loop when the page loads
+        startShimmerLoop();
+
+    </script>
+</body>
+</html>

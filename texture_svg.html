@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- Security Headers -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
+
+  <meta name="description" content="SVG Grid Viewer with Foil - Visual verification tool for typographic shapes from rules.json" />
+  <meta name="keywords" content="typography, typeforms, svg, shapes, grid viewer, validation, foil" />
+  <title>SVG Grid Viewer (Foil) - Asemic Typeform Crafter</title>
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="en">
+
+  <!-- Open Graph Meta Tags for Social Sharing -->
+  <meta property="og:title" content="SVG Grid Viewer (Foil) - Asemic Typeform Crafter">
+  <meta property="og:description" content="Visual grid of all SVGs from rules.json with foil background texture">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://asemia.relentlesscurious.com/texture_svg">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://asemia.relentlesscurious.com/texture_svg">
+
+  <!-- Favicon and Icons -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+  <link href="/src/style.css" rel="stylesheet" />
+
+  <style>
+    /* Custom styles for texture background using CSS variable */
+    :root {
+      --texture-url: url('/assets/foil.png');
+    }
+
+    .texture-container {
+      background-size: cover;
+      background-position: center;
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-slate-900 min-h-screen">
+  <!-- Header -->
+  <header class="bg-white dark:bg-slate-800 shadow-sm border-b border-gray-200 dark:border-slate-700">
+    <div class="max-w-7xl mx-auto px-4 py-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-3xl font-serif font-black text-gray-900 dark:text-gray-100">
+            SVG Grid Viewer (Foil)
+          </h1>
+          <p class="text-gray-600 dark:text-gray-300 mt-2">
+            Visual grid of all SVGs from rules.json with foil background texture
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Texture Toggle Subnav -->
+  <nav class="sticky top-16 z-50 bg-gray-100 dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-3">
+      <div class="flex items-center gap-2">
+        <span class="text-sm font-medium text-gray-700 dark:text-gray-300 mr-2">Texture:</span>
+        <button id="texture-foil" class="texture-btn px-4 py-2 rounded-md text-sm font-medium transition-colors bg-blue-600 text-white">
+          Foil
+        </button>
+        <button id="texture-marble" class="texture-btn px-4 py-2 rounded-md text-sm font-medium transition-colors bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600">
+          Marble 1
+        </button>
+        <button id="texture-marble2" class="texture-btn px-4 py-2 rounded-md text-sm font-medium transition-colors bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600">
+          Marble 2
+        </button>
+        <button id="texture-marble-red" class="texture-btn px-4 py-2 rounded-md text-sm font-medium transition-colors bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600">
+          Marble Red
+        </button>
+        <button id="texture-marble-red2" class="texture-btn px-4 py-2 rounded-md text-sm font-medium transition-colors bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600">
+          Marble Red 2
+        </button>
+        <button id="texture-blackmarble" class="texture-btn px-4 py-2 rounded-md text-sm font-medium transition-colors bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600">
+          Black Marble
+        </button>
+        <button id="texture-blackmarble2" class="texture-btn px-4 py-2 rounded-md text-sm font-medium transition-colors bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600">
+          Black Marble 2
+        </button>
+        <button id="texture-blackmarble-gold" class="texture-btn px-4 py-2 rounded-md text-sm font-medium transition-colors bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600">
+          Black Marble Gold
+        </button>
+        <button id="texture-blackmarble-gold2" class="texture-btn px-4 py-2 rounded-md text-sm font-medium transition-colors bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-slate-600">
+          Black Marble Gold 2
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 py-8">
+    <div id="loading" class="text-center py-8">
+      <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <p class="mt-2 text-gray-700 dark:text-gray-300">Loading SVGs...</p>
+    </div>
+
+    <div id="error" class="hidden bg-red-100 dark:bg-red-900/40 border border-red-400 dark:border-red-600 text-red-700 dark:text-red-200 px-4 py-3 rounded mb-4">
+      <strong>Error:</strong> <span id="errorMessage"></span>
+    </div>
+
+    <div id="content" class="hidden space-y-12">
+      <!-- SVG grids will be populated here -->
+    </div>
+  </main>
+
+  <script>
+    // Current texture state
+    let currentTexture = 'foil';
+
+    // Texture mappings
+    const textures = {
+      'foil': '/assets/foil.png',
+      'marble': '/assets/marble.png',
+      'marble2': '/assets/marble2.png',
+      'marble-red': '/assets/marble-red.png',
+      'marble-red2': '/assets/marble-red2.png',
+      'blackmarble': '/assets/blackmarble.png',
+      'blackmarble2': '/assets/blackmarble2.png',
+      'blackmarble-gold': '/assets/blackmarble-gold.png',
+      'blackmarble-gold2': '/assets/blackmarble-gold2.png'
+    };
+
+    // Load and display SVGs with foil background
+    async function loadRulesData() {
+      try {
+        document.getElementById('loading').classList.remove('hidden');
+        document.getElementById('error').classList.add('hidden');
+        document.getElementById('content').classList.add('hidden');
+
+        const response = await fetch('./assets/rules.json');
+        if (!response.ok) {
+          throw new Error(`Failed to fetch rules.json: ${response.status} ${response.statusText}`);
+        }
+
+        rulesData = await response.json();
+        displaySVGs();
+
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('content').classList.remove('hidden');
+      } catch (error) {
+        console.error('Error loading rules.json:', error);
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('error').classList.remove('hidden');
+        document.getElementById('errorMessage').textContent = error.message;
+      }
+    }
+
+    function validateSVG(svgString) {
+      if (!svgString || svgString.trim() === '') {
+        return 'empty';
+      }
+
+      try {
+        // Basic SVG validation - check if it's valid XML and contains SVG tag
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(svgString, 'image/svg+xml');
+
+        // Check for parsing errors
+        const parserError = doc.querySelector('parsererror');
+        if (parserError) {
+          return 'invalid';
+        }
+
+        // Check if it contains an SVG element
+        const svgElement = doc.querySelector('svg');
+        if (!svgElement) {
+          return 'invalid';
+        }
+
+        return 'valid';
+      } catch (error) {
+        return 'invalid';
+      }
+    }
+
+    function createSVGDisplay(shape, category, angleKey) {
+      const validation = validateSVG(shape.svg);
+
+      const container = document.createElement('div');
+      container.className = 'border border-gray-300 dark:border-gray-600 rounded-lg p-3 bg-white dark:bg-slate-800';
+
+      let svgContent = '';
+      let statusClass = '';
+      let statusText = '';
+
+      if (validation === 'valid') {
+        // Parse the SVG and wrap it in foil container
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = shape.svg;
+        const svgElement = tempDiv.querySelector('svg');
+
+        if (svgElement) {
+          // Set SVG to fill the container
+          svgElement.setAttribute('width', '80');
+          svgElement.setAttribute('height', '80');
+
+          // Create texture wrapper with mask
+          svgContent = `
+            <div class="texture-container w-20 h-20 mx-auto" style="
+              background-image: var(--texture-url);
+              -webkit-mask-image: url('data:image/svg+xml;base64,${btoa(svgElement.outerHTML)}');
+              mask-image: url('data:image/svg+xml;base64,${btoa(svgElement.outerHTML)}');
+            "></div>
+          `;
+        } else {
+          svgContent = shape.svg;
+        }
+
+        statusClass = 'text-green-600 dark:text-green-400';
+        statusText = '✓ Valid';
+      } else if (validation === 'empty') {
+        svgContent = '<div class="w-24 h-24 bg-yellow-100 dark:bg-yellow-900/40 border-2 border-dashed border-yellow-400 dark:border-yellow-600 rounded flex items-center justify-center text-yellow-600 dark:text-yellow-400 text-xs">Empty SVG</div>';
+        statusClass = 'text-yellow-600 dark:text-yellow-400';
+        statusText = '⚠ Empty';
+      } else {
+        svgContent = '<div class="w-24 h-24 bg-red-100 dark:bg-red-900/40 border-2 border-dashed border-red-400 dark:border-red-600 rounded flex items-center justify-center text-red-600 dark:text-red-400 text-xs">Invalid SVG</div>';
+        statusClass = 'text-red-600 dark:text-red-400';
+        statusText = '✗ Invalid';
+      }
+
+      container.innerHTML = `
+        <div class="flex flex-col items-center space-y-2">
+          <div class="w-24 h-24 flex items-center justify-center border border-gray-200 dark:border-gray-600 rounded bg-gray-50 dark:bg-slate-700">
+            ${svgContent}
+          </div>
+          <div class="text-center">
+            <div class="font-mono text-xs font-bold text-gray-900 dark:text-gray-100">${shape.shape_name}</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400">${shape.width}×${shape.height}</div>
+            <div class="text-xs ${statusClass}">${statusText}</div>
+          </div>
+        </div>
+      `;
+
+      return container;
+    }
+
+    function displaySVGs() {
+      const content = document.getElementById('content');
+      content.innerHTML = '';
+
+      if (!rulesData || !rulesData.shapes) {
+        content.innerHTML = '<p class="text-center text-gray-500 dark:text-gray-400">No shapes data found in rules.json</p>';
+        return;
+      }
+
+      const categories = ['bodies', 'serifs', 'joins'];
+
+      categories.forEach(category => {
+        if (!rulesData.shapes[category]) return;
+
+        const categorySection = document.createElement('div');
+        categorySection.className = 'space-y-6';
+
+        const categoryTitle = document.createElement('h2');
+        categoryTitle.className = 'text-2xl font-bold text-gray-900 dark:text-gray-100 border-b border-gray-300 dark:border-gray-700 pb-2';
+        categoryTitle.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+        categorySection.appendChild(categoryTitle);
+
+        // Skip the 'grid' property and process angle groups
+        Object.keys(rulesData.shapes[category]).forEach(angleKey => {
+          if (angleKey === 'grid') return;
+
+          const shapes = rulesData.shapes[category][angleKey];
+          if (!Array.isArray(shapes) || shapes.length === 0) return;
+
+          const angleSection = document.createElement('div');
+          angleSection.className = 'space-y-3';
+
+          const angleTitle = document.createElement('h3');
+          angleTitle.className = 'text-lg font-semibold text-gray-800 dark:text-gray-200';
+          angleTitle.textContent = `${angleKey} (${shapes.length} shapes)`;
+          angleSection.appendChild(angleTitle);
+
+          const grid = document.createElement('div');
+          grid.className = 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4';
+
+          shapes.forEach(shape => {
+            const svgDisplay = createSVGDisplay(shape, category, angleKey);
+            grid.appendChild(svgDisplay);
+          });
+
+          angleSection.appendChild(grid);
+          categorySection.appendChild(angleSection);
+        });
+
+        content.appendChild(categorySection);
+      });
+    }
+
+    // Texture switching functionality
+    function setTexture(textureName) {
+      currentTexture = textureName;
+
+      // Update CSS variable for texture
+      const textureUrl = textures[textureName];
+      document.documentElement.style.setProperty('--texture-url', `url('${textureUrl}')`);
+
+      // Update button states
+      document.querySelectorAll('.texture-btn').forEach(btn => {
+        btn.classList.remove('bg-blue-600', 'text-white');
+        btn.classList.add('bg-gray-200', 'dark:bg-slate-700', 'text-gray-700', 'dark:text-gray-300', 'hover:bg-gray-300', 'dark:hover:bg-slate-600');
+      });
+
+      const activeBtn = document.getElementById(`texture-${textureName}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-gray-200', 'dark:bg-slate-700', 'text-gray-700', 'dark:text-gray-300', 'hover:bg-gray-300', 'dark:hover:bg-slate-600');
+        activeBtn.classList.add('bg-blue-600', 'text-white');
+      }
+    }
+
+    // Load data on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      loadRulesData();
+
+      // Set up texture button listeners
+      document.getElementById('texture-foil').addEventListener('click', () => setTexture('foil'));
+      document.getElementById('texture-marble').addEventListener('click', () => setTexture('marble'));
+      document.getElementById('texture-marble2').addEventListener('click', () => setTexture('marble2'));
+      document.getElementById('texture-marble-red').addEventListener('click', () => setTexture('marble-red'));
+      document.getElementById('texture-marble-red2').addEventListener('click', () => setTexture('marble-red2'));
+      document.getElementById('texture-blackmarble').addEventListener('click', () => setTexture('blackmarble'));
+      document.getElementById('texture-blackmarble2').addEventListener('click', () => setTexture('blackmarble2'));
+      document.getElementById('texture-blackmarble-gold').addEventListener('click', () => setTexture('blackmarble-gold'));
+      document.getElementById('texture-blackmarble-gold2').addEventListener('click', () => setTexture('blackmarble-gold2'));
+    });
+  </script>
+
+  <!-- Nav and Footer components -->
+  <script type="module">
+    import { initNav, initFooter } from '/src/components.js';
+    initNav();
+    initFooter();
+  </script>
+</body>
+</html>
