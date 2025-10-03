@@ -1,0 +1,84 @@
+{
+  "metadata": {
+    "name": "norvme",
+    "created": "2025-10-03T01:38:50.845Z",
+    "version": "1.0"
+  },
+  "grids": {
+    "serifs": {
+      "gridType": "serifs",
+      "gridSize": 5,
+      "shapes": [
+        {
+          "index": 9,
+          "category": "serifs",
+          "angleKey": "45_deg",
+          "shapeName": "tr_to_bl",
+          "imagePath": "./assets/shapes/serifs/45_deg/tr_to_bl.svg"
+        },
+        {
+          "index": 12,
+          "category": "bodies",
+          "angleKey": "0_deg",
+          "shapeName": "vertical",
+          "imagePath": "./assets/shapes/bodies/0_deg/vertical.svg"
+        },
+        {
+          "index": 17,
+          "category": "bodies",
+          "angleKey": "0_deg",
+          "shapeName": "vertical",
+          "imagePath": "./assets/shapes/bodies/0_deg/vertical.svg"
+        },
+        {
+          "index": 22,
+          "category": "serifs",
+          "angleKey": "0_deg",
+          "shapeName": "bottom",
+          "imagePath": "./assets/shapes/serifs/0_deg/bottom.svg"
+        },
+        {
+          "index": 22,
+          "category": "bodies",
+          "angleKey": "0_deg",
+          "shapeName": "horizontal",
+          "imagePath": "./assets/shapes/bodies/0_deg/horizontal.svg"
+        }
+      ]
+    },
+    "joins": {
+      "gridType": "joins",
+      "gridSize": 4,
+      "shapes": [
+        {
+          "index": 5,
+          "category": "joins",
+          "angleKey": "22_5_deg",
+          "shapeName": "vertical_tr",
+          "imagePath": "./assets/shapes/joins/22_5_deg/vertical_tr.svg"
+        },
+        {
+          "index": 7,
+          "category": "joins",
+          "angleKey": "135_deg",
+          "shapeName": "vertical_bl",
+          "imagePath": "./assets/shapes/joins/135_deg/vertical_bl.svg"
+        },
+        {
+          "index": 12,
+          "category": "joins",
+          "angleKey": "67_5_deg",
+          "shapeName": "vertical_br",
+          "imagePath": "./assets/shapes/joins/67_5_deg/vertical_br.svg"
+        },
+        {
+          "index": 14,
+          "category": "joins",
+          "angleKey": "90_deg",
+          "shapeName": "horizontal_br",
+          "imagePath": "./assets/shapes/joins/90_deg/horizontal_br.svg"
+        }
+      ]
+    }
+  }
+}

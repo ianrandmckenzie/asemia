@@ -380,9 +380,23 @@ function createSentenceGridCells(grid, cellCount) {
 
 // Apply shape data to sentence grid
 function applySentenceGridData(grid, gridData) {
+  // Group shapes by cell index to handle overlapping shapes properly
+  const shapesByCell = {};
   gridData.shapes.forEach(shapeInfo => {
-    const cell = grid.children[shapeInfo.index];
-    if (cell) {
+    if (!shapesByCell[shapeInfo.index]) {
+      shapesByCell[shapeInfo.index] = [];
+    }
+    shapesByCell[shapeInfo.index].push(shapeInfo);
+  });
+
+  // Place shapes in each cell
+  Object.keys(shapesByCell).forEach(cellIndex => {
+    const cell = grid.children[cellIndex];
+    if (!cell) return;
+
+    const shapesInCell = shapesByCell[cellIndex];
+
+    shapesInCell.forEach((shapeInfo, shapeIndex) => {
       // Recreate the shape data object
       const shapeData = {
         category: shapeInfo.category,
@@ -400,21 +414,25 @@ function applySentenceGridData(grid, gridData) {
 
         if (foundShape) {
           shapeData.shape = foundShape;
-          placeShapeInSentenceCell(cell, shapeData);
+          // Clear cell for the first shape, allow overlap for subsequent shapes
+          const allowOverlap = shapeIndex > 0;
+          placeShapeInSentenceCell(cell, shapeData, allowOverlap);
         } else {
           console.warn('Shape not found in rulesData:', shapeInfo.shapeName);
         }
       } else {
         console.warn('Category/angleKey not found in rulesData:', shapeInfo.category, shapeInfo.angleKey);
       }
-    }
+    });
   });
 }
 
 // Place shape in sentence cell
-function placeShapeInSentenceCell(cell, shapeData) {
-  // Clear existing content
-  cell.innerHTML = '';
+function placeShapeInSentenceCell(cell, shapeData, allowOverlap = false) {
+  // Clear existing content only if not allowing overlap
+  if (!allowOverlap) {
+    cell.innerHTML = '';
+  }
 
   // Create SVG element
   const baseClasses = 'absolute';
