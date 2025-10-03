@@ -131,12 +131,9 @@ function createMobileTextureButton(texture) {
 
 // Handle mobile texture selection
 function handleMobileTextureSelection(button, texture) {
-  // Remove previous selection
-  document.querySelectorAll('.mobile-shape-btn.selected').forEach(el => {
+  // Remove previous selection from texture buttons
+  document.querySelectorAll('.mobile-shape-btn[data-category="textures"]').forEach(el => {
     el.classList.remove('selected');
-  });
-  document.querySelectorAll('.shape-selected').forEach(el => {
-    el.classList.remove('shape-selected', 'bg-blue-200', 'border-blue-500');
   });
 
   // Add selection to clicked button
@@ -162,14 +159,9 @@ function handleMobileTextureSelection(button, texture) {
     }
   }
 
-  // Update selected shape (for textures)
-  const selectedShape = {
-    category: 'textures',
-    texture: texture
-  };
-
-  if (window.setSelectedShape) {
-    window.setSelectedShape(selectedShape);
+  // Update selectedTexture (not selectedShape)
+  if (window.setSelectedTexture) {
+    window.setSelectedTexture(texture);
   }
 
   if (window.updateSelectedShapeDisplay) {

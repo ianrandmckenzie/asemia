@@ -6,6 +6,7 @@
 let rulesData = null;
 let texturesData = null;
 let selectedShape = null;
+let selectedTexture = null; // Separate state for texture selection
 let currentTab = 'bodies';
 let previewMode = false;
 let eraseMode = false;
@@ -200,6 +201,7 @@ async function initBuilder() {
   window.clearCellHighlights = clearCellHighlights;
   window.placeShapeInCell = placeShapeInCell;
   window.applyPositioning = applyPositioning;
+  window.applyTextureToShape = applyTextureToShape;
   window.rulesData = rulesData;
   window.texturesData = texturesData;
   window.shapeConfig = shapeConfig;
@@ -207,6 +209,8 @@ async function initBuilder() {
   // Make selectedShape accessible via a getter function since it changes
   window.getSelectedShape = () => selectedShape;
   window.setSelectedShape = (shape) => { selectedShape = shape; };
+  window.getSelectedTexture = () => selectedTexture;
+  window.setSelectedTexture = (texture) => { selectedTexture = texture; };
   window.handleGridCellClick = handleGridCellClick;
   window.handleGridCellRightClick = handleGridCellRightClick;
   window.handleGridCellLeave = handleGridCellLeave;
@@ -422,10 +426,8 @@ function createTextureButton(texture) {
     button.classList.remove('border-gray-300', 'dark:border-gray-600');
     button.classList.add('border-blue-500', 'dark:border-blue-400', 'bg-blue-50', 'dark:bg-blue-900');
 
-    selectedShape = {
-      category: 'textures',
-      texture: texture
-    };
+    // Update selectedTexture (not selectedShape)
+    selectedTexture = texture;
 
     updateSelectedShapeDisplay();
   });
@@ -1037,7 +1039,60 @@ function placeShapeInCell(cell, shapeData, allowOverlap = false) {
 
   // SVG elements don't have load errors like img elements, so no error handling needed
 
-  cell.appendChild(svgElement);
+  // Apply texture if one is selected - wrap SVG in texture container
+  if (selectedTexture) {
+    const texturedElement = applyTextureToShape(svgElement, selectedTexture);
+    cell.appendChild(texturedElement);
+  } else {
+    cell.appendChild(svgElement);
+  }
+}
+
+// Apply texture to an SVG shape using CSS mask approach
+function applyTextureToShape(svgElement, texture) {
+  if (!svgElement || !texture) return svgElement;
+
+  // Convert SVG to base64 for use in CSS mask
+  const svgString = new XMLSerializer().serializeToString(svgElement);
+  const svgBase64 = btoa(unescape(encodeURIComponent(svgString)));
+  const svgDataUrl = `data:image/svg+xml;base64,${svgBase64}`;
+
+  // Create a wrapper div that will hold the texture with SVG as mask
+  const textureContainer = document.createElement('div');
+  textureContainer.className = 'absolute';
+
+  // Copy positioning from the SVG element
+  textureContainer.style.width = svgElement.style.width;
+  textureContainer.style.height = svgElement.style.height;
+  textureContainer.style.top = svgElement.style.top || '';
+  textureContainer.style.bottom = svgElement.style.bottom || '';
+  textureContainer.style.left = svgElement.style.left || '';
+  textureContainer.style.right = svgElement.style.right || '';
+  textureContainer.style.transform = svgElement.style.transform || '';
+
+  // Apply texture as background with SVG as mask
+  textureContainer.style.backgroundImage = `url('/assets/textures/${texture.filename}')`;
+  textureContainer.style.backgroundSize = 'cover';
+  textureContainer.style.backgroundPosition = 'center';
+
+  // Apply SVG as mask
+  textureContainer.style.webkitMaskImage = `url('${svgDataUrl}')`;
+  textureContainer.style.maskImage = `url('${svgDataUrl}')`;
+  textureContainer.style.webkitMaskSize = 'contain';
+  textureContainer.style.maskSize = 'contain';
+  textureContainer.style.webkitMaskRepeat = 'no-repeat';
+  textureContainer.style.maskRepeat = 'no-repeat';
+  textureContainer.style.webkitMaskPosition = 'center';
+  textureContainer.style.maskPosition = 'center';
+
+  // Store metadata for potential later use
+  textureContainer.dataset.category = svgElement.dataset.category;
+  textureContainer.dataset.angleKey = svgElement.dataset.angleKey;
+  textureContainer.dataset.shapeName = svgElement.dataset.shapeName;
+  textureContainer.dataset.textured = 'true';
+  textureContainer.dataset.textureId = texture.id;
+
+  return textureContainer;
 }
 
 // Setup tab switching
@@ -1097,9 +1152,20 @@ function updateSelectedShapeDisplay() {
   const display = document.getElementById('selectedShapeDisplay');
   const info = document.getElementById('selectedShapeInfo');
 
-  if (selectedShape) {
+  if (selectedShape || selectedTexture) {
     display.classList.remove('hidden');
-    info.textContent = `${selectedShape.category} > ${selectedShape.angleKey} > ${selectedShape.shape.shape_name}`;
+    let displayText = '';
+
+    if (selectedShape) {
+      displayText += `Shape: ${selectedShape.category} > ${selectedShape.angleKey} > ${selectedShape.shape.shape_name}`;
+    }
+
+    if (selectedTexture) {
+      if (displayText) displayText += '<br>';
+      displayText += `Texture: ${selectedTexture.name}`;
+    }
+
+    info.innerHTML = displayText;
   } else {
     display.classList.add('hidden');
   }
@@ -1111,9 +1177,24 @@ function setupClearSelection() {
   if (clearSelectionBtn) {
     document.getElementById('clearSelection').addEventListener('click', () => {
       selectedShape = null;
+      selectedTexture = null;
+
+      // Clear shape selections
       document.querySelectorAll('.shape-selected').forEach(el => {
         el.classList.remove('shape-selected', 'bg-blue-200', 'border-blue-500');
       });
+
+      // Clear texture selections
+      document.querySelectorAll('#texturesShapes button').forEach(btn => {
+        btn.classList.remove('border-blue-500', 'dark:border-blue-400', 'bg-blue-50', 'dark:bg-blue-900');
+        btn.classList.add('border-gray-300', 'dark:border-gray-600');
+      });
+
+      // Clear mobile texture selections
+      document.querySelectorAll('.mobile-shape-btn[data-category="textures"]').forEach(el => {
+        el.classList.remove('selected');
+      });
+
       updateSelectedShapeDisplay();
     });
   }
