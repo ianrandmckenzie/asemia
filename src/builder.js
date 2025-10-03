@@ -663,12 +663,6 @@ function handleGridCellClick(event) {
     return;
   }
 
-  // Handle texture application differently
-  if (selectedShape.category === 'textures') {
-    applyTextureToCell(cell, selectedShape.texture);
-    return;
-  }
-
   const gridType = cell.dataset.grid;
 
   // Check if shape can be placed on this grid
@@ -1105,11 +1099,7 @@ function updateSelectedShapeDisplay() {
 
   if (selectedShape) {
     display.classList.remove('hidden');
-    if (selectedShape.category === 'textures') {
-      info.textContent = `Texture: ${selectedShape.texture.name}`;
-    } else {
-      info.textContent = `${selectedShape.category} > ${selectedShape.angleKey} > ${selectedShape.shape.shape_name}`;
-    }
+    info.textContent = `${selectedShape.category} > ${selectedShape.angleKey} > ${selectedShape.shape.shape_name}`;
   } else {
     display.classList.add('hidden');
   }
