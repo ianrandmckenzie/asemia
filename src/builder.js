@@ -1064,6 +1064,22 @@ function applyTextureToShape(svgElement, texture) {
   svgClone.style.transform = '';
   svgClone.style.position = '';
 
+  // Force all fill colors to black for proper masking
+  // CSS masks use luminance - black (opaque) shows texture, white (transparent) hides it
+  svgClone.setAttribute('fill', 'black');
+  svgClone.setAttribute('stroke', 'black');
+
+  // Also update any child elements with fill/stroke
+  const fillableElements = svgClone.querySelectorAll('*[fill], *[stroke]');
+  fillableElements.forEach(el => {
+    if (el.getAttribute('fill') && el.getAttribute('fill') !== 'none') {
+      el.setAttribute('fill', 'black');
+    }
+    if (el.getAttribute('stroke') && el.getAttribute('stroke') !== 'none') {
+      el.setAttribute('stroke', 'black');
+    }
+  });
+
   // Convert cleaned SVG to base64 for use in CSS mask
   const svgString = new XMLSerializer().serializeToString(svgClone);
   const svgBase64 = btoa(unescape(encodeURIComponent(svgString)));
