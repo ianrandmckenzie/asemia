@@ -186,28 +186,33 @@ function extractGridData(gridId, gridType) {
 
   for (let i = 0; i < grid.children.length; i++) {
     const cell = grid.children[i];
-    const img = cell.querySelector('img');
-    const svg = cell.querySelector('svg');
+    const imgs = cell.querySelectorAll('img');
+    const svgs = cell.querySelectorAll('svg');
 
-    if (img && img.src) {
-      // Extract shape info from image path
-      const srcPath = img.src;
-      const pathParts = srcPath.split('/');
-      const fileName = pathParts[pathParts.length - 1].replace('.svg', '');
-      const angleKey = pathParts[pathParts.length - 2];
-      const category = pathParts[pathParts.length - 3];
+    // Handle all img elements in the cell
+    imgs.forEach(img => {
+      if (img.src) {
+        // Extract shape info from image path
+        const srcPath = img.src;
+        const pathParts = srcPath.split('/');
+        const fileName = pathParts[pathParts.length - 1].replace('.svg', '');
+        const angleKey = pathParts[pathParts.length - 2];
+        const category = pathParts[pathParts.length - 3];
 
-      console.log(`Found img in cell ${i}:`, { srcPath, fileName, angleKey, category });
+        console.log(`Found img in cell ${i}:`, { srcPath, fileName, angleKey, category });
 
-      cells.push({
-        index: i,
-        category: category,
-        angleKey: angleKey,
-        shapeName: fileName,
-        imagePath: `./assets/shapes/${category}/${angleKey}/${fileName}.svg`
-      });
-    } else if (svg) {
-      // Handle SVG elements that might not have img tags
+        cells.push({
+          index: i,
+          category: category,
+          angleKey: angleKey,
+          shapeName: fileName,
+          imagePath: `./assets/shapes/${category}/${angleKey}/${fileName}.svg`
+        });
+      }
+    });
+
+    // Handle all SVG elements in the cell
+    svgs.forEach(svg => {
       console.log(`Found svg in cell ${i}:`, svg);
       // Try to extract data from SVG attributes or data attributes
       const category = svg.getAttribute('data-category');
@@ -223,7 +228,7 @@ function extractGridData(gridId, gridType) {
           imagePath: `./assets/shapes/${category}/${angleKey}/${shapeName}.svg`
         });
       }
-    }
+    });
   }
 
   console.log(`Extracted ${cells.length} shapes from ${gridId}`);
@@ -290,9 +295,23 @@ function applyComposition(composition) {
 function applyGridData(gridId, gridData) {
   const grid = document.getElementById(gridId);
 
+  // Group shapes by cell index to handle overlapping shapes properly
+  const shapesByCell = {};
   gridData.shapes.forEach(shapeInfo => {
-    const cell = grid.children[shapeInfo.index];
-    if (cell) {
+    if (!shapesByCell[shapeInfo.index]) {
+      shapesByCell[shapeInfo.index] = [];
+    }
+    shapesByCell[shapeInfo.index].push(shapeInfo);
+  });
+
+  // Place shapes in each cell
+  Object.keys(shapesByCell).forEach(cellIndex => {
+    const cell = grid.children[cellIndex];
+    if (!cell) return;
+
+    const shapesInCell = shapesByCell[cellIndex];
+
+    shapesInCell.forEach((shapeInfo, shapeIndex) => {
       // Recreate the shape data object
       const shapeData = {
         category: shapeInfo.category,
@@ -311,7 +330,9 @@ function applyGridData(gridId, gridData) {
         if (foundShape) {
           shapeData.shape = foundShape;
           if (window.placeShapeInCell) {
-            window.placeShapeInCell(cell, shapeData);
+            // Clear cell for the first shape, allow overlap for subsequent shapes
+            const allowOverlap = shapeIndex > 0;
+            window.placeShapeInCell(cell, shapeData, allowOverlap);
           } else {
             console.warn('placeShapeInCell function not available');
           }
@@ -321,7 +342,7 @@ function applyGridData(gridId, gridData) {
       } else {
         console.warn('Category/angleKey not found in rulesData:', shapeInfo.category, shapeInfo.angleKey);
       }
-    }
+    });
   });
 }
 

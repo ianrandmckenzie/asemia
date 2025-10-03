@@ -252,9 +252,23 @@ function createArchiveGridCells(grid, cellCount) {
 
 // Apply shape data to archive grid (similar to storage.js but for archive display)
 function applyArchiveGridData(grid, gridData) {
+  // Group shapes by cell index to handle overlapping shapes properly
+  const shapesByCell = {};
   gridData.shapes.forEach(shapeInfo => {
-    const cell = grid.children[shapeInfo.index];
-    if (cell) {
+    if (!shapesByCell[shapeInfo.index]) {
+      shapesByCell[shapeInfo.index] = [];
+    }
+    shapesByCell[shapeInfo.index].push(shapeInfo);
+  });
+
+  // Place shapes in each cell
+  Object.keys(shapesByCell).forEach(cellIndex => {
+    const cell = grid.children[cellIndex];
+    if (!cell) return;
+
+    const shapesInCell = shapesByCell[cellIndex];
+
+    shapesInCell.forEach((shapeInfo, shapeIndex) => {
       // Recreate the shape data object
       const shapeData = {
         category: shapeInfo.category,
@@ -272,25 +286,31 @@ function applyArchiveGridData(grid, gridData) {
 
         if (foundShape) {
           shapeData.shape = foundShape;
-          placeShapeInArchiveCell(cell, shapeData);
+          // Clear cell for the first shape, allow overlap for subsequent shapes
+          const allowOverlap = shapeIndex > 0;
+          placeShapeInArchiveCell(cell, shapeData, allowOverlap);
         } else {
           console.warn('Shape not found in rulesData:', shapeInfo.shapeName);
           // Create fallback display
-          createFallbackShape(cell, shapeInfo.shapeName);
+          const allowOverlap = shapeIndex > 0;
+          createFallbackShape(cell, shapeInfo.shapeName, allowOverlap);
         }
       } else {
         console.warn('Category/angleKey not found in rulesData:', shapeInfo.category, shapeInfo.angleKey);
         // Create fallback display
-        createFallbackShape(cell, shapeInfo.shapeName);
+        const allowOverlap = shapeIndex > 0;
+        createFallbackShape(cell, shapeInfo.shapeName, allowOverlap);
       }
-    }
+    });
   });
 }
 
 // Place shape in archive cell (simplified version of placeShapeInCell)
-function placeShapeInArchiveCell(cell, shapeData) {
-  // Clear existing content
-  cell.innerHTML = '';
+function placeShapeInArchiveCell(cell, shapeData, allowOverlap = false) {
+  // Clear existing content only if not allowing overlap
+  if (!allowOverlap) {
+    cell.innerHTML = '';
+  }
 
   // Create SVG element
   const baseClasses = 'absolute';
@@ -307,7 +327,7 @@ function placeShapeInArchiveCell(cell, shapeData) {
 
   if (!svgElement) {
     console.warn('Could not create SVG for shape:', shapeData);
-    createFallbackShape(cell, shapeData.shape.shape_name);
+    createFallbackShape(cell, shapeData.shape.shape_name, allowOverlap);
     return;
   }
 
@@ -328,7 +348,12 @@ function placeShapeInArchiveCell(cell, shapeData) {
 }
 
 // Create fallback shape display when SVG is not available
-function createFallbackShape(cell, shapeName) {
+function createFallbackShape(cell, shapeName, allowOverlap = false) {
+  // Clear existing content only if not allowing overlap
+  if (!allowOverlap) {
+    cell.innerHTML = '';
+  }
+
   const textElement = document.createElement('div');
   textElement.textContent = shapeName.substring(0, 4);
   textElement.className = 'absolute inset-0 flex items-center justify-center text-xs font-mono text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded';
