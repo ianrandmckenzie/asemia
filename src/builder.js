@@ -7,6 +7,8 @@ let rulesData = null;
 let selectedShape = null;
 let currentTab = 'bodies';
 let previewMode = false;
+let eraseMode = false;
+let pendingEraseCell = null; // Track cell pending erase confirmation
 
 // Configuration object for shape positioning
 const shapeConfig = {
@@ -186,6 +188,7 @@ async function initBuilder() {
   setupTabSwitching();
   setupClearSelection();
   setupPreviewToggle();
+  setupDesktopEraseMode();
   updateGridLayers();
 
   // Make necessary functions globally accessible for constrained builder and save/load
@@ -206,6 +209,7 @@ async function initBuilder() {
   window.handleGridCellLeave = handleGridCellLeave;
 
   // Make functions accessible to mobile_builder.js
+  window.clearPendingEraseHighlight = clearPendingEraseHighlight;
   window.updateSelectedShapeDisplay = updateSelectedShapeDisplay;
   window.updateGridLayers = updateGridLayers;
   window.getCurrentTab = () => currentTab;
@@ -510,19 +514,22 @@ function clearCellHighlights() {
 
 // Handle grid cell click
 function handleGridCellClick(event) {
-  // Check if erase mode is active (mobile)
-  if (window.isEraseMode && window.isEraseMode()) {
-    const cell = event.currentTarget;
-    cell.innerHTML = '';
+  const cell = event.currentTarget;
+
+  // Check if erase mode is active (mobile or desktop)
+  if ((window.isEraseMode && window.isEraseMode()) || eraseMode) {
+    handleEraseClick(cell);
     return;
   }
+
+  // Clear any pending erase highlight when not in erase mode
+  clearPendingEraseHighlight();
 
   if (!selectedShape) {
     alert('Please select a shape from the sidebar first');
     return;
   }
 
-  const cell = event.currentTarget;
   const gridType = cell.dataset.grid;
 
   // Check if shape can be placed on this grid
@@ -570,6 +577,85 @@ function handleGridCellClick(event) {
   // Place the shape in the primary cell (the one clicked)
   placeShapeInCell(cell, selectedShape, !shouldClearCells);
 }
+
+// Handle erase mode click with confirmation
+function handleEraseClick(cell) {
+  // If this is the same cell as pending erase, confirm the erase
+  if (pendingEraseCell === cell) {
+    cell.innerHTML = '';
+    clearPendingEraseHighlight();
+    return;
+  }
+
+  // Clear any previous pending erase highlight
+  clearPendingEraseHighlight();
+
+  // Only highlight for erase if cell has content
+  if (cell.innerHTML.trim() !== '') {
+    pendingEraseCell = cell;
+    cell.classList.add('cell-erase-pending');
+  }
+}
+
+// Clear pending erase highlight
+function clearPendingEraseHighlight() {
+  if (pendingEraseCell) {
+    pendingEraseCell.classList.remove('cell-erase-pending');
+    pendingEraseCell = null;
+  }
+}
+
+// Setup desktop erase mode
+function setupDesktopEraseMode() {
+  const desktopEraseBtn = document.getElementById('desktopEraseBtn');
+  if (!desktopEraseBtn) return;
+
+  desktopEraseBtn.addEventListener('click', () => {
+    eraseMode = !eraseMode;
+    clearPendingEraseHighlight();
+
+    // Update button appearance and icon
+    const textSpan = desktopEraseBtn.querySelector('span');
+    const icon = document.getElementById('desktopEraseIcon');
+
+    if (eraseMode) {
+      desktopEraseBtn.classList.add('bg-red-100', 'dark:bg-red-900');
+      desktopEraseBtn.classList.remove('hover:bg-gray-50', 'dark:hover:bg-slate-700');
+      desktopEraseBtn.classList.add('hover:bg-red-200', 'dark:hover:bg-red-800');
+      if (textSpan) {
+        textSpan.classList.remove('text-gray-700', 'dark:text-gray-200');
+        textSpan.classList.add('text-red-700', 'dark:text-red-300');
+      }
+      if (icon) {
+        icon.src = '/assets/icons/erasing.svg';
+      }
+    } else {
+      desktopEraseBtn.classList.remove('bg-red-100', 'dark:bg-red-900');
+      desktopEraseBtn.classList.add('hover:bg-gray-50', 'dark:hover:bg-slate-700');
+      desktopEraseBtn.classList.remove('hover:bg-red-200', 'dark:hover:bg-red-800');
+      if (textSpan) {
+        textSpan.classList.remove('text-red-700', 'dark:text-red-300');
+        textSpan.classList.add('text-gray-700', 'dark:text-gray-200');
+      }
+      if (icon) {
+        icon.src = '/assets/icons/erase.svg';
+      }
+    }
+
+    // Update cursor for grid cells
+    const gridsWrapper = document.querySelector('.builder-grids-wrapper');
+    if (gridsWrapper) {
+      if (eraseMode) {
+        gridsWrapper.style.cursor = 'crosshair';
+      } else {
+        gridsWrapper.style.cursor = '';
+      }
+    }
+  });
+}
+
+// Export erase mode state for mobile compatibility
+window.isDesktopEraseMode = () => eraseMode;
 
 // Helper function to apply join positioning
 function applyJoinPositioning(element, shapeData) {
@@ -869,11 +955,49 @@ function setupClearSelection() {
 
 // Setup preview toggle
 function setupPreviewToggle() {
+  // Legacy checkbox support (if it exists)
   const previewToggle = document.getElementById('previewToggle');
   if (previewToggle) {
     previewToggle.addEventListener('change', (e) => {
       previewMode = e.target.checked;
       document.body.classList.toggle('preview-mode', previewMode);
+    });
+  }
+
+  // New desktop button support
+  const desktopPreviewBtn = document.getElementById('desktopPreviewBtn');
+  if (desktopPreviewBtn) {
+    desktopPreviewBtn.addEventListener('click', () => {
+      previewMode = !previewMode;
+      document.body.classList.toggle('preview-mode', previewMode);
+
+      // Update button appearance and icon
+      const textSpan = desktopPreviewBtn.querySelector('span');
+      const icon = document.getElementById('desktopPreviewIcon');
+
+      if (previewMode) {
+        desktopPreviewBtn.classList.add('bg-blue-100', 'dark:bg-blue-900');
+        desktopPreviewBtn.classList.remove('hover:bg-gray-50', 'dark:hover:bg-slate-700');
+        desktopPreviewBtn.classList.add('hover:bg-blue-200', 'dark:hover:bg-blue-800');
+        if (textSpan) {
+          textSpan.classList.remove('text-gray-700', 'dark:text-gray-200');
+          textSpan.classList.add('text-blue-700', 'dark:text-blue-300');
+        }
+        if (icon) {
+          icon.src = '/assets/icons/eye-slash.svg';
+        }
+      } else {
+        desktopPreviewBtn.classList.remove('bg-blue-100', 'dark:bg-blue-900');
+        desktopPreviewBtn.classList.add('hover:bg-gray-50', 'dark:hover:bg-slate-700');
+        desktopPreviewBtn.classList.remove('hover:bg-blue-200', 'dark:hover:bg-blue-800');
+        if (textSpan) {
+          textSpan.classList.remove('text-blue-700', 'dark:text-blue-300');
+          textSpan.classList.add('text-gray-700', 'dark:text-gray-200');
+        }
+        if (icon) {
+          icon.src = '/assets/icons/eye.svg';
+        }
+      }
     });
   }
 }

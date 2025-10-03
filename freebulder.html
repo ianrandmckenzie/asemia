@@ -44,7 +44,7 @@
 
   <link href="/src/style.css" rel="stylesheet" />
 </head>
-<body>
+<body class="bg-white dark:bg-slate-900">
   <div class="flex flex-col md:flex-row h-[calc(85vh)] md:h-screen text-black dark:text-white">
     <!-- Mobile Top Tabs (visible below md breakpoint) -->
     <div class="md:hidden flex flex-col bg-gray-100 dark:bg-slate-800 border-b border-gray-300 dark:border-gray-700">
@@ -133,8 +133,9 @@
 
         <!-- Save Dropdown -->
         <div class="relative group">
-          <button onclick="saveComposition()" class="bg-slate-600 hover:bg-slate-700 text-white px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors">
-            💾 Save
+          <button onclick="saveComposition()" class="bg-slate-600 hover:bg-slate-700 text-white px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors flex items-center space-x-2">
+            <img src="/assets/icons/save.svg" alt="Save" class="h-4 w-4 invert">
+            <span>Save</span>
           </button>
           <!-- Dropdown Menu -->
           <div class="absolute left-0 top-full mt-1 bg-white dark:bg-slate-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
@@ -149,8 +150,9 @@
 
         <!-- Load Dropdown -->
         <div class="relative group">
-          <button onclick="loadComposition()" class="bg-slate-600 hover:bg-slate-700 text-white px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors">
-            📁 Load
+          <button onclick="loadComposition()" class="bg-slate-600 hover:bg-slate-700 text-white px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors flex items-center space-x-2">
+            <img src="/assets/icons/load.svg" alt="Load" class="h-4 w-4 invert">
+            <span>Load</span>
           </button>
           <!-- Dropdown Menu -->
           <div class="absolute left-0 top-full mt-1 bg-white dark:bg-slate-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
@@ -163,20 +165,29 @@
           </div>
         </div>
 
-        <button onclick="manageCompositions()" class="bg-slate-600 hover:bg-slate-700 dark:bg-slate-500 dark:hover:bg-slate-600 text-white px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors">
-          ⚙️ Manage
+        <button onclick="manageCompositions()" class="bg-slate-600 hover:bg-slate-700 dark:bg-slate-500 dark:hover:bg-slate-600 text-white px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors flex items-center space-x-2">
+          <img src="/assets/icons/manage.svg" alt="Manage" class="h-4 w-4 invert">
+          <span>Manage</span>
         </button>
-        <button onclick="clearAllGrids()" class="bg-slate-600 hover:bg-red-700 dark:bg-slate-600 dark:hover:bg-red-600 text-white px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors">
-          🗑️ Clear
+        <button onclick="clearAllGrids()" class="bg-slate-600 hover:bg-red-700 dark:bg-slate-600 dark:hover:bg-red-600 text-white px-3 py-2 rounded-lg shadow-md text-sm font-medium transition-colors flex items-center space-x-2">
+          <img src="/assets/icons/clear.svg" alt="Clear" class="h-4 w-4 invert">
+          <span>Clear</span>
         </button>
       </div>
 
-      <!-- Desktop Preview Toggle (visible md and above) -->
-      <div class="hidden md:block absolute top-4 right-4 z-50">
-        <label class="flex items-center space-x-2 bg-white dark:bg-slate-800 px-3 py-2 rounded-lg shadow-md border border-gray-300 dark:border-gray-700">
-          <input type="checkbox" id="previewToggle" class="rounded">
+      <!-- Desktop Controls (visible md and above) -->
+      <div class="hidden md:flex absolute top-4 right-4 z-50 gap-2">
+        <!-- Erase Mode Toggle -->
+        <button id="desktopEraseBtn" class="flex items-center space-x-2 bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 px-3 py-2 rounded-lg shadow-md border border-gray-300 dark:border-gray-700 transition-colors">
+          <img id="desktopEraseIcon" src="/assets/icons/erase.svg" alt="Erase Mode" class="h-4 w-4 dark:invert">
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Erase</span>
+        </button>
+
+        <!-- Preview Toggle -->
+        <button id="desktopPreviewBtn" class="flex items-center space-x-2 bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 px-3 py-2 rounded-lg shadow-md border border-gray-300 dark:border-gray-700 transition-colors">
+          <img id="desktopPreviewIcon" src="/assets/icons/eye.svg" alt="Preview Mode" class="h-4 w-4 dark:invert">
           <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Preview</span>
-        </label>
+        </button>
       </div>
 
       <!-- Mobile Toolbar (visible below md) -->
@@ -227,8 +238,8 @@
   </div>
 
   <!-- Mobile Save Menu Modal -->
-  <div id="mobileSaveMenu" class="hidden fixed bottom-31 inset-0 bg-black/50 z-50 md:hidden border-b border-gray-200 dark:border-slate-700">
-    <div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-800 rounded-t-2xl shadow-xl pb-[env(safe-area-inset-bottom)] max-h-[80vh] flex flex-col">
+  <div id="mobileSaveMenu" class="hidden fixed inset-0 bottom-31 bg-black/50 z-50 md:hidden transition-opacity duration-200 border-b border-gray-200 dark:border-slate-700">
+    <div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-800 rounded-t-2xl pb-[env(safe-area-inset-bottom)] border-t border-gray-200 dark:border-slate-700 transition-transform duration-150 ease-in-out translate-y-full max-h-[80vh] flex flex-col">
       <div class="p-4 border-b border-gray-200 dark:border-slate-700 flex-shrink-0">
         <div class="flex items-center justify-between text-gray-900 dark:text-gray-100">
           <h3 class="text-lg font-semibold">Save & Load</h3>
@@ -240,37 +251,55 @@
         </div>
       </div>
       <div class="p-4 space-y-2 overflow-y-auto flex-1">
-        <button onclick="saveComposition(); document.getElementById('mobileSaveMenu').classList.add('hidden')" class="w-full text-left px-4 py-3 bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-lg transition-colors">
-          <div class="font-medium text-gray-900 dark:text-gray-100">💾 Save to browser</div>
-          <div class="text-sm text-gray-600 dark:text-gray-400">Save your work locally</div>
+        <button onclick="saveComposition(); hideMobileSaveMenu()" class="w-full text-left px-4 py-3 bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-lg transition-colors flex items-start space-x-3">
+          <img src="/assets/icons/save.svg" alt="Save to browser" class="h-5 w-5 mt-0.5 dark:invert">
+          <div>
+            <div class="font-medium text-gray-900 dark:text-gray-100">Save to browser</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">Save your work locally</div>
+          </div>
         </button>
-        <button onclick="saveCompositionToComputer(); document.getElementById('mobileSaveMenu').classList.add('hidden')" class="w-full text-left px-4 py-3 bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-lg transition-colors">
-          <div class="font-medium text-gray-900 dark:text-gray-100">💾 Save to computer</div>
-          <div class="text-sm text-gray-600 dark:text-gray-400">Download as JSON file</div>
+        <button onclick="saveCompositionToComputer(); hideMobileSaveMenu()" class="w-full text-left px-4 py-3 bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-lg transition-colors flex items-start space-x-3">
+          <img src="/assets/icons/save-computer.svg" alt="Save to computer" class="h-5 w-5 mt-0.5 dark:invert">
+          <div>
+            <div class="font-medium text-gray-900 dark:text-gray-100">Save to computer</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">Download as JSON file</div>
+          </div>
         </button>
-        <button onclick="loadFromBrowser(); document.getElementById('mobileSaveMenu').classList.add('hidden')" class="w-full text-left px-4 py-3 bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-lg transition-colors">
-          <div class="font-medium text-gray-900 dark:text-gray-100">📁 Load from browser</div>
-          <div class="text-sm text-gray-600 dark:text-gray-400">Load saved work</div>
+        <button onclick="loadFromBrowser(); hideMobileSaveMenu()" class="w-full text-left px-4 py-3 bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-lg transition-colors flex items-start space-x-3">
+          <img src="/assets/icons/load.svg" alt="Load from browser" class="h-5 w-5 mt-0.5 dark:invert">
+          <div>
+            <div class="font-medium text-gray-900 dark:text-gray-100">Load from browser</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">Load saved work</div>
+          </div>
         </button>
-        <button onclick="loadComposition(); document.getElementById('mobileSaveMenu').classList.add('hidden')" class="w-full text-left px-4 py-3 bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-lg transition-colors">
-          <div class="font-medium text-gray-900 dark:text-gray-100">📁 Load from computer</div>
-          <div class="text-sm text-gray-600 dark:text-gray-400">Upload JSON file</div>
+        <button onclick="loadComposition(); hideMobileSaveMenu()" class="w-full text-left px-4 py-3 bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-lg transition-colors flex items-start space-x-3">
+          <img src="/assets/icons/load-computer.svg" alt="Load from computer" class="h-5 w-5 mt-0.5 dark:invert">
+          <div>
+            <div class="font-medium text-gray-900 dark:text-gray-100">Load from computer</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">Upload JSON file</div>
+          </div>
         </button>
-        <button onclick="manageCompositions(); document.getElementById('mobileSaveMenu').classList.add('hidden')" class="w-full text-left px-4 py-3 bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-lg transition-colors">
-          <div class="font-medium text-gray-900 dark:text-gray-100">⚙️ Manage</div>
-          <div class="text-sm text-gray-600 dark:text-gray-400">Manage saved compositions</div>
+        <button onclick="manageCompositions(); hideMobileSaveMenu()" class="w-full text-left px-4 py-3 bg-gray-50 dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-lg transition-colors flex items-start space-x-3">
+          <img src="/assets/icons/manage.svg" alt="Manage" class="h-5 w-5 mt-0.5 dark:invert">
+          <div>
+            <div class="font-medium text-gray-900 dark:text-gray-100">Manage</div>
+            <div class="text-sm text-gray-600 dark:text-gray-400">Manage saved compositions</div>
+          </div>
         </button>
-        <button onclick="clearAllGrids(); document.getElementById('mobileSaveMenu').classList.add('hidden')" class="w-full text-left px-4 py-3 bg-red-50 dark:bg-red-900 hover:bg-red-100 dark:hover:bg-red-800 rounded-lg transition-colors">
-          <div class="font-medium text-red-900 dark:text-red-100">🗑️ Clear All</div>
-          <div class="text-sm text-red-600 dark:text-red-400">Remove all shapes from grids</div>
+        <button onclick="clearAllGrids(); hideMobileSaveMenu()" class="w-full text-left px-4 py-3 bg-red-50 dark:bg-red-900 hover:bg-red-100 dark:hover:bg-red-800 rounded-lg transition-colors flex items-start space-x-3">
+          <img src="/assets/icons/clear.svg" alt="Clear All" class="h-5 w-5 mt-0.5 invert-0 dark:invert">
+          <div>
+            <div class="font-medium text-red-900 dark:text-red-100">Clear All</div>
+            <div class="text-sm text-red-600 dark:text-red-400">Remove all shapes from grids</div>
+          </div>
         </button>
       </div>
     </div>
   </div>
 
   <!-- Mobile Size Menu Modal -->
-  <div id="mobileSizeMenu" class="hidden fixed bottom-31 inset-0 bg-black/50 z-50 md:hidden border-b border-gray-200 dark:border-slate-700">
-    <div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-800 rounded-t-2xl shadow-xl pb-[env(safe-area-inset-bottom)]">
+  <div id="mobileSizeMenu" class="hidden fixed inset-0 bottom-31 bg-black/50 z-50 md:hidden transition-opacity duration-200 border-b border-gray-200 dark:border-slate-700">
+    <div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-800 rounded-t-2xl pb-[env(safe-area-inset-bottom)] border-t border-gray-200 dark:border-slate-700 transition-transform duration-150 ease-in-out translate-y-full">
       <div class="p-4 border-b border-gray-200 dark:border-slate-700">
         <div class="flex items-center justify-between text-gray-900 dark:text-gray-100">
           <h3 class="text-lg font-semibold">Grid Size</h3>

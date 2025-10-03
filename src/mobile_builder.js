@@ -252,34 +252,104 @@ function setupMobileToolbar() {
 
   if (!mobileSaveMenuBtn) return; // Not on mobile
 
-  // Save menu
+  // Save menu with slide animation
   mobileSaveMenuBtn.addEventListener('click', () => {
-    mobileSaveMenu.classList.toggle('hidden');
+    const isHidden = mobileSaveMenu.classList.contains('hidden');
+    const panel = mobileSaveMenu.querySelector('.absolute');
+
+    if (isHidden) {
+      // Show menu: remove hidden and translate
+      mobileSaveMenu.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          panel.classList.remove('translate-y-full');
+          panel.classList.add('translate-y-0');
+        });
+      });
+    } else {
+      // Hide menu: slide down then hide
+      mobileSaveMenu.classList.add('opacity-0');
+      panel.classList.remove('translate-y-0');
+      panel.classList.add('translate-y-full');
+      setTimeout(() => {
+        mobileSaveMenu.classList.add('hidden');
+        mobileSaveMenu.classList.remove('opacity-0');
+      }, 200);
+    }
   });
 
   closeSaveMenu.addEventListener('click', () => {
-    mobileSaveMenu.classList.add('hidden');
+    const panel = mobileSaveMenu.querySelector('.absolute');
+    mobileSaveMenu.classList.add('opacity-0');
+    panel.classList.remove('translate-y-0');
+    panel.classList.add('translate-y-full');
+    setTimeout(() => {
+      mobileSaveMenu.classList.add('hidden');
+      mobileSaveMenu.classList.remove('opacity-0');
+    }, 150);
   });
 
   // Close on backdrop click
   mobileSaveMenu.addEventListener('click', (e) => {
     if (e.target === mobileSaveMenu) {
-      mobileSaveMenu.classList.add('hidden');
+      const panel = mobileSaveMenu.querySelector('.absolute');
+      mobileSaveMenu.classList.add('opacity-0');
+      panel.classList.remove('translate-y-0');
+      panel.classList.add('translate-y-full');
+      setTimeout(() => {
+        mobileSaveMenu.classList.add('hidden');
+        mobileSaveMenu.classList.remove('opacity-0');
+      }, 150);
     }
   });
 
-  // Size menu
+  // Size menu with slide animation
   mobileSizeBtn.addEventListener('click', () => {
-    mobileSizeMenu.classList.toggle('hidden');
+    const isHidden = mobileSizeMenu.classList.contains('hidden');
+    const panel = mobileSizeMenu.querySelector('.absolute');
+
+    if (isHidden) {
+      // Show menu: remove hidden and translate
+      mobileSizeMenu.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          panel.classList.remove('translate-y-full');
+          panel.classList.add('translate-y-0');
+        });
+      });
+    } else {
+      // Hide menu: slide down then hide
+      mobileSizeMenu.classList.add('opacity-0');
+      panel.classList.remove('translate-y-0');
+      panel.classList.add('translate-y-full');
+      setTimeout(() => {
+        mobileSizeMenu.classList.add('hidden');
+        mobileSizeMenu.classList.remove('opacity-0');
+      }, 200);
+    }
   });
 
   closeSizeMenu.addEventListener('click', () => {
-    mobileSizeMenu.classList.add('hidden');
+    const panel = mobileSizeMenu.querySelector('.absolute');
+    mobileSizeMenu.classList.add('opacity-0');
+    panel.classList.remove('translate-y-0');
+    panel.classList.add('translate-y-full');
+    setTimeout(() => {
+      mobileSizeMenu.classList.add('hidden');
+      mobileSizeMenu.classList.remove('opacity-0');
+    }, 150);
   });
 
   mobileSizeMenu.addEventListener('click', (e) => {
     if (e.target === mobileSizeMenu) {
-      mobileSizeMenu.classList.add('hidden');
+      const panel = mobileSizeMenu.querySelector('.absolute');
+      mobileSizeMenu.classList.add('opacity-0');
+      panel.classList.remove('translate-y-0');
+      panel.classList.add('translate-y-full');
+      setTimeout(() => {
+        mobileSizeMenu.classList.add('hidden');
+        mobileSizeMenu.classList.remove('opacity-0');
+      }, 150);
     }
   });
 
@@ -292,9 +362,28 @@ function setupMobileToolbar() {
       window.setPreviewMode(previewActive);
     }
 
+    // Update button appearance and icon
+    const textSpan = mobilePreviewBtn.querySelector('span');
     const icon = document.getElementById('mobilePreviewIcon');
-    if (icon) {
-      icon.src = previewActive ? '/assets/icons/eye-slash.svg' : '/assets/icons/eye.svg';
+
+    if (previewActive) {
+      mobilePreviewBtn.classList.add('bg-blue-100', 'dark:bg-blue-900');
+      if (textSpan) {
+        textSpan.classList.remove('text-gray-600', 'dark:text-gray-300');
+        textSpan.classList.add('text-blue-700', 'dark:text-blue-300');
+      }
+      if (icon) {
+        icon.src = '/assets/icons/eye-slash.svg';
+      }
+    } else {
+      mobilePreviewBtn.classList.remove('bg-blue-100', 'dark:bg-blue-900');
+      if (textSpan) {
+        textSpan.classList.remove('text-blue-700', 'dark:text-blue-300');
+        textSpan.classList.add('text-gray-600', 'dark:text-gray-300');
+      }
+      if (icon) {
+        icon.src = '/assets/icons/eye.svg';
+      }
     }
   });
 
@@ -311,6 +400,11 @@ let eraseMode = false;
 function setupEraseMode(eraseBtn) {
   eraseBtn.addEventListener('click', () => {
     eraseMode = !eraseMode;
+
+    // Clear any pending erase highlight when toggling
+    if (window.clearPendingEraseHighlight) {
+      window.clearPendingEraseHighlight();
+    }
 
     // Update button appearance and icon
     const textSpan = eraseBtn.querySelector('span');
@@ -351,6 +445,21 @@ function setupEraseMode(eraseBtn) {
 // Export erase mode state
 window.isEraseMode = () => eraseMode;
 
+// Export function to hide save menu with animation (for onclick handlers)
+window.hideMobileSaveMenu = function() {
+  const mobileSaveMenu = document.getElementById('mobileSaveMenu');
+  const panel = mobileSaveMenu?.querySelector('.absolute');
+  if (mobileSaveMenu && panel) {
+    mobileSaveMenu.classList.add('opacity-0');
+    panel.classList.remove('translate-y-0');
+    panel.classList.add('translate-y-full');
+    setTimeout(() => {
+      mobileSaveMenu.classList.add('hidden');
+      mobileSaveMenu.classList.remove('opacity-0');
+    }, 150);
+  }
+};
+
 // Setup size options
 function setupSizeOptions() {
   const mobileSizeButtons = document.getElementById('mobileSizeButtons');
@@ -369,7 +478,17 @@ function setupSizeOptions() {
     button.addEventListener('click', () => {
       currentSize = size;
       applyGridScale(size);
-      document.getElementById('mobileSizeMenu').classList.add('hidden');
+
+      // Hide menu with animation
+      const mobileSizeMenu = document.getElementById('mobileSizeMenu');
+      const panel = mobileSizeMenu.querySelector('.absolute');
+      mobileSizeMenu.classList.add('opacity-0');
+      panel.classList.remove('translate-y-0');
+      panel.classList.add('translate-y-full');
+      setTimeout(() => {
+        mobileSizeMenu.classList.add('hidden');
+        mobileSizeMenu.classList.remove('opacity-0');
+      }, 150);
 
       // Update button styles
       mobileSizeButtons.querySelectorAll('button').forEach(btn => {

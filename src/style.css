@@ -104,6 +104,22 @@
   border-color: #ef4444 !important;
 }
 
+.cell-erase-pending {
+  background-color: rgba(239, 68, 68, 0.2) !important;
+  border-color: #ef4444 !important;
+  border-width: 2px !important;
+  animation: pulse-erase 2s infinite;
+}
+
+@keyframes pulse-erase {
+  0%, 100% {
+    background-color: rgba(239, 68, 68, 0.2);
+  }
+  50% {
+    background-color: rgba(239, 68, 68, 0.4);
+  }
+}
+
 /* Shape button styling */
 .shape-button {
   transition: all 0.2s;
