@@ -6,6 +6,7 @@
 let rulesData = null;
 let texturesData = null;
 let selectedShape = null;
+let selectedTexture = null; // Track the currently selected texture to auto-apply
 let currentTab = 'bodies';
 let previewMode = false;
 let eraseMode = false;
@@ -207,6 +208,8 @@ async function initBuilder() {
   // Make selectedShape accessible via a getter function since it changes
   window.getSelectedShape = () => selectedShape;
   window.setSelectedShape = (shape) => { selectedShape = shape; };
+  window.getSelectedTexture = () => selectedTexture;
+  window.setSelectedTexture = (texture) => { selectedTexture = texture; };
   window.handleGridCellClick = handleGridCellClick;
   window.handleGridCellRightClick = handleGridCellRightClick;
   window.handleGridCellLeave = handleGridCellLeave;
@@ -412,7 +415,7 @@ function createTextureButton(texture) {
   button.appendChild(label);
 
   button.addEventListener('click', () => {
-    // Remove previous selection
+    // Remove previous selection from texture buttons only
     document.querySelectorAll('#texturesShapes button').forEach(btn => {
       btn.classList.remove('border-blue-500', 'dark:border-blue-400', 'bg-blue-50', 'dark:bg-blue-900');
       btn.classList.add('border-gray-300', 'dark:border-gray-600');
@@ -422,10 +425,16 @@ function createTextureButton(texture) {
     button.classList.remove('border-gray-300', 'dark:border-gray-600');
     button.classList.add('border-blue-500', 'dark:border-blue-400', 'bg-blue-50', 'dark:bg-blue-900');
 
-    selectedShape = {
-      category: 'textures',
-      texture: texture
-    };
+    // Set the selected texture (keep existing shape selection)
+    selectedTexture = texture;
+
+    // Only set selectedShape if we're clicking a texture directly (not placing a shape)
+    if (!selectedShape || selectedShape.category === 'textures') {
+      selectedShape = {
+        category: 'textures',
+        texture: texture
+      };
+    }
 
     updateSelectedShapeDisplay();
   });
@@ -469,11 +478,13 @@ function createShapeButton(category, angleKey, shape) {
 
 // Select a shape
 function selectShape(button, category, angleKey, shape) {
-  // Remove previous selection
+  // Remove previous selection from shape buttons only
   document.querySelectorAll('.shape-selected').forEach(el => {
     // remove both light and dark variants when clearing previous selection
     el.classList.remove('shape-selected', 'bg-blue-200', 'border-blue-500', 'dark:bg-blue-800/40', 'dark:border-blue-400');
   });
+
+  // DON'T clear texture selection - textures and shapes should coexist
 
   // Add selection to current button
   // add selection styles for both light and dark themes
@@ -665,7 +676,12 @@ function handleGridCellClick(event) {
 
   // Handle texture application differently
   if (selectedShape.category === 'textures') {
-    applyTextureToCell(cell, selectedShape.texture);
+    const existingSvg = cell.querySelector('svg');
+    if (!existingSvg) {
+      alert('Please place a shape in this cell first before applying a texture');
+    } else {
+      applyTextureToCell(cell, selectedShape.texture);
+    }
     return;
   }
 
@@ -747,11 +763,10 @@ function clearPendingEraseHighlight() {
 // Apply texture to a cell by wrapping existing SVG content
 function applyTextureToCell(cell, texture) {
   // Find the SVG element in the cell
-  const svgElement = cell.querySelector('svg');
+  const svgElement = cell.querySelector('svg:not([style*="display: none"])');
 
   if (!svgElement) {
-    alert('Please place a shape in this cell first before applying a texture');
-    return;
+    return; // Silently fail if no SVG (texture will be applied when shape is placed)
   }
 
   // Remove any existing texture wrapper
@@ -760,28 +775,41 @@ function applyTextureToCell(cell, texture) {
     existingTextureDiv.remove();
   }
 
+  // Clone the SVG to capture its current state
+  const svgClone = svgElement.cloneNode(true);
+
   // Create a wrapper div for the texture
   const textureDiv = document.createElement('div');
-  textureDiv.className = 'texture-mask absolute inset-0';
-  textureDiv.style.cssText = `
-    background-image: url('/assets/textures/${texture.filename}');
-    background-size: cover;
-    background-position: center;
-    -webkit-mask-image: url('data:image/svg+xml;base64,${btoa(svgElement.outerHTML)}');
-    mask-image: url('data:image/svg+xml;base64,${btoa(svgElement.outerHTML)}');
-    -webkit-mask-size: contain;
-    mask-size: contain;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-  `;
+  textureDiv.className = 'texture-mask';
+
+  // Copy the entire inline style from the SVG element
+  textureDiv.style.cssText = svgElement.style.cssText;
+
+  // Ensure it has position absolute if the SVG does
+  if (!textureDiv.style.position) {
+    textureDiv.style.position = 'absolute';
+  }
+
+  // Add texture-specific styles (these will be appended to existing styles)
+  textureDiv.style.backgroundImage = `url('/assets/textures/${texture.filename}')`;
+  textureDiv.style.backgroundSize = 'cover';
+  textureDiv.style.backgroundPosition = 'center';
+  textureDiv.style.webkitMaskImage = `url('data:image/svg+xml;base64,${btoa(svgClone.outerHTML)}')`;
+  textureDiv.style.maskImage = `url('data:image/svg+xml;base64,${btoa(svgClone.outerHTML)}')`;
+  textureDiv.style.webkitMaskSize = '100% 100%';
+  textureDiv.style.maskSize = '100% 100%';
+  textureDiv.style.webkitMaskRepeat = 'no-repeat';
+  textureDiv.style.maskRepeat = 'no-repeat';
+  textureDiv.style.webkitMaskPosition = 'center';
+  textureDiv.style.maskPosition = 'center';
+  textureDiv.style.pointerEvents = 'none';
 
   // Hide the original SVG and add the textured version
   svgElement.style.display = 'none';
 
   // Store texture data as a data attribute for potential save/load
   cell.dataset.texture = texture.id;
+  cell.dataset.textureFilename = texture.filename;
 
   cell.appendChild(textureDiv);
 }
@@ -1086,6 +1114,14 @@ function placeShapeInCell(cell, shapeData, allowOverlap = false) {
   // SVG elements don't have load errors like img elements, so no error handling needed
 
   cell.appendChild(svgElement);
+
+  // If a texture is currently selected, apply it automatically
+  // Use a small delay to ensure DOM is fully updated and styles are computed
+  if (selectedTexture) {
+    requestAnimationFrame(() => {
+      applyTextureToCell(cell, selectedTexture);
+    });
+  }
 }
 
 // Setup tab switching
@@ -1145,13 +1181,31 @@ function updateSelectedShapeDisplay() {
   const display = document.getElementById('selectedShapeDisplay');
   const info = document.getElementById('selectedShapeInfo');
 
-  if (selectedShape) {
+  if (selectedShape || selectedTexture) {
     display.classList.remove('hidden');
-    if (selectedShape.category === 'textures') {
-      info.textContent = `Texture: ${selectedShape.texture.name}`;
-    } else {
-      info.textContent = `${selectedShape.category} > ${selectedShape.angleKey} > ${selectedShape.shape.shape_name}`;
+
+    let displayText = '';
+
+    // Show shape info if shape is selected
+    if (selectedShape && selectedShape.category !== 'textures') {
+      displayText = `${selectedShape.category} > ${selectedShape.angleKey} > ${selectedShape.shape.shape_name}`;
     }
+
+    // Show texture info if texture is selected
+    if (selectedTexture) {
+      if (displayText) {
+        displayText += ` + Texture: ${selectedTexture.name}`;
+      } else {
+        displayText = `Texture: ${selectedTexture.name}`;
+      }
+    }
+
+    // Fallback for texture-only selection via old method
+    if (!displayText && selectedShape && selectedShape.category === 'textures') {
+      displayText = `Texture: ${selectedShape.texture.name}`;
+    }
+
+    info.textContent = displayText;
   } else {
     display.classList.add('hidden');
   }
@@ -1163,8 +1217,14 @@ function setupClearSelection() {
   if (clearSelectionBtn) {
     document.getElementById('clearSelection').addEventListener('click', () => {
       selectedShape = null;
+      selectedTexture = null;
       document.querySelectorAll('.shape-selected').forEach(el => {
         el.classList.remove('shape-selected', 'bg-blue-200', 'border-blue-500');
+      });
+      // Clear texture selection
+      document.querySelectorAll('#texturesShapes button').forEach(btn => {
+        btn.classList.remove('border-blue-500', 'dark:border-blue-400', 'bg-blue-50', 'dark:bg-blue-900');
+        btn.classList.add('border-gray-300', 'dark:border-gray-600');
       });
       updateSelectedShapeDisplay();
     });

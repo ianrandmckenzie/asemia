@@ -131,13 +131,15 @@ function createMobileTextureButton(texture) {
 
 // Handle mobile texture selection
 function handleMobileTextureSelection(button, texture) {
-  // Remove previous selection
+  // Remove previous selection from texture buttons only
   document.querySelectorAll('.mobile-shape-btn.selected').forEach(el => {
-    el.classList.remove('selected');
+    // Only clear if it's a texture button
+    if (el.dataset.textureId) {
+      el.classList.remove('selected');
+    }
   });
-  document.querySelectorAll('.shape-selected').forEach(el => {
-    el.classList.remove('shape-selected', 'bg-blue-200', 'border-blue-500');
-  });
+
+  // DON'T clear shape selections - textures and shapes should coexist
 
   // Add selection to clicked button
   button.classList.add('selected');
@@ -162,14 +164,24 @@ function handleMobileTextureSelection(button, texture) {
     }
   }
 
-  // Update selected shape (for textures)
-  const selectedShape = {
-    category: 'textures',
-    texture: texture
-  };
+  // Update selected shape and texture (for textures)
+  // Only update selectedShape if no shape is currently selected
+  const currentShape = window.getSelectedShape ? window.getSelectedShape() : null;
 
-  if (window.setSelectedShape) {
-    window.setSelectedShape(selectedShape);
+  if (!currentShape || currentShape.category === 'textures') {
+    const selectedShape = {
+      category: 'textures',
+      texture: texture
+    };
+
+    if (window.setSelectedShape) {
+      window.setSelectedShape(selectedShape);
+    }
+  }
+
+  // Always set the selectedTexture
+  if (window.setSelectedTexture) {
+    window.setSelectedTexture(texture);
   }
 
   if (window.updateSelectedShapeDisplay) {
@@ -208,9 +220,12 @@ function createMobileShapeButton(category, angleKey, shape) {
 
 // Handle mobile shape selection
 function handleMobileShapeSelection(button, category, angleKey, shape) {
-  // Remove previous selection
+  // Remove previous selection from shape buttons only
   document.querySelectorAll('.mobile-shape-btn.selected').forEach(el => {
-    el.classList.remove('selected');
+    // Only clear if it's not a texture button
+    if (!el.dataset.textureId) {
+      el.classList.remove('selected');
+    }
   });
   document.querySelectorAll('.shape-selected').forEach(el => {
     el.classList.remove('shape-selected', 'bg-blue-200', 'border-blue-500');
@@ -230,6 +245,8 @@ function handleMobileShapeSelection(button, category, angleKey, shape) {
   if (window.setSelectedShape) {
     window.setSelectedShape(selectedShape);
   }
+
+  // DON'T clear texture selection - textures and shapes should coexist
 
   if (window.updateSelectedShapeDisplay) {
     window.updateSelectedShapeDisplay();
