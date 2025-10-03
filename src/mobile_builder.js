@@ -335,10 +335,9 @@ function setupMobileToolbar() {
   const closeSaveMenu = document.getElementById('closeSaveMenu');
   const closeSizeMenu = document.getElementById('closeSizeMenu');
 
-  if (!mobileSaveMenuBtn) return; // Not on mobile
-
-  // Save menu with slide animation
-  mobileSaveMenuBtn.addEventListener('click', () => {
+  // Save menu with slide animation (if it exists)
+  if (mobileSaveMenuBtn && mobileSaveMenu && closeSaveMenu) {
+    mobileSaveMenuBtn.addEventListener('click', () => {
     const isHidden = mobileSaveMenu.classList.contains('hidden');
     const panel = mobileSaveMenu.querySelector('.absolute');
 
@@ -387,8 +386,10 @@ function setupMobileToolbar() {
       }, 150);
     }
   });
+  } // End mobileSaveMenuBtn if block
 
   // Size menu with slide animation
+  if (mobileSizeBtn && mobileSizeMenu && closeSizeMenu) {
   mobileSizeBtn.addEventListener('click', () => {
     const isHidden = mobileSizeMenu.classList.contains('hidden');
     const panel = mobileSizeMenu.querySelector('.absolute');
@@ -437,8 +438,10 @@ function setupMobileToolbar() {
       }, 150);
     }
   });
+  } // End mobileSizeBtn if block
 
   // Preview toggle
+  if (mobilePreviewBtn) {
   let previewActive = false;
   mobilePreviewBtn.addEventListener('click', () => {
     previewActive = !previewActive;
@@ -471,6 +474,7 @@ function setupMobileToolbar() {
       }
     }
   });
+  } // End mobilePreviewBtn if block
 
   // Erase mode toggle
   const mobileEraseBtn = document.getElementById('mobileEraseBtn');
