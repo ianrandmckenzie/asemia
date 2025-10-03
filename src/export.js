@@ -22,12 +22,19 @@ async function exportAsPNG() {
       return;
     }
 
-    // Temporarily set overflow visible on all cells to prevent clipping
+    // Temporarily set overflow visible on all cells and grids to prevent clipping
     const allCells = document.querySelectorAll('.grid-cell');
     const originalOverflows = [];
+    const originalGridOverflows = [];
+
     allCells.forEach(cell => {
       originalOverflows.push(cell.style.overflow);
       cell.style.overflow = 'visible';
+    });
+
+    [serifsGrid, joinsGrid].forEach(grid => {
+      originalGridOverflows.push(grid.style.overflow);
+      grid.style.overflow = 'visible';
     });
 
     // Wait a moment for the DOM to update
@@ -58,39 +65,68 @@ async function exportAsPNG() {
     // Helper function to render shapes from a grid
     const renderGrid = async (grid, offsetX, offsetY) => {
       const cells = grid.querySelectorAll('.grid-cell');
+      const gridRect = grid.getBoundingClientRect();
 
       for (const cell of cells) {
-        const svg = cell.querySelector('svg');
-        if (!svg) continue;
+        const svgs = cell.querySelectorAll('svg');
+        if (svgs.length === 0) continue;
 
-        // Get the SVG's actual bounding box (now includes overflow since we set overflow:visible)
-        const svgRect = svg.getBoundingClientRect();
-        const gridRect = grid.getBoundingClientRect();
+        // Process each SVG in the cell (there can be multiple for overlapping shapes)
+        for (const svg of svgs) {
+          // Get the actual rendered position and size of the SVG
+          const svgRect = svg.getBoundingClientRect();
+          const cellRect = cell.getBoundingClientRect();
 
-        // Calculate position relative to the grid
-        const x = padding + offsetX + (svgRect.left - gridRect.left);
-        const y = padding + offsetY + (svgRect.top - gridRect.top);
+          // Calculate the SVG's position relative to the grid's top-left corner
+          const relativeX = svgRect.left - gridRect.left;
+          const relativeY = svgRect.top - gridRect.top;
 
-        // Clone and serialize the SVG
-        const svgClone = svg.cloneNode(true);
-        const svgData = new XMLSerializer().serializeToString(svgClone);
-        const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
-        const url = URL.createObjectURL(svgBlob);
+          // Clone the SVG for serialization
+          const svgClone = svg.cloneNode(true);
 
-        // Load and draw the SVG
-        await new Promise((resolve, reject) => {
-          const img = new Image();
-          img.onload = () => {
-            ctx.drawImage(img, x, y, svgRect.width, svgRect.height);
-            URL.revokeObjectURL(url);
-            resolve();
-          };
-          img.onerror = () => {
-            URL.revokeObjectURL(url);
-            reject(new Error('Failed to load SVG'));
-          };
-          img.src = url;
-        });
+          // Get the actual dimensions
+          let width = svgRect.width;
+          let height = svgRect.height;
+
+          // If dimensions are 0, try to get them from the SVG viewBox
+          if (width === 0 || height === 0) {
+            const viewBox = svg.getAttribute('viewBox');
+            if (viewBox) {
+              const parts = viewBox.split(' ').map(Number);
+              if (parts.length === 4) {
+                width = parts[2];
+                height = parts[3];
+              }
+            }
+
+            // Fallback to 100x100 if still 0
+            if (width === 0) width = 100;
+            if (height === 0) height = 100;
+          }
+
+          // Serialize the SVG
+          const svgData = new XMLSerializer().serializeToString(svgClone);
+          const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+          const url = URL.createObjectURL(svgBlob);
+
+          // Load and draw the SVG at the calculated position
+          await new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => {
+              const finalX = padding + offsetX + relativeX;
+              const finalY = padding + offsetY + relativeY;
+              ctx.drawImage(img, finalX, finalY, width, height);
+              URL.revokeObjectURL(url);
+              resolve();
+            };
+            img.onerror = () => {
+              URL.revokeObjectURL(url);
+              console.warn('Failed to load SVG, skipping');
+              resolve(); // Continue even if one SVG fails
+            };
+            img.src = url;
+          });
+        }
       }
     };
 
@@ -103,6 +139,10 @@ async function exportAsPNG() {
     // Restore original overflow values
     allCells.forEach((cell, index) => {
       cell.style.overflow = originalOverflows[index];
+    });
+
+    [serifsGrid, joinsGrid].forEach((grid, index) => {
+      grid.style.overflow = originalGridOverflows[index];
     });
 
     // Convert canvas to blob and download

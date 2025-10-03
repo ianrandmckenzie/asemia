@@ -541,6 +541,21 @@ function showShapePreview(cell, shapeData) {
 
   if (svgElement) {
     svgElement.setAttribute('alt', shapeData.shape.shape_name);
+
+    // Remove width and height attributes to let CSS control sizing
+    svgElement.removeAttribute('width');
+    svgElement.removeAttribute('height');
+
+    // Get the viewBox dimensions to set appropriate CSS sizing
+    const viewBox = svgElement.getAttribute('viewBox');
+    if (viewBox) {
+      const [, , vbWidth, vbHeight] = viewBox.split(' ').map(Number);
+
+      // Set explicit pixel dimensions based on viewBox
+      svgElement.style.width = `${vbWidth}px`;
+      svgElement.style.height = `${vbHeight}px`;
+    }
+
     // Apply positioning using the same logic as placing shapes
     applyPositioning(svgElement, shapeData);
     // Add preview-specific styling
@@ -931,6 +946,22 @@ function placeShapeInCell(cell, shapeData, allowOverlap = false) {
   }
 
   svgElement.setAttribute('alt', shapeData.shape.shape_name);
+
+  // Remove width and height attributes to let CSS control sizing
+  // The viewBox will define the coordinate system and aspect ratio
+  svgElement.removeAttribute('width');
+  svgElement.removeAttribute('height');
+
+  // Get the viewBox dimensions to set appropriate CSS sizing
+  const viewBox = svgElement.getAttribute('viewBox');
+  if (viewBox) {
+    const [, , vbWidth, vbHeight] = viewBox.split(' ').map(Number);
+
+    // Set explicit pixel dimensions based on viewBox
+    // This ensures the shape renders at its intended size
+    svgElement.style.width = `${vbWidth}px`;
+    svgElement.style.height = `${vbHeight}px`;
+  }
 
   // Apply positioning using unified configuration-based approach
   applyPositioning(svgElement, shapeData);

@@ -838,6 +838,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.clearAllGrids = clearAllGrids;
   window.getAllCompositions = getAllCompositions;
   window.deleteFromBrowser = deleteFromBrowser;
+  window.showNotification = showNotification;
 
   console.log('Storage functionality initialized');
 });
