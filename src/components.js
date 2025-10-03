@@ -71,7 +71,7 @@ export function createNav() {
           </a>
           <a
             href="/freebulder.html"
-            class="${isOnFreebuilder ? 'hidden' : 'block'} text-xs md:text-base px-4 py-2 bg-slate-800 hover:bg-slate-950 text-white font-medium transition-colors"
+            class="${isOnFreebuilder ? 'hidden' : 'block'} text-xs md:text-base px-4 py-2 bg-slate-800 hover:bg-slate-950 text-white dark:bg-white dark:text-slate-800 font-medium transition-colors"
           >
             Start Making
           </a>
