@@ -47,6 +47,10 @@
   background-color: #f3f4f6;
 }
 
+.dark #serifsGrid .grid-cell:hover {
+  background-color: #374151;
+}
+
 #joinsGrid .grid-cell {
   border: 1px solid #dedede;
   background-color: rgba(245, 245, 245, 0.25);
@@ -54,7 +58,11 @@
 }
 
 #joinsGrid .grid-cell:hover {
-  background-color: rgba(254, 202, 202, 0.7);
+  background-color: rgba(191, 219, 254, 0.7);
+}
+
+.dark #joinsGrid .grid-cell:hover {
+  background-color: rgba(30, 64, 175, 0.7);
 }
 
 /* Preview mode - hide borders */
@@ -102,6 +110,13 @@
 .cell-highlight-invalid {
   background-color: rgba(239, 68, 68, 0.3) !important;
   border-color: #ef4444 !important;
+}
+
+/* Preview highlight for secondary cells on desktop */
+.cell-highlight-preview {
+  background-color: rgba(59, 130, 246, 0.15) !important;
+  border-color: #3b82f6 !important;
+  border-width: 1px !important;
 }
 
 .cell-erase-pending {

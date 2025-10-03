@@ -488,16 +488,35 @@ function handleGridCellHover(event) {
   const shapeGrid = rulesData.shapes[selectedShape.category].grid;
   if (gridType !== shapeGrid) return;
 
-  // Clear previous highlights
+  // Clear previous highlights and previews
   clearCellHighlights();
 
-  // Highlight all cells this shape would occupy
-  const occupiedCells = getOccupiedCells(cell, selectedShape);
-  occupiedCells.forEach(occupiedCell => {
-    if (occupiedCell) {
-      occupiedCell.classList.add('cell-highlight');
-    }
-  });
+  // Check if we're on desktop (viewport width >= 768px)
+  const isDesktop = window.innerWidth >= 768;
+
+  if (isDesktop) {
+    // On desktop: Show shape preview instead of highlighting
+    const occupiedCells = getOccupiedCells(cell, selectedShape);
+    occupiedCells.forEach(occupiedCell => {
+      if (occupiedCell) {
+        // Add preview to the primary cell (first one)
+        if (occupiedCell === cell) {
+          showShapePreview(occupiedCell, selectedShape);
+        } else {
+          // Add subtle highlight to secondary cells
+          occupiedCell.classList.add('cell-highlight-preview');
+        }
+      }
+    });
+  } else {
+    // On mobile: Keep the original highlighting behavior
+    const occupiedCells = getOccupiedCells(cell, selectedShape);
+    occupiedCells.forEach(occupiedCell => {
+      if (occupiedCell) {
+        occupiedCell.classList.add('cell-highlight');
+      }
+    });
+  }
 }
 
 // Handle grid cell leave
@@ -505,10 +524,40 @@ function handleGridCellLeave(event) {
   clearCellHighlights();
 }
 
+// Show shape preview in cell (desktop only)
+function showShapePreview(cell, shapeData) {
+  // Create a temporary preview SVG element
+  const baseClasses = 'absolute shape-preview';
+  let svgElement = null;
+
+  if (window.SVGUtils && window.SVGUtils.createSVGElement) {
+    svgElement = window.SVGUtils.createSVGElement(
+      shapeData.category,
+      shapeData.angleKey,
+      shapeData.shape.shape_name,
+      baseClasses
+    );
+  }
+
+  if (svgElement) {
+    svgElement.setAttribute('alt', shapeData.shape.shape_name);
+    // Apply positioning using the same logic as placing shapes
+    applyPositioning(svgElement, shapeData);
+    // Add preview-specific styling
+    svgElement.style.opacity = '0.6';
+    svgElement.style.pointerEvents = 'none';
+    cell.appendChild(svgElement);
+  }
+}
+
 // Clear all cell highlights
 function clearCellHighlights() {
-  document.querySelectorAll('.cell-highlight, .cell-highlight-valid, .cell-highlight-invalid').forEach(cell => {
-    cell.classList.remove('cell-highlight', 'cell-highlight-valid', 'cell-highlight-invalid');
+  document.querySelectorAll('.cell-highlight, .cell-highlight-valid, .cell-highlight-invalid, .cell-highlight-preview').forEach(cell => {
+    cell.classList.remove('cell-highlight', 'cell-highlight-valid', 'cell-highlight-invalid', 'cell-highlight-preview');
+  });
+  // Remove any shape previews
+  document.querySelectorAll('.shape-preview').forEach(preview => {
+    preview.remove();
   });
 }
 
