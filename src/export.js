@@ -576,15 +576,18 @@ async function exportAsJPEG() {
     // Clone the SVG to modify colors
     const clonedSVG = exportSVG.cloneNode(true);
 
-    // Apply fill color to all paths in the SVG
+    // Apply fill color to all paths in the SVG, but preserve texture patterns
     const allPaths = clonedSVG.querySelectorAll('path, polygon, circle, ellipse, rect, line, polyline');
     allPaths.forEach(element => {
-      // Set fill color if the element has a fill attribute or uses default fill
-      if (!element.hasAttribute('fill') || element.getAttribute('fill') !== 'none') {
+      const currentFill = element.getAttribute('fill');
+      const currentStroke = element.getAttribute('stroke');
+
+      // Only change fill if it's not already a pattern (texture)
+      if (!currentFill || (currentFill !== 'none' && !currentFill.startsWith('url(#'))) {
         element.setAttribute('fill', fillColor);
       }
-      // Set stroke color if the element has a stroke
-      if (element.hasAttribute('stroke') && element.getAttribute('stroke') !== 'none') {
+      // Only change stroke if it's not already a pattern (texture) and has a stroke
+      if (currentStroke && currentStroke !== 'none' && !currentStroke.startsWith('url(#')) {
         element.setAttribute('stroke', fillColor);
       }
     });
