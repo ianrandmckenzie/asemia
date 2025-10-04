@@ -12,7 +12,8 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         archive: resolve(__dirname, 'archive.html'),
-        freebuilder: resolve(__dirname, 'freebulder.html'),
+        freebulder: resolve(__dirname, 'freebulder.html'),
+        freebuilder: resolve(__dirname, 'freebuilder.html'),
         sentence: resolve(__dirname, 'sentence_generator.html'),
         svg: resolve(__dirname, 'svg.html'),
         word: resolve(__dirname, 'word_generator.html'),

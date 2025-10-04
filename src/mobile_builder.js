@@ -31,8 +31,8 @@ async function initMobileBuilder() {
 
   // Wait for builder core to be ready
   if (!window.rulesData) {
-    console.warn('rulesData not available yet, waiting...');
-    setTimeout(initMobileBuilder, 50);
+    console.warn('rulesData not available yet, waiting for builderReady event...');
+    // Don't use setTimeout, wait for the proper event
     return;
   }
 
@@ -993,10 +993,10 @@ function applyResponsiveScale() {
 // Initialize when DOM is ready and builder is loaded
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
-    // Wait a bit for builder.js to initialize
-    setTimeout(initMobileBuilder, 100);
+    // Wait for builder to be ready
+    document.addEventListener('builderReady', initMobileBuilder, { once: true });
   });
 } else {
-  // DOM already loaded
-  setTimeout(initMobileBuilder, 100);
+  // DOM already loaded, wait for builder
+  document.addEventListener('builderReady', initMobileBuilder, { once: true });
 }

@@ -238,6 +238,9 @@ async function initBuilder() {
   window.clearCleanMode = clearCleanMode;
 
   console.log('Builder functions made globally accessible');
+
+  // Dispatch event to signal builder is ready
+  document.dispatchEvent(new CustomEvent('builderReady'));
 }
 
 // Minimal initialization for pages that only need the rendering functions
