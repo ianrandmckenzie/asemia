@@ -450,26 +450,97 @@ function applyGridData(gridId, gridData) {
 
 // Clear all shapes from both grids
 function clearAllGrids() {
-  const serifsGrid = document.getElementById('serifsGrid');
-  const joinsGrid = document.getElementById('joinsGrid');
+  showClearGridsConfirmation();
+}
 
-  // Clear serifs grid
-  for (let i = 0; i < serifsGrid.children.length; i++) {
-    serifsGrid.children[i].innerHTML = '';
-  }
+// Show clear grids confirmation modal
+function showClearGridsConfirmation() {
+  // Create confirmation overlay
+  const confirmOverlay = document.createElement('div');
+  confirmOverlay.className = 'fixed inset-0 bg-black/50 dark:bg-black/60 z-50 flex items-center justify-center';
 
-  // Clear joins grid
-  for (let i = 0; i < joinsGrid.children.length; i++) {
-    joinsGrid.children[i].innerHTML = '';
-  }
+  // Create confirmation modal
+  const confirmModal = document.createElement('div');
+  confirmModal.className = 'bg-white dark:bg-slate-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-xl max-w-sm w-full mx-4';
 
-  // Clear clean mode if active
-  if (window.clearCleanMode) {
-    window.clearCleanMode();
-  }
+  // Create header
+  const header = document.createElement('div');
+  header.className = 'px-6 py-4 border-b border-gray-200 dark:border-gray-700';
+  header.innerHTML = `
+    <h3 class="text-lg font-medium text-red-600 dark:text-red-400">Clear All Grids</h3>
+  `;
 
-  console.log('All grids cleared');
-  showNotification('Grids cleared', 'info');
+  // Create body
+  const body = document.createElement('div');
+  body.className = 'px-6 py-4';
+  body.innerHTML = `
+    <p class="text-gray-700 dark:text-gray-200">Are you sure you want to clear all shapes from the grids?</p>
+    <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">This action cannot be undone.</p>
+  `;
+
+  // Create footer
+  const footer = document.createElement('div');
+  footer.className = 'px-6 py-4 border-t border-gray-200 dark:border-gray-700 flex justify-end gap-3';
+
+  const cancelBtn = document.createElement('button');
+  cancelBtn.className = 'px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors';
+  cancelBtn.textContent = 'Cancel';
+  cancelBtn.onclick = () => document.body.removeChild(confirmOverlay);
+
+  const clearBtn = document.createElement('button');
+  clearBtn.className = 'px-4 py-2 bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 text-white rounded-lg transition-colors';
+  clearBtn.textContent = 'Clear All';
+
+  clearBtn.onclick = () => {
+    const serifsGrid = document.getElementById('serifsGrid');
+    const joinsGrid = document.getElementById('joinsGrid');
+
+    // Clear serifs grid
+    for (let i = 0; i < serifsGrid.children.length; i++) {
+      serifsGrid.children[i].innerHTML = '';
+    }
+
+    // Clear joins grid
+    for (let i = 0; i < joinsGrid.children.length; i++) {
+      joinsGrid.children[i].innerHTML = '';
+    }
+
+    // Clear clean mode if active
+    if (window.clearCleanMode) {
+      window.clearCleanMode();
+    }
+
+    showNotification('All grids cleared', 'success');
+    document.body.removeChild(confirmOverlay);
+  };
+
+  footer.appendChild(cancelBtn);
+  footer.appendChild(clearBtn);
+
+  // Assemble confirmation modal
+  confirmModal.appendChild(header);
+  confirmModal.appendChild(body);
+  confirmModal.appendChild(footer);
+  confirmOverlay.appendChild(confirmModal);
+
+  // Add to page
+  document.body.appendChild(confirmOverlay);
+
+  // Close on overlay click
+  confirmOverlay.onclick = (e) => {
+    if (e.target === confirmOverlay) {
+      document.body.removeChild(confirmOverlay);
+    }
+  };
+
+  // Handle escape key
+  const handleKeyDown = (e) => {
+    if (e.key === 'Escape') {
+      document.body.removeChild(confirmOverlay);
+      document.removeEventListener('keydown', handleKeyDown);
+    }
+  };
+  document.addEventListener('keydown', handleKeyDown);
 }
 
 // Show notification message

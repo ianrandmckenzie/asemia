@@ -1820,6 +1820,16 @@ function setupPreviewToggle() {
       }
     });
   }
+
+  // Desktop Clear Grids button
+  const desktopClearGridsBtn = document.getElementById('desktopClearGridsBtn');
+  if (desktopClearGridsBtn) {
+    desktopClearGridsBtn.addEventListener('click', () => {
+      if (window.clearAllGrids) {
+        window.clearAllGrids();
+      }
+    });
+  }
 }
 
 // Update grid layers and interactivity based on current tab

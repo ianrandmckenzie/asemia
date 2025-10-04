@@ -766,6 +766,16 @@ function setupMobileToolbar() {
   });
   } // End mobilePreviewBtn if block
 
+  // Clear Grids button
+  const mobileClearGridsBtn = document.getElementById('mobileClearGridsBtn');
+  if (mobileClearGridsBtn) {
+    mobileClearGridsBtn.addEventListener('click', () => {
+      if (window.clearAllGrids) {
+        window.clearAllGrids();
+      }
+    });
+  }
+
   // Setup mobile category erase buttons
   setupMobileCategoryEraseButtons();
 }
