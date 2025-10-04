@@ -743,8 +743,8 @@ function showCompositionSelector(compositions) {
 
     // Create delete button
     const deleteBtn = document.createElement('button');
-  deleteBtn.className = 'ml-3 px-2 py-1 text-red-600 hover:bg-red-100 dark:hover:bg-slate-800 rounded transition-colors text-sm';
-    deleteBtn.innerHTML = '🗑️';
+    deleteBtn.className = 'ml-3 px-2 py-1 text-red-600 hover:bg-red-100 dark:hover:bg-slate-800 rounded transition-colors text-sm';
+    deleteBtn.innerHTML = '<img src="/assets/icons/trash.svg" alt="Delete" class="w-6 h-6 inline-block dark:invert">';
     deleteBtn.title = 'Delete composition';
 
     deleteBtn.onclick = (e) => {
