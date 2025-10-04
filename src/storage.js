@@ -241,18 +241,28 @@ function extractGridData(gridId, gridType) {
       const angleKey = texturedElement.dataset.angleKey;
       const shapeName = texturedElement.dataset.shapeName;
       const textureId = texturedElement.dataset.textureId;
+      const textureType = texturedElement.dataset.textureType;
+      const textureColor = texturedElement.dataset.textureColor;
 
       if (category && angleKey && shapeName && textureId) {
+        const textureData = {
+          id: textureId,
+          applied: true
+        };
+
+        // If it's a color texture, save the color data
+        if (textureType === 'color' && textureColor) {
+          textureData.type = 'color';
+          textureData.color = textureColor;
+        }
+
         cells.push({
           index: i,
           category: category,
           angleKey: angleKey,
           shapeName: shapeName,
           imagePath: `./assets/shapes/${category}/${angleKey}/${shapeName}.svg`,
-          texture: {
-            id: textureId,
-            applied: true
-          }
+          texture: textureData
         });
       }
     });
@@ -364,31 +374,61 @@ function applyGridData(gridId, gridData) {
 
             // Apply texture if the shape had one
             if (shapeInfo.texture && shapeInfo.texture.applied && shapeInfo.texture.id) {
-              // Find the texture data
-              if (window.texturesData && window.applyTextureToShape) {
-                const texture = window.texturesData.textures.find(t => t.id === shapeInfo.texture.id);
+              // Check if it's a color texture
+              if (shapeInfo.texture.type === 'color' && shapeInfo.texture.color) {
+                // Create color texture object
+                const colorTexture = {
+                  type: 'color',
+                  id: shapeInfo.texture.id,
+                  name: shapeInfo.texture.id === 'black' ? 'Black' :
+                        shapeInfo.texture.id === 'white' ? 'White' : 'Custom Color',
+                  color: shapeInfo.texture.color
+                };
 
-                if (texture) {
+                if (window.applyTextureToShape) {
                   // Find the SVG element that was just placed
                   const placedSvg = cell.querySelector(`svg[data-shape-name="${shapeInfo.shapeName}"]`);
 
                   if (placedSvg) {
-                    // Apply the texture to the shape
-                    const texturedElement = window.applyTextureToShape(placedSvg, texture);
+                    // Apply the color texture to the shape
+                    const texturedElement = window.applyTextureToShape(placedSvg, colorTexture);
 
                     // Replace the SVG with the textured element
                     if (texturedElement && texturedElement !== placedSvg) {
                       placedSvg.parentNode.replaceChild(texturedElement, placedSvg);
-                      console.log(`Applied texture "${texture.name}" to shape "${shapeInfo.shapeName}"`);
+                      console.log(`Applied color "${colorTexture.color}" to shape "${shapeInfo.shapeName}"`);
                     }
                   } else {
-                    console.warn('Could not find placed SVG to apply texture');
+                    console.warn('Could not find placed SVG to apply color');
                   }
-                } else {
-                  console.warn(`Texture not found: ${shapeInfo.texture.id}`);
                 }
               } else {
-                console.warn('Texture system not available');
+                // Handle image-based texture
+                if (window.texturesData && window.applyTextureToShape) {
+                  const texture = window.texturesData.textures.find(t => t.id === shapeInfo.texture.id);
+
+                  if (texture) {
+                    // Find the SVG element that was just placed
+                    const placedSvg = cell.querySelector(`svg[data-shape-name="${shapeInfo.shapeName}"]`);
+
+                    if (placedSvg) {
+                      // Apply the texture to the shape
+                      const texturedElement = window.applyTextureToShape(placedSvg, texture);
+
+                      // Replace the SVG with the textured element
+                      if (texturedElement && texturedElement !== placedSvg) {
+                        placedSvg.parentNode.replaceChild(texturedElement, placedSvg);
+                        console.log(`Applied texture "${texture.name}" to shape "${shapeInfo.shapeName}"`);
+                      }
+                    } else {
+                      console.warn('Could not find placed SVG to apply texture');
+                    }
+                  } else {
+                    console.warn(`Texture not found: ${shapeInfo.texture.id}`);
+                  }
+                } else {
+                  console.warn('Texture system not available');
+                }
               }
             }
           } else {

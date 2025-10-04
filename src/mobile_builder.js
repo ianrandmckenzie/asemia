@@ -102,14 +102,170 @@ function populateMobileShapes(category, containerId) {
 // Populate mobile textures selector
 function populateMobileTextures(containerId) {
   const container = document.getElementById(containerId);
-  if (!container || !window.texturesData?.textures) return;
+  if (!container) return;
 
   container.innerHTML = '';
 
-  window.texturesData.textures.forEach(texture => {
-    const textureButton = createMobileTextureButton(texture);
-    container.appendChild(textureButton);
+  // Add color picker section first
+  const colorPickerSection = createMobileColorPickerSection();
+  container.appendChild(colorPickerSection);
+
+  // Add textures if available
+  if (window.texturesData?.textures) {
+    window.texturesData.textures.forEach(texture => {
+      const textureButton = createMobileTextureButton(texture);
+      container.appendChild(textureButton);
+    });
+  }
+}
+
+// Create mobile color picker section
+function createMobileColorPickerSection() {
+  const section = document.createElement('div');
+  section.className = 'flex gap-2 mb-3 pr-2';
+
+  // Black button
+  const blackButton = createMobileColorButton('Black', '#000000', 'black');
+  section.appendChild(blackButton);
+
+  // White button
+  const whiteButton = createMobileColorButton('White', '#FFFFFF', 'white');
+  section.appendChild(whiteButton);
+
+  // Color picker button
+  const colorPickerButton = createMobileColorPickerButton();
+  section.appendChild(colorPickerButton);
+
+  return section;
+}
+
+// Create mobile solid color button
+function createMobileColorButton(name, color, id) {
+  const button = document.createElement('button');
+  button.className = 'mobile-shape-btn flex-shrink-0 overflow-hidden flex flex-col';
+  button.dataset.category = 'textures';
+  button.dataset.colorId = id;
+  button.dataset.colorValue = color;
+
+  // Color preview
+  const preview = document.createElement('div');
+  preview.className = 'flex-1 w-full';
+  preview.style.backgroundColor = color;
+  if (id === 'white') {
+    preview.style.border = '1px solid #d1d5db';
+  }
+
+  // Label
+  const label = document.createElement('div');
+  label.className = 'text-[10px] font-medium py-0.5';
+  label.textContent = name;
+
+  button.appendChild(preview);
+  button.appendChild(label);
+
+  button.addEventListener('click', () => {
+    handleMobileColorSelection(button, {
+      type: 'color',
+      id: id,
+      name: name,
+      color: color
+    });
   });
+
+  return button;
+}
+
+// Create mobile color picker button
+function createMobileColorPickerButton() {
+  const button = document.createElement('button');
+  button.className = 'mobile-shape-btn flex-shrink-0 overflow-hidden flex flex-col relative';
+  button.dataset.category = 'textures';
+  button.type = 'button';
+
+  // Color preview
+  const preview = document.createElement('div');
+  preview.className = 'flex-1 w-full relative';
+  preview.style.background = 'linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 25%, #45B7D1 50%, #FFA07A 75%, #98D8C8 100%)';
+
+  // Hidden color input
+  const colorInput = document.createElement('input');
+  colorInput.type = 'color';
+  colorInput.className = 'absolute inset-0 w-full h-full opacity-0 cursor-pointer';
+  colorInput.value = '#FF6B6B';
+  preview.appendChild(colorInput);
+
+  // Label
+  const label = document.createElement('div');
+  label.className = 'text-[10px] font-medium py-0.5';
+  label.textContent = 'Custom';
+
+  button.appendChild(preview);
+  button.appendChild(label);
+
+  // Handle color change
+  colorInput.addEventListener('input', (e) => {
+    const color = e.target.value;
+    preview.style.backgroundColor = color;
+
+    handleMobileColorSelection(button, {
+      type: 'color',
+      id: 'custom',
+      name: 'Custom Color',
+      color: color
+    });
+  });
+
+  // Click button to trigger color picker
+  button.addEventListener('click', (e) => {
+    if (e.target !== colorInput) {
+      colorInput.click();
+    }
+  });
+
+  return button;
+}
+
+// Handle mobile color selection
+function handleMobileColorSelection(button, colorData) {
+  // Clear any active mobile erase modes
+  if (typeof clearMobileEraseModes === 'function') {
+    clearMobileEraseModes();
+  }
+
+  // Remove previous selection
+  document.querySelectorAll('.mobile-shape-btn[data-category="textures"]').forEach(el => {
+    el.classList.remove('selected');
+  });
+
+  // Add selection to clicked button
+  button.classList.add('selected');
+
+  // Update the mobile textures tab icon with a color indicator
+  const mobileTexturesTab = document.getElementById('mobileTexturesTab');
+  if (mobileTexturesTab) {
+    const iconContainer = mobileTexturesTab.querySelector('.flex.flex-col');
+    if (iconContainer) {
+      const existingIcon = iconContainer.querySelector('svg, img, div.color-indicator');
+
+      // Create color indicator
+      const colorIndicator = document.createElement('div');
+      colorIndicator.className = 'color-indicator h-6 w-6 rounded border border-gray-300 dark:border-gray-600';
+      colorIndicator.style.backgroundColor = colorData.color;
+
+      if (existingIcon) {
+        existingIcon.replaceWith(colorIndicator);
+      }
+    }
+  }
+
+  // Update selectedTexture
+  if (window.setSelectedTexture) {
+    window.setSelectedTexture(colorData);
+  }
+
+  if (window.updateSelectedShapeDisplay) {
+    window.updateSelectedShapeDisplay();
+  }
 }
 
 // Create mobile texture button

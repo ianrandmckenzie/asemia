@@ -396,6 +396,16 @@ function populateTexturesShapes() {
   if (container) {
     container.innerHTML = '';
 
+    // Add color selector buttons first
+    const colorPickerSection = createColorPickerSection();
+    container.appendChild(colorPickerSection);
+
+    // Add divider
+    const divider = document.createElement('div');
+    divider.className = 'col-span-2 h-px bg-gray-300 dark:bg-gray-600 my-2';
+    container.appendChild(divider);
+
+    // Add texture buttons
     if (!texturesData?.textures) return;
 
     texturesData.textures.forEach(texture => {
@@ -403,6 +413,146 @@ function populateTexturesShapes() {
       container.appendChild(textureButton);
     });
   }
+}
+
+// Create color picker section with Black, White, and Color Picker options
+function createColorPickerSection() {
+  const section = document.createElement('div');
+  section.className = 'col-span-2 grid grid-cols-3 gap-2 mb-2';
+
+  // Black button
+  const blackButton = createColorButton('Black', '#000000', 'black');
+  section.appendChild(blackButton);
+
+  // White button
+  const whiteButton = createColorButton('White', '#FFFFFF', 'white');
+  section.appendChild(whiteButton);
+
+  // Color picker button
+  const colorPickerButton = createColorPickerButton();
+  section.appendChild(colorPickerButton);
+
+  return section;
+}
+
+// Create a solid color button
+function createColorButton(name, color, id) {
+  const button = document.createElement('button');
+  button.className = 'aspect-square rounded border-2 border-gray-300 dark:border-gray-600 hover:border-blue-500 dark:hover:border-blue-400 overflow-hidden flex flex-col items-center justify-center relative';
+  button.dataset.colorId = id;
+  button.dataset.colorValue = color;
+
+  // Color preview
+  const preview = document.createElement('div');
+  preview.className = 'w-full h-3/4';
+  preview.style.backgroundColor = color;
+  if (id === 'white') {
+    preview.className += ' border border-gray-300 dark:border-gray-600';
+  }
+
+  // Label
+  const label = document.createElement('div');
+  label.className = 'w-full h-1/4 flex items-center justify-center text-xs font-medium text-gray-700 dark:text-gray-300 px-1 text-center';
+  label.textContent = name;
+
+  button.appendChild(preview);
+  button.appendChild(label);
+
+  button.addEventListener('click', () => {
+    // Clear any active erase modes
+    if (typeof clearAllEraseModes === 'function') {
+      clearAllEraseModes();
+    }
+
+    // Remove previous selection from all texture/color buttons
+    document.querySelectorAll('#texturesShapes button').forEach(btn => {
+      btn.classList.remove('border-blue-500', 'dark:border-blue-400', 'bg-blue-50', 'dark:bg-blue-900');
+      btn.classList.add('border-gray-300', 'dark:border-gray-600');
+    });
+
+    // Mark this as selected
+    button.classList.remove('border-gray-300', 'dark:border-gray-600');
+    button.classList.add('border-blue-500', 'dark:border-blue-400', 'bg-blue-50', 'dark:bg-blue-900');
+
+    // Update selectedTexture with color data
+    selectedTexture = {
+      type: 'color',
+      id: id,
+      name: name,
+      color: color
+    };
+
+    updateSelectedShapeDisplay();
+  });
+
+  return button;
+}
+
+// Create color picker button with input
+function createColorPickerButton() {
+  const button = document.createElement('button');
+  button.className = 'aspect-square rounded border-2 border-gray-300 dark:border-gray-600 hover:border-blue-500 dark:hover:border-blue-400 overflow-hidden flex flex-col items-center justify-center relative';
+  button.type = 'button';
+
+  // Color preview div
+  const preview = document.createElement('div');
+  preview.className = 'w-full h-3/4 relative';
+  preview.style.background = 'linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 25%, #45B7D1 50%, #FFA07A 75%, #98D8C8 100%)';
+
+  // Hidden color input
+  const colorInput = document.createElement('input');
+  colorInput.type = 'color';
+  colorInput.className = 'absolute inset-0 w-full h-full opacity-0 cursor-pointer';
+  colorInput.value = '#FF6B6B';
+  preview.appendChild(colorInput);
+
+  // Label
+  const label = document.createElement('div');
+  label.className = 'w-full h-1/4 flex items-center justify-center text-xs font-medium text-gray-700 dark:text-gray-300 px-1 text-center';
+  label.textContent = 'Custom';
+
+  button.appendChild(preview);
+  button.appendChild(label);
+
+  // Handle color change
+  colorInput.addEventListener('input', (e) => {
+    const color = e.target.value;
+    preview.style.backgroundColor = color;
+
+    // Clear any active erase modes
+    if (typeof clearAllEraseModes === 'function') {
+      clearAllEraseModes();
+    }
+
+    // Remove previous selection from all texture/color buttons
+    document.querySelectorAll('#texturesShapes button').forEach(btn => {
+      btn.classList.remove('border-blue-500', 'dark:border-blue-400', 'bg-blue-50', 'dark:bg-blue-900');
+      btn.classList.add('border-gray-300', 'dark:border-gray-600');
+    });
+
+    // Mark this as selected
+    button.classList.remove('border-gray-300', 'dark:border-gray-600');
+    button.classList.add('border-blue-500', 'dark:border-blue-400', 'bg-blue-50', 'dark:bg-blue-900');
+
+    // Update selectedTexture with custom color
+    selectedTexture = {
+      type: 'color',
+      id: 'custom',
+      name: 'Custom Color',
+      color: color
+    };
+
+    updateSelectedShapeDisplay();
+  });
+
+  // Click button to trigger color picker
+  button.addEventListener('click', (e) => {
+    if (e.target !== colorInput) {
+      colorInput.click();
+    }
+  });
+
+  return button;
 }
 
 // Create a texture button for the sidebar
@@ -1198,6 +1348,36 @@ function placeShapeInCell(cell, shapeData, allowOverlap = false) {
 function applyTextureToShape(svgElement, texture) {
   if (!svgElement || !texture) return svgElement;
 
+  // Check if this is a solid color or texture
+  if (texture.type === 'color') {
+    // For solid colors, just clone the SVG and apply the color
+    const svgClone = svgElement.cloneNode(true);
+
+    // Apply the color as fill
+    svgClone.setAttribute('fill', texture.color);
+    svgClone.setAttribute('stroke', texture.color);
+
+    // Also update any child elements with fill/stroke
+    const fillableElements = svgClone.querySelectorAll('*[fill], *[stroke]');
+    fillableElements.forEach(el => {
+      if (el.getAttribute('fill') && el.getAttribute('fill') !== 'none') {
+        el.setAttribute('fill', texture.color);
+      }
+      if (el.getAttribute('stroke') && el.getAttribute('stroke') !== 'none') {
+        el.setAttribute('stroke', texture.color);
+      }
+    });
+
+    // Store metadata
+    svgClone.dataset.textured = 'true';
+    svgClone.dataset.textureId = texture.id;
+    svgClone.dataset.textureType = 'color';
+    svgClone.dataset.textureColor = texture.color;
+
+    return svgClone;
+  }
+
+  // Original texture application logic for image-based textures
   // Clone the SVG to avoid modifying the original
   const svgClone = svgElement.cloneNode(true);
 
@@ -1267,6 +1447,7 @@ function applyTextureToShape(svgElement, texture) {
   textureContainer.dataset.shapeName = svgElement.dataset.shapeName;
   textureContainer.dataset.textured = 'true';
   textureContainer.dataset.textureId = texture.id;
+  textureContainer.dataset.textureType = 'image';
 
   return textureContainer;
 }
