@@ -129,7 +129,7 @@ const TUTORIAL_STEPS = [
   {
     id: 'complete',
     title: 'You\'re Ready to Create!',
-    generalContent: 'Start building your asemic typeforms.\n\nExperiment, explore, and have fun.\n\n💡 Tip: Check out the Archive to see examples, or try the Word and Sentence Generators for inspiration.',
+    generalContent: 'Start building your asemic typeforms.\n\nExperiment, explore, and have fun.\n\n<img src="/assets/icons/lightbulb.svg" alt="Tip" class="inline-block w-5 h-5 align-text-bottom"> Tip: Check out the Archive to see examples, or try the Word and Sentence Generators for inspiration.',
     desktopContent: '',
     mobileContent: '',
     desktopTargetSelector: null,

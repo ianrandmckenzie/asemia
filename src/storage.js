@@ -123,7 +123,6 @@ async function saveUpdatedManifest(newFilename) {
     document.body.removeChild(a);
     URL.revokeObjectURL(manifestUrl);
 
-    console.log('📋 Updated manifest downloaded with', manifest.files.length, 'files');
     showNotification('Updated manifest.json also downloaded', 'info');
   } catch (error) {
     console.warn('Could not generate updated manifest:', error);

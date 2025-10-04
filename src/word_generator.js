@@ -54,7 +54,9 @@ async function initWordGenerator() {
   } catch (error) {
     console.error('Failed to initialize word generator:', error);
     loadingElement.innerHTML = `
-      <div class="text-red-500 text-xl mb-4">⚠️</div>
+      <div class="inline-block w-12 h-12 mb-4">
+        <img src="assets/icons/warning.svg" alt="Warning" class="w-full h-full text-red-500">
+      </div>
       <p class="text-gray-600 dark:text-gray-300 mb-4">Failed to initialize word generator</p>
       <p class="text-gray-500 dark:text-gray-400 text-sm">Error: ${error.message}</p>
     `;
@@ -76,7 +78,6 @@ async function loadArchivedForms() {
       if (manifestResponse.ok) {
         const manifest = await manifestResponse.json();
         archiveFiles = manifest.files;
-        console.log(`📋 Loaded manifest with ${archiveFiles.length} files`);
       } else {
         throw new Error('Manifest not found');
       }
@@ -104,12 +105,11 @@ async function loadArchivedForms() {
           composition.filename = filename;
           composition.source = 'archive';
           compositions.push(composition);
-          console.log(`✅ Loaded ${filename}:`, composition.metadata?.name || 'Unknown');
         } else {
-          console.warn(`❌ Failed to load ${filename}: ${response.status} ${response.statusText}`);
+          console.warn(`[FAILED] Failed to load ${filename}: ${response.status} ${response.statusText}`);
         }
       } catch (error) {
-        console.warn(`❌ Error loading ${filename}:`, error);
+        console.warn(`[ERROR] Error loading ${filename}:`, error);
       }
     }
 
@@ -119,13 +119,11 @@ async function loadArchivedForms() {
     try {
       if (window.getAllCompositions) {
         const browserCompositions = await window.getAllCompositions();
-        console.log(`📦 Found ${browserCompositions.length} compositions in browser storage`);
 
         // Add browser compositions to the list
         browserCompositions.forEach(comp => {
           comp.source = 'browser';
           compositions.push(comp);
-          console.log(`✅ Loaded from browser:`, comp.metadata?.name || 'Unknown');
         });
       } else {
         console.warn('Browser storage not available (getAllCompositions function not found)');
@@ -142,7 +140,6 @@ async function loadArchivedForms() {
     }
 
     archivedCompositions = compositions;
-    console.log(`🎉 Successfully loaded ${compositions.length} forms as source material`);
 
   } catch (error) {
     console.error('Failed to load archived forms:', error);
