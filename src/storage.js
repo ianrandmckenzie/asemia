@@ -214,8 +214,13 @@ function extractGridData(gridId, gridType) {
       }
     });
 
-    // Handle all SVG elements in the cell
+    // Handle all SVG elements in the cell (skip textured ones, they're handled separately)
     svgs.forEach(svg => {
+      // Skip textured SVGs - they will be handled in the texturedElements section
+      if (svg.dataset.textured === 'true') {
+        return;
+      }
+
       console.log(`Found svg in cell ${i}:`, svg);
       // Try to extract data from SVG attributes or data attributes
       const category = svg.getAttribute('data-category');

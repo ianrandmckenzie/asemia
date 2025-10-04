@@ -1,0 +1,109 @@
+{
+  "metadata": {
+    "name": "ofte",
+    "created": "2025-10-03T22:26:19.410Z",
+    "version": "1.0"
+  },
+  "grids": {
+    "serifs": {
+      "gridType": "serifs",
+      "gridSize": 5,
+      "shapes": [
+        {
+          "index": 3,
+          "category": "bodies",
+          "angleKey": "0_deg",
+          "shapeName": "horizontal",
+          "imagePath": "./assets/shapes/bodies/0_deg/horizontal.svg",
+          "texture": {
+            "id": "blackmarble-gold2",
+            "applied": true
+          }
+        },
+        {
+          "index": 4,
+          "category": "serifs",
+          "angleKey": "0_deg",
+          "shapeName": "right",
+          "imagePath": "./assets/shapes/serifs/0_deg/right.svg",
+          "texture": {
+            "id": "blackmarble-gold2",
+            "applied": true
+          }
+        },
+        {
+          "index": 13,
+          "category": "bodies",
+          "angleKey": "0_deg",
+          "shapeName": "horizontal",
+          "imagePath": "./assets/shapes/bodies/0_deg/horizontal.svg",
+          "texture": {
+            "id": "blackmarble-gold2",
+            "applied": true
+          }
+        },
+        {
+          "index": 17,
+          "category": "bodies",
+          "angleKey": "0_deg",
+          "shapeName": "vertical",
+          "imagePath": "./assets/shapes/bodies/0_deg/vertical.svg",
+          "texture": {
+            "id": "blackmarble-gold2",
+            "applied": true
+          }
+        },
+        {
+          "index": 22,
+          "category": "serifs",
+          "angleKey": "0_deg",
+          "shapeName": "bottom",
+          "imagePath": "./assets/shapes/serifs/0_deg/bottom.svg",
+          "texture": {
+            "id": "blackmarble-gold2",
+            "applied": true
+          }
+        }
+      ]
+    },
+    "joins": {
+      "gridType": "joins",
+      "gridSize": 4,
+      "shapes": [
+        {
+          "index": 2,
+          "category": "joins",
+          "angleKey": "45_deg",
+          "shapeName": "horizontal_tl",
+          "imagePath": "./assets/shapes/joins/45_deg/horizontal_tl.svg",
+          "texture": {
+            "id": "blackmarble-gold2",
+            "applied": true
+          }
+        },
+        {
+          "index": 7,
+          "category": "joins",
+          "angleKey": "45_deg",
+          "shapeName": "horizontal_br",
+          "imagePath": "./assets/shapes/joins/45_deg/horizontal_br.svg",
+          "texture": {
+            "id": "blackmarble-gold2",
+            "applied": true
+          }
+        },
+        {
+          "index": 10,
+          "category": "joins",
+          "angleKey": "90_deg",
+          "shapeName": "horizontal_tl",
+          "imagePath": "./assets/shapes/joins/90_deg/horizontal_tl.svg",
+          "texture": {
+            "id": "blackmarble-gold2",
+            "applied": true
+          }
+        }
+      ]
+    }
+  }
+}

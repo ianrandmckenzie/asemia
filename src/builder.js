@@ -1368,7 +1368,12 @@ function applyTextureToShape(svgElement, texture) {
       }
     });
 
-    // Store metadata
+    // Store shape metadata (preserve from original SVG)
+    svgClone.dataset.category = svgElement.dataset.category;
+    svgClone.dataset.angleKey = svgElement.dataset.angleKey;
+    svgClone.dataset.shapeName = svgElement.dataset.shapeName;
+
+    // Store texture metadata
     svgClone.dataset.textured = 'true';
     svgClone.dataset.textureId = texture.id;
     svgClone.dataset.textureType = 'color';
