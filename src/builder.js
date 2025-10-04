@@ -9,7 +9,12 @@ let selectedShape = null;
 let selectedTexture = null; // Separate state for texture selection
 let currentTab = 'bodies';
 let previewMode = false;
-let eraseMode = false;
+let eraseMode = false; // Still exists for backward compatibility, but now per-category
+let eraseModes = { // New: per-category erase modes
+  serifs: false,
+  bodies: false,
+  joins: false
+};
 let pendingEraseCell = null; // Track cell pending erase confirmation
 let pendingPlacementCell = null; // Track cell pending placement confirmation (mobile)
 let pendingPlacementShape = null; // Track shape data for pending placement
@@ -193,7 +198,7 @@ async function initBuilder() {
   setupTabSwitching();
   setupClearSelection();
   setupPreviewToggle();
-  setupDesktopEraseMode();
+  setupCategoryEraseButtons(); // New: setup per-category erase buttons
   updateGridLayers();
 
   // Make necessary functions globally accessible for constrained builder and save/load
@@ -419,6 +424,11 @@ function createTextureButton(texture) {
   button.appendChild(label);
 
   button.addEventListener('click', () => {
+    // Clear any active erase modes when selecting a texture
+    if (typeof clearAllEraseModes === 'function') {
+      clearAllEraseModes();
+    }
+
     // Remove previous selection from texture buttons only
     document.querySelectorAll('#texturesShapes button').forEach(btn => {
       btn.classList.remove('border-blue-500', 'dark:border-blue-400', 'bg-blue-50', 'dark:bg-blue-900');
@@ -474,6 +484,11 @@ function createShapeButton(category, angleKey, shape) {
 
 // Select a shape
 function selectShape(button, category, angleKey, shape) {
+  // Clear any active erase modes when selecting a shape
+  if (typeof clearAllEraseModes === 'function') {
+    clearAllEraseModes();
+  }
+
   // Remove previous selection from shape buttons only
   document.querySelectorAll('.shape-selected').forEach(el => {
     // remove both light and dark variants when clearing previous selection
@@ -658,8 +673,9 @@ function clearCellHighlights() {
 function handleGridCellClick(event) {
   const cell = event.currentTarget;
 
-  // Check if erase mode is active (mobile or desktop)
-  if ((window.isEraseMode && window.isEraseMode()) || eraseMode) {
+  // Check if any erase mode is active (mobile or desktop)
+  const activeEraseMode = eraseModes.serifs || eraseModes.bodies || eraseModes.joins;
+  if ((window.isEraseMode && window.isEraseMode()) || activeEraseMode) {
     handleEraseClick(cell);
     return;
   }
@@ -769,9 +785,35 @@ function proceedWithPlacement(cell, shapeData) {
 
 // Handle erase mode click with confirmation
 function handleEraseClick(cell) {
+  // Find which category's erase mode is active
+  let activeCategory = null;
+  if (eraseModes.serifs) activeCategory = 'serifs';
+  else if (eraseModes.bodies) activeCategory = 'bodies';
+  else if (eraseModes.joins) activeCategory = 'joins';
+
+  // Check mobile erase mode
+  if (window.isEraseMode && window.isEraseMode()) {
+    const mobileCategory = window.getMobileEraseCategory ? window.getMobileEraseCategory() : null;
+    if (mobileCategory) activeCategory = mobileCategory;
+  }
+
+  if (!activeCategory) return;
+
   // If this is the same cell as pending erase, confirm the erase
   if (pendingEraseCell === cell) {
-    cell.innerHTML = '';
+    // Erase only shapes of the active category
+    const shapesInCell = cell.querySelectorAll('[data-category]');
+    shapesInCell.forEach(shape => {
+      if (shape.dataset.category === activeCategory) {
+        shape.remove();
+      }
+    });
+
+    // If no shapes remain, clear the cell entirely
+    if (cell.innerHTML.trim() === '') {
+      cell.innerHTML = '';
+    }
+
     clearPendingEraseHighlight();
     return;
   }
@@ -779,8 +821,9 @@ function handleEraseClick(cell) {
   // Clear any previous pending erase highlight
   clearPendingEraseHighlight();
 
-  // Only highlight for erase if cell has content
-  if (cell.innerHTML.trim() !== '') {
+  // Only highlight for erase if cell has content of the active category
+  const hasTargetCategory = cell.querySelector(`[data-category="${activeCategory}"]`);
+  if (hasTargetCategory) {
     pendingEraseCell = cell;
     cell.classList.add('cell-erase-pending');
   }
@@ -812,57 +855,88 @@ function clearPendingPlacement() {
   }
 }
 
-// Setup desktop erase mode
-function setupDesktopEraseMode() {
-  const desktopEraseBtn = document.getElementById('desktopEraseBtn');
-  if (!desktopEraseBtn) return;
+// Setup category-specific erase buttons
+function setupCategoryEraseButtons() {
+  const eraseButtons = {
+    serifs: document.getElementById('serifsEraseBtn'),
+    bodies: document.getElementById('bodiesEraseBtn'),
+    joins: document.getElementById('joinsEraseBtn')
+  };
 
-  desktopEraseBtn.addEventListener('click', () => {
-    eraseMode = !eraseMode;
-    clearPendingEraseHighlight();
+  Object.entries(eraseButtons).forEach(([category, btn]) => {
+    if (!btn) return;
 
-    // Update button appearance and icon
-    const textSpan = desktopEraseBtn.querySelector('span');
-    const icon = document.getElementById('desktopEraseIcon');
+    btn.addEventListener('click', () => {
+      // Toggle this category's erase mode
+      eraseModes[category] = !eraseModes[category];
 
-    if (eraseMode) {
-      desktopEraseBtn.classList.add('bg-red-100', 'dark:bg-red-900');
-      desktopEraseBtn.classList.remove('hover:bg-gray-50', 'dark:hover:bg-slate-700');
-      desktopEraseBtn.classList.add('hover:bg-red-200', 'dark:hover:bg-red-800');
-      if (textSpan) {
-        textSpan.classList.remove('text-gray-700', 'dark:text-gray-200');
-        textSpan.classList.add('text-red-700', 'dark:text-red-300');
+      // Turn off other categories' erase modes
+      Object.keys(eraseModes).forEach(cat => {
+        if (cat !== category) eraseModes[cat] = false;
+      });
+
+      clearPendingEraseHighlight();
+
+      // Update all button appearances
+      updateEraseButtonAppearances();
+
+      // Update cursor for grid cells
+      const gridsWrapper = document.querySelector('.builder-grids-wrapper');
+      if (gridsWrapper) {
+        const anyEraseMode = Object.values(eraseModes).some(mode => mode);
+        gridsWrapper.style.cursor = anyEraseMode ? 'crosshair' : '';
       }
+    });
+  });
+}
+
+// Update all erase button appearances
+function updateEraseButtonAppearances() {
+  const buttons = [
+    { category: 'serifs', id: 'serifsEraseBtn' },
+    { category: 'bodies', id: 'bodiesEraseBtn' },
+    { category: 'joins', id: 'joinsEraseBtn' }
+  ];
+
+  buttons.forEach(({ category, id }) => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+
+    const icon = btn.querySelector('img');
+    const isActive = eraseModes[category];
+
+    if (isActive) {
+      // Active state - red theme
+      btn.classList.remove('border-gray-300', 'dark:border-gray-700');
+      btn.classList.remove('hover:border-red-500', 'dark:hover:border-red-400');
+      btn.classList.remove('hover:bg-red-50', 'dark:hover:bg-red-900/40');
+      btn.classList.add('bg-red-200', 'border-red-500', 'dark:bg-red-800/40', 'dark:border-red-400');
+      btn.classList.add('hover:bg-red-300', 'dark:hover:bg-red-700/40');
       if (icon) {
         icon.src = '/assets/icons/erasing.svg';
       }
     } else {
-      desktopEraseBtn.classList.remove('bg-red-100', 'dark:bg-red-900');
-      desktopEraseBtn.classList.add('hover:bg-gray-50', 'dark:hover:bg-slate-700');
-      desktopEraseBtn.classList.remove('hover:bg-red-200', 'dark:hover:bg-red-800');
-      if (textSpan) {
-        textSpan.classList.remove('text-red-700', 'dark:text-red-300');
-        textSpan.classList.add('text-gray-700', 'dark:text-gray-200');
-      }
+      // Inactive state - default theme
+      btn.classList.remove('bg-red-200', 'border-red-500', 'dark:bg-red-800/40', 'dark:border-red-400');
+      btn.classList.remove('hover:bg-red-300', 'dark:hover:bg-red-700/40');
+      btn.classList.add('border-gray-300', 'dark:border-gray-700');
+      btn.classList.add('hover:border-red-500', 'dark:hover:border-red-400');
+      btn.classList.add('hover:bg-red-50', 'dark:hover:bg-red-900/40');
       if (icon) {
         icon.src = '/assets/icons/erase.svg';
-      }
-    }
-
-    // Update cursor for grid cells
-    const gridsWrapper = document.querySelector('.builder-grids-wrapper');
-    if (gridsWrapper) {
-      if (eraseMode) {
-        gridsWrapper.style.cursor = 'crosshair';
-      } else {
-        gridsWrapper.style.cursor = '';
       }
     }
   });
 }
 
 // Export erase mode state for mobile compatibility
-window.isDesktopEraseMode = () => eraseMode;
+window.isDesktopEraseMode = () => Object.values(eraseModes).some(mode => mode);
+window.getActiveEraseCategory = () => {
+  for (const [category, active] of Object.entries(eraseModes)) {
+    if (active) return category;
+  }
+  return null;
+};
 
 // Helper function to apply join positioning
 function applyJoinPositioning(element, shapeData) {
@@ -1215,6 +1289,10 @@ function setupTabSwitching() {
       bodiesContent.classList.remove('hidden');
       joinsContent.classList.add('hidden');
       texturesContent.classList.add('hidden');
+
+      // Clear erase modes when switching tabs
+      clearAllEraseModes();
+
       updateGridLayers();
     });
 
@@ -1226,6 +1304,10 @@ function setupTabSwitching() {
       joinsContent.classList.remove('hidden');
       bodiesContent.classList.add('hidden');
       texturesContent.classList.add('hidden');
+
+      // Clear erase modes when switching tabs
+      clearAllEraseModes();
+
       updateGridLayers();
     });
 
@@ -1237,8 +1319,27 @@ function setupTabSwitching() {
       texturesContent.classList.remove('hidden');
       bodiesContent.classList.add('hidden');
       joinsContent.classList.add('hidden');
+
+      // Clear erase modes when switching tabs
+      clearAllEraseModes();
+
       updateGridLayers();
     });
+  }
+}
+
+// Clear all erase modes and update UI
+function clearAllEraseModes() {
+  eraseModes.serifs = false;
+  eraseModes.bodies = false;
+  eraseModes.joins = false;
+  clearPendingEraseHighlight();
+  updateEraseButtonAppearances();
+
+  // Update cursor
+  const gridsWrapper = document.querySelector('.builder-grids-wrapper');
+  if (gridsWrapper) {
+    gridsWrapper.style.cursor = '';
   }
 }
 

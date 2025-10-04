@@ -77,8 +77,13 @@ function setupMobileUI() {
 function populateMobileShapes(category, containerId) {
   const container = document.getElementById(containerId);
   if (!container || !window.rulesData?.shapes) return;
+  const capitalizedCategory = category.charAt(0).toUpperCase() + category.slice(1);
 
-  container.innerHTML = '';
+  container.innerHTML = `
+    <button id="mobile${capitalizedCategory}EraseBtn" class="mobile-shape-btn flex-shrink-0">
+      <img src="/assets/icons/erase.svg" alt="Erase ${capitalizedCategory}" class="w-6 h-6 dark:invert">
+    </button>
+  `;
 
   const categoryData = window.rulesData.shapes[category];
   if (!categoryData) return;
@@ -131,6 +136,11 @@ function createMobileTextureButton(texture) {
 
 // Handle mobile texture selection
 function handleMobileTextureSelection(button, texture) {
+  // Clear any active mobile erase modes when selecting a texture
+  if (typeof clearMobileEraseModes === 'function') {
+    clearMobileEraseModes();
+  }
+
   // Remove previous selection from texture buttons
   document.querySelectorAll('.mobile-shape-btn[data-category="textures"]').forEach(el => {
     el.classList.remove('selected');
@@ -200,6 +210,11 @@ function createMobileShapeButton(category, angleKey, shape) {
 
 // Handle mobile shape selection
 function handleMobileShapeSelection(button, category, angleKey, shape) {
+  // Clear any active mobile erase modes when selecting a shape
+  if (typeof clearMobileEraseModes === 'function') {
+    clearMobileEraseModes();
+  }
+
   // Clear any pending placement when selecting a new shape
   if (window.clearPendingPlacement) {
     window.clearPendingPlacement();
@@ -262,6 +277,9 @@ function switchMobileTab(category) {
   if (window.clearPendingPlacement) {
     window.clearPendingPlacement();
   }
+
+  // Clear erase modes when switching tabs
+  clearMobileEraseModes();
 
   // If clicking the active tab, toggle it off
   if (activeTab === category) {
@@ -486,68 +504,123 @@ function setupMobileToolbar() {
   });
   } // End mobilePreviewBtn if block
 
-  // Erase mode toggle
-  const mobileEraseBtn = document.getElementById('mobileEraseBtn');
-  if (mobileEraseBtn) {
-    setupEraseMode(mobileEraseBtn);
-  }
+  // Setup mobile category erase buttons
+  setupMobileCategoryEraseButtons();
 }
 
-// Setup erase mode functionality
-let eraseMode = false;
+// Setup mobile category-specific erase buttons
+let mobileEraseModes = {
+  serifs: false,
+  bodies: false,
+  joins: false
+};
 
-function setupEraseMode(eraseBtn) {
-  eraseBtn.addEventListener('click', () => {
-    eraseMode = !eraseMode;
+function setupMobileCategoryEraseButtons() {
+  const eraseButtons = {
+    serifs: document.getElementById('mobileSerifsEraseBtn'),
+    bodies: document.getElementById('mobileBodiesEraseBtn'),
+    joins: document.getElementById('mobileJoinsEraseBtn')
+  };
 
-    // Clear any pending erase highlight when toggling
-    if (window.clearPendingEraseHighlight) {
-      window.clearPendingEraseHighlight();
-    }
+  Object.entries(eraseButtons).forEach(([category, btn]) => {
+    if (!btn) return;
 
-    // Clear any pending placement when toggling erase mode
-    if (window.clearPendingPlacement) {
-      window.clearPendingPlacement();
-    }
+    btn.addEventListener('click', () => {
+      // Toggle this category's erase mode
+      mobileEraseModes[category] = !mobileEraseModes[category];
 
-    // Update button appearance and icon
-    const textSpan = eraseBtn.querySelector('span');
-    const icon = document.getElementById('mobileEraseIcon');
+      // Turn off other categories' erase modes
+      Object.keys(mobileEraseModes).forEach(cat => {
+        if (cat !== category) mobileEraseModes[cat] = false;
+      });
 
-    if (eraseMode) {
-      eraseBtn.classList.add('bg-red-100', 'dark:bg-red-900');
-      if (textSpan) {
-        textSpan.classList.remove('text-gray-600', 'dark:text-gray-300');
-        textSpan.classList.add('text-red-700', 'dark:text-red-300');
+      // Clear any pending erase highlight when toggling
+      if (window.clearPendingEraseHighlight) {
+        window.clearPendingEraseHighlight();
       }
+
+      // Clear any pending placement when toggling erase mode
+      if (window.clearPendingPlacement) {
+        window.clearPendingPlacement();
+      }
+
+      // Update all button appearances
+      updateMobileEraseButtonAppearances();
+
+      // Update cursor for grid cells
+      const gridsWrapper = document.querySelector('.builder-grids-wrapper');
+      if (gridsWrapper) {
+        const anyEraseMode = Object.values(mobileEraseModes).some(mode => mode);
+        gridsWrapper.style.cursor = anyEraseMode ? 'crosshair' : '';
+      }
+    });
+  });
+}
+
+// Update all mobile erase button appearances
+function updateMobileEraseButtonAppearances() {
+  const buttons = [
+    { category: 'serifs', id: 'mobileSerifsEraseBtn' },
+    { category: 'bodies', id: 'mobileBodiesEraseBtn' },
+    { category: 'joins', id: 'mobileJoinsEraseBtn' }
+  ];
+
+  buttons.forEach(({ category, id }) => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+
+    const icon = btn.querySelector('img');
+    const isActive = mobileEraseModes[category];
+
+    if (isActive) {
+      // Active state - red theme with scale effect
+      btn.classList.remove('border-gray-300', 'dark:border-gray-700');
+      btn.classList.add('border-red-500', 'dark:border-red-400');
+      btn.style.borderWidth = '3px';
+      btn.style.boxShadow = '0 0 0 2px rgb(254 202 202)'; // red-200
       if (icon) {
         icon.src = '/assets/icons/erasing.svg';
       }
     } else {
-      eraseBtn.classList.remove('bg-red-100', 'dark:bg-red-900');
-      if (textSpan) {
-        textSpan.classList.remove('text-red-700', 'dark:text-red-300');
-        textSpan.classList.add('text-gray-600', 'dark:text-gray-300');
-      }
+      // Inactive state - default theme
+      btn.classList.remove('border-red-500', 'dark:border-red-400');
+      btn.classList.add('border-gray-300', 'dark:border-gray-700');
+      btn.style.borderWidth = '';
+      btn.style.boxShadow = '';
       if (icon) {
         icon.src = '/assets/icons/erase.svg';
-      }
-    }
-
-    // Update cursor for grid cells
-    const gridsWrapper = document.querySelector('.builder-grids-wrapper');
-    if (gridsWrapper) {
-      if (eraseMode) {
-        gridsWrapper.style.cursor = 'crosshair';
-      } else {
-        gridsWrapper.style.cursor = '';
       }
     }
   });
 }
 
+// Clear all mobile erase modes and update UI
+function clearMobileEraseModes() {
+  mobileEraseModes.serifs = false;
+  mobileEraseModes.bodies = false;
+  mobileEraseModes.joins = false;
+
+  if (window.clearPendingEraseHighlight) {
+    window.clearPendingEraseHighlight();
+  }
+
+  updateMobileEraseButtonAppearances();
+
+  // Update cursor
+  const gridsWrapper = document.querySelector('.builder-grids-wrapper');
+  if (gridsWrapper) {
+    gridsWrapper.style.cursor = '';
+  }
+}
+
 // Export erase mode state
-window.isEraseMode = () => eraseMode;
+window.isEraseMode = () => Object.values(mobileEraseModes).some(mode => mode);
+window.getMobileEraseCategory = () => {
+  for (const [category, active] of Object.entries(mobileEraseModes)) {
+    if (active) return category;
+  }
+  return null;
+};
 
 // Export function to hide save menu with animation (for onclick handlers)
 window.hideMobileSaveMenu = function() {

@@ -119,11 +119,21 @@
         <!-- Bodies/Serifs Content -->
         <div id="bodiesContent" class="space-y-4">
           <div class="space-y-2">
-            <h3 class="font-serif font-semibold text-sm text-gray-700 dark:text-gray-200">Bodies</h3>
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-serif font-semibold text-sm text-gray-700 dark:text-gray-200">Bodies</h3>
+              <button id="bodiesEraseBtn" class="w-12 h-12 border border-gray-300 dark:border-gray-700 rounded hover:border-red-500 dark:hover:border-red-400 hover:bg-red-50 dark:hover:bg-red-900/40 flex items-center justify-center relative shape-button">
+                <img src="/assets/icons/erase.svg" alt="Erase Bodies" class="w-6 h-6 dark:invert">
+              </button>
+            </div>
             <div id="bodiesShapes" class="grid grid-cols-4 gap-2"></div>
           </div>
           <div class="space-y-2">
-            <h3 class="font-serif font-semibold text-sm text-gray-700 dark:text-gray-200">Serifs</h3>
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-serif font-semibold text-sm text-gray-700 dark:text-gray-200">Serifs</h3>
+              <button id="serifsEraseBtn" class="w-12 h-12 border border-gray-300 dark:border-gray-700 rounded hover:border-red-500 dark:hover:border-red-400 hover:bg-red-50 dark:hover:bg-red-900/40 flex items-center justify-center relative shape-button">
+                <img src="/assets/icons/erase.svg" alt="Erase Serifs" class="w-6 h-6 dark:invert">
+              </button>
+            </div>
             <div id="serifsShapes" class="grid grid-cols-4 gap-2"></div>
           </div>
         </div>
@@ -131,7 +141,12 @@
         <!-- Joins Content -->
         <div id="joinsContent" class="hidden space-y-4">
           <div class="space-y-2">
-            <h3 class="font-serif font-semibold text-sm text-gray-700 dark:text-gray-200">Joins</h3>
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-serif font-semibold text-sm text-gray-700 dark:text-gray-200">Joins</h3>
+              <button id="joinsEraseBtn" class="w-12 h-12 border border-gray-300 dark:border-gray-700 rounded hover:border-red-500 dark:hover:border-red-400 hover:bg-red-50 dark:hover:bg-red-900/40 flex items-center justify-center relative shape-button">
+                <img src="/assets/icons/erase.svg" alt="Erase Joins" class="w-6 h-6 dark:invert">
+              </button>
+            </div>
             <div id="joinsShapes" class="grid grid-cols-4 gap-2"></div>
           </div>
         </div>
@@ -219,12 +234,6 @@
 
       <!-- Desktop Controls (visible md and above) -->
       <div class="hidden md:flex absolute top-4 right-4 z-50 gap-2">
-        <!-- Erase Mode Toggle -->
-        <button id="desktopEraseBtn" class="flex items-center space-x-2 bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 px-3 py-2 rounded-lg shadow-md border border-gray-300 dark:border-gray-700 transition-colors">
-          <img id="desktopEraseIcon" src="/assets/icons/erase.svg" alt="Erase Mode" class="h-4 w-4 dark:invert">
-          <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Erase</span>
-        </button>
-
         <!-- Preview Toggle -->
         <button id="desktopPreviewBtn" class="flex items-center space-x-2 bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 px-3 py-2 rounded-lg shadow-md border border-gray-300 dark:border-gray-700 transition-colors">
           <img id="desktopPreviewIcon" src="/assets/icons/eye.svg" alt="Preview Mode" class="h-4 w-4 dark:invert">
@@ -245,12 +254,6 @@
           <button id="mobileSizeBtn" class="flex flex-col items-center gap-1 py-1 px-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
             <img src="/assets/icons/size-opt.svg" alt="Size Options" class="h-6 w-6 dark:invert">
             <span class="text-xs text-gray-600 dark:text-gray-300">Size</span>
-          </button>
-
-          <!-- Erase Mode Toggle Button -->
-          <button id="mobileEraseBtn" class="flex flex-col items-center gap-1 py-1 px-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
-            <img id="mobileEraseIcon" src="/assets/icons/erase.svg" alt="Erase Mode" class="h-6 w-6 dark:invert">
-            <span class="text-xs text-gray-600 dark:text-gray-300">Erase</span>
           </button>
 
           <!-- Preview Toggle Button -->

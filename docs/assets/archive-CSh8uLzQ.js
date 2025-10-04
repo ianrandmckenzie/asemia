@@ -1,4 +1,4 @@
-import{i as E,a as C}from"./components-pPIV5Z_R.js";import"./svg-ckjYZtu2.js";import"./storage-DA4SciAX.js";import{i as k,s as L,a as S,b as $,u,c as j,g as N}from"./mobile_controls-DF0OqE54.js";async function f(){console.log("Initializing archive...");const t=document.getElementById("loading");t.innerHTML=`
+import{i as E,a as C}from"./components-CLYpBYEG.js";import"./svg-ckjYZtu2.js";import"./storage-VIi1Jdgv.js";import{i as k,s as L,a as S,b as $,u,c as j,g as N}from"./mobile_controls-DF0OqE54.js";async function f(){console.log("Initializing archive...");const t=document.getElementById("loading");t.innerHTML=`
     <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
     <p class="mt-4 text-gray-600 dark:text-gray-300">Loading builder core...</p>
   `;try{if(window.initBuilderCore)await window.initBuilderCore();else throw new Error("Builder core not available");t.innerHTML=`
