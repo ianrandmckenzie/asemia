@@ -141,8 +141,9 @@ async function generateCompositionSVG() {
       // Find SVG elements within the cell
       const svgElements = cell.querySelectorAll('svg');
 
-      // Also find textured elements (divs with texture applied)
-      const texturedElements = cell.querySelectorAll('[data-textured="true"]');
+      // Also find textured elements (divs with texture applied as masks)
+      // Exclude SVG elements since they're already processed above
+      const texturedElements = cell.querySelectorAll('[data-textured="true"]:not(svg)');
 
       for (const svgElement of svgElements) {
         // Clone the SVG element
@@ -231,6 +232,21 @@ async function generateCompositionSVG() {
           nestedSVG.setAttribute('viewBox', viewBox);
           nestedSVG.setAttribute('width', svgWidth);
           nestedSVG.setAttribute('height', svgHeight);
+
+          // Copy data attributes from original SVG (including texture metadata)
+          if (clonedSVG.dataset.textured) {
+            nestedSVG.dataset.textured = clonedSVG.dataset.textured;
+          }
+          if (clonedSVG.dataset.textureType) {
+            nestedSVG.dataset.textureType = clonedSVG.dataset.textureType;
+          }
+          if (clonedSVG.dataset.textureColor) {
+            nestedSVG.dataset.textureColor = clonedSVG.dataset.textureColor;
+          }
+          if (clonedSVG.dataset.textureId) {
+            nestedSVG.dataset.textureId = clonedSVG.dataset.textureId;
+          }
+
           nestedSVG.innerHTML = svgContent;
           shapeGroup.appendChild(nestedSVG);
         } else {
@@ -468,6 +484,37 @@ async function exportAsSVG() {
     // Generate the composed SVG
     const { svg: exportSVG } = await generateCompositionSVG();
 
+    // Apply flat colors to paths that have them
+    const allPaths = exportSVG.querySelectorAll('path, polygon, circle, ellipse, rect, line, polyline');
+    allPaths.forEach(element => {
+      // Check if this element is part of an SVG with a flat color texture
+      let parentSVG = element.closest('svg');
+      let hasFlatColor = false;
+      let flatColorValue = null;
+
+      // Walk up the tree to find an SVG with data-texture-type="color"
+      while (parentSVG && !hasFlatColor) {
+        const textureType = parentSVG.getAttribute('data-texture-type');
+        if (textureType === 'color') {
+          hasFlatColor = true;
+          flatColorValue = parentSVG.getAttribute('data-texture-color');
+          break;
+        }
+        // Move to parent, then find next SVG ancestor
+        const parent = parentSVG.parentElement;
+        parentSVG = parent ? parent.closest('svg') : null;
+      }
+
+      // Apply the flat color if found
+      if (hasFlatColor && flatColorValue) {
+        element.setAttribute('fill', flatColorValue);
+        const currentStroke = element.getAttribute('stroke');
+        if (currentStroke && currentStroke !== 'none') {
+          element.setAttribute('stroke', flatColorValue);
+        }
+      }
+    });
+
     // Serialize the SVG to string
     const serializer = new XMLSerializer();
     const svgString = serializer.serializeToString(exportSVG);
@@ -530,6 +577,37 @@ async function exportAsPNG() {
   try {
     // Generate the composed SVG
     const { svg: exportSVG, width, height } = await generateCompositionSVG();
+
+    // Apply flat colors to paths that have them
+    const allPaths = exportSVG.querySelectorAll('path, polygon, circle, ellipse, rect, line, polyline');
+    allPaths.forEach(element => {
+      // Check if this element is part of an SVG with a flat color texture
+      let parentSVG = element.closest('svg');
+      let hasFlatColor = false;
+      let flatColorValue = null;
+
+      // Walk up the tree to find an SVG with data-texture-type="color"
+      while (parentSVG && !hasFlatColor) {
+        const textureType = parentSVG.getAttribute('data-texture-type');
+        if (textureType === 'color') {
+          hasFlatColor = true;
+          flatColorValue = parentSVG.getAttribute('data-texture-color');
+          break;
+        }
+        // Move to parent, then find next SVG ancestor
+        const parent = parentSVG.parentElement;
+        parentSVG = parent ? parent.closest('svg') : null;
+      }
+
+      // Apply the flat color if found
+      if (hasFlatColor && flatColorValue) {
+        element.setAttribute('fill', flatColorValue);
+        const currentStroke = element.getAttribute('stroke');
+        if (currentStroke && currentStroke !== 'none') {
+          element.setAttribute('stroke', flatColorValue);
+        }
+      }
+    });
 
     // Serialize the SVG to string
     const serializer = new XMLSerializer();
@@ -643,19 +721,44 @@ async function exportAsJPEG() {
     // Clone the SVG to modify colors
     const clonedSVG = exportSVG.cloneNode(true);
 
-    // Apply fill color to all paths in the SVG, but preserve texture patterns
+    // Apply fill color to all paths in the SVG, but preserve texture patterns and flat colors
     const allPaths = clonedSVG.querySelectorAll('path, polygon, circle, ellipse, rect, line, polyline');
-    allPaths.forEach(element => {
+
+    allPaths.forEach((element, i) => {
       const currentFill = element.getAttribute('fill');
       const currentStroke = element.getAttribute('stroke');
 
-      // Only change fill if it's not already a pattern (texture)
-      if (!currentFill || (currentFill !== 'none' && !currentFill.startsWith('url(#'))) {
-        element.setAttribute('fill', fillColor);
+      // Check if this element is part of an SVG with a flat color texture
+      let parentSVG = element.closest('svg');
+      let hasFlatColor = false;
+
+      // Walk up the tree to find an SVG with data-texture-type="color"
+      let flatColorValue = null;
+      while (parentSVG && !hasFlatColor) {
+        const textureType = parentSVG.getAttribute('data-texture-type');
+        if (textureType === 'color') {
+          hasFlatColor = true;
+          flatColorValue = parentSVG.getAttribute('data-texture-color');
+          break;
+        }
+        // Move to parent, then find next SVG ancestor
+        const parent = parentSVG.parentElement;
+        parentSVG = parent ? parent.closest('svg') : null;
       }
-      // Only change stroke if it's not already a pattern (texture) and has a stroke
-      if (currentStroke && currentStroke !== 'none' && !currentStroke.startsWith('url(#')) {
-        element.setAttribute('stroke', fillColor);
+
+      // Apply the appropriate fill color
+      if (hasFlatColor && flatColorValue) {
+        // Apply the flat color from the data attribute
+        element.setAttribute('fill', flatColorValue);
+        if (currentStroke && currentStroke !== 'none') {
+          element.setAttribute('stroke', flatColorValue);
+        }
+      } else if (!hasFlatColor && (!currentFill || (currentFill !== 'none' && !currentFill.startsWith('url(#')))) {
+        // Apply default fill color for uncolored shapes
+        element.setAttribute('fill', fillColor);
+        if (currentStroke && currentStroke !== 'none' && !currentStroke.startsWith('url(#')) {
+          element.setAttribute('stroke', fillColor);
+        }
       }
     });
 
