@@ -1102,19 +1102,25 @@ function handleCleanClick(cell) {
       }
     } else if (textureType === 'color') {
       // This is an SVG with color applied
-      // Remove the texture attributes and color styling
+      // Remove the texture attributes
       element.removeAttribute('data-textured');
       element.removeAttribute('data-texture-id');
       element.removeAttribute('data-texture-type');
       element.removeAttribute('data-texture-color');
-      element.removeAttribute('fill');
-      element.removeAttribute('stroke');
 
-      // Reset fill and stroke on all child elements
+      // Set to currentColor so it adapts to light/dark mode
+      element.setAttribute('fill', 'currentColor');
+      element.setAttribute('stroke', 'currentColor');
+
+      // Reset fill and stroke on all child elements to currentColor
       const styledElements = element.querySelectorAll('*[fill], *[stroke]');
       styledElements.forEach(el => {
-        el.removeAttribute('fill');
-        el.removeAttribute('stroke');
+        if (el.hasAttribute('fill') && el.getAttribute('fill') !== 'none') {
+          el.setAttribute('fill', 'currentColor');
+        }
+        if (el.hasAttribute('stroke') && el.getAttribute('stroke') !== 'none') {
+          el.setAttribute('stroke', 'currentColor');
+        }
       });
     }
   });
