@@ -313,8 +313,8 @@ function handleFileLoad(event) {
 function applyComposition(composition) {
   console.log('Loading composition:', composition);
 
-  // Clear existing grids
-  clearAllGrids();
+  // Clear existing grids (skip confirmation for programmatic clearing)
+  clearAllGrids(true);
 
   // Apply shapes to each grid
   if (composition.grids?.serifs) {
@@ -448,9 +448,38 @@ function applyGridData(gridId, gridData) {
   });
 }
 
+// Internal function to actually clear the grids
+function performClearGrids(showMessage = true) {
+  const serifsGrid = document.getElementById('serifsGrid');
+  const joinsGrid = document.getElementById('joinsGrid');
+
+  // Clear serifs grid
+  for (let i = 0; i < serifsGrid.children.length; i++) {
+    serifsGrid.children[i].innerHTML = '';
+  }
+
+  // Clear joins grid
+  for (let i = 0; i < joinsGrid.children.length; i++) {
+    joinsGrid.children[i].innerHTML = '';
+  }
+
+  // Clear clean mode if active
+  if (window.clearCleanMode) {
+    window.clearCleanMode();
+  }
+
+  if (showMessage) {
+    showNotification('All grids cleared', 'success');
+  }
+}
+
 // Clear all shapes from both grids
-function clearAllGrids() {
-  showClearGridsConfirmation();
+function clearAllGrids(skipConfirmation = false) {
+  if (skipConfirmation) {
+    performClearGrids(false);
+  } else {
+    showClearGridsConfirmation();
+  }
 }
 
 // Show clear grids confirmation modal
@@ -492,25 +521,7 @@ function showClearGridsConfirmation() {
   clearBtn.textContent = 'Clear All';
 
   clearBtn.onclick = () => {
-    const serifsGrid = document.getElementById('serifsGrid');
-    const joinsGrid = document.getElementById('joinsGrid');
-
-    // Clear serifs grid
-    for (let i = 0; i < serifsGrid.children.length; i++) {
-      serifsGrid.children[i].innerHTML = '';
-    }
-
-    // Clear joins grid
-    for (let i = 0; i < joinsGrid.children.length; i++) {
-      joinsGrid.children[i].innerHTML = '';
-    }
-
-    // Clear clean mode if active
-    if (window.clearCleanMode) {
-      window.clearCleanMode();
-    }
-
-    showNotification('All grids cleared', 'success');
+    performClearGrids(true);
     document.body.removeChild(confirmOverlay);
   };
 
@@ -780,7 +791,7 @@ function showCompositionSelector(compositions) {
 
   // Create modal content
   const modal = document.createElement('div');
-  modal.className = 'bg-white dark:bg-slate-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-xl max-w-md w-full mx-4 max-h-96 overflow-hidden';
+  modal.className = 'bg-white dark:bg-slate-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-xl max-w-md w-full mx-4 max-h-108 overflow-hidden';
 
   // Create modal header
   const header = document.createElement('div');
