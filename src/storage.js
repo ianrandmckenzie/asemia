@@ -463,6 +463,11 @@ function clearAllGrids() {
     joinsGrid.children[i].innerHTML = '';
   }
 
+  // Clear clean mode if active
+  if (window.clearCleanMode) {
+    window.clearCleanMode();
+  }
+
   console.log('All grids cleared');
   showNotification('Grids cleared', 'info');
 }

@@ -15,6 +15,7 @@ let eraseModes = { // New: per-category erase modes
   bodies: false,
   joins: false
 };
+let cleanMode = false; // Track if clean mode is active
 let pendingEraseCell = null; // Track cell pending erase confirmation
 let pendingPlacementCell = null; // Track cell pending placement confirmation (mobile)
 let pendingPlacementShape = null; // Track shape data for pending placement
@@ -234,6 +235,7 @@ async function initBuilder() {
     previewMode = mode;
     document.body.classList.toggle('preview-mode', mode);
   };
+  window.clearCleanMode = clearCleanMode;
 
   console.log('Builder functions made globally accessible');
 }
@@ -400,6 +402,10 @@ function populateTexturesShapes() {
     const colorPickerSection = createColorPickerSection();
     container.appendChild(colorPickerSection);
 
+    // Add clean button
+    const cleanButton = createCleanButton();
+    container.appendChild(cleanButton);
+
     // Add divider
     const divider = document.createElement('div');
     divider.className = 'col-span-2 h-px bg-gray-300 dark:bg-gray-600 my-2';
@@ -435,6 +441,64 @@ function createColorPickerSection() {
   return section;
 }
 
+// Create a clean button for removing textures
+function createCleanButton() {
+  const button = document.createElement('button');
+  button.className = 'col-span-2 aspect-[6/1] rounded border-2 border-gray-300 dark:border-gray-600 hover:border-blue-500 dark:hover:border-blue-400 overflow-hidden flex items-center justify-center gap-2 relative bg-white dark:bg-slate-900';
+  button.id = 'cleanTextureBtn';
+
+  // Icon
+  const icon = document.createElement('img');
+  icon.src = '/assets/icons/clean.svg';
+  icon.alt = 'Clean';
+  icon.className = 'h-5 w-5 dark:invert';
+
+  // Label
+  const label = document.createElement('div');
+  label.className = 'text-sm font-medium text-gray-700 dark:text-gray-300';
+  label.textContent = 'Clean';
+
+  button.appendChild(icon);
+  button.appendChild(label);
+
+  button.addEventListener('click', () => {
+    // Clear any active erase modes
+    if (typeof clearAllEraseModes === 'function') {
+      clearAllEraseModes();
+    }
+
+    // Toggle clean mode
+    cleanMode = !cleanMode;
+
+    // Update button appearance
+    if (cleanMode) {
+      button.classList.remove('border-gray-300', 'dark:border-gray-600');
+      button.classList.add('border-blue-500', 'dark:border-blue-400', 'bg-blue-50', 'dark:bg-blue-900');
+    } else {
+      button.classList.remove('border-blue-500', 'dark:border-blue-400', 'bg-blue-50', 'dark:bg-blue-900');
+      button.classList.add('border-gray-300', 'dark:border-gray-600');
+    }
+
+    // Clear other texture selections when activating clean mode
+    if (cleanMode) {
+      // Remove selection from all other texture/color buttons
+      document.querySelectorAll('#texturesShapes button').forEach(btn => {
+        if (btn.id !== 'cleanTextureBtn') {
+          btn.classList.remove('border-blue-500', 'dark:border-blue-400', 'bg-blue-50', 'dark:bg-blue-900');
+          btn.classList.add('border-gray-300', 'dark:border-gray-600');
+        }
+      });
+
+      // Clear selectedTexture
+      selectedTexture = null;
+    }
+
+    updateSelectedShapeDisplay();
+  });
+
+  return button;
+}
+
 // Create a solid color button
 function createColorButton(name, color, id) {
   const button = document.createElement('button');
@@ -463,6 +527,9 @@ function createColorButton(name, color, id) {
     if (typeof clearAllEraseModes === 'function') {
       clearAllEraseModes();
     }
+
+    // Clear clean mode
+    cleanMode = false;
 
     // Remove previous selection from all texture/color buttons
     document.querySelectorAll('#texturesShapes button').forEach(btn => {
@@ -524,6 +591,9 @@ function createColorPickerButton() {
       clearAllEraseModes();
     }
 
+    // Clear clean mode
+    cleanMode = false;
+
     // Remove previous selection from all texture/color buttons
     document.querySelectorAll('#texturesShapes button').forEach(btn => {
       btn.classList.remove('border-blue-500', 'dark:border-blue-400', 'bg-blue-50', 'dark:bg-blue-900');
@@ -578,6 +648,9 @@ function createTextureButton(texture) {
     if (typeof clearAllEraseModes === 'function') {
       clearAllEraseModes();
     }
+
+    // Clear clean mode when selecting a texture
+    cleanMode = false;
 
     // Remove previous selection from texture buttons only
     document.querySelectorAll('#texturesShapes button').forEach(btn => {
@@ -823,6 +896,13 @@ function clearCellHighlights() {
 function handleGridCellClick(event) {
   const cell = event.currentTarget;
 
+  // Check if clean mode is active (desktop or mobile)
+  const mobileCleanActive = window.getMobileCleanMode && window.getMobileCleanMode();
+  if (cleanMode || mobileCleanActive) {
+    handleCleanClick(cell);
+    return;
+  }
+
   // Check if any erase mode is active (mobile or desktop)
   const activeEraseMode = eraseModes.serifs || eraseModes.bodies || eraseModes.joins;
   if ((window.isEraseMode && window.isEraseMode()) || activeEraseMode) {
@@ -977,6 +1057,67 @@ function handleEraseClick(cell) {
     pendingEraseCell = cell;
     cell.classList.add('cell-erase-pending');
   }
+}
+
+// Handle clean mode click - removes textures and resets colors to default
+function handleCleanClick(cell) {
+  // Check if cell has any content
+  if (!cell.hasChildNodes()) return;
+
+  // Find all elements with textured data attribute (both SVGs and wrapper divs)
+  const texturedElements = cell.querySelectorAll('[data-textured="true"]');
+
+  texturedElements.forEach(element => {
+    const textureType = element.dataset.textureType;
+
+    if (textureType === 'image') {
+      // This is a wrapper div with texture mask
+      // We need to create a plain SVG to replace it
+      const category = element.dataset.category;
+      const angleKey = element.dataset.angleKey;
+      const shapeName = element.dataset.shapeName;
+
+      // Use SVGUtils to recreate the SVG (same method used when placing shapes)
+      if (window.SVGUtils && window.SVGUtils.createSVGElement && category && angleKey && shapeName) {
+        const svgElement = window.SVGUtils.createSVGElement(category, angleKey, shapeName, 'absolute pointer-events-none');
+
+        if (svgElement) {
+          // Copy positioning from the wrapper
+          svgElement.style.width = element.style.width;
+          svgElement.style.height = element.style.height;
+          svgElement.style.top = element.style.top;
+          svgElement.style.bottom = element.style.bottom;
+          svgElement.style.left = element.style.left;
+          svgElement.style.right = element.style.right;
+          svgElement.style.transform = element.style.transform;
+
+          // Store metadata
+          svgElement.dataset.category = category;
+          svgElement.dataset.angleKey = angleKey;
+          svgElement.dataset.shapeName = shapeName;
+
+          // Replace the texture wrapper with the plain SVG
+          element.replaceWith(svgElement);
+        }
+      }
+    } else if (textureType === 'color') {
+      // This is an SVG with color applied
+      // Remove the texture attributes and color styling
+      element.removeAttribute('data-textured');
+      element.removeAttribute('data-texture-id');
+      element.removeAttribute('data-texture-type');
+      element.removeAttribute('data-texture-color');
+      element.removeAttribute('fill');
+      element.removeAttribute('stroke');
+
+      // Reset fill and stroke on all child elements
+      const styledElements = element.querySelectorAll('*[fill], *[stroke]');
+      styledElements.forEach(el => {
+        el.removeAttribute('fill');
+        el.removeAttribute('stroke');
+      });
+    }
+  });
 }
 
 // Clear pending erase highlight
@@ -1479,6 +1620,16 @@ function setupTabSwitching() {
       // Clear erase modes when switching tabs
       clearAllEraseModes();
 
+      // Clear clean mode when switching away from textures
+      if (cleanMode) {
+        cleanMode = false;
+        const cleanBtn = document.getElementById('cleanTextureBtn');
+        if (cleanBtn) {
+          cleanBtn.classList.remove('border-blue-500', 'dark:border-blue-400', 'bg-blue-50', 'dark:bg-blue-900');
+          cleanBtn.classList.add('border-gray-300', 'dark:border-gray-600');
+        }
+      }
+
       updateGridLayers();
     });
 
@@ -1493,6 +1644,16 @@ function setupTabSwitching() {
 
       // Clear erase modes when switching tabs
       clearAllEraseModes();
+
+      // Clear clean mode when switching away from textures
+      if (cleanMode) {
+        cleanMode = false;
+        const cleanBtn = document.getElementById('cleanTextureBtn');
+        if (cleanBtn) {
+          cleanBtn.classList.remove('border-blue-500', 'dark:border-blue-400', 'bg-blue-50', 'dark:bg-blue-900');
+          cleanBtn.classList.add('border-gray-300', 'dark:border-gray-600');
+        }
+      }
 
       updateGridLayers();
     });
@@ -1526,6 +1687,23 @@ function clearAllEraseModes() {
   const gridsWrapper = document.querySelector('.builder-grids-wrapper');
   if (gridsWrapper) {
     gridsWrapper.style.cursor = '';
+  }
+}
+
+// Clear clean mode and update UI
+function clearCleanMode() {
+  if (cleanMode) {
+    cleanMode = false;
+    const cleanBtn = document.getElementById('cleanTextureBtn');
+    if (cleanBtn) {
+      cleanBtn.classList.remove('border-blue-500', 'dark:border-blue-400', 'bg-blue-50', 'dark:bg-blue-900');
+      cleanBtn.classList.add('border-gray-300', 'dark:border-gray-600');
+    }
+  }
+
+  // Clear mobile clean mode too if it exists
+  if (window.clearMobileCleanMode) {
+    window.clearMobileCleanMode();
   }
 }
 

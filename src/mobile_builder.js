@@ -18,6 +18,7 @@ const SIZE_SCALES = {
 };
 
 let currentSize = '7xl'; // Default mobile size
+let mobileCleanMode = false; // Track if mobile clean mode is active
 
 // Initialize mobile builder
 async function initMobileBuilder() {
@@ -109,6 +110,10 @@ function populateMobileTextures(containerId) {
   // Add color picker section first
   const colorPickerSection = createMobileColorPickerSection();
   container.appendChild(colorPickerSection);
+
+  // Add clean button
+  const cleanButton = createMobileCleanButton();
+  container.appendChild(cleanButton);
 
   // Add textures if available
   if (window.texturesData?.textures) {
@@ -225,12 +230,101 @@ function createMobileColorPickerButton() {
   return button;
 }
 
+// Create mobile clean button
+function createMobileCleanButton() {
+  const button = document.createElement('button');
+  button.className = 'mobile-shape-btn flex-shrink-0 overflow-hidden flex flex-col items-center justify-center gap-1 bg-white dark:bg-slate-900 mr-2';
+  button.id = 'mobileCleanTextureBtn';
+  button.dataset.category = 'textures';
+  button.type = 'button';
+
+  // Icon
+  const icon = document.createElement('img');
+  icon.src = '/assets/icons/clean.svg';
+  icon.alt = 'Clean';
+  icon.className = 'h-6 w-6 dark:invert';
+
+  // Label
+  const label = document.createElement('div');
+  label.className = 'text-[10px] font-medium';
+  label.textContent = 'Clean';
+
+  button.appendChild(icon);
+  button.appendChild(label);
+
+  button.addEventListener('click', () => {
+    handleMobileCleanSelection(button);
+  });
+
+  return button;
+}
+
+// Handle mobile clean selection
+function handleMobileCleanSelection(button) {
+  // Clear any active mobile erase modes
+  if (typeof clearMobileEraseModes === 'function') {
+    clearMobileEraseModes();
+  }
+
+  // Toggle mobile clean mode
+  mobileCleanMode = !mobileCleanMode;
+
+  // Update button appearance
+  if (mobileCleanMode) {
+    // Remove selection from other buttons
+    document.querySelectorAll('.mobile-shape-btn[data-category="textures"]').forEach(el => {
+      if (el.id !== 'mobileCleanTextureBtn') {
+        el.classList.remove('selected');
+      }
+    });
+
+    button.classList.add('selected');
+
+    // Clear selectedTexture
+    if (window.setSelectedTexture) {
+      window.setSelectedTexture(null);
+    }
+
+    // Reset textures tab icon to default
+    const mobileTexturesTab = document.getElementById('mobileTexturesTab');
+    if (mobileTexturesTab) {
+      const iconContainer = mobileTexturesTab.querySelector('.flex.flex-col');
+      if (iconContainer) {
+        const existingIcon = iconContainer.querySelector('svg, img, div.color-indicator');
+        if (existingIcon && !existingIcon.tagName === 'svg') {
+          // Restore the default SVG icon
+          const defaultSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+          defaultSvg.setAttribute('class', 'h-6 w-auto');
+          defaultSvg.setAttribute('fill', 'currentColor');
+          defaultSvg.setAttribute('viewBox', '0 0 100 100');
+          defaultSvg.innerHTML = '<rect width="40" height="40" x="0" y="0" opacity="0.8"/><rect width="40" height="40" x="60" y="0" opacity="0.5"/><rect width="40" height="40" x="0" y="60" opacity="0.3"/><rect width="40" height="40" x="60" y="60" opacity="0.9"/>';
+          existingIcon.replaceWith(defaultSvg);
+        }
+      }
+    }
+  } else {
+    button.classList.remove('selected');
+  }
+
+  // Sync with desktop clean mode
+  if (window.clearCleanMode && !mobileCleanMode) {
+    window.clearCleanMode();
+  }
+
+  if (window.updateSelectedShapeDisplay) {
+    window.updateSelectedShapeDisplay();
+  }
+}
+
 // Handle mobile color selection
 function handleMobileColorSelection(button, colorData) {
   // Clear any active mobile erase modes
   if (typeof clearMobileEraseModes === 'function') {
     clearMobileEraseModes();
   }
+
+  // Clear mobile clean mode
+  mobileCleanMode = false;
 
   // Remove previous selection
   document.querySelectorAll('.mobile-shape-btn[data-category="textures"]').forEach(el => {
@@ -296,6 +390,9 @@ function handleMobileTextureSelection(button, texture) {
   if (typeof clearMobileEraseModes === 'function') {
     clearMobileEraseModes();
   }
+
+  // Clear mobile clean mode
+  mobileCleanMode = false;
 
   // Remove previous selection from texture buttons
   document.querySelectorAll('.mobile-shape-btn[data-category="textures"]').forEach(el => {
@@ -436,6 +533,15 @@ function switchMobileTab(category) {
 
   // Clear erase modes when switching tabs
   clearMobileEraseModes();
+
+  // Clear clean mode when switching away from textures
+  if (category !== 'textures' && mobileCleanMode) {
+    mobileCleanMode = false;
+    const cleanBtn = document.getElementById('mobileCleanTextureBtn');
+    if (cleanBtn) {
+      cleanBtn.classList.remove('selected');
+    }
+  }
 
   // If clicking the active tab, toggle it off
   if (activeTab === category) {
@@ -776,6 +882,18 @@ window.getMobileEraseCategory = () => {
     if (active) return category;
   }
   return null;
+};
+
+// Export clean mode state
+window.getMobileCleanMode = () => mobileCleanMode;
+window.clearMobileCleanMode = () => {
+  if (mobileCleanMode) {
+    mobileCleanMode = false;
+    const cleanBtn = document.getElementById('mobileCleanTextureBtn');
+    if (cleanBtn) {
+      cleanBtn.classList.remove('selected');
+    }
+  }
 };
 
 // Export function to hide save menu with animation (for onclick handlers)
